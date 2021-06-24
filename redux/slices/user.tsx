@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
-    name: string
+    name: string,
+    loggedIn: boolean
 };
 
 const initialState: UserState = {
-    name: ""
+    name: "",
+    loggedIn: false
 };
 
 export const userSlice = createSlice({
@@ -14,10 +16,13 @@ export const userSlice = createSlice({
     reducers: {
         setName: (state, action: PayloadAction<string>) => {
             state.name = action.payload;
+        },
+        setLoggedIn: (state, action: PayloadAction<boolean>) => {
+            state.loggedIn = action.payload;
         }
     }
 });
 
-export const { setName } = userSlice.actions;
+export const { setName, setLoggedIn } = userSlice.actions;
 
 export default userSlice.reducer;
