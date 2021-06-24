@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { setName } from "../redux/slices/user";
+import navLogo from "../media/navbar.png";
 
 const NavbarContainer = styled.div`
-     height: 60px;
-     width: 100%;
-     background-color: pink;
+    height: 50px;
+    background-color: #ffe5e9;
+    padding: 20px 30px;
+`;
+
+const NavLogo = styled.img`
+    height: 100%;
 `;
 
 export default function Navbar() {
@@ -15,8 +19,7 @@ export default function Navbar() {
 
     return (
         <NavbarContainer>
-            <button onClick={() => dispatch(setName("hello"))}>hehe</button>
-            {name}
+            <NavLogo src={navLogo} />
         </NavbarContainer>
     )
 }
