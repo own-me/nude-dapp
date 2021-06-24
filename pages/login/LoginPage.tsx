@@ -12,7 +12,7 @@ export default function LoginPage() {
 
     return (
         <LoginPageContainer>
-
+            <p>Hello</p>
         </LoginPageContainer>
     )
 }

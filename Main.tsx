@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Navbar from "./components/Navbar";
 import LoginPage from "./pages/login/LoginPage";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 const MainContainer = styled.div`
     height: 100%;
@@ -10,13 +11,28 @@ const MainContainer = styled.div`
 `;
 
 export default function Main() {
-    const name = useAppSelector(state => state.user.name);
+    const loggedIn = useAppSelector(state => state.user.loggedIn);
     const dispatch = useAppDispatch();
 
     return (
         <MainContainer>
-            <Navbar />
-            <LoginPage />
+            <Switch>
+                <Route path="/login">
+                    <LoginPage />
+                </Route>
+                <Route render={({ location }) =>
+                    loggedIn ? (
+                        <>Logged In</>
+                    ) : (
+                        <Redirect
+                            to={{
+                                pathname: "/login",
+                                state: { from: location }
+                            }}
+                        />
+                    )
+                } />
+            </Switch>
         </MainContainer>
     );
 };
