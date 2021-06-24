@@ -4,7 +4,7 @@ import "@fontsource/rock-salt";
 import "@fontsource/yeseva-one";
 import "@fontsource/poppins";
 import "@fontsource/shadows-into-light";
-import store from './redux/store';
+import { store } from './redux/store';
 import { Provider } from 'react-redux'
 import Navbar from "./components/Navbar";
 

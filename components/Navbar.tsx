@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from 'react-redux';
-import { setName } from '../redux/slices/user';
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { setName } from "../redux/slices/user";
 
 const NavbarContainer = styled.div`
      height: 60px;
@@ -10,10 +10,8 @@ const NavbarContainer = styled.div`
 `;
 
 export default function Navbar() {
-    const name = useSelector(state => state.user.name);
-    const dispatch = useDispatch();
-
-    console.log(name);
+    const name = useAppSelector(state => state.user.name);
+    const dispatch = useAppDispatch();
 
     return (
         <NavbarContainer>
