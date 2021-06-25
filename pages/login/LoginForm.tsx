@@ -1,19 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import LoginForm from "./LoginForm";
 
-const LoginPageContainer = styled.div`
+const LoginFormContainer = styled.div`
     height: 100%;
 `;
 
-export default function LoginPage() {
+const EmailInput = styled.input`
+
+`;
+
+const PasswordInput = styled.input`
+
+`;
+
+export default function LoginForm() {
     const name = useAppSelector(state => state.user.name);
     const dispatch = useAppDispatch();
 
     return (
-        <LoginPageContainer>
-            <LoginForm />
-        </LoginPageContainer>
+        <LoginFormContainer>
+            <EmailInput />
+            <PasswordInput />
+        </LoginFormContainer>
     )
 }
