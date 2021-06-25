@@ -30,7 +30,8 @@ export default function LoginForm() {
     const name = useAppSelector(state => state.user.name);
     const dispatch = useAppDispatch();
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         console.log("Submit!");
     };
 
