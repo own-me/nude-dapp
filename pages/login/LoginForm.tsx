@@ -40,7 +40,7 @@ export default function LoginForm() {
     const [postLogin, { isLoading, isSuccess, isError, data }] = usePostLoginMutation();
 
     useEffect(() => {
-        if(isSuccess) {
+        if (isSuccess) {
             window.localStorage.setItem("token", data.token);
         }
     }, [data, isSuccess, isError]);

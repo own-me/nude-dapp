@@ -40,7 +40,9 @@ export default function RegisterForm() {
     const [postRegister, { isLoading, isSuccess, isError, data }] = usePostRegisterMutation();
 
     useEffect(() => {
-        console.log(data, isSuccess, isError);
+        if (isSuccess) {
+            console.log(data);
+        }
     }, [data, isSuccess, isError]);
 
     const handleSubmit = (e) => {
