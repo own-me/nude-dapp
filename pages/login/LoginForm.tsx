@@ -40,7 +40,9 @@ export default function LoginForm() {
     const [postLogin, { isLoading, isSuccess, isError, data }] = usePostLoginMutation();
 
     useEffect(() => {
-        console.log(data, isSuccess, isError);
+        if(isSuccess) {
+            window.localStorage.setItem("token", data.token);
+        }
     }, [data, isSuccess, isError]);
 
     const handleSubmit = (e) => {
