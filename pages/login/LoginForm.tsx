@@ -4,7 +4,10 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
 
 const LoginFormContainer = styled.form`
-    height: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const EmailLabel = styled.label`
@@ -24,7 +27,7 @@ const PasswordInput = styled.input`
 `;
 
 const SubmitButton = styled.button`
-
+    margin: 10px;
 `;
 
 export default function LoginForm() {

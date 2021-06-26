@@ -5,6 +5,10 @@ import RegisterForm from "./RegisterForm";
 
 const RegisterPageContainer = styled.div`
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 `;
 
 export default function RegisterPage() {
