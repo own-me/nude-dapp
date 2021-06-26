@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
-const LoginPageContainer = styled.div`
+const RegisterPageContainer = styled.div`
     height: 100%;
 `;
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const name = useAppSelector(state => state.user.name);
     const dispatch = useAppDispatch();
 
     return (
-        <LoginPageContainer>
-            <h1>Login</h1>
-            <LoginForm />
-        </LoginPageContainer>
+        <RegisterPageContainer>
+            <h1>Register</h1>
+            <RegisterForm />
+        </RegisterPageContainer>
     )
 }

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Navbar from "./components/Navbar";
 import LoginPage from "./pages/login/LoginPage";
+import RegisterPage from "./pages/register/RegisterPage";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -19,6 +20,9 @@ export default function Main() {
             <Switch>
                 <Route path="/login">
                     <LoginPage />
+                </Route>
+                <Route path="/register">
+                    <RegisterPage />
                 </Route>
                 <Route render={({ location }) =>
                     loggedIn ? (
