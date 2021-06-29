@@ -5,6 +5,7 @@ import RegisterPage from "./pages/register/RegisterPage";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRouter";
+import HomePage from "./pages/home/HomePage";
 
 const MainContainer = styled.div`
     height: 100%;
@@ -24,7 +25,7 @@ export default function Main() {
                 <Route path="/register">
                     <RegisterPage />
                 </Route>
-                <PrivateRoute path="/" children={<><h1>Hello There!</h1></>} />
+                <PrivateRoute path="/" children={<HomePage />} />
             </Switch>
         </MainContainer>
     );
