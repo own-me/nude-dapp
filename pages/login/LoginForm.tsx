@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
+import { setLoggedIn } from "../../redux/slices/user";
 
 const LoginFormContainer = styled.form`
     height: 200px;
@@ -30,9 +32,10 @@ const SubmitButton = styled.button`
     margin: 10px;
 `;
 
-export default function LoginForm() {
-    const name = useAppSelector(state => state.user.name);
+export default function LoginForm(props) {
+    const loggedIn = useAppSelector(state => state.user.loggedIn);
     const dispatch = useAppDispatch();
+    const history = useHistory();
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -42,8 +45,15 @@ export default function LoginForm() {
     useEffect(() => {
         if (isSuccess) {
             window.localStorage.setItem("token", data.token);
+            dispatch(setLoggedIn(true));
         }
     }, [data, isSuccess, isError]);
+
+    useEffect(() => {
+        if (loggedIn) {
+            history.push("/");
+        }
+    }, [loggedIn]);
 
     const handleSubmit = (e) => {
         e.preventDefault();

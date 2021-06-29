@@ -3,7 +3,8 @@ import styled from "styled-components";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import { useAppSelector, useAppDispatch } from "./redux/hooks";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRouter";
 
 const MainContainer = styled.div`
     height: 100%;
@@ -23,18 +24,7 @@ export default function Main() {
                 <Route path="/register">
                     <RegisterPage />
                 </Route>
-                <Route render={({ location }) =>
-                    loggedIn ? (
-                        <>Logged In</>
-                    ) : (
-                        <Redirect
-                            to={{
-                                pathname: "/login",
-                                state: { from: location }
-                            }}
-                        />
-                    )
-                } />
+                <PrivateRoute path="/" children={<><h1>Hello There!</h1></>} />
             </Switch>
         </MainContainer>
     );
