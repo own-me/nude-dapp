@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import Navbar from "../../components/Navbar";
 
 const HomePageContainer = styled.div`
     height: 100%;
@@ -15,8 +16,11 @@ export default function HomePage() {
     const dispatch = useAppDispatch();
 
     return (
-        <HomePageContainer>
-            <h1>Own Me!</h1>
-        </HomePageContainer>
+        <>
+            <Navbar />
+            <HomePageContainer>
+                <h1>Own Me!</h1>
+            </HomePageContainer>
+        </>
     );
 };
