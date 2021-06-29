@@ -55,6 +55,13 @@ export default function LoginForm(props) {
         }
     }, [loggedIn]);
 
+    useEffect(() => {
+        const token = window.localStorage.getItem("token");
+        if (token) {
+            postLogin({ token });
+        }
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Submit!");
