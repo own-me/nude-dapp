@@ -46,6 +46,8 @@ export default function LoginForm(props) {
         if (isSuccess) {
             window.localStorage.setItem("token", data.token);
             dispatch(setLoggedIn(true));
+        } else if (isError) {
+            window.localStorage.removeItem("token");
         }
     }, [data, isSuccess, isError]);
 
