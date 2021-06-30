@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { usePostRegisterMutation } from "../../redux/api/register";
 
@@ -40,6 +41,8 @@ const SubmitButton = styled.button`
 
 export default function RegisterForm() {
     const dispatch = useAppDispatch();
+    const history = useHistory();
+
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -50,7 +53,7 @@ export default function RegisterForm() {
 
     useEffect(() => {
         if (isSuccess) {
-            console.log(data);
+            history.push("/login");
         }
     }, [data, isSuccess, isError]);
 
