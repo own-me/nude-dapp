@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import navLogo from "../media/navbar.png";
+import UserBadge from "./UserBadge";
 
 const NavbarContainer = styled.div`
     height: 50px;
@@ -11,6 +11,9 @@ const NavbarContainer = styled.div`
     right: 0;
     left: 0;
     top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 const NavLogo = styled.img`
@@ -18,12 +21,10 @@ const NavLogo = styled.img`
 `;
 
 export default function Navbar() {
-    const name = useAppSelector(state => state.user.name);
-    const dispatch = useAppDispatch();
-
     return (
         <NavbarContainer>
             <NavLogo src={navLogo} />
+            <UserBadge />
         </NavbarContainer>
     )
 }

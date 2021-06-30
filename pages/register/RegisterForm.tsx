@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hooks";
 import { usePostRegisterMutation } from "../../redux/api/register";
 
 const RegisterFormContainer = styled.form`
@@ -40,9 +39,7 @@ const SubmitButton = styled.button`
 `;
 
 export default function RegisterForm() {
-    const dispatch = useAppDispatch();
     const history = useHistory();
-
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -70,11 +67,11 @@ export default function RegisterForm() {
     return (
         <RegisterFormContainer onSubmit={handleSubmit}>
             <EmailLabel htmlFor="email">Email</EmailLabel>
-            <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} required/>
+            <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} required />
             <PasswordLabel htmlFor="password">Password</PasswordLabel>
-            <PasswordInput type="password" id="password" onChange={(e) => setPassword(e.target.value)} required/>
+            <PasswordInput type="password" id="password" onChange={(e) => setPassword(e.target.value)} required />
             <ConfirmPasswordLabel htmlFor="confirmPassword">Confirm Password</ConfirmPasswordLabel>
-            <ConfirmPasswordInput type="password" id="confirmPassword" onChange={(e) => setConfirmPassword(e.target.value)} required/>
+            <ConfirmPasswordInput type="password" id="confirmPassword" onChange={(e) => setConfirmPassword(e.target.value)} required />
             <SubmitButton disabled={!isPasswordConfirmed}>Submit</SubmitButton>
         </RegisterFormContainer>
     );

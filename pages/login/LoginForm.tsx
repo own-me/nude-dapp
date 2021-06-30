@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
-import { setLoggedIn } from "../../redux/slices/user";
+import { setUserLoggedIn, setUserEmail } from "../../redux/slices/user";
 
 const LoginFormContainer = styled.form`
     height: 200px;
@@ -45,7 +45,8 @@ export default function LoginForm(props) {
     useEffect(() => {
         if (isSuccess) {
             window.localStorage.setItem("token", data.token);
-            dispatch(setLoggedIn(true));
+            dispatch(setUserLoggedIn(true));
+            dispatch(setUserEmail(data.decoded.email));
         } else if (isError) {
             window.localStorage.removeItem("token");
         }

@@ -6,9 +6,15 @@ interface LoginRequest {
     token?: string
 }
 
+interface DecodedToken {
+    email: string,
+    exp: number,
+    iat: number
+}
 interface LoginResponse {
     token: string,
-    message: string
+    message: string,
+    decoded: DecodedToken
 }
 
 export const loginApi = createApi({
