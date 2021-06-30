@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import Navbar from "../../components/Navbar";
 
 const HomePageContainer = styled.div`
@@ -12,9 +11,6 @@ const HomePageContainer = styled.div`
 `;
 
 export default function HomePage() {
-    const name = useAppSelector(state => state.user.name);
-    const dispatch = useAppDispatch();
-
     return (
         <>
             <Navbar />
