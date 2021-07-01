@@ -6,9 +6,10 @@ import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRouter";
 import HomePage from "./pages/home/HomePage";
+import Footer from "./components/Footer";
 
 const MainContainer = styled.div`
-    height: 100%;
+    height: calc(100% - 50px);
     width: 100%;
 `;
 
@@ -27,6 +28,7 @@ export default function Main() {
                 </Route>
                 <PrivateRoute path="/" children={<HomePage />} />
             </Switch>
+            <Footer />
         </MainContainer>
     );
 };
