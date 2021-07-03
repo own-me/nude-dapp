@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 
 export default function useWallet() {
     const [balance, setBalance] = useState<string>();
+    const [address, setAddress] = useState<string>();
 
     useEffect(() => {
         async function getBalance() {
@@ -11,10 +12,16 @@ export default function useWallet() {
             const signer = provider.getSigner();
             const address = await signer.getAddress();
             const balance = await provider.getBalance(address);
-            setBalance(balance.toString());
+            setBalance(ethers.utils.formatEther(balance));
         }
         getBalance();
-    }, []);
+    }, [window.ethereum, address]);
 
-    return { balance };
+    useEffect(() => {
+        window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
+            setAddress(accounts[0]);
+        });
+    });
+
+    return { balance, address };
 };
