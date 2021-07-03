@@ -54,7 +54,9 @@ export default function LoginForm(props) {
 
     useEffect(() => {
         if (loggedIn) {
-            history.push("/");
+            const params = new URLSearchParams(window.location.search);
+            const redirectPath = params.get("redirect");
+            history.push(redirectPath || "");
         }
     }, [loggedIn]);
 

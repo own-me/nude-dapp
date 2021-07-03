@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRouter";
 import HomePage from "./pages/home/HomePage";
 import Footer from "./components/Footer";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 const MainContainer = styled.div`
     height: calc(100% - 50px);
@@ -26,7 +27,8 @@ export default function Main() {
                 <Route path="/register">
                     <RegisterPage />
                 </Route>
-                <PrivateRoute path="/" children={<HomePage />} />
+                <PrivateRoute exact path="/profile" children={<ProfilePage />} />
+                <PrivateRoute exact path="/" children={<HomePage />} />
             </Switch>
             <Footer />
         </MainContainer>
