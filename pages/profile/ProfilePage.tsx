@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Navbar from "../../components/Navbar";
 
 const ProfilePageContainer = styled.div`
     height: 100%;
@@ -11,8 +12,11 @@ const ProfilePageContainer = styled.div`
 
 export default function ProfilePage() {
     return (
-        <ProfilePageContainer>
+        <>
+            <Navbar />
+            <ProfilePageContainer>
             <h1>Profile</h1>
-        </ProfilePageContainer>
+            </ProfilePageContainer>
+        </>
     );
 };
