@@ -3,10 +3,12 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { loginApi } from "./api/login";
 import { registerApi } from "./api/register";
 import userReducer from "./slices/user";
+import walletReducer from "./slices/wallet";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
+        wallet: walletReducer,
         [loginApi.reducerPath]: loginApi.reducer,
         [registerApi.reducerPath]: registerApi.reducer,
     },

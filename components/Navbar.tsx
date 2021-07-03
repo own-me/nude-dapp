@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import navLogo from "../media/navbar.png";
 import UserBadge from "./UserBadge";
+import WalletBalance from "./WalletBalance";
 
 const NavbarContainer = styled.div`
     height: 50px;
@@ -25,6 +26,7 @@ export default function Navbar() {
         <NavbarContainer>
             <NavLogo src={navLogo} />
             <UserBadge />
+            <WalletBalance />
         </NavbarContainer>
     )
 }
