@@ -20,6 +20,9 @@ export const userSlice = createSlice({
             state.name = action.payload;
         },
         setUserLoggedIn: (state, action: PayloadAction<boolean>) => {
+            if (!state.loggedIn) {
+                window.localStorage.removeItem("token");
+            }
             state.loggedIn = action.payload;
         },
         setUserEmail: (state, action: PayloadAction<string>) => {

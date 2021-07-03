@@ -3,6 +3,7 @@ import styled from "styled-components";
 import navLogo from "../media/navbar.png";
 import UserBadge from "./UserBadge";
 import WalletBalance from "./WalletBalance";
+import LogoutButton from "./LogoutButton";
 
 const NavbarContainer = styled.div`
     height: 50px;
@@ -27,6 +28,7 @@ export default function Navbar() {
             <NavLogo src={navLogo} />
             <UserBadge />
             <WalletBalance />
+            <LogoutButton />
         </NavbarContainer>
     )
 }
