@@ -7,11 +7,12 @@ const WalletBalanceContainer = styled.div`
 `;
 
 export default function WalletBalance() {
-    const { balance } = useWallet();
+    const { balance, address } = useWallet();
 
     return (
         <WalletBalanceContainer>
             {balance}
+            {address}
         </WalletBalanceContainer>
     );
 };

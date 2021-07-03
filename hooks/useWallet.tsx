@@ -10,18 +10,19 @@ export default function useWallet() {
             await window.ethereum.enable();
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
-            const address = await signer.getAddress();
-            const balance = await provider.getBalance(address);
+            const signerAddress = await signer.getAddress();
+            const balance = await provider.getBalance(signerAddress);
+            setAddress(signerAddress);
             setBalance(ethers.utils.formatEther(balance));
         }
         getBalance();
-    }, [window.ethereum, address]);
+    }, [address]);
 
     useEffect(() => {
         window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
             setAddress(accounts[0]);
         });
-    });
+    }, []);
 
     return { balance, address };
 };
