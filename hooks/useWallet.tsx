@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 export default function useWallet() {
-    const [balance, setBalance] = useState<string>();
+    const [balance, setBalance] = useState<BigNumber>();
     const [address, setAddress] = useState<string>();
 
     useEffect(() => {
@@ -13,7 +13,7 @@ export default function useWallet() {
             const signerAddress = await signer.getAddress();
             const balance = await provider.getBalance(signerAddress);
             setAddress(signerAddress);
-            setBalance(ethers.utils.formatEther(balance));
+            setBalance(balance);
         }
         getBalance();
     }, [address]);

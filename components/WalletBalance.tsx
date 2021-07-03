@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import useWallet from "../hooks/useWallet";
-import { shortenAddress } from "../lib/helpers";
+import { shortenAddress, formatEth } from "../lib/helpers";
 
 const WalletBalanceContainer = styled.div`
     color: purple;
@@ -10,9 +10,11 @@ const WalletBalanceContainer = styled.div`
 export default function WalletBalance() {
     const { balance, address } = useWallet();
 
+    const formattedBalance = useMemo(() => formatEth(balance), [balance]);
+
     return (
         <WalletBalanceContainer>
-            <p>{balance}</p>
+            <p>{formatEth(balance)}</p>
             {shortenAddress(address)}
         </WalletBalanceContainer>
     );
