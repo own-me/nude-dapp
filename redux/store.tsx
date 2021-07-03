@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { loginApi } from "./api/login";
 import { registerApi } from "./api/register";
+import { userApi } from "./api/user";
 import userReducer from "./slices/user";
 import walletReducer from "./slices/wallet";
 
@@ -11,10 +12,12 @@ export const store = configureStore({
         wallet: walletReducer,
         [loginApi.reducerPath]: loginApi.reducer,
         [registerApi.reducerPath]: registerApi.reducer,
+        [userApi.reducerPath]: userApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         loginApi.middleware,
-        registerApi.middleware
+        registerApi.middleware,
+        userApi.middleware
     ),
 });
 
