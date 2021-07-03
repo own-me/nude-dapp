@@ -27,7 +27,7 @@ export default function Main() {
                 <Route path="/register">
                     <RegisterPage />
                 </Route>
-                <PrivateRoute exact path="/profile" children={<ProfilePage />} />
+                <PrivateRoute exact path="/:name" children={<ProfilePage />} />
                 <PrivateRoute exact path="/" children={<HomePage />} />
             </Switch>
             <Footer />

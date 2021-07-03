@@ -13,7 +13,7 @@ export default function PrivateRoute({ children, path, ...props }: PrivateRouteP
         if (path === "/") {
             return "";
         }
-        return `/?redirect=${encodeURIComponent((path as string))}`;
+        return `/?redirect=${encodeURIComponent(props.location.pathname)}`;
     }, [path])
 
     return (
