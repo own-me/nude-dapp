@@ -7,7 +7,7 @@ export default function useWallet() {
 
     useEffect(() => {
         async function getBalance() {
-            await window.ethereum.enable();
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const signerAddress = await signer.getAddress();
