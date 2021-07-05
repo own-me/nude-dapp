@@ -13,28 +13,39 @@ const LoginFormContainer = styled.form`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
     border: 1px solid #FEB8FF;
-    padding: 50px;
+    padding: 50px 100px;
     color: black;
+`;
+
+const LoginHeader = styled.h1`
+    font-family: Rock Salt, Open Sans;
+    color: #c931ff;
 `;
 
 const EmailLabel = styled.label`
     color: black;
+    font-family: Poppins, Open Sans;
 `;
 
 const EmailInput = styled.input`
-
+    border-radius: 5px;
+    border: solid black 1px;
+    padding: 5px;
 `;
 
 const PasswordLabel = styled.label`
     color: black;
+    font-family: Poppins, Open Sans;
 `;
 
 const PasswordInput = styled.input`
-
+    border-radius: 5px;
+    border: solid black 1px;
+    padding: 5px;
 `;
 
 const SubmitButton = styled.button`
-    margin: 10px;
+    margin: 20px;
     background: #DA72FF;
     border: 1px solid #707070;
     box-sizing: border-box;
@@ -42,6 +53,7 @@ const SubmitButton = styled.button`
     border-radius: 5px;
     color: white;
     padding: 8px 25px;
+    font-family: Poppins, Open Sans;
 `;
 
 export default function LoginForm(props) {
@@ -87,7 +99,7 @@ export default function LoginForm(props) {
 
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
-            <h1>Login</h1>
+            <LoginHeader>Login</LoginHeader>
             <EmailLabel htmlFor="email">Email</EmailLabel>
             <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
             <PasswordLabel htmlFor="password">Password</PasswordLabel>
