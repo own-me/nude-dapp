@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LoginForm from "./LoginForm";
-import loginBackground from "../../media/login-background.png";
+import loginBackground from "../../media/login-background.svg";
 import logo from "../../media/navbar.png";
 
 const LoginPageContainer = styled.div`
