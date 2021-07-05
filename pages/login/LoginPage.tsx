@@ -17,7 +17,6 @@ const LoginPageContainer = styled.div`
 export default function LoginPage() {
     return (
         <LoginPageContainer>
-            <h1>Login</h1>
             <LoginForm />
         </LoginPageContainer>
     )

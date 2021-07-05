@@ -6,14 +6,19 @@ import { usePostLoginMutation } from "../../redux/api/login";
 import { setUserLoggedIn, setUserEmail } from "../../redux/slices/user";
 
 const LoginFormContainer = styled.form`
-    height: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #FFEAFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    border: 1px solid #FEB8FF;
+    padding: 50px;
+    color: black;
 `;
 
 const EmailLabel = styled.label`
-
+    color: black;
 `;
 
 const EmailInput = styled.input`
@@ -21,7 +26,7 @@ const EmailInput = styled.input`
 `;
 
 const PasswordLabel = styled.label`
-
+    color: black;
 `;
 
 const PasswordInput = styled.input`
@@ -30,6 +35,13 @@ const PasswordInput = styled.input`
 
 const SubmitButton = styled.button`
     margin: 10px;
+    background: #DA72FF;
+    border: 1px solid #707070;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    color: white;
+    padding: 8px 25px;
 `;
 
 export default function LoginForm(props) {
@@ -75,6 +87,7 @@ export default function LoginForm(props) {
 
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
+            <h1>Login</h1>
             <EmailLabel htmlFor="email">Email</EmailLabel>
             <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
             <PasswordLabel htmlFor="password">Password</PasswordLabel>
