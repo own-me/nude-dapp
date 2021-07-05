@@ -76,9 +76,9 @@ export default function LoginForm(props) {
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
             <EmailLabel htmlFor="email">Email</EmailLabel>
-            <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+            <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
             <PasswordLabel htmlFor="password">Password</PasswordLabel>
-            <PasswordInput type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+            <PasswordInput type="password" id="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
             <SubmitButton>Submit</SubmitButton>
         </LoginFormContainer>
     )

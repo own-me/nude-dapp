@@ -67,7 +67,7 @@ export default function RegisterForm() {
     return (
         <RegisterFormContainer onSubmit={handleSubmit}>
             <EmailLabel htmlFor="email">Email</EmailLabel>
-            <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} required />
+            <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
             <PasswordLabel htmlFor="password">Password</PasswordLabel>
             <PasswordInput type="password" id="password" onChange={(e) => setPassword(e.target.value)} required />
             <ConfirmPasswordLabel htmlFor="confirmPassword">Confirm Password</ConfirmPasswordLabel>
