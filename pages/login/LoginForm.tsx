@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
 import { setUserLoggedIn, setUserEmail } from "../../redux/slices/user";
+import loadingSpinner from "../../media/loading.svg";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -113,11 +114,14 @@ export default function LoginForm(props) {
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
             <LoginHeader>Login</LoginHeader>
+            
             <EmailLabel htmlFor="email">Email</EmailLabel>
             <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
             <PasswordLabel htmlFor="password">Password</PasswordLabel>
             <PasswordInput type="password" id="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
-            <SubmitButton>Submit</SubmitButton>
+            {
+                isLoading ? <img src={loadingSpinner} /> : <SubmitButton>Submit</SubmitButton>
+            }
         </LoginFormContainer>
-    )
-}
+    );
+};
