@@ -25,23 +25,35 @@ const LoginHeader = styled.h1`
 const EmailLabel = styled.label`
     color: black;
     font-family: Poppins, Open Sans;
+    font-size: 22px;
 `;
 
 const EmailInput = styled.input`
+    background: #FFFFFF;
+    border: 1px solid #FFA2FB;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    border: solid black 1px;
-    padding: 5px;
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
 `;
 
 const PasswordLabel = styled.label`
     color: black;
     font-family: Poppins, Open Sans;
+    font-size: 22px;
 `;
 
 const PasswordInput = styled.input`
+    background: #FFFFFF;
+    border: 1px solid #FFA2FB;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    border: solid black 1px;
-    padding: 5px;
+    margin-bottom: 20px;
+    padding: 8px 15px;
+    font-size: 18px;
 `;
 
 const SubmitButton = styled.button`
@@ -54,6 +66,7 @@ const SubmitButton = styled.button`
     color: white;
     padding: 8px 25px;
     font-family: Poppins, Open Sans;
+    font-size: 20px;
 `;
 
 export default function LoginForm(props) {
