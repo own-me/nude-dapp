@@ -59,7 +59,7 @@ const PasswordInput = styled.input`
 
 const SubmitButton = styled.button`
     margin: 20px;
-    background: #DA72FF;
+    background: #f455fa;
     border: 1px solid #707070;
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -68,6 +68,11 @@ const SubmitButton = styled.button`
     padding: 8px 25px;
     font-family: Poppins, Open Sans;
     font-size: 20px;
+    cursor: pointer;
+
+    :hover{
+        background: #ff44e6;  
+    }
 `;
 
 export default function LoginForm(props) {
