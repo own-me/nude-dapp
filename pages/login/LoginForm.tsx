@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
 import { setUserLoggedIn, setUserEmail } from "../../redux/slices/user";
 import loadingSpinner from "../../media/loading.svg";
+import FormInput from "../../components/FormInput";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -21,40 +22,6 @@ const LoginFormContainer = styled.form`
 const LoginHeader = styled.h1`
     font-family: Rock Salt, Open Sans;
     color: #c931ff;
-`;
-
-const EmailLabel = styled.label`
-    color: black;
-    font-family: Poppins, Open Sans;
-    font-size: 22px;
-`;
-
-const EmailInput = styled.input`
-    background: #FFFFFF;
-    border: 1px solid #FFA2FB;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    padding: 8px 15px;
-    margin-bottom: 20px;
-    font-size: 18px;
-`;
-
-const PasswordLabel = styled.label`
-    color: black;
-    font-family: Poppins, Open Sans;
-    font-size: 22px;
-`;
-
-const PasswordInput = styled.input`
-    background: #FFFFFF;
-    border: 1px solid #FFA2FB;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    margin-bottom: 20px;
-    padding: 8px 15px;
-    font-size: 18px;
 `;
 
 const SubmitButton = styled.button`
@@ -119,11 +86,8 @@ export default function LoginForm(props) {
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
             <LoginHeader>Login</LoginHeader>
-            
-            <EmailLabel htmlFor="email">Email</EmailLabel>
-            <EmailInput type="email" id="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
-            <PasswordLabel htmlFor="password">Password</PasswordLabel>
-            <PasswordInput type="password" id="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
+            <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
+            <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
             {
                 isLoading ? <img src={loadingSpinner} /> : <SubmitButton>Submit</SubmitButton>
             }
