@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 import { usePostRegisterMutation } from "../../redux/api/register";
 import loadingSpinner from "../../media/loading.svg";
@@ -22,7 +22,7 @@ const RegisterHeader = styled.h1`
     color: #c931ff;
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.button<{ $disabled: boolean }>`
     margin: 20px;
     background: #f455fa;
     border: 1px solid #707070;
@@ -34,10 +34,23 @@ const SubmitButton = styled.button`
     font-family: Poppins, Open Sans;
     font-size: 20px;
     cursor: pointer;
+    opacity: ${props => props.$disabled ? 0.8 : 1};
 
     :hover{
         background: #ff44e6;  
     }
+
+    ${props => props.$disabled && css`
+        cursor: not-allowed;
+        :hover{
+            background: #f455fa;  
+        }
+    `}
+`;
+
+const ErrorMessage = styled.p`
+    color: red;
+    font-family: Poppins, Open Sans;
 `;
 
 export default function RegisterForm() {
@@ -48,7 +61,7 @@ export default function RegisterForm() {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(false);
 
-    const [postRegister, { isLoading, isSuccess, isError, data }] = usePostRegisterMutation();
+    const [postRegister, { isLoading, isSuccess, isError, data, error }] = usePostRegisterMutation();
 
     useEffect(() => {
         if (isSuccess) {
@@ -70,10 +83,11 @@ export default function RegisterForm() {
         <RegisterFormContainer onSubmit={handleSubmit}>
             <RegisterHeader>Register</RegisterHeader>
             <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
-            <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
-            <FormInput label="Confirm Password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} required />
+            <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required />
+            <FormInput label="Confirm Password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
+            <ErrorMessage>{isError && error.data.error}</ErrorMessage>
             {
-                isLoading ? <img src={loadingSpinner} /> : <SubmitButton disabled={!isPasswordConfirmed}>Submit</SubmitButton>
+                isLoading ? <img src={loadingSpinner} /> : <SubmitButton disabled={!isPasswordConfirmed} $disabled={!isPasswordConfirmed}>Submit</SubmitButton>
             }
         </RegisterFormContainer>
     );
