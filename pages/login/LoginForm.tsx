@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
@@ -24,7 +24,7 @@ const LoginHeader = styled.h1`
     color: #c931ff;
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.button<{ $disabled: boolean }>`
     margin: 20px;
     background: #f455fa;
     border: 1px solid #707070;
@@ -36,10 +36,18 @@ const SubmitButton = styled.button`
     font-family: Poppins, Open Sans;
     font-size: 20px;
     cursor: pointer;
+    opacity: ${props => props.$disabled ? 0.8 : 1};
 
     :hover{
         background: #ff44e6;  
     }
+
+    ${props => props.$disabled && css`
+        cursor: not-allowed;
+        :hover{
+            background: #f455fa;  
+        }
+    `}
 `;
 
 const ErrorMessage = styled.p`
@@ -95,7 +103,7 @@ export default function LoginForm(props) {
             <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
             <ErrorMessage>{isError && error.data.error}</ErrorMessage>
             {
-                isLoading ? <img src={loadingSpinner} /> : <SubmitButton>Submit</SubmitButton>
+                isLoading ? <img src={loadingSpinner} /> : <SubmitButton $disabled={!email || !password}>Submit</SubmitButton>
             }
         </LoginFormContainer>
     );
