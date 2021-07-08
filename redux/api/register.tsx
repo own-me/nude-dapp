@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface RegisterRequest {
     email: string,
+    name: string,
     password: string
 }
 

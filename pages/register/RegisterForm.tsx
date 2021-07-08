@@ -57,6 +57,7 @@ export default function RegisterForm() {
     const history = useHistory();
 
     const [email, setEmail] = useState<string>("");
+    const [name, setName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(false);
@@ -76,13 +77,14 @@ export default function RegisterForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Submit!");
-        postRegister({ email, password });
+        postRegister({ email, name, password });
     };
 
     return (
         <RegisterFormContainer onSubmit={handleSubmit}>
             <RegisterHeader>Register</RegisterHeader>
             <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
+            <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} required />
             <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required />
             <FormInput label="Confirm Password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
             <ErrorMessage>{isError && error.data.error}</ErrorMessage>
