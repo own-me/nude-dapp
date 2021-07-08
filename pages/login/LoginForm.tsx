@@ -42,6 +42,11 @@ const SubmitButton = styled.button`
     }
 `;
 
+const ErrorMessage = styled.p`
+    color: red;
+    font-family: Poppins, Open Sans;
+`;
+
 export default function LoginForm(props) {
     const loggedIn = useAppSelector(state => state.user.loggedIn);
     const dispatch = useAppDispatch();
@@ -50,7 +55,7 @@ export default function LoginForm(props) {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const [postLogin, { isLoading, isSuccess, isError, data }] = usePostLoginMutation();
+    const [postLogin, { isLoading, isSuccess, isError, data, error }] = usePostLoginMutation();
 
     useEffect(() => {
         if (isSuccess) {
@@ -88,6 +93,7 @@ export default function LoginForm(props) {
             <LoginHeader>Login</LoginHeader>
             <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
             <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
+            <ErrorMessage>{isError && error.data.error}</ErrorMessage>
             {
                 isLoading ? <img src={loadingSpinner} /> : <SubmitButton>Submit</SubmitButton>
             }
