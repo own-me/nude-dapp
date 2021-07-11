@@ -24,7 +24,10 @@ export default function ProfilePage() {
         <>
             <Navbar />
             <ProfilePageContainer>
-            <h1>Profile</h1>
+            <h1>Profile: {data?.name}</h1>
+            <h1>Registration Date: {new Date(data?.registrationDate).toLocaleDateString()}</h1>
+            <h1>Last Login Date: {new Date(data?.lastLoginDate).toLocaleDateString()}</h1>
+            <h1>Birth Date: {data?.birthDate}</h1>
             </ProfilePageContainer>
         </>
     );
