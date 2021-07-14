@@ -8,6 +8,7 @@ interface LoginRequest {
 
 interface DecodedToken {
     email: string,
+    name: string,
     exp: number,
     iat: number
 }

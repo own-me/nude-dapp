@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
-import { setUserLoggedIn, setUserEmail } from "../../redux/slices/user";
+import { setUserLoggedIn, setUserEmail, setUserName } from "../../redux/slices/user";
 import loadingSpinner from "../../media/loading.svg";
 import FormInput from "../../components/FormInput";
 
@@ -70,6 +70,7 @@ export default function LoginForm(props) {
             window.localStorage.setItem("token", data.token);
             dispatch(setUserLoggedIn(true));
             dispatch(setUserEmail(data.decoded.email));
+            dispatch(setUserName(data.decoded.name));
         } else if (isError) {
             window.localStorage.removeItem("token");
         }
