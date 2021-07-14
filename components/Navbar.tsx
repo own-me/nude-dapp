@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import navLogo from "../media/navbar.png";
 import AccountButton from "./AccountButton";
@@ -20,10 +21,30 @@ const NavLogo = styled.img`
     height: 100%;
 `;
 
+const navLinks = [
+    {
+        text: "Home",
+        link: "/",
+    },
+    {
+        text: "Candyshop",
+        link: "/candyshop",
+    },
+    {
+        text: "Auctionhouse",
+        link: "/auctionhouse",
+    }
+]
+
 export default function Navbar() {
     return (
         <NavbarContainer>
             <NavLogo src={navLogo} />
+            {
+                navLinks.map(({ text, link }, index) => {
+                    return <Link to={link} key={index}>{text}</Link>
+                })
+            }
             <AccountButton />
         </NavbarContainer>
     );
