@@ -5,14 +5,18 @@ const ImageUploadInput = styled.input`
 
 `;
 
-export default function ImageUpload({ onChange }) {
+interface ImageUploadProps {
+    onImage: (image: string | ArrayBuffer) => void;
+}
+
+export default function ImageUpload({ onImage }: ImageUploadProps) {
     function handleImageUpload(e) {
         e.preventDefault();
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = function(e) {
             const image = e.target.result;
-            onChange(image);
+            onImage(image);
         };
         reader.readAsDataURL(file);
     };
