@@ -12,6 +12,16 @@ interface UserResponse {
     lastLoginDate: string
 }
 
+interface UploadProfileImageRequest {
+    name: string,
+    image: string
+}
+
+interface UploadProfileImageResponse {
+    message: string,
+    url: string
+}
+
 export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
@@ -22,7 +32,17 @@ export const userApi = createApi({
                 method: "GET",
             }),
         }),
+        uploadProfileImage: builder.mutation<UploadProfileImageResponse, UploadProfileImageRequest>({
+            query: ({ name, image }) => ({
+                url: `user/upload-profile-image`,
+                method: "POST",
+                body: {
+                    name,
+                    image
+                }
+            }),
+        }),
     }),
 });
 
-export const { useGetUserQuery } = userApi;
+export const { useGetUserQuery, useUploadProfileImageMutation } = userApi;
