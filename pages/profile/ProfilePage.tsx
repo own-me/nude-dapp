@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../redux/hooks";
-import { useGetUserQuery } from "../../redux/api/user";
+import { useGetUserQuery, useUploadProfileImageMutation } from "../../redux/api/user";
 import Navbar from "../../components/Navbar";
 import ImageUpload from "../../components/ImageUpload";
 
@@ -15,21 +15,27 @@ const ProfilePageContainer = styled.div`
 
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
-    const { data, error, isLoading } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
+    const { data: userData, error: userError, isLoading: IsUserLoading } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
+    const [postProfileImageUpload, { isLoading: isProfileImageLoading, isSuccess: isProfileImageSuccess, data: profileImageData, error: profileImageError }] = useUploadProfileImageMutation();
 
     useEffect(() => {
-        console.log(data);
-    }, [data]);
+        console.log(userData);
+    }, [userData]);
+
+    function handleProfileImage(image) {
+        console.log(image);
+        postProfileImageUpload({ name: userData.name, image});
+    };
 
     return (
         <>
             <Navbar />
             <ProfilePageContainer>
-            <h1>Profile: {data?.name}</h1>
-            <h1>Registration Date: {new Date(data?.registrationDate).toLocaleDateString()}</h1>
-            <h1>Last Login Date: {new Date(data?.lastLoginDate).toLocaleDateString()}</h1>
-            <h1>Birth Date: {data?.birthDate}</h1>
-            <ImageUpload />
+                <h1>Profile: {userData?.name}</h1>
+                <h1>Registration Date: {new Date(userData?.registrationDate).toLocaleDateString()}</h1>
+                <h1>Last Login Date: {new Date(userData?.lastLoginDate).toLocaleDateString()}</h1>
+                <h1>Birth Date: {userData?.birthDate}</h1>
+                <ImageUpload onImage={handleProfileImage} />
             </ProfilePageContainer>
         </>
     );
