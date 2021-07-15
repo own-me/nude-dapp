@@ -5,8 +5,11 @@ interface UserRequest {
 }
 
 interface UserResponse {
+    message: string,
     name: string,
-    birthDate: string
+    birthDate: string,
+    registrationDate: string,
+    lastLoginDate: string
 }
 
 export const userApi = createApi({
