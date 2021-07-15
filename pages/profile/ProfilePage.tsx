@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
 import { useGetUserQuery } from "../../redux/api/user";
 import Navbar from "../../components/Navbar";
+import ImageUpload from "../../components/ImageUpload";
 
 const ProfilePageContainer = styled.div`
     height: 100%;
@@ -28,6 +29,7 @@ export default function ProfilePage() {
             <h1>Registration Date: {new Date(data?.registrationDate).toLocaleDateString()}</h1>
             <h1>Last Login Date: {new Date(data?.lastLoginDate).toLocaleDateString()}</h1>
             <h1>Birth Date: {data?.birthDate}</h1>
+            <ImageUpload />
             </ProfilePageContainer>
         </>
     );
