@@ -22,9 +22,8 @@ export default function ProfilePage() {
         console.log(userData);
     }, [userData]);
 
-    function handleProfileImage(image) {
-        console.log(image);
-        postProfileImageUpload({ name: userData.name, image});
+    function handleProfileImage(image, type) {
+        postProfileImageUpload({ name: userData.name, image, type});
     };
 
     return (

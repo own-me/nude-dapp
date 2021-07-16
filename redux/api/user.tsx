@@ -14,7 +14,8 @@ interface UserResponse {
 
 interface UploadProfileImageRequest {
     name: string,
-    image: string
+    image: string,
+    type: string
 }
 
 interface UploadProfileImageResponse {
@@ -33,12 +34,13 @@ export const userApi = createApi({
             }),
         }),
         uploadProfileImage: builder.mutation<UploadProfileImageResponse, UploadProfileImageRequest>({
-            query: ({ name, image }) => ({
+            query: ({ name, image, type }) => ({
                 url: `user/upload-profile-image`,
                 method: "POST",
                 body: {
                     name,
-                    image
+                    image,
+                    type
                 }
             }),
         }),
