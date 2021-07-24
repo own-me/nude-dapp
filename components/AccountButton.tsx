@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown";
 import UserBadge from "./UserBadge";
 import WalletBalance from "./WalletBalance";
 import LogoutButton from "./LogoutButton";
-import { useAppSelector } from "../redux/hooks";
+import SendTxButton from "./SendTxButton";
 
 const AccountButtonContainer = styled.button`
     height: 20px;
@@ -24,6 +24,7 @@ export default function AccountButton() {
                     <UserBadge />
                     <WalletBalance />
                     <LogoutButton />
+                    <SendTxButton />
                 </Dropdown>
             }
         </>
