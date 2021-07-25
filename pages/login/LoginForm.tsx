@@ -6,6 +6,7 @@ import { usePostLoginMutation } from "../../redux/api/login";
 import { setUserLoggedIn, setUserEmail, setUserName } from "../../redux/slices/user";
 import loadingSpinner from "../../media/loading.svg";
 import FormInput from "../../components/FormInput";
+import { Link } from "react-router-dom";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -106,6 +107,7 @@ export default function LoginForm(props) {
             {
                 isLoading ? <img src={loadingSpinner} /> : <SubmitButton $disabled={!email || !password}>Submit</SubmitButton>
             }
+            <Link to="/register">Register</Link>
         </LoginFormContainer>
     );
 };
