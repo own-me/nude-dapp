@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
-import { usePostRegisterMutation } from "../../redux/api/register";
+import { usePostRegisterMutation, useVerifyEmailMutation } from "../../redux/api/register";
 import loadingSpinner from "../../media/loading.svg";
 import FormInput from "../../components/FormInput";
+import VerifyForm from "./VerifyForm";
 
 const RegisterFormContainer = styled.form`
     display: flex;
@@ -22,7 +23,7 @@ const RegisterHeader = styled.h1`
     color: #c931ff;
 `;
 
-const SubmitButton = styled.button<{ $disabled: boolean }>`
+const SubmitButton = styled.button<{ $disabled?: boolean }>`
     margin: 20px;
     background: #f455fa;
     border: 1px solid #707070;
@@ -61,35 +62,56 @@ export default function RegisterForm() {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(false);
+    const [verificationCode, setVerificationCode] = useState<string>("");
 
-    const [postRegister, { isLoading, isSuccess, isError, data, error }] = usePostRegisterMutation();
+    const [postRegister, {
+        isLoading: isRegisterLoading,
+        isSuccess: isRegisterSuccess,
+        isError: isRegisterError,
+        data: registerData,
+        error: registerError
+    }] = usePostRegisterMutation();
+
+    const [postVerifyEmail, {
+        isLoading: isVerifyEmailLoading,
+        isSuccess: isVerifyEmailSuccess,
+        isError: isVerifyEmailError,
+        data: verifyEmailData,
+        error: verifyEmailError
+    }] = useVerifyEmailMutation();
 
     useEffect(() => {
-        if (isSuccess) {
+        if (isRegisterSuccess) {
             history.push("/login");
         }
-    }, [data, isSuccess, isError]);
+    }, [registerData, isRegisterSuccess, isRegisterError]);
 
     useEffect(() => {
         setIsPasswordConfirmed((password && confirmPassword) && (password === confirmPassword));
     }, [password, confirmPassword]);
 
-    const handleSubmit = (e) => {
+    const handleRegister = (e) => {
         e.preventDefault();
-        console.log("Submit!");
-        postRegister({ email, name, password });
+        postRegister({ email, name, password, verificationCode });
+    };
+
+    const handleVerifyEmail = (e) => {
+        e.preventDefault();
+        postVerifyEmail({ email });
     };
 
     return (
-        <RegisterFormContainer onSubmit={handleSubmit}>
+        <RegisterFormContainer>
             <RegisterHeader>Register</RegisterHeader>
             <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
             <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} required />
             <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required />
             <FormInput label="Confirm Password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
-            <ErrorMessage>{isError && error.data.error}</ErrorMessage>
+            <FormInput label="Verification Code" type="text" onChange={(e) => setVerificationCode(e.target.value)} required />
+            <ErrorMessage>{isRegisterError && registerError.data.error}</ErrorMessage>
+            <SubmitButton onClick={handleVerifyEmail} disabled={!email} $disabled={!email}>Send Code</SubmitButton>
             {
-                isLoading ? <img src={loadingSpinner} /> : <SubmitButton disabled={!isPasswordConfirmed} $disabled={!isPasswordConfirmed}>Submit</SubmitButton>
+                isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} disabled={!isPasswordConfirmed} $disabled={!isPasswordConfirmed}>Submit</SubmitButton>
             }
         </RegisterFormContainer>
     );
