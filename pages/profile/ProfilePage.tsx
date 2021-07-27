@@ -13,17 +13,27 @@ const ProfilePageContainer = styled.div`
     flex-direction: column;
 `;
 
+const ProfileImage = styled.img`
+    width: 50px;
+    height: 50px;
+`;
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
     const { data: userData, error: userError, isLoading: IsUserLoading } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
-    const [postProfileImageUpload, { isLoading: isProfileImageLoading, isSuccess: isProfileImageSuccess, data: profileImageData, error: profileImageError }] = useUploadProfileImageMutation();
+    const [postProfileImageUpload, {
+        isLoading: isProfileImageLoading,
+        isSuccess: isProfileImageSuccess,
+        data: profileImageData,
+        error: profileImageError
+    }] = useUploadProfileImageMutation();
 
     useEffect(() => {
         console.log(userData);
     }, [userData]);
 
     function handleProfileImage(image, type) {
-        postProfileImageUpload({ name: userData.name, image, type});
+        postProfileImageUpload({ name: userData.name, image, type });
     };
 
     return (
@@ -34,6 +44,7 @@ export default function ProfilePage() {
                 <h1>Registration Date: {new Date(userData?.registrationDate).toLocaleDateString()}</h1>
                 <h1>Last Login Date: {new Date(userData?.lastLoginDate).toLocaleDateString()}</h1>
                 <h1>Birth Date: {userData?.birthDate}</h1>
+                <ProfileImage src={userData?.profileImageUrl} alt="Profile Image" />
                 <ImageUpload onImage={handleProfileImage} />
             </ProfilePageContainer>
         </>

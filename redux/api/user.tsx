@@ -9,7 +9,8 @@ interface UserResponse {
     name: string,
     birthDate: string,
     registrationDate: string,
-    lastLoginDate: string
+    lastLoginDate: string,
+    profileImageUrl: string
 }
 
 interface UploadProfileImageRequest {
