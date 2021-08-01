@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import navLogo from "../media/navbar.png";
 import AccountButton from "./AccountButton";
+import { useHistory } from "react-router-dom";
 
 const NavbarContainer = styled.div`
     height: 50px;
-    background-color: #ffe5e9;
+    background-color: #FDE5FE;
     padding: 20px 30px;
     position: fixed;
     right: 0;
@@ -15,6 +16,22 @@ const NavbarContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+`;
+
+const NavbarItems = styled.div`
+
+`
+
+const NavLink = styled(Link) <{ $isActive: boolean }>`
+    font-family: Rock Salt, Open Sans; 
+    margin: 0 30px;
+    color: ${props => props.$isActive ? "#D842FE" : "rgb(216, 66, 254, 75%)"}; 
+    text-decoration: none;
+    font-size: 20px;
+
+    :hover {
+        color: #D842FE;
+    }
 `;
 
 const NavLogo = styled.img`
@@ -37,15 +54,19 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+    const history = useHistory();
+
     return (
         <NavbarContainer>
             <NavLogo src={navLogo} />
-            {
-                navLinks.map(({ text, link }, index) => {
-                    return <Link to={link} key={index}>{text}</Link>
-                })
-            }
-            <AccountButton />
+            <NavbarItems>
+                    {
+                        navLinks.map(({ text, link }, index) => {
+                            return <NavLink to={link} key={index} $isActive={history.location.pathname === link}>{text}</NavLink>
+                        })
+                    }
+                <AccountButton />
+            </NavbarItems>
         </NavbarContainer>
     );
 };
