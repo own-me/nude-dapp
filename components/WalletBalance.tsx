@@ -14,7 +14,7 @@ export default function WalletBalance() {
 
     return (
         <WalletBalanceContainer>
-            <p>{formatEth(balance)}</p>
+            <p>{formattedBalance}</p>
             {shortenAddress(address)}
         </WalletBalanceContainer>
     );

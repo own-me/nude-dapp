@@ -24,10 +24,11 @@ const NavbarItems = styled.div`
 
 const NavLink = styled(Link) <{ $isActive: boolean }>`
     font-family: Rock Salt, Open Sans; 
-    margin: 0 30px;
+    margin: 0 50px;
     color: ${props => props.$isActive ? "#D842FE" : "rgb(216, 66, 254, 75%)"}; 
     text-decoration: none;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 600;
 
     :hover {
         color: #D842FE;
