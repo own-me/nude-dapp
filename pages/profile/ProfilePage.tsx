@@ -173,9 +173,9 @@ export default function ProfilePage() {
                                     icon = social.icon;
                                 }
                             });
-                            return <SocialHandleContainer>
+                            return <SocialHandleContainer key={index}>
                                 {icon && <SocialIcon src={icon} />}
-                                <SocialHandle key={index} href={url} target="_blank">
+                                <SocialHandle href={url} target="_blank">
                                     {handle || url}
                                 </SocialHandle>
                             </SocialHandleContainer>;
