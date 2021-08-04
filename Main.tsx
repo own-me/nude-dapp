@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import ProfilePage from "./pages/profile/ProfilePage";
 import CandyShopPage from "./pages/candyshop/CandyshopPage";
 import AuctionHousePage from "./pages/auctionhouse/AuctionhousePage";
+import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
 
 const MainContainer = styled.div`
     height: calc(100% - 50px);
@@ -31,6 +32,7 @@ export default function Main() {
                 </Route>
                 <PrivateRoute exact path="/candyshop" children={<CandyShopPage />} />
                 <PrivateRoute exact path="/auctionhouse" children={<AuctionHousePage />} />
+                <PrivateRoute exact path="/gumballmachine" children={<GumballMachinePage />} />
                 <PrivateRoute exact path="/:name" children={<ProfilePage />} />
                 <PrivateRoute exact path="/" children={<HomePage />} />
             </Switch>

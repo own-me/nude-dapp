@@ -30,6 +30,8 @@ const NavLink = styled(Link) <{ $isActive: boolean }>`
     font-size: 22px;
     font-weight: 600;
 
+    ${props => props.$isActive && "border-bottom: 2px solid #dd9cff;"}
+
     :hover {
         color: #D842FE;
     }
@@ -49,8 +51,12 @@ const navLinks = [
         link: "/candyshop",
     },
     {
-        text: "Auctionhouse",
+        text: "Auction House",
         link: "/auctionhouse",
+    },
+    {
+        text: "Gumball Machine",
+        link: "/gumballmachine",
     }
 ]
 
