@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../redux/hooks";
 import { useGetUserQuery, useUploadProfileImageMutation } from "../../redux/api/user";
@@ -6,6 +6,8 @@ import Navbar from "../../components/Navbar";
 import ImageUpload from "../../components/ImageUpload";
 import defaultBanner from "../../media/defaults/stars-banner.png";
 import defaultProfile from "../../media/defaults/missing-profile.png";
+import useWallet from "../../hooks/useWallet";
+import { shortenAddress } from "../../lib/helpers";
 
 const ProfilePageContainer = styled.div`
     height: 100%;
@@ -45,8 +47,23 @@ const ProfileDescription = styled.p`
     text-align: center;
 `;
 
+const ProfileAddress = styled.button`
+    font-family: Poppins, Open Sans;
+    font-size: 16px;
+    background-color: #FF81EB;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 25px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    margin: 20px 20px 0 0;
+    float: right;
+`;
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
+    const { address } = useWallet();
+
     const { data: userData, error: userError, isLoading: IsUserLoading } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
     const [postProfileImageUpload, {
         isLoading: isProfileImageLoading,
@@ -63,12 +80,15 @@ export default function ProfilePage() {
         postProfileImageUpload({ name: userData.name, image, type });
     };
 
+    const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
+
     return (
         <>
             <Navbar />
             <ProfilePageContainer>
                 <ProfileBannerImage src={defaultBanner} />
                 <ProfileImage src={defaultProfile} />
+                <ProfileAddress>{formattedAddress}</ProfileAddress>
                 <ProfileName>{userData?.name}</ProfileName>
                 <ProfileDescription>Software Engineer | Tobi’s Dad | Own Me Founder</ProfileDescription>
                 {/* <h1>Profile: {userData?.name}</h1>
