@@ -1,13 +1,16 @@
 import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../redux/hooks";
-import { useGetUserQuery, useUploadProfileImageMutation } from "../../redux/api/user";
+import { useGetUserQuery } from "../../redux/api/user";
 import Navbar from "../../components/Navbar";
-import ImageUpload from "../../components/ImageUpload";
 import defaultBanner from "../../media/defaults/stars-banner.png";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import useWallet from "../../hooks/useWallet";
 import { shortenAddress } from "../../lib/helpers";
+import twitterIcon from "../../media/icons/socials/color/twitter.svg";
+import instagramIcon from "../../media/icons/socials/color/instagram.svg";
+import linkedinIcon from "../../media/icons/socials/color/linkedin.svg";
+import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
 
 const ProfilePageContainer = styled.div`
     height: 100%;
@@ -60,27 +63,77 @@ const ProfileAddress = styled.button`
     float: right;
 `;
 
+const SocialHandles = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+`;
+
+const SocialHandleContainer = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 10px;
+`;
+
+const SocialIcon = styled.img`
+    width: 30px;
+    height: 30px;
+`;
+
+const SocialHandle = styled.a`
+    font-family: Poppins, Open Sans;
+    color: #1B1B1B;
+    text-decoration: none;
+    padding: 0 10px;
+`;
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
     const { address } = useWallet();
 
-    const { data: userData, error: userError, isLoading: IsUserLoading } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
-    const [postProfileImageUpload, {
-        isLoading: isProfileImageLoading,
-        isSuccess: isProfileImageSuccess,
-        data: profileImageData,
-        error: profileImageError
-    }] = useUploadProfileImageMutation();
+    const {
+        data: userData,
+        error: userError,
+        isLoading: IsUserLoading
+    } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
 
     useEffect(() => {
         console.log(userData);
     }, [userData]);
 
-    function handleProfileImage(image, type) {
-        postProfileImageUpload({ name: userData.name, image, type });
-    };
-
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
+
+    const mockSocials = [
+        "https://www.instagram.com/christopher.trimboli/",
+        "https://www.linkedin.com/in/christophertrimboli/"
+    ];
+
+    const supportedSocials = [
+        {
+            name: "Instagram",
+            icon: instagramIcon,
+            domainRegex: /www\.instagram\.com/,
+            getHandle: (url: string) => url.split("/")[3]
+        },
+        {
+            name: "Twitter",
+            icon: twitterIcon,
+            domainRegex: /www\.twitter\.com/,
+            getHandle: (url: string) => url.split("/")[3]
+        },
+        {
+            name: "Linkedin",
+            icon: linkedinIcon,
+            domainRegex: /www\.linkedin\.com/,
+            getHandle: (url: string) => url.split("/")[4]
+        },
+        {
+            name: "Youtube",
+            icon: youtubeIcon,
+            domainRegex: /www\.youtube\.com/,
+            getHandle: (url: string) => url.split("/")[4]
+        }
+    ];
 
     return (
         <>
@@ -91,12 +144,26 @@ export default function ProfilePage() {
                 <ProfileAddress>{formattedAddress}</ProfileAddress>
                 <ProfileName>{userData?.name}</ProfileName>
                 <ProfileDescription>Software Engineer | Tobi’s Dad | Own Me Founder</ProfileDescription>
-                {/* <h1>Profile: {userData?.name}</h1>
-                <h1>Registration Date: {new Date(userData?.registrationDate).toLocaleDateString()}</h1>
-                <h1>Last Login Date: {new Date(userData?.lastLoginDate).toLocaleDateString()}</h1>
-                <h1>Birth Date: {userData?.birthDate}</h1>
-                <ProfileImage src={userData?.profileImageUrl} alt="Profile Image" />
-                <ImageUpload onImage={handleProfileImage} /> */}
+                <SocialHandles>
+                    {
+                        mockSocials.map((url, index) => {
+                            let handle = "";
+                            let icon = "";
+                            supportedSocials.forEach((social) => {
+                                if (social.domainRegex.test(url)) {
+                                    handle = social.getHandle(url);
+                                    icon = social.icon;
+                                }
+                            });
+                            return <SocialHandleContainer>
+                                {icon && <SocialIcon src={icon} />}
+                                <SocialHandle key={index} href={url} target="_blank">
+                                    {handle || url}
+                                </SocialHandle>
+                            </SocialHandleContainer>;
+                        })
+                    }
+                </SocialHandles>
             </ProfilePageContainer>
         </>
     );
