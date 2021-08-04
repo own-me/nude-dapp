@@ -87,6 +87,24 @@ const SocialHandle = styled.a`
     padding: 0 10px;
 `;
 
+const ActionButtons = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
+const ActionButton = styled.button`
+    font-family: Poppins, Open Sans;
+    font-size: 16px;
+    background-color: #FF81EB;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 25px;
+    margin: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    cursor: pointer;
+`;
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
     const { address } = useWallet();
@@ -164,6 +182,10 @@ export default function ProfilePage() {
                         })
                     }
                 </SocialHandles>
+                <ActionButtons>
+                    <ActionButton>Follow</ActionButton>
+                    <ActionButton>Subscribe</ActionButton>
+                </ActionButtons>
             </ProfilePageContainer>
         </>
     );
