@@ -4,18 +4,30 @@ import { useAppDispatch } from "../../redux/hooks";
 import { useGetUserQuery, useUploadProfileImageMutation } from "../../redux/api/user";
 import Navbar from "../../components/Navbar";
 import ImageUpload from "../../components/ImageUpload";
+import defaultBanner from "../../media/defaults/stars-banner.png";
+import defaultProfile from "../../media/defaults/missing-profile.png";
 
 const ProfilePageContainer = styled.div`
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    width: 50%;
+    margin: 90px auto 0 auto;
+    background-color: white;
+`;
+
+const ProfileBannerImage = styled.img`
+    width: 100%;
+    height: 200px;
 `;
 
 const ProfileImage = styled.img`
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    right: calc(50% - 75px);
+    top: 190px;
+    border-radius: 100%;
+    border: 5px solid white;
+    background: white;
 `;
 
 export default function ProfilePage() {
@@ -40,12 +52,14 @@ export default function ProfilePage() {
         <>
             <Navbar />
             <ProfilePageContainer>
-                <h1>Profile: {userData?.name}</h1>
+                <ProfileBannerImage src={defaultBanner} />
+                <ProfileImage src={defaultProfile} />
+                {/* <h1>Profile: {userData?.name}</h1>
                 <h1>Registration Date: {new Date(userData?.registrationDate).toLocaleDateString()}</h1>
                 <h1>Last Login Date: {new Date(userData?.lastLoginDate).toLocaleDateString()}</h1>
                 <h1>Birth Date: {userData?.birthDate}</h1>
                 <ProfileImage src={userData?.profileImageUrl} alt="Profile Image" />
-                <ImageUpload onImage={handleProfileImage} />
+                <ImageUpload onImage={handleProfileImage} /> */}
             </ProfilePageContainer>
         </>
     );
