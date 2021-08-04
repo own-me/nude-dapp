@@ -30,6 +30,21 @@ const ProfileImage = styled.img`
     background: white;
 `;
 
+const ProfileName = styled.h1`
+    font-family: "Poppins", sans-serif;
+    color: #1B1B1B;
+    font-size: 36px;
+    text-align: center;
+    margin-top: 80px;
+`;
+
+const ProfileDescription = styled.p`
+    font-family: "Poppins", sans-serif;
+    color: #1B1B1B;
+    font-size: 20px;
+    text-align: center;
+`;
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
     const { data: userData, error: userError, isLoading: IsUserLoading } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
@@ -54,6 +69,8 @@ export default function ProfilePage() {
             <ProfilePageContainer>
                 <ProfileBannerImage src={defaultBanner} />
                 <ProfileImage src={defaultProfile} />
+                <ProfileName>{userData?.name}</ProfileName>
+                <ProfileDescription>Software Engineer | Tobi’s Dad | Own Me Founder</ProfileDescription>
                 {/* <h1>Profile: {userData?.name}</h1>
                 <h1>Registration Date: {new Date(userData?.registrationDate).toLocaleDateString()}</h1>
                 <h1>Last Login Date: {new Date(userData?.lastLoginDate).toLocaleDateString()}</h1>
