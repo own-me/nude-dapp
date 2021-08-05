@@ -14,15 +14,24 @@ const TabsHeader = styled.div`
     font-family: Poppins, Open Sans;
     display: flex;
     justify-content: space-around;
+    border-bottom: 1px #e0e0e0 solid;
 `;
 
 const Tab = styled.div<{ $isActive: boolean }>`
     cursor: pointer;
     padding: 10px 20px;
+    opacity: 0.8;
 
     ${props => props.$isActive && css`
-        border-bottom: 2px solid #D14FFF;
+        border-bottom: 3px solid #D14FFF;
+        font-weight: 600;
+        opacity: 1;
     `}
+
+    &:hover {
+        border-bottom: 3px solid #d972ff;
+        opacity: 1;
+    }
 `;
 
 export const TabContent = styled.div`
