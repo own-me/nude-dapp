@@ -11,12 +11,17 @@ import twitterIcon from "../../media/icons/socials/color/twitter.svg";
 import instagramIcon from "../../media/icons/socials/color/instagram.svg";
 import linkedinIcon from "../../media/icons/socials/color/linkedin.svg";
 import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
+import Tabs, { TabContent } from "../../components/Tabs";
 
 const ProfilePageContainer = styled.div`
     height: 100%;
     width: 50%;
     margin: 90px auto 0 auto;
     background-color: white;
+
+    @media (max-width: 1200px) {
+        width: 100%;
+    }
 `;
 
 const ProfileBannerImage = styled.img`
@@ -186,6 +191,21 @@ export default function ProfilePage() {
                     <ActionButton>Follow</ActionButton>
                     <ActionButton>Subscribe</ActionButton>
                 </ActionButtons>
+                <br />
+                <Tabs tabs={["NFTs", "Posts", "Following", "Activity"]}>
+                    <TabContent>
+                        <h1>NFTs bro</h1>
+                    </TabContent>
+                    <TabContent>
+                        <h1>Posts bro</h1>
+                    </TabContent>
+                    <TabContent>
+                        <h1>Following bro</h1>
+                    </TabContent>
+                    <TabContent>
+                        <h1>Activity bro</h1>
+                    </TabContent>
+                </Tabs>
             </ProfilePageContainer>
         </>
     );
