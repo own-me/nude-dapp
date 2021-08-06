@@ -4,11 +4,16 @@ import styled from "styled-components";
 import navLogo from "../media/navbar.png";
 import AccountButton from "./AccountButton";
 import { useHistory } from "react-router-dom";
+import { ZIndex } from "../lib/zindex";
+
+export const NAVBAR_HEIGHT = 50;
+export const NAVBAR_PADDING = 20;
+export const TOTAL_HEIGHT = NAVBAR_HEIGHT + (NAVBAR_PADDING * 2);
 
 const NavbarContainer = styled.div`
-    height: 50px;
+    height: ${NAVBAR_HEIGHT}px;
     background-color: #FDE5FE;
-    padding: 20px 30px;
+    padding: ${NAVBAR_PADDING}px;
     position: fixed;
     right: 0;
     left: 0;
@@ -16,6 +21,7 @@ const NavbarContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: ${ZIndex.NAVBAR};
 `;
 
 const NavbarItems = styled.div`
@@ -67,11 +73,11 @@ export default function Navbar() {
         <NavbarContainer>
             <NavLogo src={navLogo} />
             <NavbarItems>
-                    {
-                        navLinks.map(({ text, link }, index) => {
-                            return <NavLink to={link} key={index} $isActive={history.location.pathname === link}>{text}</NavLink>
-                        })
-                    }
+                {
+                    navLinks.map(({ text, link }, index) => {
+                        return <NavLink to={link} key={index} $isActive={history.location.pathname === link}>{text}</NavLink>
+                    })
+                }
                 <AccountButton />
             </NavbarItems>
         </NavbarContainer>

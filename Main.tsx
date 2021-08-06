@@ -6,15 +6,18 @@ import { useAppSelector, useAppDispatch } from "./redux/hooks";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRouter";
 import HomePage from "./pages/home/HomePage";
-import Footer from "./components/Footer";
 import ProfilePage from "./pages/profile/ProfilePage";
 import CandyShopPage from "./pages/candyshop/CandyshopPage";
 import AuctionHousePage from "./pages/auctionhouse/AuctionhousePage";
 import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
+import {TOTAL_HEIGHT} from "./components/Navbar";
 
 const MainContainer = styled.div`
-    height: calc(100% - 50px);
+    height: calc(100% - ${TOTAL_HEIGHT}px);
+    margin-top: ${TOTAL_HEIGHT}px;
     width: 100%;
+    overflow-y: auto;
+    position: relative;
 `;
 
 export default function Main() {
@@ -36,7 +39,6 @@ export default function Main() {
                 <PrivateRoute exact path="/:name" children={<ProfilePage />} />
                 <PrivateRoute exact path="/" children={<HomePage />} />
             </Switch>
-            <Footer />
         </MainContainer>
     );
 };
