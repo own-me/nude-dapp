@@ -12,11 +12,13 @@ import instagramIcon from "../../media/icons/socials/color/instagram.svg";
 import linkedinIcon from "../../media/icons/socials/color/linkedin.svg";
 import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
 import Tabs, { TabContent } from "../../components/Tabs";
+import NFTCard from "../../components/NFTCard";
+import catNft from "../../media/defaults/catnft.png";
 
 const ProfilePageContainer = styled.div`
-    height: 100%;
+    min-height: 100%;
     width: 50%;
-    margin: 90px auto 0 auto;
+    margin: 0 auto;
     background-color: white;
 
     @media (max-width: 1200px) {
@@ -34,7 +36,7 @@ const ProfileImage = styled.img`
     height: 150px;
     position: absolute;
     right: calc(50% - 75px);
-    top: 190px;
+    top: 100px;
     border-radius: 100%;
     border: 5px solid white;
     background: white;
@@ -110,6 +112,13 @@ const ActionButton = styled.button`
     cursor: pointer;
 `;
 
+const NftCards = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 0px;
+`;
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
     const { address } = useWallet();
@@ -158,6 +167,14 @@ export default function ProfilePage() {
         }
     ];
 
+    const mockNFTCards = () => {
+        const cards = []
+        for (let i = 0; i < 12; i++) {
+            cards.push(<NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={catNft} />);
+        }
+        return cards;
+    }
+
     return (
         <>
             <Navbar />
@@ -194,7 +211,11 @@ export default function ProfilePage() {
                 <br />
                 <Tabs tabs={["NFTs", "Posts", "Following", "Activity"]}>
                     <TabContent>
-                        <h1>NFTs bro</h1>
+                        <NftCards>
+                            {
+                                mockNFTCards().map((card) => card)
+                            }
+                        </NftCards>
                     </TabContent>
                     <TabContent>
                         <h1>Posts bro</h1>
