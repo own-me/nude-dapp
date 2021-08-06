@@ -170,7 +170,7 @@ export default function ProfilePage() {
     const mockNFTCards = () => {
         const cards = []
         for (let i = 0; i < 12; i++) {
-            cards.push(<NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={catNft} />);
+            cards.push(<NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={catNft} key={i} />);
         }
         return cards;
     }
