@@ -11,6 +11,7 @@ import CandyShopPage from "./pages/candyshop/CandyshopPage";
 import AuctionHousePage from "./pages/auctionhouse/AuctionhousePage";
 import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
 import {TOTAL_HEIGHT} from "./components/Navbar";
+import MintPage from "./pages/mint/MintPage";
 
 const MainContainer = styled.div`
     height: calc(100% - ${TOTAL_HEIGHT}px);
@@ -36,6 +37,7 @@ export default function Main() {
                 <PrivateRoute exact path="/candyshop" children={<CandyShopPage />} />
                 <PrivateRoute exact path="/auctionhouse" children={<AuctionHousePage />} />
                 <PrivateRoute exact path="/gumballmachine" children={<GumballMachinePage />} />
+                <PrivateRoute exact path="/mint" children={<MintPage />} />
                 <PrivateRoute exact path="/:name" children={<ProfilePage />} />
                 <PrivateRoute exact path="/" children={<HomePage />} />
             </Switch>
