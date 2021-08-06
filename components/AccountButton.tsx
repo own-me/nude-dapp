@@ -90,6 +90,7 @@ export default function AccountButton() {
                         <AccountInfo>{formattedAddress}</AccountInfo>
                         <AccountInfo>{email}</AccountInfo>
                         <Link to={`/${name}`}><EditProfileButton>Edit Profile</EditProfileButton></Link>
+                        <Link to={`/mint`}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
                     </div>
                     <br />
                     <LogoutText onClick={handleLogout}>
