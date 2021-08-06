@@ -65,7 +65,7 @@ const LogoutText = styled.div`
 export default function AccountButton() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { balance, address } = useWallet();
+    const { balance, address, network } = useWallet();
     const email = useAppSelector(state => state.user.email);
     const name = useAppSelector(state => state.user.name);
 
