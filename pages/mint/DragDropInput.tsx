@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 
 const DragDropInputContainer = styled.div`
@@ -32,11 +32,37 @@ const Button = styled.div`
     z-index: 1;
 `;
 
+const PreviewImage = styled.img`
+    z-index: 2;
+    height: 75%;
+`;
+
 export default function DragDropInput() {
+    const [imageFile, setImageFile] = useState<File>();
+    const [previewImage, setPreviewImage] = useState<any>();
+
+    useEffect(() => {
+        console.log(imageFile);
+        readFile(imageFile);
+    }, [imageFile]);
+
+    const readFile = async (file: File) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            setPreviewImage(reader.result);
+        };
+        reader.readAsDataURL(file);
+    };
+
     return (
         <DragDropInputContainer>
-            <Input type="file" />
-            <Button>Drop File</Button>
+            {
+                !previewImage && <> 
+                    <Input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+                    <Button>Drop File</Button>
+                </>
+            }
+            {previewImage && <PreviewImage src={previewImage} />}
         </DragDropInputContainer>
     );
 };
