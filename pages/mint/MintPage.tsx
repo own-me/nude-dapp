@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar";
 import catNft from "../../media/defaults/catnft.png";
 import NFTCard from "../../components/NFTCard";
 import pinkCandy from "../../media/pink-candy.svg";
+import DragDropInput from "./DragDropInput";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -106,6 +107,7 @@ export default function MintPage() {
                     <MintFormHeaderTitle>Mint an NFT</MintFormHeaderTitle>
                     <MintFormHeaderCandy src={pinkCandy} />
                 </MintFormHeader>
+                <DragDropInput />
                 <NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={catNft} />
                 <MintFormContainer>
                     <MintLabel htmlFor="titleInput">Title</MintLabel>
