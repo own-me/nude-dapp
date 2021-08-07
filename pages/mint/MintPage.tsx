@@ -5,6 +5,7 @@ import catNft from "../../media/defaults/catnft.png";
 import NFTCard from "../../components/NFTCard";
 import pinkCandy from "../../media/pink-candy.svg";
 import DragDropInput from "./DragDropInput";
+import Switch from "./Switch";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -132,7 +133,7 @@ export default function MintPage() {
                     <MintTextArea id="descriptionInput" onChange={(e) => setDescription(e.target.value)} value={description} />
                 </MintFormContainer>
                 <MintFormFooter>
-                    <EncryptedLabel>Encrypted Content y/n</EncryptedLabel>
+                    <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
                     <SubmitButton onClick={() => alert("Submitted!")}>MINT</SubmitButton>
                 </MintFormFooter>
             </MintPageContainer>
