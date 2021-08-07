@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import xIcon from "../../media/icons/x.svg";
 
 const DragDropInputContainer = styled.div`
     width: 300px;
@@ -37,6 +38,18 @@ const PreviewImage = styled.img`
     height: 75%;
 `;
 
+const ClearButton = styled.img`
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+
+    :hover {
+        transform: scale(1.1);
+    }
+`;
+
 export default function DragDropInput() {
     const [imageFile, setImageFile] = useState<File>();
     const [previewImage, setPreviewImage] = useState<any>();
@@ -54,15 +67,25 @@ export default function DragDropInput() {
         reader.readAsDataURL(file);
     };
 
+    const handleClear = () => {
+        setImageFile(null);
+        setPreviewImage(null);
+    };
+
     return (
         <DragDropInputContainer>
             {
-                !previewImage && <> 
+                !previewImage && <>
                     <Input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
                     <Button>Drop File</Button>
                 </>
             }
-            {previewImage && <PreviewImage src={previewImage} />}
+            {
+                previewImage && <>
+                    <PreviewImage src={previewImage} />
+                    <ClearButton src={xIcon} onClick={handleClear} />
+                </>
+            }
         </DragDropInputContainer>
     );
 };
