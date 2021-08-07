@@ -94,9 +94,16 @@ const EncryptedLabel = styled.h3`
     margin: 0;
 `;
 
+const ImagesRow = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 export default function MintPage() {
     const [title, setTitle] = useState<string>("");
-    const [price, setPrice] = useState<string>("0");
+    const [price, setPrice] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [image, setImage] = useState<string | ArrayBuffer>(""); 
 
@@ -108,8 +115,10 @@ export default function MintPage() {
                     <MintFormHeaderTitle>Mint an NFT</MintFormHeaderTitle>
                     <MintFormHeaderCandy src={pinkCandy} />
                 </MintFormHeader>
-                <DragDropInput onImage={(image) => setImage(image)} onClear={() => setImage(null)}/>
-                <NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={image || catNft} />
+                <ImagesRow>
+                    <DragDropInput onImage={(image) => setImage(image)} onClear={() => setImage(null)}/>
+                    <NFTCard title={title || "King Tobi"} owner={"@thecatdad"} price={price + "ETH" || "? ETH"} rarity={[1, 8]} image={image || catNft} />
+                </ImagesRow>
                 <MintFormContainer>
                     <MintLabel htmlFor="titleInput">Title</MintLabel>
                     <MintForm type="text" id="titleInput" onChange={(e) => setTitle(e.target.value)} value={title} />
