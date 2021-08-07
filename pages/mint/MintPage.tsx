@@ -98,6 +98,7 @@ export default function MintPage() {
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<string>("0");
     const [description, setDescription] = useState<string>("");
+    const [image, setImage] = useState<string | ArrayBuffer>(""); 
 
     return (
         <>
@@ -107,8 +108,8 @@ export default function MintPage() {
                     <MintFormHeaderTitle>Mint an NFT</MintFormHeaderTitle>
                     <MintFormHeaderCandy src={pinkCandy} />
                 </MintFormHeader>
-                <DragDropInput />
-                <NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={catNft} />
+                <DragDropInput onImage={(image) => setImage(image)} onClear={() => setImage(null)}/>
+                <NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={image || catNft} />
                 <MintFormContainer>
                     <MintLabel htmlFor="titleInput">Title</MintLabel>
                     <MintForm type="text" id="titleInput" onChange={(e) => setTitle(e.target.value)} value={title} />

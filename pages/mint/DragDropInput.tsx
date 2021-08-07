@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import styled from "styled-components";
 import xIcon from "../../media/icons/x.svg";
 
@@ -50,9 +50,15 @@ const ClearButton = styled.img`
     }
 `;
 
-export default function DragDropInput() {
+interface DragDropInputProps {
+    onImage?: (image: string | ArrayBuffer) => void;
+    onChange?: (file: File) => void;
+    onClear?: () => void;
+}
+
+const DragDropInput = memo(({ onImage, onClear, onChange }: DragDropInputProps) => {
     const [imageFile, setImageFile] = useState<File>();
-    const [previewImage, setPreviewImage] = useState<any>();
+    const [previewImage, setPreviewImage] = useState<string | ArrayBuffer>();
 
     useEffect(() => {
         console.log(imageFile);
@@ -63,6 +69,7 @@ export default function DragDropInput() {
         const reader = new FileReader();
         reader.onload = () => {
             setPreviewImage(reader.result);
+            onImage && onImage(reader.result);
         };
         reader.readAsDataURL(file);
     };
@@ -70,13 +77,19 @@ export default function DragDropInput() {
     const handleClear = () => {
         setImageFile(null);
         setPreviewImage(null);
+        onClear && onClear();
+    };
+
+    const handleChange = (e) => {
+        setImageFile(e.target.files[0])
+        onChange && onChange(e.target.files[0]);
     };
 
     return (
         <DragDropInputContainer>
             {
                 !previewImage && <>
-                    <Input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+                    <Input type="file" onChange={handleChange} />
                     <Button>Drop File</Button>
                 </>
             }
@@ -88,4 +101,6 @@ export default function DragDropInput() {
             }
         </DragDropInputContainer>
     );
-};
+});
+
+export default DragDropInput;
