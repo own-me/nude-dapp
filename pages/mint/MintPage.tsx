@@ -7,6 +7,7 @@ import pinkCandy from "../../media/pink-candy.svg";
 import DragDropInput from "./DragDropInput";
 import Switch from "./Switch";
 import MintFormInput from "./MintFormInput";
+import MintFormTextArea from "./MintFormTextArea";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -38,32 +39,6 @@ const MintFormHeaderTitle = styled.h1`
 
 const MintFormHeaderCandy = styled.img`
     height: 60px;
-`;
-
-const MintFormContainer = styled.div`
-    width: 100%;
-    margin: 10px 0px;
-`;
-
-const MintLabel = styled.label`
-    text-align: left;
-    display: block;
-    font-size: 30px;
-`;
-
-const formStyles = css`
-    background-color: #FFFDFF;
-    border: 1px solid #DC68F9;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 25px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    outline: none;
-    width: 100%;
-`;
-
-const MintTextArea = styled.textarea`
-    ${formStyles};
 `;
 
 const MintFormFooter = styled.div`
@@ -116,25 +91,23 @@ export default function MintPage() {
                     <DragDropInput onImage={(image) => setImage(image)} onClear={() => setImage(null)}/>
                     <NFTCard title={title || "King Tobi"} owner={"@thecatdad"} price={price + "ETH" || "? ETH"} rarity={[1, 8]} image={image || catNft} />
                 </ImagesRow>
-
                 <MintFormInput 
                     type="text" 
                     label="Title" 
                     onChange={(value) => setTitle(value)} 
                     errorMessage="Title is required." 
                 />
-
                 <MintFormInput 
                     type="number" 
                     label="Price" 
                     onChange={(value) => setPrice(value)} 
                     errorMessage="Price is required." 
                 />
-
-                <MintFormContainer>
-                    <MintLabel htmlFor="descriptionInput">Description</MintLabel>
-                    <MintTextArea id="descriptionInput" onChange={(e) => setDescription(e.target.value)} value={description} />
-                </MintFormContainer>
+                <MintFormTextArea 
+                    label="Description" 
+                    onChange={(value) => setDescription(value)} 
+                    errorMessage="Description is required." 
+                />
                 <MintFormFooter>
                     <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
                     <SubmitButton onClick={() => alert("Submitted!")}>MINT</SubmitButton>
