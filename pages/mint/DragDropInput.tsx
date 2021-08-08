@@ -61,8 +61,9 @@ const DragDropInput = memo(({ onImage, onClear, onChange }: DragDropInputProps) 
     const [previewImage, setPreviewImage] = useState<string | ArrayBuffer>();
 
     useEffect(() => {
-        console.log(imageFile);
-        readFile(imageFile);
+        if (imageFile) {
+            readFile(imageFile);
+        }
     }, [imageFile]);
 
     const readFile = async (file: File) => {
