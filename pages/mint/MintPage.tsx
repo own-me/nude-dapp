@@ -6,6 +6,7 @@ import NFTCard from "../../components/NFTCard";
 import pinkCandy from "../../media/pink-candy.svg";
 import DragDropInput from "./DragDropInput";
 import Switch from "./Switch";
+import MintFormInput from "./MintFormInput";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -23,7 +24,7 @@ const MintPageContainer = styled.div`
     }
 `;
 
-const MintFormHeader = styled.h1`
+const MintFormHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,7 +49,6 @@ const MintLabel = styled.label`
     text-align: left;
     display: block;
     font-size: 30px;
-    margin-bottom: 5px;
 `;
 
 const formStyles = css`
@@ -60,10 +60,6 @@ const formStyles = css`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     outline: none;
     width: 100%;
-`;
-
-const MintForm = styled.input`
-    ${formStyles};
 `;
 
 const MintTextArea = styled.textarea`
@@ -106,7 +102,7 @@ export default function MintPage() {
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [image, setImage] = useState<string | ArrayBuffer>(""); 
+    const [image, setImage] = useState<string | ArrayBuffer>("");
 
     return (
         <>
@@ -120,14 +116,21 @@ export default function MintPage() {
                     <DragDropInput onImage={(image) => setImage(image)} onClear={() => setImage(null)}/>
                     <NFTCard title={title || "King Tobi"} owner={"@thecatdad"} price={price + "ETH" || "? ETH"} rarity={[1, 8]} image={image || catNft} />
                 </ImagesRow>
-                <MintFormContainer>
-                    <MintLabel htmlFor="titleInput">Title</MintLabel>
-                    <MintForm type="text" id="titleInput" onChange={(e) => setTitle(e.target.value)} value={title} />
-                </MintFormContainer>
-                <MintFormContainer>
-                    <MintLabel htmlFor="priceInput">Price</MintLabel>
-                    <MintForm type="number" id="priceInput" onChange={(e) => setPrice(e.target.value)} value={price} />
-                </MintFormContainer>
+
+                <MintFormInput 
+                    type="text" 
+                    label="Title" 
+                    onChange={(value) => setTitle(value)} 
+                    errorMessage="Title is required." 
+                />
+
+                <MintFormInput 
+                    type="number" 
+                    label="Price" 
+                    onChange={(value) => setPrice(value)} 
+                    errorMessage="Price is required." 
+                />
+
                 <MintFormContainer>
                     <MintLabel htmlFor="descriptionInput">Description</MintLabel>
                     <MintTextArea id="descriptionInput" onChange={(e) => setDescription(e.target.value)} value={description} />
