@@ -102,6 +102,7 @@ export default function MintPage() {
                     label="Price" 
                     onChange={(value) => setPrice(value)} 
                     errorMessage="Price is required." 
+                    min={0}
                 />
                 <MintFormTextArea 
                     label="Description" 

@@ -39,9 +39,10 @@ interface MintFormInputProps {
     inputValue?: string;
     errorMessage?: string;
     placeHolder?: string;
+    min?: number;
 }
 
-const MintFormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeHolder }: MintFormInputProps) => {
+const MintFormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeHolder, min }: MintFormInputProps) => {
     const [value, setValue] = useState<string>(inputValue || "");
     const [error, setError] = useState<string>("");
 
@@ -58,7 +59,7 @@ const MintFormInput = memo(({ label, onChange, inputValue, errorMessage, type, p
         <MintFormInputContainer>
             <Label htmlFor={`${label}-input`}>{label}</Label>
             <Error>{error}</Error>
-            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeHolder} />
+            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeHolder} min={min} />
         </MintFormInputContainer>
     );
 });

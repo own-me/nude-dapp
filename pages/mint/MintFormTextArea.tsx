@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { formStyles } from "./MintFormInput";
 
 const MintFormTextAreaContainer = styled.div`
