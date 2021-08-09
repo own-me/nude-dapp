@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
+import xIcon from "../media/icons/x.svg";
 
 const MOUNTING_ID = "react-container";
 
@@ -27,8 +28,14 @@ const ModalContent = styled.div`
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 `;
 
-const CloseButton = styled.h1`
-    
+const CloseIcon = styled.img`
+    float: right;
+    margin: 25px;
+    cursor: pointer;
+
+    :hover {
+        transform: scale(1.1);
+    }
 `;
 
 interface ModalProps {
@@ -43,7 +50,7 @@ const Modal = memo(({ isOpen, onClose, children }: ModalProps) => {
             {
                 isOpen && createPortal(<ModalContainer>
                     <ModalContent>
-                        <CloseButton onClick={onClose}>X</CloseButton>
+                        <CloseIcon onClick={onClose} src={xIcon} />
                         {children}
                     </ModalContent>
                 </ModalContainer>, document.getElementById(MOUNTING_ID))

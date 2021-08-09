@@ -15,6 +15,7 @@ import Tabs, { TabContent } from "../../components/Tabs";
 import NFTCard from "../../components/NFTCard";
 import catNft from "../../media/defaults/catnft.png";
 import Modal from "../../components/Modal";
+import EditProfileForm from "./EditProfileForm";
 
 const ProfilePageContainer = styled.div`
     min-height: 100%;
@@ -237,7 +238,7 @@ export default function ProfilePage() {
                     </TabContent>
                 </Tabs>
                 <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
-                    <h1>Hello World!</h1>
+                    <EditProfileForm />
                 </Modal>
             </ProfilePageContainer>
         </>
