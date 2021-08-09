@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../redux/hooks";
 import { useGetUserQuery } from "../../redux/api/user";
@@ -14,6 +14,7 @@ import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
 import Tabs, { TabContent } from "../../components/Tabs";
 import NFTCard from "../../components/NFTCard";
 import catNft from "../../media/defaults/catnft.png";
+import Modal from "../../components/Modal";
 
 const ProfilePageContainer = styled.div`
     min-height: 100%;
@@ -119,9 +120,16 @@ const NftCards = styled.div`
     padding: 20px 0px;
 `;
 
+const EditProfileButton = styled(ProfileAddress)`
+    background-color: blue;
+    float: left;
+    margin-left: 20px;
+`;
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch();
     const { address } = useWallet();
+    const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
     const {
         data: userData,
@@ -181,6 +189,7 @@ export default function ProfilePage() {
             <ProfilePageContainer>
                 <ProfileBannerImage src={defaultBanner} />
                 <ProfileImage src={defaultProfile} />
+                <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
                 <ProfileAddress>{formattedAddress}</ProfileAddress>
                 <ProfileName>{userData?.name}</ProfileName>
                 <ProfileDescription>Software Engineer | Tobi’s Dad | Own Me Founder</ProfileDescription>
@@ -227,6 +236,9 @@ export default function ProfilePage() {
                         <h1>Activity bro</h1>
                     </TabContent>
                 </Tabs>
+                <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
+                    <h1>Hello World!</h1>
+                </Modal>
             </ProfilePageContainer>
         </>
     );

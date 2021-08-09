@@ -1,5 +1,8 @@
 import React, { memo } from "react";
+import { createPortal } from "react-dom";
 import styled from "styled-components";
+
+const MOUNTING_ID = "react-container";
 
 const ModalContainer = styled.div`
     position: fixed;
@@ -11,6 +14,8 @@ const ModalContainer = styled.div`
     align-items: center;
     background: #0000005e;
     z-index: 10;
+    top: 0;
+    color: black;
 `;
 
 const ModalContent = styled.div`
@@ -36,12 +41,12 @@ const Modal = memo(({ isOpen, onClose, children }: ModalProps) => {
     return (
         <>
             {
-                isOpen && <ModalContainer>
+                isOpen && createPortal(<ModalContainer>
                     <ModalContent>
                         <CloseButton onClick={onClose}>X</CloseButton>
                         {children}
                     </ModalContent>
-                </ModalContainer>
+                </ModalContainer>, document.getElementById(MOUNTING_ID))
             }
         </>
     );
