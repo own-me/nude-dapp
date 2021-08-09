@@ -13,9 +13,9 @@ import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
 import {TOTAL_HEIGHT} from "./components/Navbar";
 import MintPage from "./pages/mint/MintPage";
 
-const MainContainer = styled.div`
-    height: calc(100% - ${TOTAL_HEIGHT}px);
-    margin-top: ${TOTAL_HEIGHT}px;
+const MainContainer = styled.div<{ $isLoggedIn: boolean }>`
+    height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
+    margin-top: ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px;
     width: 100%;
     overflow-y: auto;
     position: relative;
@@ -26,7 +26,7 @@ export default function Main() {
     const dispatch = useAppDispatch();
 
     return (
-        <MainContainer>
+        <MainContainer $isLoggedIn={loggedIn}>
             <Switch>
                 <Route path="/login">
                     <LoginPage />
