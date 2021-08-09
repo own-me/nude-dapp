@@ -26,12 +26,14 @@ const ModalContent = styled.div`
     border-radius: 20px;
     border: 1px solid #0000005e;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    position: relative;
 `;
 
 const CloseIcon = styled.img`
     float: right;
-    margin: 25px;
+    margin: 33px;
     cursor: pointer;
+    height: 25px;
 
     :hover {
         transform: scale(1.1);

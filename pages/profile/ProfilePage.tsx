@@ -238,7 +238,7 @@ export default function ProfilePage() {
                     </TabContent>
                 </Tabs>
                 <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
-                    <EditProfileForm />
+                    <EditProfileForm bannerImage={defaultBanner} profileImage={defaultProfile} />
                 </Modal>
             </ProfilePageContainer>
         </>
