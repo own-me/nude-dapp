@@ -13,6 +13,7 @@ export const formStyles = css`
 `;
 
 const MintFormInputContainer = styled.div`
+    font-family: Poppins, Open Sans;
     width: 100%;
     margin: 10px 0px;
 `;

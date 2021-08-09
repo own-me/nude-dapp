@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { formStyles } from "./MintFormInput";
 
 const MintFormTextAreaContainer = styled.div`
+    font-family: Poppins, Open Sans;
     width: 100%;
     margin: 10px 0px;
 `;
