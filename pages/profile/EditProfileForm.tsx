@@ -82,11 +82,13 @@ const Button = styled.button`
 `;
 
 const SaveButton = styled(Button)`
-
+    width: 200px;
+    margin-left: 30px;
 `;
 
 const CancelButton = styled(Button)`
     background-color: #71A1FF;
+    width: 130px;
 `;
 
 interface EditProfileFormProps {
@@ -110,12 +112,14 @@ const EditProfileForm = memo(({ bannerImage, profileImage }: EditProfileFormProp
                     type="text" 
                     label="Name" 
                     onChange={(value) => setName(value)} 
-                    errorMessage="Name is required." 
+                    errorMessage="Name is required."
+                    placeHolder="What should people call you?"
                 />
                 <MintFormTextArea
                     label="Bio"
                     onChange={(value) => setBio(value)} 
-                    errorMessage="Bio is required." 
+                    errorMessage="Bio is required."
+                    placeHolder="Tell the world about yourself and everything you have to offer :)"
                 />
             </InputContainer>
             <Footer>

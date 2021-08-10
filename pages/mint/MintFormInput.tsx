@@ -6,7 +6,7 @@ export const formStyles = css<{ $isError?: boolean }>`
     border: 1px solid ${props => props.$isError ? "red" : "#DC68F9"};
     padding: 10px 15px;
     border-radius: 5px;
-    font-size: 25px;
+    font-size: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     outline: none;
     width: 100%;

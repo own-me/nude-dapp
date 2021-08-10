@@ -11,6 +11,7 @@ const MintFormTextAreaContainer = styled.div`
 
 const Textarea = styled.textarea<{ $isError: boolean }>`
     ${formStyles};
+    max-width: 100%;
 `;
 
 const Label = styled.label`
