@@ -23,10 +23,15 @@ const ModalContent = styled.div`
     background-color: white;
     min-height: 55%;
     width: 60%;
+    max-width: 800px;
     border-radius: 20px;
     border: 1px solid #0000005e;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     position: relative;
+
+    @media (max-width: 1200px) {
+        width: 90%;
+    }
 `;
 
 const CloseIcon = styled.img`

@@ -1,9 +1,9 @@
 import React, { memo, useState } from "react";
 import styled, { css } from "styled-components";
 
-export const formStyles = css`
+export const formStyles = css<{ $isError?: boolean }>`
     background-color: #FFFDFF;
-    border: 1px solid #DC68F9;
+    border: 1px solid ${props => props.$isError ? "red" : "#DC68F9"};
     padding: 10px 15px;
     border-radius: 5px;
     font-size: 25px;
@@ -19,7 +19,7 @@ const MintFormInputContainer = styled.div`
     position: relative;
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ $isError: boolean }>`
     ${formStyles};
 `;
 
@@ -63,7 +63,7 @@ const MintFormInput = memo(({ label, onChange, inputValue, errorMessage, type, p
         <MintFormInputContainer>
             <Label htmlFor={`${label}-input`}>{label}</Label>
             <Error>{error}</Error>
-            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeHolder} min={min} />
+            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeHolder} min={min} $isError={error} />
         </MintFormInputContainer>
     );
 });

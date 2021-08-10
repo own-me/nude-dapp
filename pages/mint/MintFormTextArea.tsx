@@ -6,9 +6,10 @@ const MintFormTextAreaContainer = styled.div`
     font-family: Poppins, Open Sans;
     width: 100%;
     margin: 10px 0px;
+    position: relative;
 `;
 
-const Textarea = styled.textarea`
+const Textarea = styled.textarea<{ $isError: boolean }>`
     ${formStyles};
 `;
 
@@ -20,7 +21,9 @@ const Label = styled.label`
 
 const Error = styled.span`
     color: red;
-    float: right;
+    position: absolute;
+    right: 15px;
+    top: 15px;
 `;
 
 interface MintFormTextAreaProps {
@@ -48,7 +51,7 @@ const MintFormTextArea = memo(({ label, onChange, inputValue, errorMessage, plac
         <MintFormTextAreaContainer>
             <Label htmlFor={`${label}-textarea`}>{label}</Label>
             <Error>{error}</Error>
-            <Textarea id={`${label}-textarea`} onChange={handleChange} value={value} placeholder={placeHolder} />
+            <Textarea id={`${label}-textarea`} onChange={handleChange} value={value} placeholder={placeHolder} $isError={error} />
         </MintFormTextAreaContainer>
     );
 });
