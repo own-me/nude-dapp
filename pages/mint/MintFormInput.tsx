@@ -16,6 +16,7 @@ const MintFormInputContainer = styled.div`
     font-family: Poppins, Open Sans;
     width: 100%;
     margin: 10px 0px;
+    position: relative;
 `;
 
 const Input = styled.input`
@@ -30,7 +31,9 @@ const Label = styled.label`
 
 const Error = styled.span`
     color: red;
-    float: right;
+    position: absolute;
+    right: 15px;
+    top: 15px;
 `;
 
 interface MintFormInputProps {

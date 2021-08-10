@@ -65,7 +65,7 @@ const InputContainer = styled.div`
 
 const Footer = styled.div`
     float: right;
-    padding-right: 40px;
+    padding: 0px 40px 40px 0px;
 `;
 
 const Button = styled.button`
@@ -113,7 +113,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage }: EditProfileFormProp
                     errorMessage="Name is required." 
                 />
                 <MintFormTextArea
-                    label="Bio" 
+                    label="Bio"
                     onChange={(value) => setBio(value)} 
                     errorMessage="Bio is required." 
                 />
