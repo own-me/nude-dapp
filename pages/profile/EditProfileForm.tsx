@@ -1,5 +1,5 @@
-import React, { memo, useState } from "react";
-import styled from "styled-components";
+import React, { memo, useEffect, useState } from "react";
+import styled, { css } from "styled-components";
 import MintFormInput from "../mint/MintFormInput";
 import MintFormTextArea from "../mint/MintFormTextArea";
 
@@ -68,7 +68,7 @@ const Footer = styled.div`
     padding: 0px 40px 40px 0px;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ $isDisabled?: boolean }>`
     font-family: Poppins,Open Sans;
     font-size: 22px;
     background-color: #FF81EB;
@@ -79,24 +79,42 @@ const Button = styled.button`
     margin-left: 50px;
     box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
     cursor: pointer;
+
+    ${props => props.$isDisabled && css`
+        opacity: 0.5;
+        cursor: not-allowed;
+    `}
 `;
 
-const SaveButton = styled(Button)`
+const SaveButton = styled(Button)<{ $isDisabled?: boolean }>`
     width: 200px;
     margin-left: 30px;
+
+    ${props => !props.$isDisabled && css`
+        :hover {
+            background-color: #ff31de;
+        }
+    `}
 `;
 
-const CancelButton = styled(Button)`
+const CancelButton = styled(Button)<{ $isDisabled?: boolean }>`
     background-color: #71A1FF;
     width: 130px;
+
+    ${props => !props.$isDisabled && css`
+        :hover {
+            background-color: #2c73ff;
+        }
+    `}
 `;
 
 interface EditProfileFormProps {
     bannerImage: string;
     profileImage: string;
+    onCancel: () => void;
 }
 
-const EditProfileForm = memo(({ bannerImage, profileImage }: EditProfileFormProps) => {
+const EditProfileForm = memo(({ bannerImage, profileImage, onCancel }: EditProfileFormProps) => {
     const [name, setName] = useState<string>("");
     const [bio, setBio] = useState<string>("");
 
@@ -108,23 +126,23 @@ const EditProfileForm = memo(({ bannerImage, profileImage }: EditProfileFormProp
             <ProfileImage src={profileImage} />
             <EditProfileButton onClick={() => console.log("save banner!")}>Edit Banner</EditProfileButton>
             <InputContainer>
-                <MintFormInput 
-                    type="text" 
-                    label="Name" 
-                    onChange={(value) => setName(value)} 
+                <MintFormInput
+                    type="text"
+                    label="Name"
+                    onChange={(value) => setName(value)}
                     errorMessage="Name is required."
                     placeHolder="What should people call you?"
                 />
                 <MintFormTextArea
                     label="Bio"
-                    onChange={(value) => setBio(value)} 
+                    onChange={(value) => setBio(value)}
                     errorMessage="Bio is required."
                     placeHolder="Tell the world about yourself and everything you have to offer :)"
                 />
             </InputContainer>
             <Footer>
-                <CancelButton onClick={() => console.log("cancel!")}>Cancel</CancelButton>
-                <SaveButton onClick={() => console.log("save!")}>Save</SaveButton>
+                <CancelButton onClick={onCancel}>Cancel</CancelButton>
+                <SaveButton onClick={() => console.log("save!")} $isDisabled={!name || !bio}>Save</SaveButton>
             </Footer>
         </EditProfileFormContainer>
     );
