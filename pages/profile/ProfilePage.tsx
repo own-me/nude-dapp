@@ -193,7 +193,7 @@ export default function ProfilePage() {
                 <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
                 <ProfileAddress>{formattedAddress}</ProfileAddress>
                 <ProfileName>{userData?.name}</ProfileName>
-                <ProfileDescription>Software Engineer | Tobi’s Dad | Own Me Founder</ProfileDescription>
+                <ProfileDescription>{userData?.bio}</ProfileDescription>
                 <SocialHandles>
                     {
                         mockSocials.map((url, index) => {
@@ -238,7 +238,13 @@ export default function ProfilePage() {
                     </TabContent>
                 </Tabs>
                 <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
-                    <EditProfileForm bannerImage={defaultBanner} profileImage={defaultProfile} onCancel={() => setIsEditProfileOpen(false)} />
+                    <EditProfileForm 
+                        bannerImage={defaultBanner} 
+                        profileImage={defaultProfile} 
+                        onCancel={() => setIsEditProfileOpen(false)} 
+                        currentName={userData?.name}
+                        currentBio={userData?.bio}
+                    />
                 </Modal>
             </ProfilePageContainer>
         </>

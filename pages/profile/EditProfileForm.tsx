@@ -1,7 +1,9 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import MintFormInput from "../mint/MintFormInput";
 import MintFormTextArea from "../mint/MintFormTextArea";
+import { useEditProfileMutation } from "../../redux/api/user";
+import { useHistory } from "react-router-dom";
 
 const EditProfileFormContainer = styled.div`
 
@@ -86,7 +88,7 @@ const Button = styled.button<{ $isDisabled?: boolean }>`
     `}
 `;
 
-const SaveButton = styled(Button)<{ $isDisabled?: boolean }>`
+const SaveButton = styled(Button) <{ $isDisabled?: boolean }>`
     width: 200px;
     margin-left: 30px;
 
@@ -97,7 +99,7 @@ const SaveButton = styled(Button)<{ $isDisabled?: boolean }>`
     `}
 `;
 
-const CancelButton = styled(Button)<{ $isDisabled?: boolean }>`
+const CancelButton = styled(Button) <{ $isDisabled?: boolean }>`
     background-color: #71A1FF;
     width: 130px;
 
@@ -111,12 +113,39 @@ const CancelButton = styled(Button)<{ $isDisabled?: boolean }>`
 interface EditProfileFormProps {
     bannerImage: string;
     profileImage: string;
+    currentName: string;
+    currentBio: string;
     onCancel: () => void;
 }
 
-const EditProfileForm = memo(({ bannerImage, profileImage, onCancel }: EditProfileFormProps) => {
-    const [name, setName] = useState<string>("");
-    const [bio, setBio] = useState<string>("");
+const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName, currentBio }: EditProfileFormProps) => {
+    const [name, setName] = useState<string>(currentName ?? "");
+    const [bio, setBio] = useState<string>(currentBio ?? "");
+
+    const history = useHistory();
+
+    const [postEditProfile, {
+        isLoading: isEditProfileLoading,
+        isSuccess: isEditProfileSuccess,
+        isError: isEditProfileError,
+        data: editProfileData,
+        error: editProfileError
+    }] = useEditProfileMutation();
+
+    const handleSave = async () => {
+        await postEditProfile({
+            oldName: currentName,
+            newName: name,
+            bio
+        });
+    };
+
+    useEffect(() => {
+        if (isEditProfileSuccess) {
+            onCancel();
+            history.push(`/${name}`);
+        }
+    }, [isEditProfileSuccess]);
 
     return (
         <EditProfileFormContainer>
@@ -132,17 +161,19 @@ const EditProfileForm = memo(({ bannerImage, profileImage, onCancel }: EditProfi
                     onChange={(value) => setName(value)}
                     errorMessage="Name is required."
                     placeHolder="What should people call you?"
+                    inputValue={currentName}
                 />
                 <MintFormTextArea
                     label="Bio"
                     onChange={(value) => setBio(value)}
                     errorMessage="Bio is required."
                     placeHolder="Tell the world about yourself and everything you have to offer :)"
+                    inputValue={currentBio}
                 />
             </InputContainer>
             <Footer>
                 <CancelButton onClick={onCancel}>Cancel</CancelButton>
-                <SaveButton onClick={() => console.log("save!")} $isDisabled={!name || !bio}>Save</SaveButton>
+                <SaveButton onClick={handleSave} $isDisabled={!name || !bio}>Save</SaveButton>
             </Footer>
         </EditProfileFormContainer>
     );

@@ -31,10 +31,10 @@ interface EditProfileResponse {
 }
 interface EditProfileRequest {
     oldName: string,
-    newName: string,
-    bio: string,
-    profileImageUrl: string,
-    bannerImageUrl: string
+    newName?: string,
+    bio?: string,
+    profileImageUrl?: string,
+    bannerImageUrl?: string
 }
 
 export const userApi = createApi({
