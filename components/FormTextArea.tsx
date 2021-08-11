@@ -1,8 +1,8 @@
 import React, { memo, useState } from "react";
 import styled from "styled-components";
-import { formStyles } from "./MintFormInput";
+import { formStyles } from "./FormInput";
 
-const MintFormTextAreaContainer = styled.div`
+const FormTextAreaContainer = styled.div`
     font-family: Poppins, Open Sans;
     width: 100%;
     margin: 10px 0px;
@@ -17,7 +17,7 @@ const Textarea = styled.textarea<{ $isError: boolean }>`
 const Label = styled.label`
     text-align: left;
     display: block;
-    font-size: 30px;
+    font-size: 26px;
 `;
 
 const Error = styled.span`
@@ -27,7 +27,7 @@ const Error = styled.span`
     top: 15px;
 `;
 
-interface MintFormTextAreaProps {
+interface FormTextAreaProps {
     label: string;
     onChange?: (value: string) => void;
     inputValue?: string;
@@ -35,7 +35,7 @@ interface MintFormTextAreaProps {
     placeHolder?: string;
 }
 
-const MintFormTextArea = memo(({ label, onChange, inputValue, errorMessage, placeHolder }: MintFormTextAreaProps) => {
+const FormTextArea = memo(({ label, onChange, inputValue, errorMessage, placeHolder }: FormTextAreaProps) => {
     const [value, setValue] = useState<string>(inputValue || "");
     const [error, setError] = useState<string>("");
 
@@ -49,12 +49,12 @@ const MintFormTextArea = memo(({ label, onChange, inputValue, errorMessage, plac
     };
 
     return (
-        <MintFormTextAreaContainer>
+        <FormTextAreaContainer>
             <Label htmlFor={`${label}-textarea`}>{label}</Label>
             <Error>{error}</Error>
             <Textarea id={`${label}-textarea`} onChange={handleChange} value={value} placeholder={placeHolder} $isError={error} />
-        </MintFormTextAreaContainer>
+        </FormTextAreaContainer>
     );
 });
 
-export default MintFormTextArea;
+export default FormTextArea;

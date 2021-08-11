@@ -6,8 +6,8 @@ import NFTCard from "../../components/NFTCard";
 import pinkCandy from "../../media/pink-candy.svg";
 import DragDropInput from "./DragDropInput";
 import Switch from "./Switch";
-import MintFormInput from "./MintFormInput";
-import MintFormTextArea from "./MintFormTextArea";
+import FormInput from "../../components/FormInput";
+import FormTextArea from "../../components/FormTextArea";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -91,20 +91,20 @@ export default function MintPage() {
                     <DragDropInput onImage={(image) => setImage(image)} onClear={() => setImage(null)}/>
                     <NFTCard title={title || "King Tobi"} owner={"@thecatdad"} price={price + "ETH" || "? ETH"} rarity={[1, 8]} image={image || catNft} />
                 </ImagesRow>
-                <MintFormInput 
+                <FormInput 
                     type="text" 
                     label="Title" 
                     onChange={(value) => setTitle(value)} 
                     errorMessage="Title is required." 
                 />
-                <MintFormInput 
+                <FormInput 
                     type="number" 
                     label="Price" 
                     onChange={(value) => setPrice(value)} 
                     errorMessage="Price is required." 
                     min={0}
                 />
-                <MintFormTextArea 
+                <FormTextArea 
                     label="Description" 
                     onChange={(value) => setDescription(value)} 
                     errorMessage="Description is required." 

@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import MintFormInput from "../mint/MintFormInput";
-import MintFormTextArea from "../mint/MintFormTextArea";
+import FormInput from "../../components/FormInput";
+import FormTextArea from "../../components/FormTextArea";
 import { useEditProfileMutation } from "../../redux/api/user";
 import { useHistory } from "react-router-dom";
 
@@ -155,7 +155,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName
             <ProfileImage src={profileImage} />
             <EditProfileButton onClick={() => console.log("save banner!")}>Edit Banner</EditProfileButton>
             <InputContainer>
-                <MintFormInput
+                <FormInput
                     type="text"
                     label="Name"
                     onChange={(value) => setName(value)}
@@ -163,7 +163,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName
                     placeHolder="What should people call you?"
                     inputValue={currentName}
                 />
-                <MintFormTextArea
+                <FormTextArea
                     label="Bio"
                     onChange={(value) => setBio(value)}
                     errorMessage="Bio is required."

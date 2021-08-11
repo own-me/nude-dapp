@@ -5,8 +5,8 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
 import { setUserLoggedIn, setUserEmail, setUserName } from "../../redux/slices/user";
 import loadingSpinner from "../../media/loading.svg";
-import FormInput from "../../components/FormInput";
 import { Link } from "react-router-dom";
+import FormInput from "../../components/FormInput";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -101,8 +101,8 @@ export default function LoginForm(props) {
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
             <LoginHeader>Login</LoginHeader>
-            <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
-            <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="password" required />
+            <FormInput label="Email" type="email" onChange={(value) => setEmail(value)} />
+            <FormInput label="Password" type="password" onChange={(value) => setPassword(value)} />
             <ErrorMessage>{isError && error.data.error}</ErrorMessage>
             {
                 isLoading ? <img src={loadingSpinner} /> : <SubmitButton $disabled={!email || !password}>Submit</SubmitButton>
