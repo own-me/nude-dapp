@@ -5,12 +5,16 @@ export default function useWallet() {
     const [balance, setBalance] = useState<BigNumber>();
     const [address, setAddress] = useState<string>();
     const [network, setNetwork] = useState<any>();
+    const [provider, setProvider] = useState<any>();
+    const [signer, setSigner] = useState<any>();
 
     useEffect(() => {
         async function getBalance() {
             await window.ethereum.request({ method: 'eth_requestAccounts' });
             const provider = new ethers.providers.Web3Provider(window.ethereum);
+            setProvider(provider);
             const signer = provider.getSigner();
+            setSigner(signer);
             const signerAddress = await signer.getAddress();
             setAddress(signerAddress);
             setBalance(await provider.getBalance(signerAddress));
@@ -25,5 +29,5 @@ export default function useWallet() {
         });
     }, []);
 
-    return { balance, address, network };
+    return { balance, address, network, provider, signer };
 };

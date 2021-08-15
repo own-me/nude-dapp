@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { fetchNudeABI, fetchNudeNftABI } from "../lib/helpers";
+import { fetchNudeABI } from "../lib/helpers";
 import { ethers } from "ethers";
 import useWallet from "../hooks/useWallet";
 
