@@ -4,6 +4,7 @@ import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
 import { useEditProfileMutation } from "../../redux/api/user";
 import { useHistory } from "react-router-dom";
+import FormFileInputButton, {FormFileInputContainer} from "../../components/FormFileInputButton";
 
 const EditProfileFormContainer = styled.div`
 
@@ -45,7 +46,7 @@ const ActionButton = styled.button`
     cursor: pointer;
 `;
 
-const EditBannerButton = styled(ActionButton)`
+const EditBannerButton = styled(FormFileInputButton)`
     position: absolute;
     right: 15px;
     top: 210px;
@@ -110,6 +111,10 @@ const CancelButton = styled(Button) <{ $isDisabled?: boolean }>`
     `}
 `;
 
+const CustomInput = styled(FormInput)`
+    color: red !important;
+`;
+
 interface EditProfileFormProps {
     bannerImage: string;
     profileImage: string;
@@ -151,11 +156,11 @@ const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName
         <EditProfileFormContainer>
             <Header>Edit Profile</Header>
             <BannerImage src={bannerImage} />
-            <EditBannerButton onClick={() => console.log("save banner!")}>Edit Banner</EditBannerButton>
+            <EditBannerButton onFile={(file) => console.log("save banner!", file)}>Edit Banner</EditBannerButton>
             <ProfileImage src={profileImage} />
             <EditProfileButton onClick={() => console.log("save banner!")}>Edit Banner</EditProfileButton>
             <InputContainer>
-                <FormInput
+                <CustomInput
                     type="text"
                     label="Name"
                     onChange={(value) => setName(value)}
