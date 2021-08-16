@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { ipfsApi } from "./api/ipfs";
 import { loginApi } from "./api/login";
 import { registerApi } from "./api/register";
 import { userApi } from "./api/user";
@@ -12,12 +13,14 @@ export const store = configureStore({
         wallet: walletReducer,
         [loginApi.reducerPath]: loginApi.reducer,
         [registerApi.reducerPath]: registerApi.reducer,
-        [userApi.reducerPath]: userApi.reducer
+        [userApi.reducerPath]: userApi.reducer,
+        [ipfsApi.reducerPath]: ipfsApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         loginApi.middleware,
         registerApi.middleware,
-        userApi.middleware
+        userApi.middleware,
+        ipfsApi.middleware
     ),
 });
 

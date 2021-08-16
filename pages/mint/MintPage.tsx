@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Navbar from "../../components/Navbar";
 import catNft from "../../media/defaults/catnft.png";
@@ -11,6 +11,7 @@ import FormTextArea from "../../components/FormTextArea";
 import { fetchNudeNftABI } from "../../lib/helpers";
 import useWallet from "../../hooks/useWallet";
 import { ethers } from "ethers";
+import { usePostIpfsUploadMutation } from "../../redux/api/ipfs";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -84,6 +85,18 @@ export default function MintPage() {
 
     const { balance, address, provider, signer } = useWallet();
 
+    const [postIpfsUpload, {
+        isLoading: isPostIpfsUploadLoading,
+        isSuccess: isPostIpfsUploadSuccess,
+        isError: isPostIpfsUploadError,
+        data: postIpfsUploadData,
+        error: postIpfsUploadError
+    }] = usePostIpfsUploadMutation();
+
+    const handleImageUpload = async () => {
+        postIpfsUpload({ image });
+    }
+
     const handleMintSubmit = async () => {
         const abi = await fetchNudeNftABI();
         const nudeNftContract = new ethers.Contract("0xdf9A1AF6dbCBC64A76b3bB967B768Cc9DC252d1c", abi.abi, provider);
@@ -98,7 +111,6 @@ export default function MintPage() {
         console.log(tx);
     }
 
-    
     const queryNFTs = async () => {
         const abi = await fetchNudeNftABI();
         const nudeNftContract = new ethers.Contract("0xdf9A1AF6dbCBC64A76b3bB967B768Cc9DC252d1c", abi.abi, provider);
@@ -141,6 +153,7 @@ export default function MintPage() {
                     <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
                     <SubmitButton onClick={handleMintSubmit}>MINT</SubmitButton>
                     <SubmitButton onClick={queryNFTs}>NFT</SubmitButton>
+                    <SubmitButton onClick={handleImageUpload}>IPFS</SubmitButton>
                 </MintFormFooter>
             </MintPageContainer>
         </>

@@ -103,7 +103,7 @@ export default function LoginForm(props) {
             <LoginHeader>Login</LoginHeader>
             <FormInput label="Email" type="email" onChange={(value) => setEmail(value)} />
             <FormInput label="Password" type="password" onChange={(value) => setPassword(value)} />
-            <ErrorMessage>{isError && error.data.error}</ErrorMessage>
+            <ErrorMessage>{isError && error?.data?.error}</ErrorMessage>
             {
                 isLoading ? <img src={loadingSpinner} /> : <SubmitButton $disabled={!email || !password}>Submit</SubmitButton>
             }
