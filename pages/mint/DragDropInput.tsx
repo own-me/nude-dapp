@@ -51,12 +51,13 @@ const ClearButton = styled.img`
 `;
 
 interface DragDropInputProps {
-    onImage?: (image: string | ArrayBuffer) => void;
+    onBase64?: (image: string) => void;
+    onArrayBuffer?: (image: ArrayBuffer) => void;
     onChange?: (file: File) => void;
     onClear?: () => void;
 }
 
-const DragDropInput = memo(({ onImage, onClear, onChange }: DragDropInputProps) => {
+const DragDropInput = memo(({ onBase64, onArrayBuffer, onClear, onChange }: DragDropInputProps) => {
     const [imageFile, setImageFile] = useState<File>();
     const [previewImage, setPreviewImage] = useState<string | ArrayBuffer>();
 
@@ -67,12 +68,17 @@ const DragDropInput = memo(({ onImage, onClear, onChange }: DragDropInputProps) 
     }, [imageFile]);
 
     const readFile = async (file: File) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            setPreviewImage(reader.result);
-            onImage && onImage(reader.result);
+        const arrayBufferReader = new FileReader();
+        const base64Reader = new FileReader();
+        arrayBufferReader.onload = () => {
+            onArrayBuffer && onArrayBuffer(arrayBufferReader.result);
         };
-        reader.readAsDataURL(file);
+        base64Reader.onload = () => {
+            setPreviewImage(base64Reader.result);
+            onBase64 && onBase64(base64Reader.result);
+        };
+        arrayBufferReader.readAsArrayBuffer(file);
+        base64Reader.readAsDataURL(file);
     };
 
     const handleClear = () => {
