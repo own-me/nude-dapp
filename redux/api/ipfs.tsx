@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface IpfsRequest {
-    image: string | ArrayBuffer;
-    filename: string;
+interface IpfsRequest extends FormData {
+
 }
 
 interface IpfsResponse {
     message: string;
     ok: boolean;
+    ipfsUrl: string;
 }
 
 export const ipfsApi = createApi({
@@ -15,13 +15,11 @@ export const ipfsApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
         postIpfsUpload: builder.mutation<IpfsResponse, IpfsRequest>({
-            query: ({ image, filename }) => ({
+            query: (formData) => ({
                 url: "ipfs/upload",
                 method: "POST",
-                body: {
-                    image,
-                    filename
-                }
+                contentType: "multipart/form-data",
+                body: formData
             }),
         }),
     }),

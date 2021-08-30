@@ -59,7 +59,7 @@ interface DragDropInputProps {
 
 const DragDropInput = memo(({ onBase64, onArrayBuffer, onClear, onChange }: DragDropInputProps) => {
     const [imageFile, setImageFile] = useState<File>();
-    const [previewImage, setPreviewImage] = useState<string | ArrayBuffer>();
+    const [previewImage, setPreviewImage] = useState<string>();
 
     useEffect(() => {
         if (imageFile) {
@@ -68,14 +68,15 @@ const DragDropInput = memo(({ onBase64, onArrayBuffer, onClear, onChange }: Drag
     }, [imageFile]);
 
     const readFile = async (file: File) => {
+        console.log(file);
         const arrayBufferReader = new FileReader();
         const base64Reader = new FileReader();
         arrayBufferReader.onload = () => {
-            onArrayBuffer && onArrayBuffer(arrayBufferReader.result);
+            onArrayBuffer && onArrayBuffer(arrayBufferReader.result as ArrayBuffer);
         };
         base64Reader.onload = () => {
-            setPreviewImage(base64Reader.result);
-            onBase64 && onBase64(base64Reader.result);
+            setPreviewImage(base64Reader.result as string);
+            onBase64 && onBase64(base64Reader.result as string);
         };
         arrayBufferReader.readAsArrayBuffer(file);
         base64Reader.readAsDataURL(file);

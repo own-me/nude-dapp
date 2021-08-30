@@ -81,7 +81,9 @@ export default function MintPage() {
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [image, setImage] = useState<string | ArrayBuffer>("");
+    const [imagePreview, setImagePreview] = useState<string>();
+    const [imageBuffer, setImageBuffer] = useState<ArrayBuffer>();
+    const [imageData, setImageData] = useState<File>();
 
     const { balance, address, provider, signer } = useWallet();
 
@@ -93,30 +95,39 @@ export default function MintPage() {
         error: postIpfsUploadError
     }] = usePostIpfsUploadMutation();
 
-    const handleImageUpload = async () => {
-        postIpfsUpload({ image });
-    }
-
     const handleMintSubmit = async () => {
-        const abi = await fetchNudeNftABI();
-        const nudeNftContract = new ethers.Contract("0xdf9A1AF6dbCBC64A76b3bB967B768Cc9DC252d1c", abi.abi, provider);
-        const nudeNftWithSigner = nudeNftContract.connect(signer);
-        console.log(nudeNftWithSigner);
-        const metadata = {
-            title,
-            description,
-            image: "https://imgr.search.brave.com/Qp_lPYKOcMOX1R6O0tQ-giks5hPkB2RDtYon6mnX8fs/fit/960/576/no/1/aHR0cHM6Ly9kM2F0/YWd0MHJucWs3ay5j/bG91ZGZyb250Lm5l/dC93cC1jb250ZW50/L3VwbG9hZHMvMjAx/Ni8wNC8xMTIzNTkz/MC9jYW5uYWJpcy1h/bmQtY2F0LXZpZGVv/cy1nby1oYW5kLWlu/LWhhbmQtYWNjb3Jk/aW5nLXRvLWdvb2ds/ZS10cmVuZC5qcGc"
+        const formData = new FormData();
+        formData.append("image", imageData);
+        const ipfsResponse = await postIpfsUpload(formData);
+        console.log(ipfsResponse);
+        if (ipfsResponse.data.ok) {
+            const abi = await fetchNudeNftABI();
+            const nudeNftContract = new ethers.Contract("0xdf9A1AF6dbCBC64A76b3bB967B768Cc9DC252d1c", abi.abi, provider);
+            const nudeNftWithSigner = nudeNftContract.connect(signer);
+            console.log(nudeNftWithSigner);
+            const metadata = {
+                title,
+                description,
+                image: ipfsResponse.data.ipfsUrl
+            }
+            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata));
+            console.log(tx);
+        } else {
+            // image did not upload correctly
         }
-        const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata));
-        console.log(tx);
     }
 
     const queryNFTs = async () => {
         const abi = await fetchNudeNftABI();
         const nudeNftContract = new ethers.Contract("0xdf9A1AF6dbCBC64A76b3bB967B768Cc9DC252d1c", abi.abi, provider);
         const nudeNftWithSigner = nudeNftContract.connect(signer);
-        const metadata = await nudeNftWithSigner.tokenURI(4);
+        const metadata = await nudeNftWithSigner.tokenURI(2);
         console.log(JSON.parse(metadata));
+    }
+
+    const clearImage = () => {
+        setImageBuffer(null);
+        setImagePreview(null);
     }
 
     return (
@@ -128,8 +139,19 @@ export default function MintPage() {
                     <MintFormHeaderCandy src={pinkCandy} />
                 </MintFormHeader>
                 <ImagesRow>
-                    <DragDropInput onImage={(image) => setImage(image)} onClear={() => setImage(null)} />
-                    <NFTCard title={title || "King Tobi"} owner={"@thecatdad"} price={price + "ETH" || "? ETH"} rarity={[1, 8]} image={image || catNft} />
+                    <DragDropInput
+                        onBase64={(image) => setImagePreview(image)} 
+                        onArrayBuffer={(image) => setImageBuffer(image)}
+                        onChange={(image) => setImageData(image)}
+                        onClear={clearImage}
+                    />
+                    <NFTCard 
+                        title={title || "King Tobi"} 
+                        owner={"@thecatdad"} 
+                        price={price + "ETH" || "? ETH"} 
+                        rarity={[1, 8]} 
+                        image={imagePreview || catNft} 
+                    />
                 </ImagesRow>
                 <FormInput
                     type="text"
@@ -153,7 +175,6 @@ export default function MintPage() {
                     <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
                     <SubmitButton onClick={handleMintSubmit}>MINT</SubmitButton>
                     <SubmitButton onClick={queryNFTs}>NFT</SubmitButton>
-                    <SubmitButton onClick={handleImageUpload}>IPFS</SubmitButton>
                 </MintFormFooter>
             </MintPageContainer>
         </>
