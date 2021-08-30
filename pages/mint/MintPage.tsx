@@ -99,10 +99,9 @@ export default function MintPage() {
         const formData = new FormData();
         formData.append("image", imageData);
         const ipfsResponse = await postIpfsUpload(formData);
-        console.log(ipfsResponse);
         if (ipfsResponse.data.ok) {
             const abi = await fetchNudeNftABI();
-            const nudeNftContract = new ethers.Contract("0xdf9A1AF6dbCBC64A76b3bB967B768Cc9DC252d1c", abi.abi, provider);
+            const nudeNftContract = new ethers.Contract(abi.networks["5777"].address, abi.abi, provider);
             const nudeNftWithSigner = nudeNftContract.connect(signer);
             console.log(nudeNftWithSigner);
             const metadata = {
@@ -119,9 +118,9 @@ export default function MintPage() {
 
     const queryNFTs = async () => {
         const abi = await fetchNudeNftABI();
-        const nudeNftContract = new ethers.Contract("0xdf9A1AF6dbCBC64A76b3bB967B768Cc9DC252d1c", abi.abi, provider);
+        const nudeNftContract = new ethers.Contract(abi.networks["5777"].address, abi.abi, provider);
         const nudeNftWithSigner = nudeNftContract.connect(signer);
-        const metadata = await nudeNftWithSigner.tokenURI(2);
+        const metadata = await nudeNftWithSigner.tokenURI(1);
         console.log(JSON.parse(metadata));
     }
 
