@@ -53,7 +53,9 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
     const handleChange = (e) => {
         const value = e.target?.value;
         if (!value) {
-            setError(errorMessage || "Error, input is invalid.");
+            setError(errorMessage || "Input invalid.");
+        } else if (error && value) {
+            setError("");
         }
         setValue(value);
         onChange && onChange(value);
