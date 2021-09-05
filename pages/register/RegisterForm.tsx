@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { usePostRegisterMutation, useVerifyEmailMutation } from "../../redux/api/register";
 import loadingSpinner from "../../media/loading.svg";
 import FormInput from "../../components/FormInput";
-import VerifyForm from "./VerifyForm";
 
 const RegisterFormContainer = styled.form`
     display: flex;
@@ -14,8 +13,16 @@ const RegisterFormContainer = styled.form`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
     border: 1px solid #FEB8FF;
-    padding: 50px 100px;
+    padding: 2rem 2rem;
     color: black;
+    margin: 2rem;
+    height: 62vh;
+    overflow-y: auto;
+
+    @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
+        padding: 3rem 5rem;
+        height: fit-content;
+    }
 `;
 
 const RegisterHeader = styled.h1`
@@ -113,6 +120,7 @@ export default function RegisterForm() {
             {
                 isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} disabled={!isPasswordConfirmed} $disabled={!isPasswordConfirmed}>Submit</SubmitButton>
             }
+            <Link to="/login">Login</Link>
         </RegisterFormContainer>
     );
 };

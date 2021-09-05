@@ -16,13 +16,19 @@ const LoginFormContainer = styled.form`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 25px;
     border: 1px solid #FEB8FF;
-    padding: 50px 100px;
+    padding: 2rem 2rem;
     color: black;
+    margin: 2rem;
+
+    @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
+        padding: 3rem 5rem;
+    }
 `;
 
 const LoginHeader = styled.h1`
     font-family: Rock Salt, Open Sans;
     color: #c931ff;
+    margin: 0;
 `;
 
 const SubmitButton = styled.button<{ $disabled: boolean }>`

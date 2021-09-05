@@ -16,10 +16,14 @@ const LoginPageContainer = styled.div`
 `;
 
 const LogoImg = styled.img`
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    height: 100px;
+    margin: 0 auto;
+    height: 5rem;
+
+    @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
+        position: absolute;
+        top: 50px;
+        left: 50px;
+    }
 `;
 
 export default function LoginPage() {
