@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
@@ -98,10 +98,15 @@ export default function LoginForm(props) {
         }
     }, []);
 
+    const isFormValid = useMemo(() => email && password, [email, password]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Submit!");
-        postLogin({ email, password });
+        if (isFormValid) {
+            postLogin({ email, password });
+        }
+        return;
     };
 
     return (
@@ -111,7 +116,7 @@ export default function LoginForm(props) {
             <FormInput label="Password" type="password" onChange={(value) => setPassword(value)} />
             <ErrorMessage>{isError && error?.data?.error}</ErrorMessage>
             {
-                isLoading ? <img src={loadingSpinner} /> : <SubmitButton $disabled={!email || !password}>Submit</SubmitButton>
+                isLoading ? <img src={loadingSpinner} /> : <SubmitButton $disabled={!isFormValid}>Submit</SubmitButton>
             }
             <Link to="/register">Register</Link>
         </LoginFormContainer>
