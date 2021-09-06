@@ -12,7 +12,7 @@ export const TOTAL_HEIGHT = NAVBAR_HEIGHT + (NAVBAR_PADDING * 2);
 
 const NavbarContainer = styled.div`
     height: ${NAVBAR_HEIGHT}px;
-    background-color: #FDE5FE;
+    background-color: white;
     padding: ${NAVBAR_PADDING}px;
     position: fixed;
     right: 0;

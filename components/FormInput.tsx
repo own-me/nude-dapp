@@ -8,7 +8,6 @@ export const formStyles = css<{ $isError?: boolean }>`
     border-radius: 5px;
     font-size: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    outline: none;
     width: 100%;
 `;
 
