@@ -40,11 +40,9 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     type: "text" | "email" | "password" | "number" | "select" | "checkbox" | "radio";
     inputValue?: string;
     errorMessage?: string;
-    placeHolder?: string;
-    min?: number;
 }
 
-const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeHolder, min }: FormInputProps) => {
+const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeholder, min }: FormInputProps) => {
     const [value, setValue] = useState<string>(inputValue || "");
     const [error, setError] = useState<string>("");
 
@@ -56,14 +54,14 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
             setError("");
         }
         setValue(value);
-        onChange && onChange(value);
+        onChange && onChange(e);
     };
 
     return (
         <FormInputContainer>
             <Label htmlFor={`${label}-input`}>{label}</Label>
             <Error>{error}</Error>
-            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeHolder} min={min} $isError={error} />
+            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeholder} min={min} $isError={error} />
         </FormInputContainer>
     );
 });
