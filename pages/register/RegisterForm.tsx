@@ -104,10 +104,6 @@ export default function RegisterForm() {
         postRegister({ email, name, password, verificationCode });
     };
 
-    const handleVerifyCode = (e) => {
-        // new api needed
-    };
-
     const switchToVerificationStage = () => {
         setIsVerificationStage(true);
         postVerifyEmail({ email });
@@ -133,7 +129,7 @@ export default function RegisterForm() {
                     {isVerificationCodeSent && <h2>We sent a code to: {email}</h2>}
                     <FormInput label="Verification Code" type="text" onChange={(e) => setVerificationCode(e.target.value)} required />
                     <ErrorMessage>{isRegisterError && registerError?.data?.error}</ErrorMessage>
-                    <SubmitButton onClick={handleVerifyCode} disabled={!isFormValid} $disabled={!isFormValid}>Verify code</SubmitButton>
+                    <SubmitButton onClick={handleRegister} disabled={!isFormValid} $disabled={!isFormValid}>Verify code</SubmitButton>
                 </>
             }
             {
