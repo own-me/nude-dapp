@@ -165,7 +165,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName
                     label="Name"
                     onChange={(value) => setName(value)}
                     errorMessage="Name is required."
-                    placeHolder="What should people call you?"
+                    placeholder="What should people call you?"
                     inputValue={currentName}
                 />
                 <FormTextArea

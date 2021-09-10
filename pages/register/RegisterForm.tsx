@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled, { css } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { usePostRegisterMutation, useVerifyEmailMutation } from "../../redux/api/register";
@@ -70,6 +70,7 @@ export default function RegisterForm() {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(false);
     const [isVerificationStage, setIsVerificationStage] = useState<boolean>(false);
+    const [isVerificationCodeSent, setIsVerificationCodeSent] = useState<boolean>(false);
     const [verificationCode, setVerificationCode] = useState<string>("");
 
     const [postRegister, {
@@ -103,23 +104,40 @@ export default function RegisterForm() {
         postRegister({ email, name, password, verificationCode });
     };
 
-    const handleVerifyEmail = (e) => {
-        e.preventDefault();
-        postVerifyEmail({ email });
+    const handleVerifyCode = (e) => {
+        // new api needed
     };
+
+    const switchToVerificationStage = () => {
+        setIsVerificationStage(true);
+        postVerifyEmail({ email });
+        setIsVerificationCodeSent(true);
+    }
+
+    const isFormValid = useMemo(() => isPasswordConfirmed && email && name, [isPasswordConfirmed, email, name]);
 
     return (
         <RegisterFormContainer>
             <RegisterHeader>Register</RegisterHeader>
-            <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
-            <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} required />
-            <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required />
-            <FormInput label="Confirm Password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
-            <FormInput label="Verification Code" type="text" onChange={(e) => setVerificationCode(e.target.value)} required />
-            <ErrorMessage>{isRegisterError && registerError.data.error}</ErrorMessage>
-            <SubmitButton onClick={handleVerifyEmail} disabled={!email} $disabled={!email}>Send Code</SubmitButton>
             {
-                isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} disabled={!isPasswordConfirmed} $disabled={!isPasswordConfirmed}>Submit</SubmitButton>
+                !isVerificationStage && <>
+                    <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
+                    <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} required />
+                    <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required />
+                    <FormInput label="Confirm Password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
+                    <SubmitButton onClick={switchToVerificationStage} disabled={!isFormValid} $disabled={!isFormValid}>Submit</SubmitButton>
+                </>
+            }
+            {
+                isVerificationStage && <>
+                    {isVerificationCodeSent && <h2>We sent a code to: {email}</h2>}
+                    <FormInput label="Verification Code" type="text" onChange={(e) => setVerificationCode(e.target.value)} required />
+                    <ErrorMessage>{isRegisterError && registerError?.data?.error}</ErrorMessage>
+                    <SubmitButton onClick={handleVerifyCode} disabled={!isFormValid} $disabled={!isFormValid}>Verify code</SubmitButton>
+                </>
+            }
+            {
+                isRegisterLoading && <img src={loadingSpinner} />
             }
             <Link to="/login">Login</Link>
         </RegisterFormContainer>
