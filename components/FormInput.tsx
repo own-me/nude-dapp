@@ -35,10 +35,9 @@ const Error = styled.span`
     top: 15px;
 `;
 
-interface FormInputProps {
+interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label: string;
     type: "text" | "email" | "password" | "number" | "select" | "checkbox" | "radio";
-    onChange?: (value: string) => void;
     inputValue?: string;
     errorMessage?: string;
     placeHolder?: string;

@@ -69,6 +69,7 @@ export default function RegisterForm() {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(false);
+    const [isVerificationStage, setIsVerificationStage] = useState<boolean>(false);
     const [verificationCode, setVerificationCode] = useState<string>("");
 
     const [postRegister, {
