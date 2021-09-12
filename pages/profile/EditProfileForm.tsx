@@ -4,7 +4,7 @@ import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
 import { useEditProfileMutation } from "../../redux/api/user";
 import { useHistory } from "react-router-dom";
-import FormFileInputButton, {FormFileInputContainer} from "../../components/FormFileInputButton";
+import FormFileInputButton from "../../components/FormFileInputButton";
 
 const EditProfileFormContainer = styled.div`
 
