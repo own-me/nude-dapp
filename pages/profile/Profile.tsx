@@ -13,6 +13,8 @@ import NFTCard from "../../components/NFTCard";
 import catNft from "../../media/defaults/catnft.png";
 import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
+import { usePostFollowMutation } from "../../redux/api/follow";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 
 const ProfileContainer = styled.div`
     min-height: 100%;
@@ -125,6 +127,7 @@ const EditProfileButton = styled(ProfileAddress)`
 `;
 
 interface ProfileInterface {
+    profileId: string;
     name: string;
     bio: string;
 }
@@ -134,6 +137,15 @@ export default function Profile(props: ProfileInterface) {
     const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
+    const userId = useAppSelector(state => state.user.id);
+
+    const [postFollow, {
+        isLoading: isPostFollowLoading,
+        isSuccess: isPostFollowSuccess,
+        isError: isPostFollowError,
+        data: postFollowData,
+        error: postFollowError
+    }] = usePostFollowMutation();
 
     const mockSocials = [
         "https://www.instagram.com/christopher.trimboli/",
@@ -175,6 +187,11 @@ export default function Profile(props: ProfileInterface) {
         return cards;
     }
 
+    const handleFollow = () => {
+        console.log("Follow");
+        postFollow({ userId, followerId: props.profileId });
+    }
+
     return (
         <ProfileContainer>
             <ProfileBannerImage src={defaultBanner} />
@@ -204,7 +221,7 @@ export default function Profile(props: ProfileInterface) {
                 }
             </SocialHandles>
             <ActionButtons>
-                <ActionButton>Follow</ActionButton>
+                <ActionButton onClick={handleFollow}>Follow</ActionButton>
                 <ActionButton>Subscribe</ActionButton>
             </ActionButtons>
             <br />

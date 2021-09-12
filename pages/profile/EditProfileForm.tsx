@@ -163,7 +163,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName
                 <CustomInput
                     type="text"
                     label="Name"
-                    onChange={(value) => setName(value)}
+                    onChange={(e) => setName(e.target.value)}
                     errorMessage="Name is required."
                     placeholder="What should people call you?"
                     inputValue={currentName}
