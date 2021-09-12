@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { followApi } from "./api/follow";
 import { ipfsApi } from "./api/ipfs";
 import { loginApi } from "./api/login";
 import { registerApi } from "./api/register";
@@ -14,13 +15,15 @@ export const store = configureStore({
         [loginApi.reducerPath]: loginApi.reducer,
         [registerApi.reducerPath]: registerApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
-        [ipfsApi.reducerPath]: ipfsApi.reducer
+        [ipfsApi.reducerPath]: ipfsApi.reducer,
+        [followApi.reducerPath]: followApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         loginApi.middleware,
         registerApi.middleware,
         userApi.middleware,
-        ipfsApi.middleware
+        ipfsApi.middleware,
+        followApi.middleware
     ),
 });
 

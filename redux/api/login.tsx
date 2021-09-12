@@ -7,11 +7,13 @@ interface LoginRequest {
 }
 
 interface DecodedToken {
+    id: string,
     email: string,
     name: string,
     exp: number,
     iat: number
 }
+
 interface LoginResponse {
     token: string,
     message: string,
