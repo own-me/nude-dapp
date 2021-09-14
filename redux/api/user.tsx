@@ -14,6 +14,7 @@ interface UserResponse {
     profileImageUrl: string,
     bannerImageUrl: string,
     bio: string,
+    isFollowing: boolean
 }
 
 interface UploadProfileImageRequest {

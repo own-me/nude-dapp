@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface FollowRequest {
-    userId: string;
+    userId: number;
     followerId: string;
 }
 

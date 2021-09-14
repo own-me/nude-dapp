@@ -16,7 +16,14 @@ export default function ProfilePage() {
         <>
             <Navbar />
             {!isUserLoading && !userData && <Profile404 />}
-            {!isUserLoading && userData && <Profile name={userData.name} bio={userData.bio} profileId={userData.id} />}
+            {!isUserLoading && userData && 
+                <Profile 
+                    name={userData.name} 
+                    bio={userData.bio} 
+                    profileId={userData.id} 
+                    isFollowing={userData.isFollowing} 
+                />
+            }
         </>
     );
 };

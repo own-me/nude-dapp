@@ -100,10 +100,10 @@ const ActionButtons = styled.div`
     justify-content: center;
 `;
 
-const ActionButton = styled.button`
+const ActionButton = styled.button<{ $isFollowing: boolean }>`
     font-family: Poppins, Open Sans;
     font-size: 16px;
-    background-color: #FF81EB;
+    background-color: ${props => props.$isFollowing ? "#01a525" : "#FF81EB"};
     color: white;
     border: none;
     padding: 5px 15px;
@@ -130,6 +130,7 @@ interface ProfileInterface {
     profileId: string;
     name: string;
     bio: string;
+    isFollowing: boolean;
 }
 
 export default function Profile(props: ProfileInterface) {
@@ -221,7 +222,12 @@ export default function Profile(props: ProfileInterface) {
                 }
             </SocialHandles>
             <ActionButtons>
-                <ActionButton onClick={handleFollow}>Follow</ActionButton>
+                <ActionButton 
+                    onClick={handleFollow} 
+                    $isFollowing={props.isFollowing}
+                >
+                    {props.isFollowing ? "Following" : "Follow"}
+                </ActionButton>
                 <ActionButton>Subscribe</ActionButton>
             </ActionButtons>
             <br />
