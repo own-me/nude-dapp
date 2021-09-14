@@ -7,7 +7,7 @@ interface LoginRequest {
 }
 
 interface DecodedToken {
-    id: string,
+    id: number,
     email: string,
     name: string,
     exp: number,

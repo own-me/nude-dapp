@@ -46,6 +46,9 @@ export const userApi = createApi({
             query: ({ name }) => ({
                 url: `user/${name}`,
                 method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
             }),
         }),
         uploadProfileImage: builder.mutation<UploadProfileImageResponse, UploadProfileImageRequest>({
