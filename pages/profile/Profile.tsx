@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import defaultBanner from "../../media/defaults/stars-banner.png";
 import defaultProfile from "../../media/defaults/missing-profile.png";
@@ -100,10 +100,17 @@ const ActionButtons = styled.div`
     justify-content: center;
 `;
 
-const ActionButton = styled.button<{ $isFollowing: boolean }>`
+function getFollowButtonHoverColor(isFollowing: boolean, isHovered: boolean) {
+    if (isFollowing) {
+        return isHovered ? "red" : "green";
+    }
+    return "#FF81EB";
+}
+
+const ActionButton = styled.button<{ $isFollowing?: boolean, $isHovered?: boolean }>`
     font-family: Poppins, Open Sans;
     font-size: 16px;
-    background-color: ${props => props.$isFollowing ? "#01a525" : "#FF81EB"};
+    background-color: ${props => getFollowButtonHoverColor(props.$isFollowing, props.$isHovered)};
     color: white;
     border: none;
     padding: 5px 15px;
@@ -139,6 +146,8 @@ export default function Profile(props: ProfileInterface) {
 
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
     const userId = useAppSelector(state => state.user.id);
+
+    const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
 
     const [postFollow, {
         isLoading: isPostFollowLoading,
@@ -189,9 +198,15 @@ export default function Profile(props: ProfileInterface) {
     }
 
     const handleFollow = () => {
-        console.log("Follow");
         postFollow({ followerId: props.profileId });
     }
+
+    const followButtonText = useMemo(() => {
+        if (props.isFollowing) {
+            return isFollowButtonHovered ? "Unfollow" : "Following";
+        }
+        return "Follow";
+    }, [props.isFollowing, isFollowButtonHovered])
 
     return (
         <ProfileContainer>
@@ -225,8 +240,11 @@ export default function Profile(props: ProfileInterface) {
                 <ActionButton 
                     onClick={handleFollow} 
                     $isFollowing={props.isFollowing}
+                    $isHovered={isFollowButtonHovered}
+                    onMouseEnter={() => setIsFollowButtonHovered(true)}
+                    onMouseOut={() => setIsFollowButtonHovered(false)}
                 >
-                    {props.isFollowing ? "Following" : "Follow"}
+                    {followButtonText}
                 </ActionButton>
                 <ActionButton>Subscribe</ActionButton>
             </ActionButtons>
