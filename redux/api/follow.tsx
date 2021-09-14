@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface FollowRequest {
-    userId: number;
     followerId: string;
 }
 
@@ -15,12 +14,14 @@ export const followApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
         postFollow: builder.mutation<FollowResponse, FollowRequest>({
-            query: ({ userId, followerId }) => ({
+            query: ({ followerId }) => ({
                 url: "follow/",
                 method: "POST",
                 body: {
-                    userId, 
                     followerId
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             }),
         }),

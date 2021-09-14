@@ -190,7 +190,7 @@ export default function Profile(props: ProfileInterface) {
 
     const handleFollow = () => {
         console.log("Follow");
-        postFollow({ userId, followerId: props.profileId });
+        postFollow({ followerId: props.profileId });
     }
 
     return (
