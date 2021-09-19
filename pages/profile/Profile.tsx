@@ -14,7 +14,8 @@ import catNft from "../../media/defaults/catnft.png";
 import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { usePostFollowMutation } from "../../redux/api/follow";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { usePostUnfollowMutation } from "../../redux/api/unfollow";
+import { useAppSelector } from "../../redux/hooks";
 
 const ProfileContainer = styled.div`
     min-height: 100%;
@@ -145,8 +146,6 @@ export default function Profile(props: ProfileInterface) {
     const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
-    const userId = useAppSelector(state => state.user.id);
-
     const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
 
     const [postFollow, {
@@ -156,6 +155,14 @@ export default function Profile(props: ProfileInterface) {
         data: postFollowData,
         error: postFollowError
     }] = usePostFollowMutation();
+
+    const [postUnfollow, {
+        isLoading: isPostUnfollowLoading,
+        isSuccess: isPostUnfollowSuccess,
+        isError: isPostUnfollowError,
+        data: postUnfollowData,
+        error: postUnfollowError
+    }] = usePostUnfollowMutation();
 
     const mockSocials = [
         "https://www.instagram.com/christopher.trimboli/",
@@ -197,10 +204,6 @@ export default function Profile(props: ProfileInterface) {
         return cards;
     }
 
-    const handleFollow = () => {
-        postFollow({ followerId: props.profileId });
-    }
-
     const followButtonText = useMemo(() => {
         if (props.isFollowing) {
             return isFollowButtonHovered ? "Unfollow" : "Following";
@@ -238,7 +241,7 @@ export default function Profile(props: ProfileInterface) {
             </SocialHandles>
             <ActionButtons>
                 <ActionButton 
-                    onClick={handleFollow} 
+                    onClick={() => props.isFollowing ? postUnfollow({ followerId: props.profileId }) : postFollow({ followerId: props.profileId })} 
                     $isFollowing={props.isFollowing}
                     $isHovered={isFollowButtonHovered}
                     onMouseEnter={() => setIsFollowButtonHovered(true)}

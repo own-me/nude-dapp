@@ -5,6 +5,7 @@ import { ipfsApi } from "./api/ipfs";
 import { loginApi } from "./api/login";
 import { registerApi } from "./api/register";
 import { userApi } from "./api/user";
+import { unfollowApi } from "./api/unfollow";
 import userReducer from "./slices/user";
 import walletReducer from "./slices/wallet";
 
@@ -16,14 +17,16 @@ export const store = configureStore({
         [registerApi.reducerPath]: registerApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
         [ipfsApi.reducerPath]: ipfsApi.reducer,
-        [followApi.reducerPath]: followApi.reducer
+        [followApi.reducerPath]: followApi.reducer,
+        [unfollowApi.reducerPath]: unfollowApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         loginApi.middleware,
         registerApi.middleware,
         userApi.middleware,
         ipfsApi.middleware,
-        followApi.middleware
+        followApi.middleware,
+        unfollowApi.middleware
     ),
 });
 
