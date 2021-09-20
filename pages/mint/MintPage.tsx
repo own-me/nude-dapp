@@ -82,10 +82,9 @@ export default function MintPage() {
     const [price, setPrice] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string>();
-    const [imageBuffer, setImageBuffer] = useState<ArrayBuffer>();
     const [imageData, setImageData] = useState<File>();
 
-    const { balance, address, provider, signer } = useWallet();
+    const { address, provider, signer } = useWallet();
 
     const [postIpfsUpload, {
         isLoading: isPostIpfsUploadLoading,
@@ -116,16 +115,7 @@ export default function MintPage() {
         }
     }
 
-    const queryNFTs = async () => {
-        const abi = await fetchNudeNftABI();
-        const nudeNftContract = new ethers.Contract(abi.networks["5777"].address, abi.abi, provider);
-        const nudeNftWithSigner = nudeNftContract.connect(signer);
-        const metadata = await nudeNftWithSigner.tokenURI(1);
-        console.log(JSON.parse(metadata));
-    }
-
     const clearImage = () => {
-        setImageBuffer(null);
         setImagePreview(null);
     }
 
@@ -140,7 +130,6 @@ export default function MintPage() {
                 <ImagesRow>
                     <DragDropInput
                         onBase64={(image) => setImagePreview(image)}
-                        onArrayBuffer={(image) => setImageBuffer(image)}
                         onChange={(image) => setImageData(image)}
                         onClear={clearImage}
                     />
@@ -167,13 +156,12 @@ export default function MintPage() {
                 />
                 <FormTextArea
                     label="Description"
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(value) => setDescription(value)}
                     errorMessage="Description is required."
                 />
                 <MintFormFooter>
                     <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
                     <SubmitButton onClick={handleMintSubmit}>MINT</SubmitButton>
-                    <SubmitButton onClick={queryNFTs}>NFT</SubmitButton>
                 </MintFormFooter>
             </MintPageContainer>
         </>
