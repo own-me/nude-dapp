@@ -129,9 +129,14 @@ const NftCards = styled.div`
 `;
 
 const EditProfileButton = styled(ProfileAddress)`
-    background-color: blue;
+    background-color: #1212ff;
     float: left;
     margin-left: 20px;
+    cursor: pointer;
+
+    :hover {
+        background-color: #b005ff;
+    }
 `;
 
 interface ProfileInterface {
@@ -174,7 +179,7 @@ export default function Profile(props: ProfileInterface) {
         "https://www.linkedin.com/in/christophertrimboli/"
     ];
 
-    const supportedSocials = [
+    const supportedSocials = useMemo(() => [
         {
             name: "Instagram",
             icon: instagramIcon,
@@ -199,12 +204,21 @@ export default function Profile(props: ProfileInterface) {
             domainRegex: /www\.youtube\.com/,
             getHandle: (url: string) => url.split("/")[4]
         }
-    ];
+    ], [instagramIcon, twitterIcon, linkedinIcon, youtubeIcon]);
 
     const mockNFTCards = () => {
         const cards = []
         for (let i = 0; i < 12; i++) {
-            cards.push(<NFTCard title={"King Tobi"} owner={"@thecatdad"} price={"2.45 ETH"} rarity={[1, 8]} image={catNft} key={i} />);
+            cards.push(
+                <NFTCard
+                    title={"King Tobi"}
+                    owner={"@thecatdad"}
+                    price={"2.45 ETH"}
+                    rarity={[1, 8]}
+                    image={catNft}
+                    key={i}
+                />
+            );
         }
         return cards;
     }
@@ -245,8 +259,8 @@ export default function Profile(props: ProfileInterface) {
                 }
             </SocialHandles>
             <ActionButtons>
-                <ActionButton 
-                    onClick={() => props.isFollowing ? postUnfollow({ followerId: props.profileId }) : postFollow({ followerId: props.profileId })} 
+                <ActionButton
+                    onClick={() => props.isFollowing ? postUnfollow({ followerId: props.profileId }) : postFollow({ followerId: props.profileId })}
                     $isFollowing={props.isFollowing}
                     $isHovered={isFollowButtonHovered}
                     onMouseEnter={() => setIsFollowButtonHovered(true)}
