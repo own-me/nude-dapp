@@ -139,6 +139,7 @@ interface ProfileInterface {
     name: string;
     bio: string;
     isFollowing: boolean;
+    userRefetch: () => void;
 }
 
 export default function Profile(props: ProfileInterface) {
@@ -163,6 +164,10 @@ export default function Profile(props: ProfileInterface) {
         data: postUnfollowData,
         error: postUnfollowError
     }] = usePostUnfollowMutation();
+
+    useEffect(() => {
+        props.userRefetch();
+    }, [isPostFollowSuccess, isPostUnfollowSuccess,]);
 
     const mockSocials = [
         "https://www.instagram.com/christopher.trimboli/",

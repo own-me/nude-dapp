@@ -9,7 +9,8 @@ export default function ProfilePage() {
     const {
         data: userData,
         error: userError,
-        isLoading: isUserLoading
+        isLoading: isUserLoading,
+        refetch: userRefetch
     } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
 
     return (
@@ -21,7 +22,8 @@ export default function ProfilePage() {
                     name={userData.name} 
                     bio={userData.bio} 
                     profileId={userData.id} 
-                    isFollowing={userData.isFollowing} 
+                    isFollowing={userData.isFollowing}
+                    userRefetch={userRefetch}
                 />
             }
         </>
