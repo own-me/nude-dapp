@@ -121,9 +121,10 @@ interface EditProfileFormProps {
     currentName: string;
     currentBio: string;
     onCancel: () => void;
+    userRefetch: () => void;
 }
 
-const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName, currentBio }: EditProfileFormProps) => {
+const EditProfileForm = memo(({ bannerImage, profileImage, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
     const [name, setName] = useState<string>(currentName ?? "");
     const [bio, setBio] = useState<string>(currentBio ?? "");
 
@@ -149,6 +150,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, onCancel, currentName
         if (isEditProfileSuccess) {
             onCancel();
             history.push(`/${name}`);
+            userRefetch();
         }
     }, [isEditProfileSuccess]);
 

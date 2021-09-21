@@ -296,6 +296,7 @@ export default function Profile(props: ProfileInterface) {
                     onCancel={() => setIsEditProfileOpen(false)}
                     currentName={props.name}
                     currentBio={props.bio}
+                    userRefetch={props.userRefetch}
                 />
             </Modal>
         </ProfileContainer>
