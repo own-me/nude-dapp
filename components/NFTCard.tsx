@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
+import { shortenAddress } from "../lib/helpers";
 
 interface NFTCardProps {
     title: string;
@@ -31,6 +32,8 @@ const NFTCardContainer = styled.div`
 
 const NFTCardImage = styled.img`
     width: 100%;
+    max-height: 70%;
+    object-fit: cover;
 `;
 
 const NFTCardTitle = styled.div`
@@ -63,7 +66,7 @@ const NFTCard = memo(({ title, owner, price, rarity, image }: NFTCardProps) => {
         <NFTCardContainer>
             <NFTCardImage src={image} />
             <NFTCardTitle>{title}</NFTCardTitle>
-            <NFTCardOwner>{owner}</NFTCardOwner>
+            <NFTCardOwner>{shortenAddress(owner, 18)}</NFTCardOwner>
             <NFTCardPrice>{price}</NFTCardPrice>
             <NFTCardRarity>{`${rarity[0]} / ${rarity[1]}`}</NFTCardRarity>
         </NFTCardContainer>
