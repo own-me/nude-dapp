@@ -144,6 +144,7 @@ interface ProfileInterface {
     name: string;
     bio: string;
     isFollowing: boolean;
+    userNfts: any[];
     userRefetch: () => void;
 }
 
@@ -223,6 +224,22 @@ export default function Profile(props: ProfileInterface) {
         return cards;
     }
 
+    const parseRawNfts = (nfts: any[]): any[] => {
+        return nfts.map((nft: any, index: number) => {
+            const tokenURI = JSON.parse(nft.returnValues.tokenURI);
+            console.log(tokenURI);
+            return {
+                title: tokenURI.title,
+                description: tokenURI.description,
+                owner: nft.returnValues.recipient,
+                price: "2.45 ETH",
+                rarity: [1, 8],
+                image: tokenURI.image,
+                tokenId: nft.returnValues.tokenId
+            }
+        });
+    }
+
     const followButtonText = useMemo(() => {
         if (props.isFollowing) {
             return isFollowButtonHovered ? "Unfollow" : "Following";
@@ -275,7 +292,16 @@ export default function Profile(props: ProfileInterface) {
                 <TabContent>
                     <NftCards>
                         {
-                            mockNFTCards().map((card) => card)
+                            props.userNfts?.length > 0 && parseRawNfts(props.userNfts).map((nft: any, index: number) => {
+                                return <NFTCard
+                                    title={nft.title}
+                                    owner={nft.owner}
+                                    price={nft.price}
+                                    rarity={nft.rarity}
+                                    image={nft.image}
+                                    key={index}
+                                />
+                            })
                         }
                     </NftCards>
                 </TabContent>

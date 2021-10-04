@@ -5,8 +5,12 @@ import Navbar from "../../components/Navbar";
 import Profile from "./Profile";
 import Profile404 from "./Profile404";
 import useWallet from "../../hooks/useWallet";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { setUserNfts } from "../../redux/slices/user";
 
 export default function ProfilePage() {
+    const dispatch = useAppDispatch();
+    const userNfts = useAppSelector(state => state.user.nfts);
 
     const { address } = useWallet();
 
@@ -28,10 +32,10 @@ export default function ProfilePage() {
 
     useEffect(() => {
         console.log(userNftsData);
+        dispatch(setUserNfts(userNftsData?.userNfts));
     }, [userNftsData]);
 
     useEffect(() => {
-        console.log(address);
         userNftsRefetch()
     }, [address]);
 
@@ -46,6 +50,7 @@ export default function ProfilePage() {
                     profileId={userData.id}
                     isFollowing={userData.isFollowing}
                     userRefetch={userRefetch}
+                    userNfts={userNfts}
                 />
             }
         </>
