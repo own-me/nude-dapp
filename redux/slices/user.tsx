@@ -2,40 +2,45 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
     id: number;
-    name: string,
-    loggedIn: boolean,
-    email: string
+    name: string;
+    loggedIn: boolean;
+    email: string;
+    nfts: any[];
 };
 
 const initialState: UserState = {
     id: null,
     name: "",
     loggedIn: false,
-    email: ""
+    email: "",
+    nfts: []
 };
 
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setUserId: (state, action: PayloadAction<number>) => {
+        setUserId: (state: UserState, action: PayloadAction<number>) => {
             state.id = action.payload;
         },
-        setUserName: (state, action: PayloadAction<string>) => {
+        setUserName: (state: UserState, action: PayloadAction<string>) => {
             state.name = action.payload;
         },
-        setUserLoggedIn: (state, action: PayloadAction<boolean>) => {
+        setUserLoggedIn: (state: UserState, action: PayloadAction<boolean>) => {
             if (!action.payload) {
                 window.localStorage.removeItem("token");
             }
             state.loggedIn = action.payload;
         },
-        setUserEmail: (state, action: PayloadAction<string>) => {
+        setUserEmail: (state: UserState, action: PayloadAction<string>) => {
             state.email = action.payload;
         },
+        setUserNfts: (state: UserState, action: PayloadAction<any[]>) => {
+            state.nfts = action.payload;
+        }
     }
 });
 
-export const { setUserId, setUserName, setUserLoggedIn, setUserEmail } = userSlice.actions;
+export const { setUserId, setUserName, setUserLoggedIn, setUserEmail, setUserNfts } = userSlice.actions;
 
 export default userSlice.reducer;
