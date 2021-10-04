@@ -8,6 +8,14 @@ interface NftDbResponse {
     
 }
 
+interface GetUserNftsRequest {
+    address: string;
+}
+
+interface GetUserNftsResponse {
+    userNfts: any[];
+}
+
 export const nftDbApi = createApi({
     reducerPath: "nftDbApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
@@ -20,8 +28,17 @@ export const nftDbApi = createApi({
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             }),
+        }),
+        getUserNfts: builder.query<GetUserNftsResponse, GetUserNftsRequest>({
+            query: ({ address }) => ({
+                url: `nft-db/user/${address}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            }),
         })
     }),
 });
 
-export const { useGetAllNftsQuery } = nftDbApi;
+export const { useGetAllNftsQuery, useGetUserNftsQuery } = nftDbApi;
