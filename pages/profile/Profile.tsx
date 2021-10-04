@@ -227,7 +227,6 @@ export default function Profile(props: ProfileInterface) {
     const parseRawNfts = (nfts: any[]): any[] => {
         return nfts.map((nft: any, index: number) => {
             const tokenURI = JSON.parse(nft.returnValues.tokenURI);
-            console.log(tokenURI);
             return {
                 title: tokenURI.title,
                 description: tokenURI.description,
