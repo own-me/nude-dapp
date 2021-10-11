@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { Link, useHistory } from "react-router-dom";
-import { usePostRegisterMutation, useVerifyEmailMutation } from "../../redux/api/register";
+import { usePostRegisterMutation } from "../../redux/api/register";
 import loadingSpinner from "../../media/loading.svg";
 import FormInput from "../../components/FormInput";
+import useWallet from "../../hooks/useWallet";
 
 const RegisterFormContainer = styled.form`
     display: flex;
@@ -64,14 +65,10 @@ const ErrorMessage = styled.p`
 export default function RegisterForm() {
     const history = useHistory();
 
+    const { address } = useWallet();
+
     const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(false);
-    const [isVerificationStage, setIsVerificationStage] = useState<boolean>(false);
-    const [isVerificationCodeSent, setIsVerificationCodeSent] = useState<boolean>(false);
-    const [verificationCode, setVerificationCode] = useState<string>("");
 
     const [postRegister, {
         isLoading: isRegisterLoading,
@@ -81,57 +78,23 @@ export default function RegisterForm() {
         error: registerError
     }] = usePostRegisterMutation();
 
-    const [postVerifyEmail, {
-        isLoading: isVerifyEmailLoading,
-        isSuccess: isVerifyEmailSuccess,
-        isError: isVerifyEmailError,
-        data: verifyEmailData,
-        error: verifyEmailError
-    }] = useVerifyEmailMutation();
-
     useEffect(() => {
         if (isRegisterSuccess) {
             history.push("/login");
         }
     }, [registerData, isRegisterSuccess, isRegisterError]);
 
-    useEffect(() => {
-        setIsPasswordConfirmed((password && confirmPassword) && (password === confirmPassword));
-    }, [password, confirmPassword]);
-
     const handleRegister = (e) => {
         e.preventDefault();
-        postRegister({ email, name, password, verificationCode });
+        postRegister({ address });
     };
-
-    const switchToVerificationStage = () => {
-        setIsVerificationStage(true);
-        postVerifyEmail({ email });
-        setIsVerificationCodeSent(true);
-    }
-
-    const isFormValid = useMemo(() => isPasswordConfirmed && email && name, [isPasswordConfirmed, email, name]);
 
     return (
         <RegisterFormContainer>
             <RegisterHeader>Register</RegisterHeader>
-            {
-                !isVerificationStage && <>
-                    <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
-                    <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} required />
-                    <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" required />
-                    <FormInput label="Confirm Password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} autoComplete="new-password" required />
-                    <SubmitButton onClick={switchToVerificationStage} disabled={!isFormValid} $disabled={!isFormValid}>Submit</SubmitButton>
-                </>
-            }
-            {
-                isVerificationStage && <>
-                    {isVerificationCodeSent && <h2>We sent a code to: {email}</h2>}
-                    <FormInput label="Verification Code" type="text" onChange={(e) => setVerificationCode(e.target.value)} required />
-                    <ErrorMessage>{isRegisterError && registerError?.data?.error}</ErrorMessage>
-                    <SubmitButton onClick={handleRegister} disabled={!isFormValid} $disabled={!isFormValid}>Verify code</SubmitButton>
-                </>
-            }
+            <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" optional />
+            <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} optional />
+            <SubmitButton onClick={handleRegister}>Register</SubmitButton>
             {
                 isRegisterLoading && <img src={loadingSpinner} />
             }
