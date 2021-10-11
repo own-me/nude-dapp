@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
@@ -6,7 +6,9 @@ import { usePostLoginMutation } from "../../redux/api/login";
 import { setUserLoggedIn, setUserEmail, setUserName, setUserId } from "../../redux/slices/user";
 import loadingSpinner from "../../media/loading.svg";
 import { Link } from "react-router-dom";
-import FormInput from "../../components/FormInput";
+import useWallet from "../../hooks/useWallet";
+import { ethers } from "ethers";
+import { usePostAuthMutation } from "../../redux/api/auth";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -31,7 +33,7 @@ const LoginHeader = styled.h1`
     margin: 0;
 `;
 
-const SubmitButton = styled.button<{ $disabled: boolean }>`
+const SubmitButton = styled.button<{ $disabled?: boolean }>`
     margin: 20px;
     background: #f455fa;
     border: 1px solid #707070;
@@ -62,27 +64,50 @@ const ErrorMessage = styled.p`
     font-family: Poppins, Open Sans;
 `;
 
-export default function LoginForm(props) {
+export const LoginForm = memo((props) => {
     const loggedIn = useAppSelector(state => state.user.loggedIn);
     const dispatch = useAppDispatch();
     const history = useHistory();
+    const { address, signer } = useWallet();
 
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [postLogin, {
+        isLoading: isPostLoginLoading,
+        isSuccess: isPostLoginSuccess,
+        isError: isPostLoginError,
+        data: postLoginData,
+        error: postLoginError
+    }] = usePostLoginMutation();
 
-    const [postLogin, { isLoading, isSuccess, isError, data, error }] = usePostLoginMutation();
+    const [postAuth, {
+        isLoading: isPostAuthLoading,
+        isSuccess: isPostAuthSuccess,
+        isError: isPostAuthError,
+        data: postAuthData,
+        error: postAuthError
+    }] = usePostAuthMutation();
+
+    const handleSubmit = useCallback((e) => {
+        e.preventDefault();
+        console.log("Submit!");
+        postLogin({ address });
+        return;
+    }, [address, postLogin]);
 
     useEffect(() => {
-        if (isSuccess) {
-            window.localStorage.setItem("token", data.token);
-            dispatch(setUserLoggedIn(true));
-            dispatch(setUserEmail(data.decoded.email));
-            dispatch(setUserName(data.decoded.name));
-            dispatch(setUserId(data.decoded.id));
-        } else if (isError) {
+        if (isPostLoginSuccess) {
+            signer.signMessage(postLoginData.nonce).then(signature => {
+                console.log(signature);
+                postAuth({ address, signature, nonce: postLoginData.nonce });
+                dispatch(setUserLoggedIn(true));
+            });
+            // window.localStorage.setItem("token", data.token);
+            // dispatch(setUserEmail(data.decoded.email));
+            // dispatch(setUserName(data.decoded.name));
+            // dispatch(setUserId(data.decoded.id));
+        } else if (isPostLoginError) {
             window.localStorage.removeItem("token");
         }
-    }, [data, isSuccess, isError]);
+    }, [postLoginData, isPostLoginSuccess, isPostLoginError]);
 
     useEffect(() => {
         if (loggedIn) {
@@ -92,34 +117,16 @@ export default function LoginForm(props) {
         }
     }, [loggedIn]);
 
-    useEffect(() => {
-        const token = window.localStorage.getItem("token");
-        if (token) {
-            postLogin({ token });
-        }
-    }, []);
-
-    const isFormValid = useMemo(() => email && password, [email, password]);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Submit!");
-        if (isFormValid) {
-            postLogin({ email, password });
-        }
-        return;
-    };
-
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
             <LoginHeader>Login</LoginHeader>
-            <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} />
-            <FormInput label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
-            <ErrorMessage>{isError && error?.data?.error}</ErrorMessage>
+            <ErrorMessage>{isPostLoginError && postLoginError?.data?.error}</ErrorMessage>
             {
-                isLoading ? <img src={loadingSpinner} /> : <SubmitButton $disabled={!isFormValid}>Submit</SubmitButton>
+                isPostLoginLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleSubmit}>Metamask</SubmitButton>
             }
             <Link to="/register">Register</Link>
         </LoginFormContainer>
     );
-};
+});
+
+export default LoginForm;
