@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { InputHTMLAttributes, memo, useState } from "react";
 import styled, { css } from "styled-components";
 
 export const formStyles = css<{ $isError?: boolean }>`
@@ -28,27 +28,37 @@ const Label = styled.label`
     font-size: 26px;
 `;
 
-const Error = styled.span`
+const InfoText = styled.span`
     color: red;
     position: absolute;
     right: 15px;
     top: 15px;
 `;
 
-interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+const ErrorText = styled(InfoText)`
+    color: red;
+
+`;
+
+const OptionalText = styled(InfoText)`
+    color: #505050;
+`;
+
+interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     type: "text" | "email" | "password" | "number" | "select" | "checkbox" | "radio";
     inputValue?: string;
     errorMessage?: string;
+    optional?: boolean;
 }
 
-const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeholder, min }: FormInputProps) => {
+const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeholder, min, optional }: FormInputProps) => {
     const [value, setValue] = useState<string>(inputValue || "");
     const [error, setError] = useState<string>("");
 
     const handleChange = (e) => {
         const value = e.target?.value;
-        if (!value) {
+        if (!value && !optional) {
             setError(errorMessage || "Input invalid.");
         } else if (error && value) {
             setError("");
@@ -60,7 +70,8 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
     return (
         <FormInputContainer>
             <Label htmlFor={`${label}-input`}>{label}</Label>
-            <Error>{error}</Error>
+            {error && <ErrorText>{error}</ErrorText>}
+            {optional && !error && <OptionalText>optional</OptionalText>}
             <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeholder} min={min} $isError={error} />
         </FormInputContainer>
     );

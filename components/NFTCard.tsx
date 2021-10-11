@@ -2,14 +2,6 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
 
-interface NFTCardProps {
-    title: string;
-    owner: string;
-    price: string;
-    rarity: [number, number];
-    image: string;
-}
-
 const NFTCardContainer = styled.div`
     font-family: Poppins, Open Sans;
     height: 280px;
@@ -60,6 +52,14 @@ const NFTCardRarity = styled.div`
     right: 20px;
     color: #595959;
 `;
+
+interface NFTCardProps {
+    title: string;
+    owner: string;
+    price: string;
+    rarity: [number, number];
+    image: string;
+}
 
 const NFTCard = memo(({ title, owner, price, rarity, image }: NFTCardProps) => {
     return (
