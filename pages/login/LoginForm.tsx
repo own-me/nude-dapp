@@ -7,7 +7,6 @@ import { setUserLoggedIn, setUserEmail, setUserName, setUserId } from "../../red
 import loadingSpinner from "../../media/loading.svg";
 import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
-import { ethers } from "ethers";
 import { usePostAuthMutation } from "../../redux/api/auth";
 
 const LoginFormContainer = styled.form`
@@ -86,28 +85,42 @@ export const LoginForm = memo((props) => {
         error: postAuthError
     }] = usePostAuthMutation();
 
-    const handleSubmit = useCallback((e) => {
+    useEffect(() => {
+        if (window.localStorage.getItem("token")) {
+            postLogin({ address });
+        }
+    }, [address])
+
+    const handleSubmit = useCallback((e?) => {
         e.preventDefault();
-        console.log("Submit!");
         postLogin({ address });
-        return;
     }, [address, postLogin]);
 
     useEffect(() => {
-        if (isPostLoginSuccess) {
-            signer.signMessage(postLoginData.nonce).then(signature => {
-                console.log(signature);
-                postAuth({ address, signature, nonce: postLoginData.nonce });
+        if (isPostLoginSuccess && postLoginData) {
+            if (postLoginData.nonce) {
+                window.localStorage.removeItem("token");
+                signer.signMessage(postLoginData.nonce).then(signature => {
+                    postAuth({ address, signature, nonce: postLoginData.nonce });
+                });
+            } else {
                 dispatch(setUserLoggedIn(true));
-            });
-            // window.localStorage.setItem("token", data.token);
-            // dispatch(setUserEmail(data.decoded.email));
-            // dispatch(setUserName(data.decoded.name));
-            // dispatch(setUserId(data.decoded.id));
-        } else if (isPostLoginError) {
+            }
+        }
+    }, [postLoginData, isPostLoginSuccess]);
+
+    useEffect(() => {
+        if (isPostLoginError) {
             window.localStorage.removeItem("token");
         }
-    }, [postLoginData, isPostLoginSuccess, isPostLoginError]);
+    }, [isPostLoginError]);
+
+    useEffect(() => {
+        if (isPostAuthSuccess && postAuthData && postAuthData.token) {
+            window.localStorage.setItem("token", postAuthData.token);
+            dispatch(setUserLoggedIn(true));
+        }
+    }, [isPostAuthSuccess]);
 
     useEffect(() => {
         if (loggedIn) {

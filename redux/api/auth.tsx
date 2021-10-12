@@ -9,6 +9,7 @@ interface AuthRequest {
 interface AuthResponse {
     address: string;
     message: string;
+    token: string;
 }
 
 export const authApi = createApi({

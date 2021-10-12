@@ -1,21 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface LoginRequest {
-    address: string
+    address?: string;
 }
 
 interface LoginResponse {
-    address: string,
-    message: string,
-    nonce: string
+    address: string;
+    message: string;
+    nonce?: string;
+    token?: string;
 }
 
 interface DecodedToken {
-    id: number,
-    email: string,
-    name: string,
-    exp: number,
-    iat: number
+    address: string;
+    exp: number;
+    iat: number;
 }
 
 export const loginApi = createApi({
@@ -28,6 +27,9 @@ export const loginApi = createApi({
                 method: "POST",
                 body: {
                     address
+                },
+                headers: {
+                    ...(localStorage.getItem("token") && {Authorization: `Bearer ${localStorage.getItem("token")}`})
                 }
             }),
         }),

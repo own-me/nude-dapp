@@ -5,9 +5,7 @@ interface RegisterRequest {
 }
 
 interface RegisterResponse {
-    address: string;
     message: string;
-    nonce: string;
 }
 
 interface VerifyEmailRequest {
