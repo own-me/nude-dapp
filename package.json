@@ -1,5 +1,5 @@
 {
-  "name": "own-me-frontend",
+  "name": "frontend",
   "version": "0.0.1",
   "description": "Own Me's frontend app.",
   "main": "App.tsx",
@@ -9,13 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/the-digital-labs/own-me-frontend.git"
+    "url": "git+https://github.com/own-me/frontend.git"
   },
-  "author": "The Digital Labs",
+  "author": "Own Me",
   "bugs": {
-    "url": "https://github.com/the-digital-labs/own-me-frontend/issues"
+    "url": "https://github.com/own-me/frontend/issues"
   },
-  "homepage": "https://github.com/the-digital-labs/own-me-frontend",
+  "homepage": "https://github.com/own-me/frontend",
   "dependencies": {
     "@fontsource/poppins": "^4.5.0",
     "@fontsource/rock-salt": "^4.5.0",
