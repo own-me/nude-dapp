@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import navLogo from "../media/navbar.png";
+import navLogo from "../media/own-me-logo.svg";
 import AccountButton from "./AccountButton";
 import { useHistory } from "react-router-dom";
 import { ZIndex } from "../lib/zindex";

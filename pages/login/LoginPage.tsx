@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import loginBackground from "../../media/login-background.svg";
-import logo from "../../media/navbar.png";
+import logo from "../../media/own-me-logo.svg";
 
 const LoginPageContainer = styled.div`
     height: 100%;

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import RegisterForm from "./RegisterForm";
 import loginBackground from "../../media/login-background.svg";
-import logo from "../../media/navbar.png";
+import logo from "../../media/own-me-logo.svg";
 
 const RegisterPageContainer = styled.div`
     height: 100%;
