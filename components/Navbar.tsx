@@ -22,6 +22,7 @@ const NavbarContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     z-index: ${ZIndex.NAVBAR};
+    border-bottom: 1px solid #fdf3ff;
 `;
 
 const NavbarItems = styled.div`
