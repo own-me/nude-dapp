@@ -19,7 +19,9 @@ export default function ProfilePage() {
         error: userError,
         isLoading: isUserLoading,
         refetch: userRefetch
-    } = useGetUserQuery({ address: address });
+    } = useGetUserQuery({ address: address }, {
+        skip: !address,
+    });
 
     const {
         data: userNftsData,
@@ -47,7 +49,7 @@ export default function ProfilePage() {
                 <Profile
                     name={userData.name}
                     bio={userData.bio}
-                    profileId={userData.id}
+                    profileAddress={userData.address}
                     isFollowing={userData.isFollowing}
                     userRefetch={userRefetch}
                     userNfts={userNfts}

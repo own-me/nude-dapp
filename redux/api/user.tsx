@@ -6,6 +6,7 @@ interface UserRequest {
 
 interface UserResponse {
     id: string,
+    address: string,
     message: string,
     name: string,
     birthDate: string,

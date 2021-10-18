@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface UnfollowRequest {
-    followerId: string;
+    toAddress: string;
 }
 
 interface UnfollowResponse {
@@ -14,11 +14,11 @@ export const unfollowApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
         postUnfollow: builder.mutation<UnfollowResponse, UnfollowRequest>({
-            query: ({ followerId }) => ({
+            query: ({ toAddress }) => ({
                 url: "unfollow/",
                 method: "POST",
                 body: {
-                    followerId
+                    toAddress
                 },
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`

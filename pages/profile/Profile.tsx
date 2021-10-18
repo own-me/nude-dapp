@@ -140,7 +140,7 @@ const EditProfileButton = styled(ProfileAddress)`
 `;
 
 interface ProfileInterface {
-    profileId: string;
+    profileAddress: string;
     name: string;
     bio: string;
     isFollowing: boolean;
@@ -276,7 +276,7 @@ export default function Profile(props: ProfileInterface) {
             </SocialHandles>
             <ActionButtons>
                 <ActionButton
-                    onClick={() => props.isFollowing ? postUnfollow({ followerId: props.profileId }) : postFollow({ followerId: props.profileId })}
+                    onClick={() => props.isFollowing ? postUnfollow({ toAddress: props.profileAddress }) : postFollow({ toAddress: props.profileAddress })}
                     $isFollowing={props.isFollowing}
                     $isHovered={isFollowButtonHovered}
                     onMouseEnter={() => setIsFollowButtonHovered(true)}
