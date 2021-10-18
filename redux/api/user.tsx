@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface UserRequest {
-    name: string
+    address: string
 }
 
 interface UserResponse {
@@ -44,8 +44,8 @@ export const userApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
         getUser: builder.query<UserResponse, UserRequest>({
-            query: ({ name }) => ({
-                url: `user/${name}`,
+            query: ({ address }) => ({
+                url: `user/${address}`,
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`

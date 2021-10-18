@@ -19,7 +19,7 @@ export default function ProfilePage() {
         error: userError,
         isLoading: isUserLoading,
         refetch: userRefetch
-    } = useGetUserQuery({ name: window.location.pathname.split("/")[1] });
+    } = useGetUserQuery({ address: address });
 
     const {
         data: userNftsData,
