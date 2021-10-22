@@ -6,7 +6,6 @@ import logo from "../../media/own-me-logo.svg";
 import loginBackgroundIpad from "../../media/login-background-ipad.svg";
 import loginBackgroundMobile from "../../media/login-background-mobile.svg";
 
-
 const LoginPageContainer = styled.div`
     height: 100%;
     display: flex;
