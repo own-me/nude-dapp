@@ -15,9 +15,8 @@ const LoginPageContainer = styled.div`
     flex-direction: column;
     background-size: cover;
     background-color: white;
-    @media(max-width: 1015px) {
-        background-image: url(${loginBackground});
-    }
+    background-image: url(${loginBackground});
+
     @media(max-width: 1014px) {
         background-image: url(${loginBackgroundIpad});
     }
