@@ -13,7 +13,7 @@ const LoginPageContainer = styled.div`
     background-image: url(${loginBackground});
     background-size: cover;
     background-color: white;
-`;
+    `;
 
 const LogoImg = styled.img`
     margin: 0 auto;
