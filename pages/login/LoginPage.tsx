@@ -3,6 +3,9 @@ import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import loginBackground from "../../media/login-background.svg";
 import logo from "../../media/own-me-logo.svg";
+import loginBackgroundIpad from "../../media/login-background-ipad.svg";
+import loginBackgroundMobile from "../../media/login-background-mobile.svg";
+
 
 const LoginPageContainer = styled.div`
     height: 100%;
@@ -10,10 +13,18 @@ const LoginPageContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-image: url(${loginBackground});
     background-size: cover;
     background-color: white;
-    `;
+    @media(max-width: 1015px) {
+        background-image: url(${loginBackground});
+    }
+    @media(max-width: 1014px) {
+        background-image: url(${loginBackgroundIpad});
+    }
+    @media(max-width: 640px) {
+        background-image: url(${loginBackgroundMobile});
+    }
+`;
 
 const LogoImg = styled.img`
     margin: 0 auto;
