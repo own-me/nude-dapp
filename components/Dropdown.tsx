@@ -1,5 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
+import { Transition } from 'react-transition-group';
 
 const DropdownContainer = styled.div`
     padding: 40px 40px 20px 40px;
@@ -13,12 +14,32 @@ const DropdownContainer = styled.div`
     flex-direction: column;
     border-radius: 10px;
     border: 1px solid #FECDFF;
+    transition: opacity 150ms ease-in-out;
+
+    &.entering {
+        opacity: 0;
+    }
+
+    &.entered {
+        opacity: 1;
+    }
 `;
 
-export default function Dropdown({ children }) {
+interface DropdownProps {
+    children: React.ReactNode;
+    isOpen: boolean;
+}
+
+const Dropdown = memo(({ children, isOpen }: DropdownProps) => {
     return (
-        <DropdownContainer>
-            {children}
-        </DropdownContainer>
+        <Transition in={isOpen} timeout={150} mountOnEnter unmountOnExit>
+            {transitionState => (
+                <DropdownContainer className={transitionState}>
+                    {children}
+                </DropdownContainer>
+            )}
+        </Transition>
     );
-};
+});
+
+export default Dropdown;

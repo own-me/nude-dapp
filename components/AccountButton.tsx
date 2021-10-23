@@ -25,7 +25,7 @@ const AccountButtonTemplate = styled.button`
     }
 `;
 
-const AccountName = styled.div`
+const AccountAddress = styled.div`
     font-family: Poppins, Open Sans;
     color: #282828;
     font-size: 24px;
@@ -81,23 +81,20 @@ export default function AccountButton() {
             <AccountButtonTemplate type="button" onClick={() => setIsOpen(!isOpen)}>
                 {formattedBalance} NUDE
             </AccountButtonTemplate>
-            {
-                isOpen &&
-                <Dropdown>
-                    <div>
-                        <AccountName>{name}</AccountName>
-                        <Divider />
-                        <AccountInfo>{formattedAddress}</AccountInfo>
-                        <AccountInfo>{email}</AccountInfo>
-                        <Link to={`/${address}`}><EditProfileButton>Edit Profile</EditProfileButton></Link>
-                        <Link to={`/mint`}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
-                    </div>
-                    <br />
-                    <LogoutText onClick={handleLogout}>
-                        Logout
-                    </LogoutText>
-                </Dropdown>
-            }
+            <Dropdown isOpen={isOpen}>
+                <div>
+                    <AccountAddress>{formattedAddress}</AccountAddress>
+                    <Divider />
+                    <AccountInfo>{name}</AccountInfo>
+                    <AccountInfo>{email}</AccountInfo>
+                    <Link to={`/${address}`}><EditProfileButton>Edit Profile</EditProfileButton></Link>
+                    <Link to={`/mint`}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
+                </div>
+                <br />
+                <LogoutText onClick={handleLogout}>
+                    Logout
+                </LogoutText>
+            </Dropdown>
         </>
     );
 };
