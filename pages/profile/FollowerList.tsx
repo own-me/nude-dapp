@@ -4,6 +4,8 @@ import { Follower } from "../../redux/api/follow";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { shortenAddress } from "../../lib/helpers";
 import { usePostFollowMutation } from "../../redux/api/follow";
+import nftStatsIcon from "../../media/card.png";
+import followerStatsIcon from "../../media/user.png";
 
 interface FollowListProps {
     followers?: Follower[];
@@ -11,12 +13,20 @@ interface FollowListProps {
 
 const FollowerListContainer = styled.div`
     display: flex;
+    font-family: Poppins, Open Sans;
 `;
 
 const FollowerListRow = styled.div`
     width: 100%;
     display: flex;
     padding: 20px 40px;
+    border-bottom: 1px solid #ebebeb;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    :hover {
+        background-color: #fbf0f7;
+    }
 `;
 
 const FollowerProfileImage = styled.img`
@@ -34,7 +44,6 @@ const FollowerInfoContainer = styled.div`
 `;
 
 const FollowerInfoAddress = styled.div`
-    font-family: Poppins, Open Sans;
     font-size: 18px;
 `;
 
@@ -60,8 +69,28 @@ const FollowButton = styled.button`
     }
 `;
 
-const FollowerStatsContainer = styled.div`
+const StatsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    flex-grow: 2;
+`;
 
+const StatsIcon = styled.img`
+    height: 20px;
+    margin-right: 5px;
+`
+
+const FollowerStats = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+
+const NftStats = styled.div`
+    display: flex;
+    align-items: center;
 `;
 
 const FollowerList = memo(({ followers = [] }: FollowListProps) => {
@@ -88,9 +117,14 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
                             <FollowerInfoAddress>{shortenAddress(follower.fromAddress, 16)}</FollowerInfoAddress>
                             <FollowButton onClick={() => handleFollow(follower.fromAddress)}>Follow</FollowButton>
                         </FollowerInfoContainer>
-                        <FollowerStatsContainer>
-
-                        </FollowerStatsContainer>
+                        <StatsContainer>
+                            <FollowerStats>
+                                <StatsIcon src={followerStatsIcon} /> {123}
+                            </FollowerStats>
+                            <NftStats>
+                                <StatsIcon src={nftStatsIcon} /> {12}
+                            </NftStats>
+                        </StatsContainer>
                     </FollowerListRow>
                 )
             }
