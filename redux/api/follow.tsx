@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export interface Follower {
+    fromAddress: string;
+    id: number;
+    toAddress: string;
+}
+
 interface FollowRequest {
     toAddress: string;
 }

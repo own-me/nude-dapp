@@ -1,21 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Follower } from "./follow";
 
 interface UserRequest {
     address: string
 }
 
 interface UserResponse {
-    id: string,
-    address: string,
-    message: string,
-    name: string,
-    birthDate: string,
-    registrationDate: string,
-    lastLoginDate: string,
-    profileImageUrl: string,
-    bannerImageUrl: string,
-    bio: string,
-    isFollowing: boolean
+    id: string;
+    address: string;
+    message: string;
+    name: string;
+    birthDate: string;
+    registrationDate: string;
+    lastLoginDate: string;
+    profileImageUrl: string;
+    bannerImageUrl: string;
+    bio: string;
+    isFollowing: boolean;
+    following: Follower[];
 }
 
 interface UploadProfileImageRequest {
