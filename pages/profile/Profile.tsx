@@ -15,7 +15,7 @@ import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
-import { useAppSelector } from "../../redux/hooks";
+import FollowerList from "./FollowerList";
 
 const ProfileContainer = styled.div`
     min-height: 100%;
@@ -146,6 +146,7 @@ interface ProfileInterface {
     bio: string;
     isFollowing: boolean;
     userNfts: any[];
+    following: any[];
     userRefetch: () => void;
 }
 
@@ -309,7 +310,7 @@ export default function Profile(props: ProfileInterface) {
                     <h1>Posts bro</h1>
                 </TabContent>
                 <TabContent>
-                    <h1>Following bro</h1>
+                    <FollowerList followers={props.following} />
                 </TabContent>
                 <TabContent>
                     <h1>Activity bro</h1>

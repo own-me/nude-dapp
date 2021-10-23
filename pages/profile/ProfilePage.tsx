@@ -53,6 +53,7 @@ export default function ProfilePage() {
                     isFollowing={userData.isFollowing}
                     userRefetch={userRefetch}
                     userNfts={userNfts}
+                    following={userData.following}
                 />
             }
         </>
