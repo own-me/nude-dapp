@@ -13,11 +13,11 @@ interface FollowListProps {
 
 const FollowerListContainer = styled.div`
     display: flex;
+    flex-direction: column;
     font-family: Poppins, Open Sans;
 `;
 
 const FollowerListRow = styled.div`
-    width: 100%;
     display: flex;
     padding: 20px 40px;
     border-bottom: 1px solid #ebebeb;
@@ -114,8 +114,8 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
                     <FollowerListRow key={index}>
                         <FollowerProfileImage src={defaultProfile} />
                         <FollowerInfoContainer>
-                            <FollowerInfoAddress>{shortenAddress(follower.fromAddress, 16)}</FollowerInfoAddress>
-                            <FollowButton onClick={() => handleFollow(follower.fromAddress)}>Follow</FollowButton>
+                            <FollowerInfoAddress>{shortenAddress(follower.toAddress, 16)}</FollowerInfoAddress>
+                            <FollowButton onClick={() => handleFollow(follower.toAddress)}>Follow</FollowButton>
                         </FollowerInfoContainer>
                         <StatsContainer>
                             <FollowerStats>
