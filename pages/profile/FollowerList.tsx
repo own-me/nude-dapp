@@ -25,7 +25,7 @@ const FollowerListRow = styled.div`
     transition: background-color 0.2s ease-in-out;
 
     :hover {
-        background-color: #fbf0f7;
+        background-color: #fef9ff;
     }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import defaultBanner from "../../media/defaults/stars-banner.png";
 import defaultProfile from "../../media/defaults/missing-profile.png";
@@ -150,7 +150,7 @@ interface ProfileInterface {
     userRefetch: () => void;
 }
 
-export default function Profile(props: ProfileInterface) {
+const Profile = memo((props: ProfileInterface) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
@@ -289,7 +289,7 @@ export default function Profile(props: ProfileInterface) {
                 <ActionButton>Subscribe</ActionButton>
             </ActionButtons>
             <br />
-            <Tabs tabs={["NFTs", "Posts", "Following", "Activity"]}>
+            <Tabs tabs={useMemo(() => ["NFTs", "Posts", "Following", "Activity"], [])}>
                 <TabContent>
                     <NftCards>
                         {
@@ -328,4 +328,6 @@ export default function Profile(props: ProfileInterface) {
             </Modal>
         </ProfileContainer>
     );
-};
+});
+
+export default Profile;
