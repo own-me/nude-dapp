@@ -42,6 +42,7 @@ const ProfileImage = styled.img`
     border-radius: 100%;
     border: 5px solid white;
     background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 `;
 
 const ProfileName = styled.h1`
