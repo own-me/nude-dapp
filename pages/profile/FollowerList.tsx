@@ -1,11 +1,13 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import styled from "styled-components";
 import { Follower } from "../../redux/api/follow";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { shortenAddress } from "../../lib/helpers";
 import { usePostFollowMutation } from "../../redux/api/follow";
+import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import nftStatsIcon from "../../media/card.png";
 import followerStatsIcon from "../../media/user.png";
+import useWallet from "../../hooks/useWallet";
 
 interface FollowListProps {
     followers?: Follower[];
@@ -94,6 +96,7 @@ const NftStats = styled.div`
 `;
 
 const FollowerList = memo(({ followers = [] }: FollowListProps) => {
+    const { address } = useWallet();
 
     const [postFollow, {
         isLoading: isPostFollowLoading,
@@ -103,9 +106,21 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
         error: postFollowError
     }] = usePostFollowMutation();
 
-    const handleFollow = (toAddress: string) => {
-        postFollow({ toAddress })
-    };
+    const [postUnfollow, {
+        isLoading: isPostUnfollowLoading,
+        isSuccess: isPostUnfollowSuccess,
+        isError: isPostUnfollowError,
+        data: postUnfollowData,
+        error: postUnfollowError
+    }] = usePostUnfollowMutation();
+
+    const handleFollowButton = useCallback((follower: Follower) => {
+        if (address === follower.fromAddress) {
+            postUnfollow({ toAddress: follower.toAddress });
+        } else {
+            postFollow({ toAddress: follower.toAddress })
+        }
+    }, [address, postFollow, postUnfollow]);
 
     return (
         <FollowerListContainer>
@@ -115,7 +130,9 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
                         <FollowerProfileImage src={defaultProfile} />
                         <FollowerInfoContainer>
                             <FollowerInfoAddress>{shortenAddress(follower.toAddress, 16)}</FollowerInfoAddress>
-                            <FollowButton onClick={() => handleFollow(follower.toAddress)}>Follow</FollowButton>
+                            <FollowButton onClick={() => handleFollowButton(follower)}>
+                                {address === follower.fromAddress ? "Unfollow" : "Follow"}
+                            </FollowButton>
                         </FollowerInfoContainer>
                         <StatsContainer>
                             <FollowerStats>
