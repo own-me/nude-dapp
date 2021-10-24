@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 import styled from "styled-components";
 
 const FooterContainer = styled.div`
@@ -9,10 +9,13 @@ const FooterContainer = styled.div`
     display: flex;
 `;
 
-export default function Footer() {
+const Footer = memo(() => {
+    const year = useMemo(() => new Date().getFullYear(), []);
     return (
         <FooterContainer>
-            <p>Copyright 2021 Own Me</p>
+            <p>Copyright {year} Own Me Inc.</p>
         </FooterContainer>
     );
-};
+});
+
+export default Footer;
