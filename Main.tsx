@@ -4,7 +4,7 @@ import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import { useAppSelector } from "./redux/hooks";
 import { Switch, Route } from "react-router-dom";
-import PrivateRoute from "./components/PrivateRouter";
+import PrivateRoute from "./components/PrivateRoute";
 import HomePage from "./pages/home/HomePage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import CandyShopPage from "./pages/candyshop/CandyshopPage";
