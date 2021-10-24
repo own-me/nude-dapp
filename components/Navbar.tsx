@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import navLogo from "../media/own-me-logo.svg";
 import AccountButton from "./AccountButton";
-import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ZIndex } from "../lib/zindex";
 
 export const NAVBAR_HEIGHT = 50;
@@ -67,20 +67,21 @@ const navLinks = [
     }
 ]
 
-export default function Navbar() {
-    const history = useHistory();
-
+const Navbar = memo((props) => {
+    const location = useLocation();
     return (
         <NavbarContainer>
             <NavLogo src={navLogo} />
             <NavbarItems>
                 {
                     navLinks.map(({ text, link }, index) => {
-                        return <NavLink to={link} key={index} $isActive={history.location.pathname === link}>{text}</NavLink>
+                        return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
                     })
                 }
                 <AccountButton />
             </NavbarItems>
         </NavbarContainer>
     );
-};
+});
+
+export default Navbar;
