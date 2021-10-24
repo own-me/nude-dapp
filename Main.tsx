@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
-import { useAppSelector, useAppDispatch } from "./redux/hooks";
+import { useAppSelector } from "./redux/hooks";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRouter";
 import HomePage from "./pages/home/HomePage";
@@ -23,7 +23,6 @@ const MainContainer = styled.div<{ $isLoggedIn: boolean }>`
 
 export default function Main() {
     const loggedIn = useAppSelector(state => state.user.loggedIn);
-    const dispatch = useAppDispatch();
 
     return (
         <MainContainer $isLoggedIn={loggedIn}>

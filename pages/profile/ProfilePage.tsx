@@ -1,26 +1,27 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { useGetUserQuery } from "../../redux/api/user";
 import { useGetUserNftsQuery } from "../../redux/api/nft-db";
 import Navbar from "../../components/Navbar";
 import Profile from "./Profile";
 import Profile404 from "./Profile404";
-import useWallet from "../../hooks/useWallet";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setUserNfts } from "../../redux/slices/user";
+import { useLocation } from "react-router";
 
-export default function ProfilePage() {
+const ProfilePage = memo((props) => {
     const dispatch = useAppDispatch();
+    const location = useLocation();
     const userNfts = useAppSelector(state => state.user.nfts);
 
-    const { address } = useWallet();
+    const profileAddress = useMemo(() => location.pathname.split("/")[1], [location.pathname]);
 
     const {
         data: userData,
         error: userError,
         isLoading: isUserLoading,
         refetch: userRefetch
-    } = useGetUserQuery({ address: address }, {
-        skip: !address,
+    } = useGetUserQuery({ address: profileAddress }, {
+        skip: !profileAddress,
     });
 
     const {
@@ -28,8 +29,8 @@ export default function ProfilePage() {
         error: userNftsError,
         isLoading: isUserNftsLoading,
         refetch: userNftsRefetch
-    } = useGetUserNftsQuery({ address }, {
-        skip: !address,
+    } = useGetUserNftsQuery({ address: profileAddress }, {
+        skip: !profileAddress,
     });
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function ProfilePage() {
 
     useEffect(() => {
         userNftsRefetch()
-    }, [address]);
+    }, [profileAddress]);
 
     return (
         <>
@@ -53,8 +54,11 @@ export default function ProfilePage() {
                     isFollowing={userData.isFollowing}
                     userRefetch={userRefetch}
                     userNfts={userNfts}
+                    following={userData.following}
                 />
             }
         </>
     );
-};
+});
+
+export default ProfilePage;

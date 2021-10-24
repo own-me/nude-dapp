@@ -1,11 +1,6 @@
 import React, { ReactNode, useState, useEffect, memo } from "react";
 import styled, {css} from "styled-components";
 
-interface TabsProps {
-    children: ReactNode;
-    tabs: Array<string>;
-}
-
 const TabsContainer = styled.div`
     color: black;
 `;
@@ -37,6 +32,11 @@ const Tab = styled.div<{ $isActive: boolean }>`
 export const TabContent = styled.div`
 
 `;
+
+interface TabsProps {
+    children: ReactNode;
+    tabs: Array<string>;
+}
 
 const Tabs = memo(({ children, tabs }: TabsProps) => {
     const [activeTab, setActiveTab] = useState<string>();

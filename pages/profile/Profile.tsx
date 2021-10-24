@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import defaultBanner from "../../media/defaults/stars-banner.png";
 import defaultProfile from "../../media/defaults/missing-profile.png";
@@ -15,7 +15,7 @@ import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
-import { useAppSelector } from "../../redux/hooks";
+import FollowerList from "./FollowerList";
 
 const ProfileContainer = styled.div`
     min-height: 100%;
@@ -42,6 +42,7 @@ const ProfileImage = styled.img`
     border-radius: 100%;
     border: 5px solid white;
     background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 `;
 
 const ProfileName = styled.h1`
@@ -145,10 +146,11 @@ interface ProfileInterface {
     bio: string;
     isFollowing: boolean;
     userNfts: any[];
+    following: any[];
     userRefetch: () => void;
 }
 
-export default function Profile(props: ProfileInterface) {
+const Profile = memo((props: ProfileInterface) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
@@ -287,7 +289,7 @@ export default function Profile(props: ProfileInterface) {
                 <ActionButton>Subscribe</ActionButton>
             </ActionButtons>
             <br />
-            <Tabs tabs={["NFTs", "Posts", "Following", "Activity"]}>
+            <Tabs tabs={useMemo(() => ["NFTs", "Posts", "Following", "Activity"], [])}>
                 <TabContent>
                     <NftCards>
                         {
@@ -308,7 +310,7 @@ export default function Profile(props: ProfileInterface) {
                     <h1>Posts bro</h1>
                 </TabContent>
                 <TabContent>
-                    <h1>Following bro</h1>
+                    <FollowerList followers={props.following} />
                 </TabContent>
                 <TabContent>
                     <h1>Activity bro</h1>
@@ -326,4 +328,6 @@ export default function Profile(props: ProfileInterface) {
             </Modal>
         </ProfileContainer>
     );
-};
+});
+
+export default Profile;
