@@ -17,4 +17,4 @@ https://ownme.io/
 
 ## Rules / Code of Conduct
 
-1. Abosultely no adult content, nude content or pornography is allowed to be commited to Github. We only publish clean code.
+1. Absolutely no adult content, nude content or pornography is allowed to be commited to Github. We only publish clean code.
