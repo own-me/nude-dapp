@@ -26,6 +26,7 @@ const FollowerListRow = styled(Link)`
     border-bottom: 1px solid #ebebeb;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
+    text-decoration: none;
 
     :hover {
         background-color: #fef9ff;
