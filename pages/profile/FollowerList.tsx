@@ -8,6 +8,7 @@ import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import nftStatsIcon from "../../media/card.png";
 import followerStatsIcon from "../../media/user.png";
 import useWallet from "../../hooks/useWallet";
+import { Link } from "react-router-dom";
 
 interface FollowListProps {
     followers?: Follower[];
@@ -19,7 +20,7 @@ const FollowerListContainer = styled.div`
     font-family: Poppins, Open Sans;
 `;
 
-const FollowerListRow = styled.div`
+const FollowerListRow = styled(Link)`
     display: flex;
     padding: 20px 40px;
     border-bottom: 1px solid #ebebeb;
@@ -126,7 +127,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
         <FollowerListContainer>
             {
                 followers.map((follower: Follower, index) =>
-                    <FollowerListRow key={index}>
+                    <FollowerListRow to={`/${follower.toAddress}`} key={index}>
                         <FollowerProfileImage src={defaultProfile} />
                         <FollowerInfoContainer>
                             <FollowerInfoAddress>{shortenAddress(follower.toAddress, 16)}</FollowerInfoAddress>
