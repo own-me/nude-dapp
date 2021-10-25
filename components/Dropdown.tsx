@@ -15,6 +15,7 @@ const DropdownContainer = styled.div`
     border-radius: 10px;
     border: 1px solid #FECDFF;
     transition: opacity 150ms ease-in-out;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
     &.entering {
         opacity: 0;
