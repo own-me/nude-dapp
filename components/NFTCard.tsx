@@ -1,8 +1,9 @@
 import React, { memo } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
 
-const NFTCardContainer = styled.div`
+const NFTCardContainer = styled(Link)`
     font-family: Poppins, Open Sans;
     height: 280px;
     width: 200px;
@@ -15,6 +16,8 @@ const NFTCardContainer = styled.div`
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: black;
 
     :hover {
         transform: translateY(-5px);
@@ -54,6 +57,7 @@ const NFTCardRarity = styled.div`
 `;
 
 interface NFTCardProps {
+    transactionHash?: string;
     title: string;
     owner: string;
     price: string;
@@ -61,9 +65,9 @@ interface NFTCardProps {
     image: string;
 }
 
-const NFTCard = memo(({ title, owner, price, rarity, image }: NFTCardProps) => {
+const NFTCard = memo(({ transactionHash, title, owner, price, rarity, image }: NFTCardProps) => {
     return (
-        <NFTCardContainer>
+        <NFTCardContainer to={`/nft/${transactionHash}`}>
             <NFTCardImage src={image} />
             <NFTCardTitle>{title}</NFTCardTitle>
             <NFTCardOwner>{shortenAddress(owner, 18)}</NFTCardOwner>

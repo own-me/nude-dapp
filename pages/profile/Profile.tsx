@@ -236,7 +236,8 @@ const Profile = memo((props: ProfileInterface) => {
                 price: "2.45 ETH",
                 rarity: [1, 8],
                 image: tokenURI.image,
-                tokenId: nft.returnValues.tokenId
+                tokenId: nft.returnValues.tokenId,
+                transactionHash: nft.transactionHash
             }
         });
     }
@@ -295,6 +296,7 @@ const Profile = memo((props: ProfileInterface) => {
                         {
                             props.userNfts?.length > 0 && parseRawNfts(props.userNfts).map((nft: any, index: number) => {
                                 return <NFTCard
+                                    transactionHash={nft.transactionHash}
                                     title={nft.title}
                                     owner={nft.owner}
                                     price={nft.price}

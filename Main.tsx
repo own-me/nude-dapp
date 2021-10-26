@@ -38,8 +38,8 @@ export default function Main() {
                 <PrivateRoute exact path="/auctionhouse" children={<AuctionHousePage />} />
                 <PrivateRoute exact path="/gumballmachine" children={<GumballMachinePage />} />
                 <PrivateRoute exact path="/mint" children={<MintPage />} />
+                <PrivateRoute exact path="/nft/:transactionHash" children={<NftPage />} />
                 <PrivateRoute exact path="/:name" children={<ProfilePage />} />
-                <PrivateRoute exact path="/nft/:address" children={<NftPage />} />
                 <PrivateRoute exact path="/" children={<HomePage />} />
             </Switch>
         </MainContainer>
