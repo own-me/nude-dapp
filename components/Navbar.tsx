@@ -34,13 +34,14 @@ const NavLink = styled(Link) <{ $isActive: boolean }>`
     margin: 0 50px;
     color: ${props => props.$isActive ? "#D842FE" : "rgb(216, 66, 254, 75%)"}; 
     text-decoration: none;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
+    padding: 20px;
 
-    ${props => props.$isActive && "border-bottom: 2px solid #dd9cff;"}
+    ${props => props.$isActive && "border-bottom: 3px solid #FF81EB;"}
 
     :hover {
-        color: #D842FE;
+        color: #FF81EB;
     }
 `;
 
