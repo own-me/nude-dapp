@@ -8,6 +8,7 @@ import { authApi } from "./api/auth";
 import { userApi } from "./api/user";
 import { unfollowApi } from "./api/unfollow";
 import { nftDbApi } from "./api/nft-db";
+import { nftApi } from "./api/nft";
 import userReducer from "./slices/user";
 import walletReducer from "./slices/wallet";
 
@@ -22,7 +23,8 @@ export const store = configureStore({
         [ipfsApi.reducerPath]: ipfsApi.reducer,
         [followApi.reducerPath]: followApi.reducer,
         [unfollowApi.reducerPath]: unfollowApi.reducer,
-        [nftDbApi.reducerPath]: nftDbApi.reducer
+        [nftDbApi.reducerPath]: nftDbApi.reducer,
+        [nftApi.reducerPath]: nftApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         loginApi.middleware,
@@ -32,7 +34,8 @@ export const store = configureStore({
         ipfsApi.middleware,
         followApi.middleware,
         unfollowApi.middleware,
-        nftDbApi.middleware
+        nftDbApi.middleware,
+        nftApi.middleware
     ),
 });
 
