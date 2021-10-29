@@ -57,7 +57,7 @@ const NFTCardRarity = styled.div`
 `;
 
 interface NFTCardProps {
-    transactionHash?: string;
+    tokenId?: string;
     title: string;
     owner: string;
     price: string;
@@ -65,9 +65,9 @@ interface NFTCardProps {
     image: string;
 }
 
-const NFTCard = memo(({ transactionHash, title, owner, price, rarity, image }: NFTCardProps) => {
+const NFTCard = memo(({ tokenId, title, owner, price, rarity, image }: NFTCardProps) => {
     return (
-        <NFTCardContainer to={`/nft/${transactionHash}`}>
+        <NFTCardContainer to={`/nft/${tokenId}`}>
             <NFTCardImage src={image} />
             <NFTCardTitle>{title}</NFTCardTitle>
             <NFTCardOwner>{shortenAddress(owner, 18)}</NFTCardOwner>

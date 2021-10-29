@@ -1,7 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
+import { useGetNftQuery } from "../../redux/api/nft";
 
 const NftPageContainer = styled.div`
     color: black;
@@ -29,6 +30,7 @@ const NftImage = styled.img`
 const NftTitle = styled.div`
     font-family: Poppins, Open Sans;
     font-size: 50px;
+    padding: 10px 0px;
 `;
 
 const NftDescription = styled.div`
@@ -86,23 +88,36 @@ const OwnMeButton = styled.button`
 `;
 
 interface NftPageProps {
-    image: string;
-    title: string;
-    description: string;
+
 }
 
 const NftPage = memo((props: NftPageProps) => {
     const params = useParams();
-    console.log(params);
+    const [tokenUriData, setTokenUriData] = useState<any>({});
+
+    const {
+        data: nftData,
+        error: nftError,
+        isLoading: isNftLoading,
+        refetch: nftRefetch
+    } = useGetNftQuery({ tokenId: params.tokenId }, {
+        skip: !params.tokenId,
+    });
+
+    useEffect(() => {
+        console.log(nftData);
+        if (nftData) {
+            setTokenUriData(JSON.parse(nftData.returnValues.tokenURI));
+        }
+    }, [nftData]);
 
     return (
         <>
             <Navbar />
             <NftPageContainer>
                 <MainSection>
-                    <NftImage src={props.image || "https://via.placeholder.com/300x300"} />
-                    <NftTitle>{props.title || "-"}</NftTitle>
-                    <NftDescription>{props.description || "-"}</NftDescription>
+                    <NftImage src={tokenUriData?.image || "https://via.placeholder.com/300x300"} />
+                    <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
                 </MainSection>
                 <InfoSection>
                     <TopItems>
@@ -120,7 +135,7 @@ const NftPage = memo((props: NftPageProps) => {
                         </TopItem>
                     </TopItems>
                     <InfoDescriptionHeader>Description</InfoDescriptionHeader>
-                    <InfoDescriptionText>What makes the pot sweeter, though, is how consistent she is at providing her fans with top-notch videos and photos, day in and day out. And oh how visually appealing this content creator is! Long story short, she’s basically the girl next door who’s decided to work on OnlyFans.</InfoDescriptionText>
+                    <InfoDescriptionText>{tokenUriData?.description || "-"}</InfoDescriptionText>
                     <OwnMeButton>Own Me (69.123 ETH)</OwnMeButton>
                 </InfoSection>
             </NftPageContainer>

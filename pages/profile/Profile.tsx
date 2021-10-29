@@ -296,7 +296,7 @@ const Profile = memo((props: ProfileInterface) => {
                         {
                             props.userNfts?.length > 0 && parseRawNfts(props.userNfts).map((nft: any, index: number) => {
                                 return <NFTCard
-                                    transactionHash={nft.transactionHash}
+                                    tokenId={nft.tokenId}
                                     title={nft.title}
                                     owner={nft.owner}
                                     price={nft.price}
