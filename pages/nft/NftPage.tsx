@@ -8,10 +8,23 @@ const NftPageContainer = styled.div`
     color: black;
     padding: 40px;
     display: flex;
+
+    @media (max-width: 1200px) {
+        flex-direction: column;
+        align-items: center;
+    }
 `;
 
 const MainSection = styled.div`
     width: 50%;
+
+    @media (max-width: 1200px) {
+        width: 80%;
+    }
+
+    @media (max-width: 640px) {
+        width: 100%;
+    }
 `;
 
 const InfoSection = styled.div`
@@ -19,18 +32,34 @@ const InfoSection = styled.div`
     padding: 40px;
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 1200px) {
+        width: 80%;
+    }
+
+    @media (max-width: 640px) {
+        width: 100%;
+        padding: 0;
+    }
 `;
 
 const NftImage = styled.img`
-    height: 75vh;
+    width: 75vh;
     max-width: 100%;
     border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const NftTitle = styled.div`
     font-family: Poppins, Open Sans;
     font-size: 50px;
-    padding: 10px 0px;
+    padding: 20px 0px;
+
+    @media (max-width: 640px) {
+        font-size: 30px;
+        text-align: center;
+        padding: 10px 0px;
+    }
 `;
 
 const NftDescription = styled.div`
@@ -43,6 +72,10 @@ const TopItems = styled.div`
     justify-content: space-around;
     text-align: center;
     padding-bottom: 40px;
+
+    @media (max-width: 640px) {
+        padding-bottom: 30px;
+    }
 `;
 
 const TopItem = styled.div`
@@ -51,22 +84,38 @@ const TopItem = styled.div`
 
 const TopItemHeader = styled.div`
     font-size: 40px;
+
+    @media (max-width: 640px) {
+        font-size: 20px;
+    }
 `;
 
 const TopItemValue = styled.div`
     font-size: 30px;
     color: #D842FE;
+
+    @media (max-width: 640px) {
+        font-size: 16px;
+    }
 `;
 
 const InfoDescriptionHeader = styled.div`
     font-family: Poppins, Open Sans;
     font-size: 30px;
+
+    @media (max-width: 640px) {
+        font-size: 25px;
+    }
 `;
 
 const InfoDescriptionText = styled.div`
     font-family: Poppins, Open Sans;
     font-size: 20px;
     padding-bottom: 40px;
+
+    @media (max-width: 640px) {
+        font-size: 16px;
+    }
 `;
 
 const OwnMeButton = styled.button`
