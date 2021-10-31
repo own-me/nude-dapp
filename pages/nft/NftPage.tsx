@@ -7,10 +7,11 @@ import { useGetNftQuery } from "../../redux/api/nft";
 
 const NftPageContainer = styled.div`
     color: black;
-    padding: 40px;
+    padding: 80px;
     display: flex;
 
     @media (max-width: 1200px) {
+        padding: 40px;
         flex-direction: column;
         align-items: center;
     }
@@ -30,7 +31,7 @@ const MainSection = styled.div`
 
 const InfoSection = styled.div`
     width: 50%;
-    padding: 40px;
+    padding: 0px 80px;
     display: flex;
     flex-direction: column;
 
@@ -63,9 +64,35 @@ const NftTitle = styled.div`
     }
 `;
 
-const NftDescription = styled.div`
+const NftStatsRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`;
+
+const NftRarityContainer = styled.div`
     font-family: Poppins, Open Sans;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+`;
+
+const NftPriceContainer = styled.div`
+    font-family: Poppins, Open Sans;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+`;
+
+const NftPriceValue = styled.div`
+    font-size: 40px;
+    color: #D842FE;
+`;
+
+const NftPriceTicker = styled.div`
     font-size: 30px;
+    color: black;
+    padding-left: 10px;
 `;
 
 const TopItems = styled.div`
@@ -180,6 +207,16 @@ const NftPage = memo((props: NftPageProps) => {
                 <MainSection>
                     <NftImage src={tokenUriData?.image || "https://via.placeholder.com/300x300"} />
                     <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
+                    <NftStatsRow>
+                        <NftPriceContainer>
+                            <NftPriceValue>{tokenUriData?.price || "69.0"}</NftPriceValue>
+                            <NftPriceTicker>{"ETH"}</NftPriceTicker>
+                        </NftPriceContainer>
+                        <NftRarityContainer>
+                            <NftPriceValue>{tokenUriData?.price || "3 / 12"}</NftPriceValue>
+                            <NftPriceTicker>{"Rarity"}</NftPriceTicker>
+                        </NftRarityContainer>
+                    </NftStatsRow>
                 </MainSection>
                 <InfoSection>
                     <TopItems>
