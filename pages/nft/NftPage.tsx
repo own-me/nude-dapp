@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
 import { useGetNftQuery } from "../../redux/api/nft";
@@ -94,6 +95,18 @@ const TopItemValue = styled.div`
     font-size: 30px;
     color: #D842FE;
 
+    a {
+        text-decoration: none;
+        color: #D842FE;
+    }
+
+    :hover {
+        a {
+            color: #bb00eb;
+            text-decoration: underline;
+        }
+    }
+
     @media (max-width: 640px) {
         font-size: 16px;
     }
@@ -172,7 +185,9 @@ const NftPage = memo((props: NftPageProps) => {
                     <TopItems>
                         <TopItem>
                             <TopItemHeader>Creator</TopItemHeader>
-                            <TopItemValue>Nicki Minaj</TopItemValue>
+                            <TopItemValue>
+                                <Link to={`/${nftData?.returnValues?.recipient}`}>Nicki Minaj</Link>
+                            </TopItemValue>
                         </TopItem>
                         <TopItem>
                             <TopItemHeader>Views</TopItemHeader>
