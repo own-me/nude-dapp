@@ -7,9 +7,10 @@ module.exports = {
     entry: path.join(__dirname, 'App.tsx'),
     devtool: "eval-source-map",
     devServer: {
-        contentBase: path.join(__dirname, 'dev'),
-        compress: true,
-        port: 9000,
+        static: {
+            directory: path.join(__dirname, 'dev'),
+        },
+        port: "auto",
         open: true,
         historyApiFallback: true,
     },
