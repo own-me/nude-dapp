@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
 import { useEditProfileMutation } from "../../redux/api/user";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FormFileInputButton from "../../components/FormFileInputButton";
 
 const EditProfileFormContainer = styled.div`
@@ -128,7 +128,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, currentName, currentB
     const [name, setName] = useState<string>(currentName ?? "");
     const [bio, setBio] = useState<string>(currentBio ?? "");
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [postEditProfile, {
         isLoading: isEditProfileLoading,
@@ -149,7 +149,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, currentName, currentB
     useEffect(() => {
         if (isEditProfileSuccess) {
             onCancel();
-            history.push(`/${name}`);
+            navigate("/name");
             userRefetch();
         }
     }, [isEditProfileSuccess]);

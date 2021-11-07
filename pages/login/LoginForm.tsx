@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect } from "react";
 import styled, { css } from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
 import { setUserLoggedIn } from "../../redux/slices/user";
@@ -64,9 +64,12 @@ const ErrorMessage = styled.p`
 `;
 
 export const LoginForm = memo((props) => {
-    const loggedIn = useAppSelector(state => state.user.loggedIn);
     const dispatch = useAppDispatch();
-    const history = useHistory();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const loggedIn = useAppSelector(state => state.user.loggedIn);
     const { address, signer } = useWallet();
 
     const [postLogin, {
@@ -124,9 +127,7 @@ export const LoginForm = memo((props) => {
 
     useEffect(() => {
         if (loggedIn) {
-            const params = new URLSearchParams(window.location.search);
-            const redirectPath = params.get("redirect");
-            history.push(redirectPath || "");
+            navigate(location?.state?.from || "/");
         }
     }, [loggedIn]);
 

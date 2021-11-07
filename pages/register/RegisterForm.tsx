@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usePostRegisterMutation } from "../../redux/api/register";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import FormInput from "../../components/FormInput";
@@ -63,7 +63,7 @@ const ErrorMessage = styled.p`
 `;
 
 export default function RegisterForm() {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { address } = useWallet();
 
@@ -80,7 +80,7 @@ export default function RegisterForm() {
 
     useEffect(() => {
         if (isRegisterSuccess) {
-            history.push("/login");
+            navigate("/login");
         }
     }, [registerData, isRegisterSuccess, isRegisterError]);
 
