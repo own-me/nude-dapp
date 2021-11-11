@@ -16,7 +16,6 @@ const AccountButtonTemplate = styled.button`
     border: none;
     padding: 8px 15px;
     border-radius: 6px;
-    margin-left: 50px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     cursor: pointer;
 

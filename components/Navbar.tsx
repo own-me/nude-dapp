@@ -5,6 +5,7 @@ import navLogo from "../media/own-me-logo.svg";
 import AccountButton from "./AccountButton";
 import { useLocation } from "react-router-dom";
 import { ZIndex } from "../lib/zindex";
+import hamburgerIcon from "../media/hamburger.svg";
 
 export const NAVBAR_HEIGHT = 50;
 export const NAVBAR_PADDING = 20;
@@ -26,8 +27,10 @@ const NavbarContainer = styled.div`
 `;
 
 const NavbarItems = styled.div`
-
-`
+    @media (max-width: 1550px) {
+        display: none;
+    }
+`;
 
 const NavLink = styled(Link) <{ $isActive: boolean }>`
     font-family: Rock Salt, Open Sans; 
@@ -47,6 +50,20 @@ const NavLink = styled(Link) <{ $isActive: boolean }>`
 
 const NavLogo = styled.img`
     height: 100%;
+`;
+
+const Hamburger = styled.img`
+    width: 35px;
+    margin-left: 25px;
+    cursor: pointer;
+
+    @media (min-width: 1550px) {
+        display: none;
+    }
+`;
+
+const NavButtons = styled.div`
+    display: flex;
 `;
 
 const navLinks = [
@@ -79,8 +96,11 @@ const Navbar = memo((props) => {
                         return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
                     })
                 }
-                <AccountButton />
             </NavbarItems>
+            <NavButtons>
+                <AccountButton />
+                <Hamburger src={hamburgerIcon} />
+            </NavButtons>
         </NavbarContainer>
     );
 });
