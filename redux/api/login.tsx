@@ -23,7 +23,7 @@ export const loginApi = createApi({
     endpoints: (builder) => ({
         postLogin: builder.mutation<LoginResponse, LoginRequest>({
             query: ({ address }) => ({
-                url: "login/",
+                url: "auth/login/",
                 method: "POST",
                 body: {
                     address
