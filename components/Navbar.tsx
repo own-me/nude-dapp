@@ -72,7 +72,7 @@ const NavButtons = styled.div`
     display: flex;
 `;
 
-const navLinks = [
+export const navLinks = [
     {
         text: "Home",
         link: "/",
@@ -89,7 +89,7 @@ const navLinks = [
         text: "Gumball Machine",
         link: "/gumballmachine",
     }
-]
+];
 
 const Navbar = memo((props) => {
     const location = useLocation();
