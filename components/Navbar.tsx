@@ -53,11 +53,12 @@ const NavLogo = styled.img`
     height: 100%;
 `;
 
-const Hamburger = styled.img`
+const Hamburger = styled.img<{ $isOpen: boolean }>`
     width: 35px;
     margin-left: 25px;
     cursor: pointer;
-    transition: width 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    transform: rotate(${props => props.$isOpen ? 90 : 0}deg);
 
     :hover {
         width: 37px;
@@ -109,7 +110,7 @@ const Navbar = memo((props) => {
                 </NavbarItems>
                 <NavButtons>
                     <AccountButton />
-                    <Hamburger src={hamburgerIcon} onClick={() => setIsSideNavOpen(!isSideNavOpen)} />
+                    <Hamburger src={hamburgerIcon} onClick={() => setIsSideNavOpen(!isSideNavOpen)} $isOpen={isSideNavOpen} />
                 </NavButtons>
             </NavbarContainer>
             <SideNav isOpen={isSideNavOpen} setIsOpen={setIsSideNavOpen} />
