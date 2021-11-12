@@ -43,6 +43,23 @@ const NavLink = styled(Link) <{ $isActive: boolean }>`
     }
 `;
 
+const OpaqueBackground = styled.div`
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 2;
+    background-color: rgb(253 117 255 / 20%);
+    transition: opacity ${SideNavTimeout}ms ease-in-out;
+
+    &.entering {
+        opacity: 0.8;
+    }
+
+    &.exiting {
+        opacity: 0;
+    }
+`;
+
 interface SideNavProps {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
@@ -52,13 +69,16 @@ const SideNav = memo(({ isOpen, setIsOpen }: SideNavProps) => {
     return (
         <Transition in={isOpen} timeout={{ enter: 0, exit: SideNavTimeout }} mountOnEnter unmountOnExit>
             {transitionState => (
-                <SideNavContainer className={transitionState}>
-                    {
-                        navLinks.map(({ text, link }, index) => {
-                            return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
-                        })
-                    }
-                </SideNavContainer>
+                <>
+                    <SideNavContainer className={transitionState}>
+                        {
+                            navLinks.map(({ text, link }, index) => {
+                                return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
+                            })
+                        }
+                    </SideNavContainer>
+                    <OpaqueBackground className={transitionState} onClick={() => setIsOpen(false)} />
+                </>
             )}
         </Transition>
     );
