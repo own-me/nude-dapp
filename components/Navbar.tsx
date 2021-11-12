@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import navLogo from "../media/own-me-logo.svg";
@@ -6,6 +6,7 @@ import AccountButton from "./AccountButton";
 import { useLocation } from "react-router-dom";
 import { ZIndex } from "../lib/zindex";
 import hamburgerIcon from "../media/hamburger.svg";
+import SideNav from "./SideNav";
 
 export const NAVBAR_HEIGHT = 50;
 export const NAVBAR_PADDING = 20;
@@ -56,6 +57,11 @@ const Hamburger = styled.img`
     width: 35px;
     margin-left: 25px;
     cursor: pointer;
+    transition: width 0.2s ease-in-out;
+
+    :hover {
+        width: 37px;
+    }
 
     @media (min-width: 1550px) {
         display: none;
@@ -87,21 +93,27 @@ const navLinks = [
 
 const Navbar = memo((props) => {
     const location = useLocation();
+
+    const [isSideNavOpen, setIsSideNavOpen] = useState<boolean>(false);
+
     return (
-        <NavbarContainer>
-            <NavLogo src={navLogo} />
-            <NavbarItems>
-                {
-                    navLinks.map(({ text, link }, index) => {
-                        return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
-                    })
-                }
-            </NavbarItems>
-            <NavButtons>
-                <AccountButton />
-                <Hamburger src={hamburgerIcon} />
-            </NavButtons>
-        </NavbarContainer>
+        <>
+            <NavbarContainer>
+                <NavLogo src={navLogo} />
+                <NavbarItems>
+                    {
+                        navLinks.map(({ text, link }, index) => {
+                            return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
+                        })
+                    }
+                </NavbarItems>
+                <NavButtons>
+                    <AccountButton />
+                    <Hamburger src={hamburgerIcon} onClick={() => setIsSideNavOpen(!isSideNavOpen)} />
+                </NavButtons>
+            </NavbarContainer>
+            <SideNav isOpen={isSideNavOpen} setIsOpen={setIsSideNavOpen} />
+        </>
     );
 });
 
