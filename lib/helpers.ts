@@ -9,11 +9,11 @@ export function formatEth(value: BigNumber) {
 };
 
 export async function fetchNudeABI() {
-    const res = await fetch(`https://raw.githubusercontent.com/the-digital-labs/own-me-contracts/master/build/Nude.json`);
+    const res = await fetch(`https://raw.githubusercontent.com/own-me/contracts/master/build/Nude.json`);
     return res.json();
 }
 
 export async function fetchNudeNftABI() {
-    const res = await fetch(`https://raw.githubusercontent.com/the-digital-labs/own-me-contracts/master/build/NudeNFT.json`);
+    const res = await fetch(`https://raw.githubusercontent.com/own-me/contracts/master/build/NudeNFT.json`);
     return res.json();
 }
