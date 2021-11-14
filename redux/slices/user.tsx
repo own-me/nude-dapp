@@ -28,7 +28,7 @@ export const userSlice = createSlice({
         },
         setUserLoggedIn: (state: UserState, action: PayloadAction<boolean>) => {
             if (!action.payload) {
-                window.localStorage.removeItem("token");
+                localStorage.removeItem("token");
             }
             state.loggedIn = action.payload;
         },

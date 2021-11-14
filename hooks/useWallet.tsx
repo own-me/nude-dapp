@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { BigNumber, ethers } from "ethers";
+import { setUserLoggedIn } from "../redux/slices/user";
+import { useAppDispatch } from "../redux/hooks";
 
 export default function useWallet() {
-    const [balance, setBalance] = useState<BigNumber>();
-    const [address, setAddress] = useState<string>();
-    const [network, setNetwork] = useState<any>();
-    const [provider, setProvider] = useState<any>();
-    const [signer, setSigner] = useState<any>();
+    const dispatch = useAppDispatch();
+
+    const [balance, setBalance] = useState<BigNumber>(null);
+    const [address, setAddress] = useState<string>("");
+    const [network, setNetwork] = useState<any>(null);
+    const [provider, setProvider] = useState<any>(null);
+    const [signer, setSigner] = useState<any>(null);
 
     useEffect(() => {
         async function getBalance() {
@@ -25,9 +29,18 @@ export default function useWallet() {
 
     useEffect(() => {
         window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
-            setAddress(accounts[0]);
+            if (!address) {
+                setAddress(accounts[0]);
+            } else {
+                setBalance(null);
+                setAddress("");
+                setNetwork(null);
+                setProvider(null);
+                setSigner(null);
+                dispatch(setUserLoggedIn(false));
+            }
         });
-    }, []);
+    }, [address]);
 
     return { balance, address, network, provider, signer };
 };
