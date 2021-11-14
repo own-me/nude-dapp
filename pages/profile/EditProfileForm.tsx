@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
-import { useEditProfileMutation } from "../../redux/api/user";
+import { useEditUserMutation, useUploadProfileImageMutation } from "../../redux/api/user";
 import { useNavigate } from "react-router-dom";
 import FormFileInputButton from "../../components/FormFileInputButton";
 
@@ -52,7 +52,7 @@ const EditBannerButton = styled(FormFileInputButton)`
     top: 210px;
 `;
 
-const EditProfileButton = styled(ActionButton)`
+const EditProfileImageButton = styled(FormFileInputButton)`
     position: absolute;
     left: calc(50% - 65px);
     top: 280px;
@@ -116,6 +116,7 @@ const CustomInput = styled(FormInput)`
 `;
 
 interface EditProfileFormProps {
+    address: string;
     bannerImage: string;
     profileImage: string;
     currentName: string;
@@ -124,35 +125,50 @@ interface EditProfileFormProps {
     userRefetch: () => void;
 }
 
-const EditProfileForm = memo(({ bannerImage, profileImage, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
+const EditProfileForm = memo(({ address, bannerImage, profileImage, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
     const [name, setName] = useState<string>(currentName ?? "");
     const [bio, setBio] = useState<string>(currentBio ?? "");
 
     const navigate = useNavigate();
 
-    const [postEditProfile, {
-        isLoading: isEditProfileLoading,
-        isSuccess: isEditProfileSuccess,
-        isError: isEditProfileError,
-        data: editProfileData,
-        error: editProfileError
-    }] = useEditProfileMutation();
+    const [postEditUser, {
+        isLoading: isEditUserLoading,
+        isSuccess: isEditUserSuccess,
+        isError: isEditUserError,
+        data: editUserData,
+        error: editUserError
+    }] = useEditUserMutation();
 
     const handleSave = async () => {
-        await postEditProfile({
-            oldName: currentName,
-            newName: name,
+        await postEditUser({
+            address,
+            name,
             bio
         });
     };
 
     useEffect(() => {
-        if (isEditProfileSuccess) {
+        if (isEditUserSuccess) {
             onCancel();
-            navigate("/name");
+            navigate(`/${address}`);
             userRefetch();
         }
-    }, [isEditProfileSuccess]);
+    }, [isEditUserSuccess]);
+
+    const [uploadProfileImage, {
+        isLoading: isUploadProfileImageLoading,
+        isSuccess: isUploadProfileImageSuccess,
+        isError: isUploadProfileImageError,
+        data: uploadProfileImageData,
+        error: uploadProfileImageError
+    }] = useUploadProfileImageMutation();
+
+    const handleUploadProfileImage = async (file: File) => {
+        const formData = new FormData();
+        formData.append("image", file);
+        const ipfsResponse = await uploadProfileImage({ address, formData });
+        console.log(ipfsResponse);
+    };
 
     return (
         <EditProfileFormContainer>
@@ -160,7 +176,7 @@ const EditProfileForm = memo(({ bannerImage, profileImage, currentName, currentB
             <BannerImage src={bannerImage} />
             <EditBannerButton onFile={(file) => console.log("save banner!", file)}>Edit Banner</EditBannerButton>
             <ProfileImage src={profileImage} />
-            <EditProfileButton onClick={() => console.log("save banner!")}>Edit Banner</EditProfileButton>
+            <EditProfileImageButton onFile={(file) => handleUploadProfileImage(file)}>Edit Profile Image</EditProfileImageButton>
             <InputContainer>
                 <CustomInput
                     type="text"

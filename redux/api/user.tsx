@@ -6,37 +6,39 @@ interface UserRequest {
 }
 
 interface UserResponse {
-    id: string;
-    address: string;
-    message: string;
-    name: string;
-    birthDate: string;
-    registrationDate: string;
-    lastLoginDate: string;
-    profileImageUrl: string;
-    bannerImageUrl: string;
-    bio: string;
-    isFollowing: boolean;
-    following: Follower[];
+    id?: string;
+    address?: string;
+    name?: string;
+    birthDate?: string;
+    registrationDate?: string;
+    lastLoginDate?: string;
+    profileImageUrl?: string;
+    bannerImageUrl?: string;
+    bio?: string;
+    isFollowing?: boolean;
+    following?: Follower[];
+    message?: string;
+    error?: string;
 }
 
-interface UploadProfileImageRequest {
-    name: string,
-    image: string,
-    type: string
+interface UploadProfileImageRequest  {
+    address: string;
+    formData: FormData;
 }
 
 interface UploadProfileImageResponse {
-    message: string,
-    url: string
+    message?: string,
+    error?: string
+    profileImageUrl?: string
 }
 
-interface EditProfileResponse {
-    message: string,
+interface UserEditResponse {
+    message?: string,
+    error?: string
 }
-interface EditProfileRequest {
-    oldName: string,
-    newName?: string,
+interface UserEditRequest {
+    address: string;
+    name?: string,
     bio?: string,
     profileImageUrl?: string,
     bannerImageUrl?: string
@@ -56,29 +58,32 @@ export const userApi = createApi({
             }),
         }),
         uploadProfileImage: builder.mutation<UploadProfileImageResponse, UploadProfileImageRequest>({
-            query: ({ name, image, type }) => ({
-                url: `user/upload-profile-image`,
+            query: ({ address, formData }) => ({
+                url: `user/profile-image/${address}`,
                 method: "POST",
-                body: {
-                    name,
-                    image,
-                    type
+                contentType: "multipart/form-data",
+                body: formData,
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             }),
         }),
-        editProfile: builder.mutation<EditProfileResponse, EditProfileRequest>({
-            query: ({ oldName, newName, bio, profileImageUrl, bannerImageUrl }) => ({
-                url: `user/edit/${oldName}`,
+        editUser: builder.mutation<UserEditResponse, UserEditRequest>({
+            query: ({ address, name, bio, profileImageUrl, bannerImageUrl }) => ({
+                url: `user/edit/${address}`,
                 method: "POST",
                 body: {
-                    newName,
+                    name,
                     bio,
                     profileImageUrl,
                     bannerImageUrl
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             }),
         }),
     }),
 });
 
-export const { useGetUserQuery, useUploadProfileImageMutation, useEditProfileMutation } = userApi;
+export const { useGetUserQuery, useUploadProfileImageMutation, useEditUserMutation } = userApi;

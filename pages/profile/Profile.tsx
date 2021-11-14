@@ -147,12 +147,13 @@ interface ProfileInterface {
     isFollowing: boolean;
     userNfts: any[];
     following: any[];
+    profileImageUrl: string;
     userRefetch: () => void;
 }
 
 const Profile = memo((props: ProfileInterface) => {
     const { address } = useWallet();
-    const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+    const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
 
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
     const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
@@ -252,7 +253,7 @@ const Profile = memo((props: ProfileInterface) => {
     return (
         <ProfileContainer>
             <ProfileBannerImage src={defaultBanner} />
-            <ProfileImage src={defaultProfile} />
+            <ProfileImage src={props.profileImageUrl || defaultProfile} />
             <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
             <ProfileAddress>{formattedAddress}</ProfileAddress>
             <ProfileName>{props.name}</ProfileName>
@@ -320,6 +321,7 @@ const Profile = memo((props: ProfileInterface) => {
             </Tabs>
             <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
                 <EditProfileForm
+                    address={props.profileAddress}
                     bannerImage={defaultBanner}
                     profileImage={defaultProfile}
                     onCancel={() => setIsEditProfileOpen(false)}

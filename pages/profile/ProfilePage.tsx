@@ -48,6 +48,7 @@ const ProfilePage = memo((props) => {
             {!isUserLoading && !userData && <Profile404 />}
             {!isUserLoading && userData &&
                 <Profile
+                    profileImageUrl={userData.profileImageUrl}
                     name={userData.name}
                     bio={userData.bio}
                     profileAddress={userData.address}
