@@ -5,6 +5,8 @@ import loginBackground from "../../media/login-background.svg";
 import logo from "../../media/own-me-logo.svg";
 import loginBackgroundIpad from "../../media/login-background-ipad.svg";
 import loginBackgroundMobile from "../../media/login-background-mobile.svg";
+import "./LoginSocials";
+import LoginSocials from "./LoginSocials";
 
 const LoginPageContainer = styled.div`
     height: 100%;
@@ -40,6 +42,8 @@ export default function LoginPage() {
         <LoginPageContainer>
             <LogoImg src={logo} />
             <LoginForm />
+            <LoginSocials />
         </LoginPageContainer>
+    
     )
 }
