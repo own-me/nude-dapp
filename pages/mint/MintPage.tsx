@@ -25,6 +25,7 @@ const MintPageContainer = styled.div`
     margin: 0 auto;
     background-color: white;
     padding: 0px 5%;
+    transition: width 0.5s ease-in-out;
 
     @media (max-width: 1200px) {
         width: 90%;

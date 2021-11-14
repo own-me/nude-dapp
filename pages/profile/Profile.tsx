@@ -22,6 +22,7 @@ const ProfileContainer = styled.div`
     width: 50%;
     margin: 0 auto;
     background-color: white;
+    transition: width 0.5s ease-in-out;
 
     @media (max-width: 1200px) {
         width: 100%;
