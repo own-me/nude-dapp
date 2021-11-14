@@ -5,9 +5,9 @@ interface IpfsRequest extends FormData {
 }
 
 interface IpfsResponse {
-    message: string;
-    ok: boolean;
-    ipfsUrl: string;
+    message?: string;
+    error?: string;
+    ipfsUrl?: string;
 }
 
 export const ipfsApi = createApi({

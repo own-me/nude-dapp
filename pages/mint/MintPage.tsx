@@ -101,7 +101,7 @@ export default function MintPage() {
         const formData = new FormData();
         formData.append("image", imageData);
         const ipfsResponse = await postIpfsUpload(formData);
-        if (ipfsResponse.data.ok) {
+        if (ipfsResponse.ok) {
             const abi = await fetchNudeNftABI();
             const nudeNftContract = new ethers.Contract(abi.networks["3"].address, abi.abi, provider);
             const nudeNftWithSigner = nudeNftContract.connect(signer);

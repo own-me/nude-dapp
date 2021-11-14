@@ -16,6 +16,7 @@ import EditProfileForm from "./EditProfileForm";
 import { usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import FollowerList from "./FollowerList";
+import { nftApi } from "../../redux/api/nft";
 
 const ProfileContainer = styled.div`
     min-height: 100%;
@@ -229,16 +230,15 @@ const Profile = memo((props: ProfileProps) => {
     }
 
     const parseRawNfts = (nfts: any[]): any[] => {
-        return nfts.map((nft: any, index: number) => {
-            const tokenURI = JSON.parse(nft.returnValues.tokenURI);
+        return nfts.map((nft: any) => {
             return {
-                title: tokenURI.title,
-                description: tokenURI.description,
-                owner: nft.returnValues.recipient,
+                title: nft.tokenURI.title,
+                description: nft.tokenURI.description,
+                owner: nft.recipient,
                 price: "2.45 ETH",
                 rarity: [1, 8],
-                image: tokenURI.image,
-                tokenId: nft.returnValues.tokenId,
+                image: nft.tokenURI.image,
+                tokenId: nft.tokenId,
                 transactionHash: nft.transactionHash
             }
         });

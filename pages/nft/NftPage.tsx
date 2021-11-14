@@ -196,7 +196,7 @@ const NftPage = memo((props: NftPageProps) => {
     useEffect(() => {
         console.log(nftData);
         if (nftData) {
-            setTokenUriData(JSON.parse(nftData.returnValues.tokenURI));
+            setTokenUriData(nftData.tokenURI);
         }
     }, [nftData]);
 
