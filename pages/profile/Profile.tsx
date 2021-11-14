@@ -140,7 +140,7 @@ const EditProfileButton = styled(ProfileAddress)`
     }
 `;
 
-interface ProfileInterface {
+interface ProfileProps{
     profileAddress: string;
     name: string;
     bio: string;
@@ -151,11 +151,11 @@ interface ProfileInterface {
     userRefetch: () => void;
 }
 
-const Profile = memo((props: ProfileInterface) => {
+const Profile = memo((props: ProfileProps) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
 
-    const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
+    const formattedAddress = useMemo(() => shortenAddress(props.profileAddress, 16), [props.profileAddress]);
     const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
 
     const [postFollow, {
