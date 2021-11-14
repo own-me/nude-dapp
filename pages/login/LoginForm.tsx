@@ -20,6 +20,7 @@ const LoginFormContainer = styled.form`
     padding: 2rem 2rem;
     color: black;
     margin: 2rem;
+    font-family: Poppins, Open Sans;
 
     @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
         padding: 3rem 5rem;

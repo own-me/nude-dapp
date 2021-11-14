@@ -19,6 +19,7 @@ const RegisterFormContainer = styled.form`
     margin: 2rem;
     height: 62vh;
     overflow-y: auto;
+    font-family: Poppins, Open Sans;
 
     @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
         padding: 3rem 5rem;
@@ -58,7 +59,6 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
 `;
 
 const AgeVerify = styled.div`
-    font-family: Poppins, Open Sans;
     width: 100%;
     display: flex;
     justify-content: space-between;
