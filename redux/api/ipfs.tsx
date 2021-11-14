@@ -19,7 +19,10 @@ export const ipfsApi = createApi({
                 url: "ipfs/upload",
                 method: "POST",
                 contentType: "multipart/form-data",
-                body: formData
+                body: formData,
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
             }),
         }),
     }),
