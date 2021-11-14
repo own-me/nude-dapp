@@ -129,7 +129,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
             {
                 followers.map((follower: Follower, index) =>
                     <FollowerListRow to={`/${follower.toAddress}`} key={index}>
-                        <FollowerProfileImage src={defaultProfile} />
+                        <FollowerProfileImage src={follower.toProfileImageUrl || defaultProfile} />
                         <FollowerInfoContainer>
                             <FollowerInfoAddress>{shortenAddress(follower.toAddress, 16)}</FollowerInfoAddress>
                             <FollowButton onClick={() => handleFollowButton(follower)}>

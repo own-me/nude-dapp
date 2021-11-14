@@ -4,6 +4,7 @@ export interface Follower {
     fromAddress: string;
     id: number;
     toAddress: string;
+    toProfileImageUrl: string;
 }
 
 interface FollowRequest {
