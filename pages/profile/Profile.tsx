@@ -278,18 +278,21 @@ const Profile = memo((props: ProfileProps) => {
                     })
                 }
             </SocialHandles>
-            <ActionButtons>
-                <ActionButton
-                    onClick={() => props.isFollowing ? postUnfollow({ toAddress: props.profileAddress }) : postFollow({ toAddress: props.profileAddress })}
-                    $isFollowing={props.isFollowing}
-                    $isHovered={isFollowButtonHovered}
-                    onMouseEnter={() => setIsFollowButtonHovered(true)}
-                    onMouseOut={() => setIsFollowButtonHovered(false)}
-                >
-                    {followButtonText}
-                </ActionButton>
-                <ActionButton>Subscribe</ActionButton>
-            </ActionButtons>
+            {
+                props.profileAddress !== address &&
+                    <ActionButtons>
+                        <ActionButton
+                            onClick={() => props.isFollowing ? postUnfollow({ toAddress: props.profileAddress }) : postFollow({ toAddress: props.profileAddress })}
+                            $isFollowing={props.isFollowing}
+                            $isHovered={isFollowButtonHovered}
+                            onMouseEnter={() => setIsFollowButtonHovered(true)}
+                            onMouseOut={() => setIsFollowButtonHovered(false)}
+                        >
+                            {followButtonText}
+                        </ActionButton>
+                        <ActionButton>Subscribe</ActionButton>
+                    </ActionButtons>
+            }
             <br />
             <Tabs tabs={useMemo(() => ["NFTs", "Posts", "Following", "Activity"], [])}>
                 <TabContent>
