@@ -57,10 +57,18 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     `}
 `;
 
-const ErrorMessage = styled.p`
-    color: red;
+const AgeVerify = styled.div`
     font-family: Poppins, Open Sans;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0px;
 `;
+
+const CheckBox = styled.input`
+
+`
 
 export default function RegisterForm() {
     const navigate = useNavigate();
@@ -69,6 +77,7 @@ export default function RegisterForm() {
 
     const [email, setEmail] = useState<string>("");
     const [name, setName] = useState<string>("");
+    const [isAgeConfirmed, setIsAgeConfirmed] = useState<boolean>(false);
 
     const [postRegister, {
         isLoading: isRegisterLoading,
@@ -84,9 +93,13 @@ export default function RegisterForm() {
         }
     }, [registerData, isRegisterSuccess, isRegisterError]);
 
+    const isSubmitDisabled = !isAgeConfirmed;
+
     const handleRegister = (e) => {
         e.preventDefault();
-        postRegister({ address });
+        if (!isSubmitDisabled) {
+            postRegister({ address, isAgeConfirmed, name, email });
+        }
     };
 
     return (
@@ -94,9 +107,12 @@ export default function RegisterForm() {
             <RegisterHeader>Register</RegisterHeader>
             <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" optional />
             <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} optional />
-            <SubmitButton onClick={handleRegister}>Register</SubmitButton>
+            <AgeVerify>
+                <label htmlFor="ageVerify">I am over 18 years of age</label>
+                <CheckBox type="checkbox" id="ageVerify" name="ageVerify" value={String(isAgeConfirmed)} onChange={() => setIsAgeConfirmed(!isAgeConfirmed)} />
+            </AgeVerify>
             {
-                isRegisterLoading && <img src={loadingSpinner} />
+                isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} $disabled={isSubmitDisabled}>Register</SubmitButton>
             }
             <Link to="/login">Login</Link>
         </RegisterFormContainer>

@@ -2,6 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface RegisterRequest {
     address: string;
+    isAgeConfirmed: boolean;
+    name?: string;
+    email?: string;
 }
 
 interface RegisterResponse {
@@ -21,11 +24,14 @@ export const registerApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
         postRegister: builder.mutation<RegisterResponse, RegisterRequest>({
-            query: ({ address }) => ({
+            query: ({ address, isAgeConfirmed, name, email }) => ({
                 url: "auth/register/",
                 method: "POST",
                 body: {
-                    address
+                    address,
+                    isAgeConfirmed,
+                    name,
+                    email
                 }
             }),
         }),
