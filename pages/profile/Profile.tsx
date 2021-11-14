@@ -323,7 +323,7 @@ const Profile = memo((props: ProfileInterface) => {
                 <EditProfileForm
                     address={props.profileAddress}
                     bannerImage={defaultBanner}
-                    profileImage={defaultProfile}
+                    profileImageUrl={props.profileImageUrl}
                     onCancel={() => setIsEditProfileOpen(false)}
                     currentName={props.name}
                     currentBio={props.bio}

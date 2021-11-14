@@ -48,7 +48,7 @@ const FormFileInput = memo(({ onFile, onData, children }: FormFileInputProps) =>
             const data = e.target.result;
             onData && onData(data);
         };
-        reader.readAsArrayBuffer(file);
+        reader.readAsDataURL(file);
     };
 
     return (

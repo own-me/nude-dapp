@@ -118,16 +118,18 @@ const CustomInput = styled(FormInput)`
 interface EditProfileFormProps {
     address: string;
     bannerImage: string;
-    profileImage: string;
+    profileImageUrl: string;
     currentName: string;
     currentBio: string;
     onCancel: () => void;
     userRefetch: () => void;
 }
 
-const EditProfileForm = memo(({ address, bannerImage, profileImage, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
+const EditProfileForm = memo(({ address, bannerImage, profileImageUrl, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
     const [name, setName] = useState<string>(currentName ?? "");
     const [bio, setBio] = useState<string>(currentBio ?? "");
+    const [profileImagePreview, setProfileImagePreview] = useState<string>(null);
+    const [profileImageFile, setProfileImageFile] = useState<File>(null);
 
     const navigate = useNavigate();
 
@@ -140,6 +142,12 @@ const EditProfileForm = memo(({ address, bannerImage, profileImage, currentName,
     }] = useEditUserMutation();
 
     const handleSave = async () => {
+        if (profileImageFile) {
+            const formData = new FormData();
+            formData.append("image", profileImageFile);
+            const ipfsResponse = await uploadProfileImage({ address, formData });
+            console.log(ipfsResponse);
+        }
         await postEditUser({
             address,
             name,
@@ -163,20 +171,18 @@ const EditProfileForm = memo(({ address, bannerImage, profileImage, currentName,
         error: uploadProfileImageError
     }] = useUploadProfileImageMutation();
 
-    const handleUploadProfileImage = async (file: File) => {
-        const formData = new FormData();
-        formData.append("image", file);
-        const ipfsResponse = await uploadProfileImage({ address, formData });
-        console.log(ipfsResponse);
-    };
-
     return (
         <EditProfileFormContainer>
             <Header>Edit Profile</Header>
             <BannerImage src={bannerImage} />
             <EditBannerButton onFile={(file) => console.log("save banner!", file)}>Edit Banner</EditBannerButton>
-            <ProfileImage src={profileImage} />
-            <EditProfileImageButton onFile={(file) => handleUploadProfileImage(file)}>Edit Profile Image</EditProfileImageButton>
+            <ProfileImage src={profileImagePreview || profileImageUrl} />
+            <EditProfileImageButton 
+                onData={(data) => setProfileImagePreview(data)}
+                onFile={(file) => setProfileImageFile(file)}
+            >
+                    Edit Profile Image
+            </EditProfileImageButton>
             <InputContainer>
                 <CustomInput
                     type="text"
