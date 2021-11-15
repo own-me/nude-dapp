@@ -44,6 +44,5 @@ export default function LoginPage() {
             <LoginForm />
             <LoginSocials />
         </LoginPageContainer>
-    
-    )
+    );
 }

@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BigNumber } from "ethers";
 
 interface WalletState {
     address: string,
     balance: number,
-};
+}
 
 const initialState: WalletState = {
     address: "",

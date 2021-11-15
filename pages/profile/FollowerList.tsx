@@ -51,10 +51,6 @@ const FollowerInfoAddress = styled.div`
     font-size: 18px;
 `;
 
-const FollowerInfoName = styled.div`
-
-`;
-
 const FollowButton = styled.button`
     font-family: Poppins, Open Sans;
     font-size: 14px;
@@ -84,7 +80,7 @@ const StatsContainer = styled.div`
 const StatsIcon = styled.img`
     height: 20px;
     margin-right: 5px;
-`
+`;
 
 const FollowerStats = styled.div`
     display: flex;
@@ -120,7 +116,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
         if (address === follower.fromAddress) {
             postUnfollow({ toAddress: follower.toAddress });
         } else {
-            postFollow({ toAddress: follower.toAddress })
+            postFollow({ toAddress: follower.toAddress });
         }
     }, [address, postFollow, postUnfollow]);
 

@@ -6,7 +6,7 @@ interface UserState {
     loggedIn: boolean;
     email: string;
     nfts: any[];
-};
+}
 
 const initialState: UserState = {
     id: null,
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
         },
         setUserLoggedIn: (state: UserState, action: PayloadAction<boolean>) => {
             if (!action.payload) {
-                window.localStorage.removeItem("token");
+                localStorage.removeItem("token");
             }
             state.loggedIn = action.payload;
         },

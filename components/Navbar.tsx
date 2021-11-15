@@ -104,7 +104,7 @@ const Navbar = memo((props) => {
                 <NavbarItems>
                     {
                         navLinks.map(({ text, link }, index) => {
-                            return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
+                            return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>;
                         })
                     }
                 </NavbarItems>

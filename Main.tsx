@@ -54,4 +54,4 @@ export default function Main() {
             </Routes>
         </MainContainer>
     );
-};
+}

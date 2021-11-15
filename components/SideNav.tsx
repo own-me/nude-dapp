@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import { Transition } from 'react-transition-group';
+import { Transition } from "react-transition-group";
 import { navLinks } from "./Navbar";
 import { Link } from "react-router-dom";
 
@@ -73,7 +73,7 @@ const SideNav = memo(({ isOpen, setIsOpen }: SideNavProps) => {
                     <SideNavContainer className={transitionState}>
                         {
                             navLinks.map(({ text, link }, index) => {
-                                return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>
+                                return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>;
                             })
                         }
                     </SideNavContainer>

@@ -4,8 +4,21 @@ interface GetNftRequest {
     tokenId: string;
 }
 
+interface TokenURIInterface{
+    title: string;
+    description: string;
+    image: string;
+}
+
 interface GetNftResponse {
-    
+    tokenId: number;
+    recipient: string;
+    address: string;
+    transactionHash: string;
+    transactionIndex: number;
+    blockHash: string;
+    blockNumber: number;
+    tokenURI: TokenURIInterface;
 }
 
 export const nftApi = createApi({

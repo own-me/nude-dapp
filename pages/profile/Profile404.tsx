@@ -31,4 +31,4 @@ export default function Profile404() {
             <Profile404Text>PROFILE DOES NOT EXIST</Profile404Text>
         </Profile404Container>
     );
-};
+}
