@@ -89,7 +89,7 @@ const DragDropInput = memo(({ onBase64, onArrayBuffer, onClear, onChange }: Drag
     };
 
     const handleChange = (e) => {
-        setImageFile(e.target.files[0])
+        setImageFile(e.target.files[0]);
         onChange && onChange(e.target.files[0]);
     };
 

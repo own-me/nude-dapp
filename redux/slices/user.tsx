@@ -6,7 +6,7 @@ interface UserState {
     loggedIn: boolean;
     email: string;
     nfts: any[];
-};
+}
 
 const initialState: UserState = {
     id: null,

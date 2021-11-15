@@ -18,11 +18,11 @@ const Input = styled.input`
 
 const RecieverInput = styled(Input)`
 
-`
+`;
 
 const AmountInput = styled(Input)`
 
-`
+`;
 
 export default function SendNudeForm() {
     const [recieverAddress, setRecieverAddress] = useState("");
@@ -35,7 +35,7 @@ export default function SendNudeForm() {
         const nudeWithSigner = nudeContract.connect(signer);
         const nude = ethers.utils.parseUnits(amount, 0);
         const tx = nudeWithSigner.transfer(recieverAddress, nude);
-    }
+    };
 
     return (
         <>
@@ -44,4 +44,4 @@ export default function SendNudeForm() {
             <SendButton onClick={handleSubmit}>Send</SendButton>
         </>
     );
-};
+}

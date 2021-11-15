@@ -37,4 +37,4 @@ export default function Switch({ onChange }: SwitchProps) {
             <SwitchThumb $isActive={isActive}></SwitchThumb>
         </SwitchContainer>
     );
-};
+}

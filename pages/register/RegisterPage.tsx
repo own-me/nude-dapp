@@ -36,5 +36,5 @@ export default function RegisterPage() {
             <LogoImg src={logo} />
             <RegisterForm />
         </RegisterPageContainer>
-    )
+    );
 }

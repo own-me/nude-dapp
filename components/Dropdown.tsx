@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import { Transition } from 'react-transition-group';
+import { Transition } from "react-transition-group";
 
 const DropdownContainer = styled.div`
     padding: 40px 40px 20px 40px;

@@ -87,7 +87,7 @@ export default function AccountButton() {
                     <AccountInfo>{name}</AccountInfo>
                     <AccountInfo>{email}</AccountInfo>
                     <Link to={`/${address}`}><EditProfileButton>Edit Profile</EditProfileButton></Link>
-                    <Link to={`/mint`}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
+                    <Link to={"/mint"}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
                 </div>
                 <br />
                 <LogoutText onClick={handleLogout}>
@@ -96,4 +96,4 @@ export default function AccountButton() {
             </Dropdown>
         </>
     );
-};
+}

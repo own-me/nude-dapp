@@ -41,5 +41,5 @@ export default function LoginPage() {
             <LogoImg src={logo} />
             <LoginForm />
         </LoginPageContainer>
-    )
+    );
 }

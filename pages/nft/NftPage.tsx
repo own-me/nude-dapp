@@ -176,11 +176,7 @@ const OwnMeButton = styled.button`
     }
 `;
 
-interface NftPageProps {
-
-}
-
-const NftPage = memo((props: NftPageProps) => {
+const NftPage = memo((props) => {
     const params = useParams();
     const [tokenUriData, setTokenUriData] = useState<any>({});
 

@@ -39,7 +39,7 @@ const ProfilePage = memo((props) => {
     }, [userNftsData]);
 
     useEffect(() => {
-        userNftsRefetch()
+        userNftsRefetch();
     }, [profileAddress]);
 
     return (

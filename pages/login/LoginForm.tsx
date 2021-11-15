@@ -93,7 +93,7 @@ export const LoginForm = memo((props) => {
         if (window.localStorage.getItem("token")) {
             postLogin({ address });
         }
-    }, [address])
+    }, [address]);
 
     const handleSubmit = useCallback((e?) => {
         e.preventDefault();

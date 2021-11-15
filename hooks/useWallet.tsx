@@ -14,7 +14,7 @@ export default function useWallet() {
 
     useEffect(() => {
         async function getBalance() {
-            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            await window.ethereum.request({ method: "eth_requestAccounts" });
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             setProvider(provider);
             const signer = provider.getSigner();
@@ -28,7 +28,7 @@ export default function useWallet() {
     }, [address]);
 
     useEffect(() => {
-        window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
+        window.ethereum.on("accountsChanged", (accounts: Array<string>) => {
             if (!address) {
                 setAddress(accounts[0]);
             } else {
@@ -43,4 +43,4 @@ export default function useWallet() {
     }, [address]);
 
     return { balance, address, network, provider, signer };
-};
+}

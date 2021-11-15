@@ -15,12 +15,12 @@ const Header = styled.h1`
     padding: 0px 40px 20px 40px;
     border-bottom: 1px solid #e0e0e0;
     margin-bottom: 0px;
-`
+`;
 
 const BannerImage = styled.img`
     width: 100%;
     height: 180px;
-`
+`;
 
 const ProfileImage = styled.img`
     width: 150px;
@@ -31,7 +31,7 @@ const ProfileImage = styled.img`
     border-radius: 100%;
     border: 5px solid white;
     background: white;
-`
+`;
 
 const ActionButton = styled.button`
     font-family: Poppins, Open Sans;

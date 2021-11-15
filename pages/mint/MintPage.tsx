@@ -110,17 +110,17 @@ export default function MintPage() {
                 title,
                 description,
                 image: ipfsResponse.data.ipfsUrl
-            }
+            };
             const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata));
             console.log(tx);
         } else {
             // image did not upload correctly
         }
-    }
+    };
 
     const clearImage = () => {
         setImagePreview(null);
-    }
+    };
 
     return (
         <>
@@ -169,4 +169,4 @@ export default function MintPage() {
             </MintPageContainer>
         </>
     );
-};
+}

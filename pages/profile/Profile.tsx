@@ -212,23 +212,6 @@ const Profile = memo((props: ProfileProps) => {
         }
     ], [instagramIcon, twitterIcon, linkedinIcon, youtubeIcon]);
 
-    const mockNFTCards = () => {
-        const cards = []
-        for (let i = 0; i < 12; i++) {
-            cards.push(
-                <NFTCard
-                    title={"King Tobi"}
-                    owner={"@thecatdad"}
-                    price={"2.45 ETH"}
-                    rarity={[1, 8]}
-                    image={catNft}
-                    key={i}
-                />
-            );
-        }
-        return cards;
-    }
-
     const parseRawNfts = (nfts: any[]): any[] => {
         return nfts.map((nft: any) => {
             return {
@@ -240,16 +223,16 @@ const Profile = memo((props: ProfileProps) => {
                 image: nft.tokenURI.image,
                 tokenId: nft.tokenId,
                 transactionHash: nft.transactionHash
-            }
+            };
         });
-    }
+    };
 
     const followButtonText = useMemo(() => {
         if (props.isFollowing) {
             return isFollowButtonHovered ? "Unfollow" : "Following";
         }
         return "Follow";
-    }, [props.isFollowing, isFollowButtonHovered])
+    }, [props.isFollowing, isFollowButtonHovered]);
 
     return (
         <ProfileContainer>
@@ -308,7 +291,7 @@ const Profile = memo((props: ProfileProps) => {
                                     rarity={nft.rarity}
                                     image={nft.image}
                                     key={index}
-                                />
+                                />;
                             })
                         }
                     </NftCards>

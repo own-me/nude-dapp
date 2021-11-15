@@ -68,7 +68,7 @@ const AgeVerify = styled.div`
 
 const CheckBox = styled.input`
 
-`
+`;
 
 export default function RegisterForm() {
     const navigate = useNavigate();
@@ -117,4 +117,4 @@ export default function RegisterForm() {
             <Link to="/login">Login</Link>
         </RegisterFormContainer>
     );
-};
+}
