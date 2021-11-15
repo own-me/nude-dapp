@@ -3,6 +3,7 @@ import styled from "styled-components";
 import RegisterForm from "./RegisterForm";
 import loginBackground from "../../media/login-background.svg";
 import logo from "../../media/own-me-logo.svg";
+import LoginSocials from "../login/LoginSocials";
 
 const RegisterPageContainer = styled.div`
     height: 100%;
@@ -13,6 +14,7 @@ const RegisterPageContainer = styled.div`
     background-image: url(${loginBackground});
     background-size: cover;
     background-color: white;
+    justify-content: center;
 
     @media (min-width: ${props => props.theme.breakpoints.mobile}px) {
         justify-content: center;
@@ -35,6 +37,7 @@ export default function RegisterPage() {
         <RegisterPageContainer>
             <LogoImg src={logo} />
             <RegisterForm />
+            <LoginSocials />
         </RegisterPageContainer>
     );
 }
