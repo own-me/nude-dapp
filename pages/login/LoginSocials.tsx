@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import instagram from "./../../media/icons/socials/color/instagram.svg";
-import linkedin from "./../../media/icons/socials/color/linkedin.svg";
-import twitter from "./../../media/icons/socials/color/twitter.svg";
-import discord from "./../../media/icons/socials/color/discord.svg";
-import medium from "./../../media/icons/socials/color/medium.svg";
-import telegram from "./../../media/icons/socials/color/telegram.svg";
+import instagram from "./../../media/icons/socials/white/instagram.svg";
+import linkedin from "./../../media/icons/socials/white/linkedin.svg";
+import twitter from "./../../media/icons/socials/white/twitter.svg";
+import discord from "./../../media/icons/socials/white/discord.svg";
+import medium from "./../../media/icons/socials/white/medium.svg";
+import telegram from "./../../media/icons/socials/white/telegram.svg";
 
 const socialIcons = [
     {
@@ -37,28 +37,33 @@ const socialIcons = [
         key: "discord",
         icon: discord,
         url: "https://discord.gg/Ww5nckNGpS"
-    },
-
+    }
 ];
 
 const SocialsGrid = styled.div` 
     position: absolute;
-    bottom: 0%;
-    right: 0%;
+    bottom: 1%;
+    right: 0;
     color: white;
-    width: auto;
-    height: auto;
-        @media screen and (max-width: 520px){
-            align-content: center;
-            grid-row: 2;
-            column-count: 3;
-        }
+    display: flex;
+
+    @media screen and (max-width: 640px){
+        width: 100%;
+        justify-content: space-around;
+        padding: 10px 0px;
+    }
 `;
 
 const SocialsIcon = styled.img`
     margin: 25px;
     width: 35px;
-    height: 34px;
+    height: auto;
+
+    @media screen and (max-width: 640px){
+        margin: 0;
+        justify-content: space-between;
+        width: 20px;
+    }
 `;
 
 const LoginSocials = () => {
@@ -70,11 +75,9 @@ const LoginSocials = () => {
                         <SocialsIcon src={value.icon} />
                     </a>
                 );
-            }
-            )}
+            })}
         </SocialsGrid>
     );
 };
+
 export default LoginSocials;
-
-
