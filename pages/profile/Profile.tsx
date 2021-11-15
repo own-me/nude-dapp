@@ -12,7 +12,7 @@ import Tabs, { TabContent } from "../../components/Tabs";
 import NFTCard from "../../components/NFTCard";
 import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
-import { usePostFollowMutation } from "../../redux/api/follow";
+import { Following, usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import FollowerList from "./FollowerList";
 import { NftInterface } from "../../redux/api/nft";
@@ -152,11 +152,11 @@ interface ProfileProps{
     userRefetch: () => void;
 }
 
-const Profile = memo((props: ProfileProps) => {
+const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, following, profileImageUrl, userRefetch}: ProfileProps) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
 
-    const formattedAddress = useMemo(() => shortenAddress(props.profileAddress, 16), [props.profileAddress]);
+    const formattedAddress = useMemo(() => shortenAddress(profileAddress, 16), [profileAddress]);
     const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
 
     const [postFollow, {
@@ -168,8 +168,8 @@ const Profile = memo((props: ProfileProps) => {
     }] = usePostUnfollowMutation();
 
     useEffect(() => {
-        props.userRefetch();
-    }, [props, isPostFollowSuccess, isPostUnfollowSuccess,]);
+        userRefetch();
+    }, [userRefetch, isPostFollowSuccess, isPostUnfollowSuccess,]);
 
     const mockSocials = [
         "https://www.instagram.com/christopher.trimboli/",
@@ -219,20 +219,20 @@ const Profile = memo((props: ProfileProps) => {
     };
 
     const followButtonText = useMemo(() => {
-        if (props.isFollowing) {
+        if (isFollowing) {
             return isFollowButtonHovered ? "Unfollow" : "Following";
         }
         return "Follow";
-    }, [props.isFollowing, isFollowButtonHovered]);
+    }, [isFollowing, isFollowButtonHovered]);
 
     return (
         <ProfileContainer>
             <ProfileBannerImage src={defaultBanner} />
-            <ProfileImage src={props.profileImageUrl || defaultProfile} />
+            <ProfileImage src={profileImageUrl || defaultProfile} />
             <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
             <ProfileAddress>{formattedAddress}</ProfileAddress>
-            <ProfileName>{props.name}</ProfileName>
-            <ProfileDescription>{props.bio}</ProfileDescription>
+            <ProfileName>{name}</ProfileName>
+            <ProfileDescription>{bio}</ProfileDescription>
             <SocialHandles>
                 {
                     mockSocials.map((url, index) => {
@@ -254,11 +254,11 @@ const Profile = memo((props: ProfileProps) => {
                 }
             </SocialHandles>
             {
-                props.profileAddress !== address &&
+                profileAddress !== address &&
                     <ActionButtons>
                         <ActionButton
-                            onClick={() => props.isFollowing ? postUnfollow({ toAddress: props.profileAddress }) : postFollow({ toAddress: props.profileAddress })}
-                            $isFollowing={props.isFollowing}
+                            onClick={() => isFollowing ? postUnfollow({ toAddress: profileAddress }) : postFollow({ toAddress: profileAddress })}
+                            $isFollowing={isFollowing}
                             $isHovered={isFollowButtonHovered}
                             onMouseEnter={() => setIsFollowButtonHovered(true)}
                             onMouseOut={() => setIsFollowButtonHovered(false)}
@@ -273,7 +273,7 @@ const Profile = memo((props: ProfileProps) => {
                 <TabContent>
                     <NftCards>
                         {
-                            props.userNfts?.length > 0 && parseRawNfts(props.userNfts).map((nft: NftInterface, index: number) => {
+                            userNfts?.length > 0 && parseRawNfts(userNfts).map((nft: NftInterface, index: number) => {
                                 return <NFTCard
                                     tokenId={nft.tokenId}
                                     title={nft.title}
@@ -291,7 +291,7 @@ const Profile = memo((props: ProfileProps) => {
                     <h1>Posts bro</h1>
                 </TabContent>
                 <TabContent>
-                    <FollowerList followers={props.following} />
+                    <FollowerList followers={following} />
                 </TabContent>
                 <TabContent>
                     <h1>Activity bro</h1>
@@ -299,13 +299,13 @@ const Profile = memo((props: ProfileProps) => {
             </Tabs>
             <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
                 <EditProfileForm
-                    address={props.profileAddress}
+                    address={profileAddress}
                     bannerImage={defaultBanner}
-                    profileImageUrl={props.profileImageUrl}
+                    profileImageUrl={profileImageUrl}
                     onCancel={() => setIsEditProfileOpen(false)}
-                    currentName={props.name}
-                    currentBio={props.bio}
-                    userRefetch={props.userRefetch}
+                    currentName={name}
+                    currentBio={bio}
+                    userRefetch={userRefetch}
                 />
             </Modal>
         </ProfileContainer>

@@ -57,16 +57,16 @@ const MintFormFooter = styled.div`
 `;
 
 const SubmitButton = styled.button`
-        font-family: Poppins, Open Sans;
-        font-size: 22px;
-        background-color: #FF81EB;
-        color: white;
-        border: none;
-        padding: 8px 40px;
-        border-radius: 6px;
-        margin-left: 50px;
-        box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
-        cursor: pointer;
+    font-family: Poppins, Open Sans;
+    font-size: 22px;
+    background-color: #FF81EB;
+    color: white;
+    border: none;
+    padding: 8px 40px;
+    border-radius: 6px;
+    margin-left: 50px;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    cursor: pointer;
 `;
 
 const EncryptedLabel = styled.h3`
