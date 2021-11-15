@@ -14,6 +14,7 @@ const RegisterPageContainer = styled.div`
     background-image: url(${loginBackground});
     background-size: cover;
     background-color: white;
+    justify-content: center;
 
     @media (min-width: ${props => props.theme.breakpoints.mobile}px) {
         justify-content: center;
