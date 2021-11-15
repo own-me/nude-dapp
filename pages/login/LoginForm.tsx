@@ -64,7 +64,7 @@ const ErrorMessage = styled.p`
     font-family: Poppins, Open Sans;
 `;
 
-export const LoginForm = memo((props) => {
+export const LoginForm = memo(() => {
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
@@ -82,18 +82,15 @@ export const LoginForm = memo((props) => {
     }] = usePostLoginMutation();
 
     const [postAuth, {
-        isLoading: isPostAuthLoading,
         isSuccess: isPostAuthSuccess,
-        isError: isPostAuthError,
         data: postAuthData,
-        error: postAuthError
     }] = usePostAuthMutation();
 
     useEffect(() => {
         if (window.localStorage.getItem("token")) {
             postLogin({ address });
         }
-    }, [address]);
+    }, [address, postLogin]);
 
     const handleSubmit = useCallback((e?) => {
         e.preventDefault();
@@ -111,7 +108,7 @@ export const LoginForm = memo((props) => {
                 dispatch(setUserLoggedIn(true));
             }
         }
-    }, [postLoginData, isPostLoginSuccess]);
+    }, [postLoginData, isPostLoginSuccess, signer, postAuth, address, dispatch]);
 
     useEffect(() => {
         if (isPostLoginError) {
@@ -124,13 +121,13 @@ export const LoginForm = memo((props) => {
             window.localStorage.setItem("token", postAuthData.token);
             dispatch(setUserLoggedIn(true));
         }
-    }, [isPostAuthSuccess]);
+    }, [dispatch, isPostAuthSuccess, postAuthData]);
 
     useEffect(() => {
         if (loggedIn) {
             navigate(location?.state?.from || "/");
         }
-    }, [loggedIn]);
+    }, [location?.state?.from, loggedIn, navigate]);
 
     return (
         <LoginFormContainer onSubmit={handleSubmit}>

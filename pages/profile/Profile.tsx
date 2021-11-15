@@ -10,13 +10,12 @@ import linkedinIcon from "../../media/icons/socials/color/linkedin.svg";
 import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
 import Tabs, { TabContent } from "../../components/Tabs";
 import NFTCard from "../../components/NFTCard";
-import catNft from "../../media/defaults/catnft.png";
 import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import FollowerList from "./FollowerList";
-import { nftApi } from "../../redux/api/nft";
+import { NftInterface } from "../../redux/api/nft";
 
 const ProfileContainer = styled.div`
     min-height: 100%;
@@ -147,8 +146,8 @@ interface ProfileProps{
     name: string;
     bio: string;
     isFollowing: boolean;
-    userNfts: any[];
-    following: any[];
+    userNfts: NftInterface[];
+    following: Following[];
     profileImageUrl: string;
     userRefetch: () => void;
 }
@@ -161,24 +160,16 @@ const Profile = memo((props: ProfileProps) => {
     const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
 
     const [postFollow, {
-        isLoading: isPostFollowLoading,
         isSuccess: isPostFollowSuccess,
-        isError: isPostFollowError,
-        data: postFollowData,
-        error: postFollowError
     }] = usePostFollowMutation();
 
     const [postUnfollow, {
-        isLoading: isPostUnfollowLoading,
         isSuccess: isPostUnfollowSuccess,
-        isError: isPostUnfollowError,
-        data: postUnfollowData,
-        error: postUnfollowError
     }] = usePostUnfollowMutation();
 
     useEffect(() => {
         props.userRefetch();
-    }, [isPostFollowSuccess, isPostUnfollowSuccess,]);
+    }, [props, isPostFollowSuccess, isPostUnfollowSuccess,]);
 
     const mockSocials = [
         "https://www.instagram.com/christopher.trimboli/",
@@ -210,10 +201,10 @@ const Profile = memo((props: ProfileProps) => {
             domainRegex: /www\.youtube\.com/,
             getHandle: (url: string) => url.split("/")[4]
         }
-    ], [instagramIcon, twitterIcon, linkedinIcon, youtubeIcon]);
+    ], []);
 
-    const parseRawNfts = (nfts: any[]): any[] => {
-        return nfts.map((nft: any) => {
+    const parseRawNfts = (nfts: NftInterface[]): NftInterface[] => {
+        return nfts.map((nft: NftInterface) => {
             return {
                 title: nft.tokenURI.title,
                 description: nft.tokenURI.description,
@@ -282,7 +273,7 @@ const Profile = memo((props: ProfileProps) => {
                 <TabContent>
                     <NftCards>
                         {
-                            props.userNfts?.length > 0 && parseRawNfts(props.userNfts).map((nft: any, index: number) => {
+                            props.userNfts?.length > 0 && parseRawNfts(props.userNfts).map((nft: NftInterface, index: number) => {
                                 return <NFTCard
                                     tokenId={nft.tokenId}
                                     title={nft.title}

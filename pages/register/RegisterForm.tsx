@@ -81,17 +81,14 @@ export default function RegisterForm() {
 
     const [postRegister, {
         isLoading: isRegisterLoading,
-        isSuccess: isRegisterSuccess,
-        isError: isRegisterError,
-        data: registerData,
-        error: registerError
+        isSuccess: isRegisterSuccess
     }] = usePostRegisterMutation();
 
     useEffect(() => {
         if (isRegisterSuccess) {
             navigate("/login");
         }
-    }, [registerData, isRegisterSuccess, isRegisterError]);
+    }, [isRegisterSuccess, navigate]);
 
     const isSubmitDisabled = !isAgeConfirmed;
 

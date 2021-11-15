@@ -89,13 +89,7 @@ export default function MintPage() {
 
     const { address, provider, signer } = useWallet();
 
-    const [postIpfsUpload, {
-        isLoading: isPostIpfsUploadLoading,
-        isSuccess: isPostIpfsUploadSuccess,
-        isError: isPostIpfsUploadError,
-        data: postIpfsUploadData,
-        error: postIpfsUploadError
-    }] = usePostIpfsUploadMutation();
+    const [postIpfsUpload] = usePostIpfsUploadMutation();
 
     const handleMintSubmit = async () => {
         const formData = new FormData();

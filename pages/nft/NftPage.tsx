@@ -176,21 +176,17 @@ const OwnMeButton = styled.button`
     }
 `;
 
-const NftPage = memo((props) => {
+const NftPage = memo(() => {
     const params = useParams();
-    const [tokenUriData, setTokenUriData] = useState<any>({});
+    const [tokenUriData, setTokenUriData] = useState(null);
 
     const {
         data: nftData,
-        error: nftError,
-        isLoading: isNftLoading,
-        refetch: nftRefetch
     } = useGetNftQuery({ tokenId: params.tokenId }, {
         skip: !params.tokenId,
     });
 
     useEffect(() => {
-        console.log(nftData);
         if (nftData) {
             setTokenUriData(nftData.tokenURI);
         }
@@ -219,7 +215,7 @@ const NftPage = memo((props) => {
                         <TopItem>
                             <TopItemHeader>Creator</TopItemHeader>
                             <TopItemValue>
-                                <Link to={`/${nftData?.returnValues?.recipient}`}>Nicki Minaj</Link>
+                                <Link to={`/${nftData?.recipient}`}>Nicki Minaj</Link>
                             </TopItemValue>
                         </TopItem>
                         <TopItem>

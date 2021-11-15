@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from "react";
 import styled from "styled-components";
-import { Follower } from "../../redux/api/follow";
+import { Following } from "../../redux/api/follow";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { shortenAddress } from "../../lib/helpers";
 import { usePostFollowMutation } from "../../redux/api/follow";
@@ -11,7 +11,7 @@ import useWallet from "../../hooks/useWallet";
 import { Link } from "react-router-dom";
 
 interface FollowListProps {
-    followers?: Follower[];
+    followers?: Following[];
 }
 
 const FollowerListContainer = styled.div`
@@ -96,23 +96,11 @@ const NftStats = styled.div`
 const FollowerList = memo(({ followers = [] }: FollowListProps) => {
     const { address } = useWallet();
 
-    const [postFollow, {
-        isLoading: isPostFollowLoading,
-        isSuccess: isPostFollowSuccess,
-        isError: isPostFollowError,
-        data: postFollowData,
-        error: postFollowError
-    }] = usePostFollowMutation();
+    const [postFollow] = usePostFollowMutation();
 
-    const [postUnfollow, {
-        isLoading: isPostUnfollowLoading,
-        isSuccess: isPostUnfollowSuccess,
-        isError: isPostUnfollowError,
-        data: postUnfollowData,
-        error: postUnfollowError
-    }] = usePostUnfollowMutation();
+    const [postUnfollow] = usePostUnfollowMutation();
 
-    const handleFollowButton = useCallback((follower: Follower) => {
+    const handleFollowButton = useCallback((follower: Following) => {
         if (address === follower.fromAddress) {
             postUnfollow({ toAddress: follower.toAddress });
         } else {
@@ -123,7 +111,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
     return (
         <FollowerListContainer>
             {
-                followers.map((follower: Follower, index) =>
+                followers.map((follower: Following, index) =>
                     <FollowerListRow to={`/${follower.toAddress}`} key={index}>
                         <FollowerProfileImage src={follower.toProfileImageUrl || defaultProfile} />
                         <FollowerInfoContainer>

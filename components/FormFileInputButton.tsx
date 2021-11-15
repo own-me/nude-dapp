@@ -33,7 +33,7 @@ const Button = styled.button`
 
 interface FormFileInputProps {
     onFile?: (file: File) => void;
-    onData?: (data: any) => void;
+    onData?: (data: string | ArrayBuffer) => void;
     children?: ReactNode;
 }
 

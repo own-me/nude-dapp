@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setUserNfts } from "../../redux/slices/user";
 import { useLocation } from "react-router";
 
-const ProfilePage = memo((props) => {
+const ProfilePage = memo(() => {
     const dispatch = useAppDispatch();
     const location = useLocation();
     const userNfts = useAppSelector(state => state.user.nfts);
@@ -17,7 +17,6 @@ const ProfilePage = memo((props) => {
 
     const {
         data: userData,
-        error: userError,
         isLoading: isUserLoading,
         refetch: userRefetch
     } = useGetUserQuery({ address: profileAddress }, {
@@ -26,21 +25,18 @@ const ProfilePage = memo((props) => {
 
     const {
         data: userNftsData,
-        error: userNftsError,
-        isLoading: isUserNftsLoading,
         refetch: userNftsRefetch
     } = useGetUserNftsQuery({ address: profileAddress }, {
         skip: !profileAddress,
     });
 
     useEffect(() => {
-        console.log(userNftsData);
         dispatch(setUserNfts(userNftsData?.userNfts));
-    }, [userNftsData]);
+    }, [dispatch, userNftsData]);
 
     useEffect(() => {
         userNftsRefetch();
-    }, [profileAddress]);
+    }, [profileAddress, userNftsRefetch]);
 
     return (
         <>

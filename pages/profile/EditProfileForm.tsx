@@ -33,19 +33,6 @@ const ProfileImage = styled.img`
     background: white;
 `;
 
-const ActionButton = styled.button`
-    font-family: Poppins, Open Sans;
-    font-size: 16px;
-    background-color: #FF81EB;
-    color: white;
-    border: none;
-    padding: 5px 15px;
-    border-radius: 25px;
-    margin: 10px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    cursor: pointer;
-`;
-
 const EditBannerButton = styled(FormFileInputButton)`
     position: absolute;
     right: 15px;
@@ -134,11 +121,7 @@ const EditProfileForm = memo(({ address, bannerImage, profileImageUrl, currentNa
     const navigate = useNavigate();
 
     const [postEditUser, {
-        isLoading: isEditUserLoading,
         isSuccess: isEditUserSuccess,
-        isError: isEditUserError,
-        data: editUserData,
-        error: editUserError
     }] = useEditUserMutation();
 
     const handleSave = async () => {
@@ -161,15 +144,9 @@ const EditProfileForm = memo(({ address, bannerImage, profileImageUrl, currentNa
             navigate(`/${address}`);
             userRefetch();
         }
-    }, [isEditUserSuccess]);
+    }, [address, isEditUserSuccess, navigate, onCancel, userRefetch]);
 
-    const [uploadProfileImage, {
-        isLoading: isUploadProfileImageLoading,
-        isSuccess: isUploadProfileImageSuccess,
-        isError: isUploadProfileImageError,
-        data: uploadProfileImageData,
-        error: uploadProfileImageError
-    }] = useUploadProfileImageMutation();
+    const [uploadProfileImage] = useUploadProfileImageMutation();
 
     return (
         <EditProfileFormContainer>

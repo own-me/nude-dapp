@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NftInterface } from "../api/nft";
 
 interface UserState {
     id: number;
     name: string;
     loggedIn: boolean;
     email: string;
-    nfts: any[];
+    nfts: NftInterface[];
 }
 
 const initialState: UserState = {
@@ -35,7 +36,7 @@ export const userSlice = createSlice({
         setUserEmail: (state: UserState, action: PayloadAction<string>) => {
             state.email = action.payload;
         },
-        setUserNfts: (state: UserState, action: PayloadAction<any[]>) => {
+        setUserNfts: (state: UserState, action: PayloadAction<NftInterface[]>) => {
             state.nfts = action.payload;
         }
     }

@@ -8,9 +8,9 @@ export default function useWallet() {
 
     const [balance, setBalance] = useState<BigNumber>(null);
     const [address, setAddress] = useState<string>("");
-    const [network, setNetwork] = useState<any>(null);
-    const [provider, setProvider] = useState<any>(null);
-    const [signer, setSigner] = useState<any>(null);
+    const [network, setNetwork] = useState(null);
+    const [provider, setProvider] = useState(null);
+    const [signer, setSigner] = useState(null);
 
     useEffect(() => {
         async function getBalance() {
@@ -40,7 +40,7 @@ export default function useWallet() {
                 dispatch(setUserLoggedIn(false));
             }
         });
-    }, [address]);
+    }, [address, dispatch]);
 
     return { balance, address, network, provider, signer };
 }

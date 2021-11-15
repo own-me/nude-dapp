@@ -92,7 +92,7 @@ export const navLinks = [
     }
 ];
 
-const Navbar = memo((props) => {
+const Navbar = memo(() => {
     const location = useLocation();
 
     const [isSideNavOpen, setIsSideNavOpen] = useState<boolean>(false);

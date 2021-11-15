@@ -11,12 +11,6 @@ interface LoginResponse {
     token?: string;
 }
 
-interface DecodedToken {
-    address: string;
-    exp: number;
-    iat: number;
-}
-
 export const loginApi = createApi({
     reducerPath: "loginApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),

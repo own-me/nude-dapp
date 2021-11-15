@@ -62,25 +62,23 @@ const DragDropInput = memo(({ onBase64, onArrayBuffer, onClear, onChange }: Drag
     const [previewImage, setPreviewImage] = useState<string>();
 
     useEffect(() => {
+        const readFile = async (file: File) => {
+            const arrayBufferReader = new FileReader();
+            const base64Reader = new FileReader();
+            arrayBufferReader.onload = () => {
+                onArrayBuffer && onArrayBuffer(arrayBufferReader.result as ArrayBuffer);
+            };
+            base64Reader.onload = () => {
+                setPreviewImage(base64Reader.result as string);
+                onBase64 && onBase64(base64Reader.result as string);
+            };
+            arrayBufferReader.readAsArrayBuffer(file);
+            base64Reader.readAsDataURL(file);
+        };
         if (imageFile) {
             readFile(imageFile);
         }
-    }, [imageFile]);
-
-    const readFile = async (file: File) => {
-        console.log(file);
-        const arrayBufferReader = new FileReader();
-        const base64Reader = new FileReader();
-        arrayBufferReader.onload = () => {
-            onArrayBuffer && onArrayBuffer(arrayBufferReader.result as ArrayBuffer);
-        };
-        base64Reader.onload = () => {
-            setPreviewImage(base64Reader.result as string);
-            onBase64 && onBase64(base64Reader.result as string);
-        };
-        arrayBufferReader.readAsArrayBuffer(file);
-        base64Reader.readAsDataURL(file);
-    };
+    }, [imageFile, onArrayBuffer, onBase64]);
 
     const handleClear = () => {
         setImageFile(null);

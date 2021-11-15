@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { NftInterface } from "./nft";
 
 interface GetUserNftsRequest {
     address: string;
 }
 
 interface GetUserNftsResponse {
-    userNfts: any[];
+    userNfts: NftInterface[];
 }
 
 export const nftDbApi = createApi({

@@ -53,15 +53,15 @@ const SocialsGrid = styled.div`
             grid-row: 2;
             column-count: 3;
         }
-`
+`;
 
 const SocialsIcon = styled.img`
     margin: 25px;
     width: 35px;
     height: 34px;
-`
+`;
 
-const LoginSocials = (props) => {
+const LoginSocials = () => {
     return (
         <SocialsGrid>
             {socialIcons.map((value, index) => {
@@ -69,11 +69,11 @@ const LoginSocials = (props) => {
                     <a href={value.url} target="blank" key={index}>
                         <SocialsIcon src={value.icon} />
                     </a>
-                )
+                );
             }
             )}
         </SocialsGrid>
-    )
+    );
 };
 export default LoginSocials;
 
