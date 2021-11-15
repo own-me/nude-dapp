@@ -31,7 +31,6 @@ const LogoImg = styled.img`
     }
 `;
 
-
 export default function RegisterPage() {
     return (
         <RegisterPageContainer>
