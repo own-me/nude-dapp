@@ -3,6 +3,7 @@ import styled from "styled-components";
 import RegisterForm from "./RegisterForm";
 import loginBackground from "../../media/login-background.svg";
 import logo from "../../media/own-me-logo.svg";
+import LoginSocials from "../login/LoginSocials";
 
 const RegisterPageContainer = styled.div`
     height: 100%;
@@ -30,11 +31,13 @@ const LogoImg = styled.img`
     }
 `;
 
+
 export default function RegisterPage() {
     return (
         <RegisterPageContainer>
             <LogoImg src={logo} />
             <RegisterForm />
+            <LoginSocials />
         </RegisterPageContainer>
     );
 }
