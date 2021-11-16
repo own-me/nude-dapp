@@ -1,25 +1,18 @@
 import React, { memo, ReactNode } from "react";
 import styled from "styled-components";
 
-const HEIGHT = 40;
-const WIDTH = 130;
+const WIDTH = 200;
 
 export const FormFileInputContainer = styled.div`
-    height: ${HEIGHT}px;
     width: ${WIDTH}px;
-`;
-
-const Input = styled.input`
-    position: absolute;
-    height: ${HEIGHT}px;
-    width: ${WIDTH}px;
-    opacity: 0;
+    position: relative;
+    display: flex;
+    cursor: pointer;
 `;
 
 const Button = styled.button`
     font-family: Poppins, Open Sans;
-    height: ${HEIGHT}px;
-    width: ${WIDTH}px;
+    height: 100%;
     font-family: Poppins,Open Sans;
     font-size: 16px;
     background-color: #FF81EB;
@@ -28,6 +21,14 @@ const Button = styled.button`
     padding: 5px 15px;
     border-radius: 25px;
     box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    cursor: pointer;
+`;
+
+const Input = styled.input`
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
     cursor: pointer;
 `;
 

@@ -22,28 +22,30 @@ const BannerImage = styled.img`
     height: 180px;
 `;
 
-const ProfileImage = styled.img`
+const ProfileImageContainer = styled.div`
     width: 150px;
     height: 150px;
     position: absolute;
     left: calc(50% - 75px);
     top: 160px;
+`; 
+
+const ProfileImage = styled.img`
+    width: 100%;
+    height: 100%;
     border-radius: 100%;
     border: 5px solid white;
     background: white;
+`;
+
+const EditProfileImageButton = styled(FormFileInputButton)`
+
 `;
 
 const EditBannerButton = styled(FormFileInputButton)`
     position: absolute;
     right: 15px;
     top: 210px;
-`;
-
-const EditProfileImageButton = styled(FormFileInputButton)`
-    position: absolute;
-    left: calc(50% - 65px);
-    top: 280px;
-    background-color: #9A5CFF;
 `;
 
 const InputContainer = styled.div`
@@ -153,13 +155,15 @@ const EditProfileForm = memo(({ address, bannerImage, profileImageUrl, currentNa
             <Header>Edit Profile</Header>
             <BannerImage src={bannerImage} />
             <EditBannerButton onFile={(file) => console.log("save banner!", file)}>Edit Banner</EditBannerButton>
-            <ProfileImage src={profileImagePreview || profileImageUrl} />
-            <EditProfileImageButton 
-                onData={(data) => setProfileImagePreview(data)}
-                onFile={(file) => setProfileImageFile(file)}
-            >
+            <ProfileImageContainer>
+                <ProfileImage src={profileImagePreview || profileImageUrl} />
+                <EditProfileImageButton
+                    onData={(data) => setProfileImagePreview(data)}
+                    onFile={(file) => setProfileImageFile(file)}
+                >
                     Edit Profile Image
-            </EditProfileImageButton>
+                </EditProfileImageButton>
+            </ProfileImageContainer>
             <InputContainer>
                 <CustomInput
                     type="text"
