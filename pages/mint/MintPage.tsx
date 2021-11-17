@@ -20,10 +20,8 @@ const MintPageContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    color: black;
     width: 50%;
     margin: 0 auto;
-    background-color: white;
     padding: 0px 5%;
     transition: width 0.5s ease-in-out;
 

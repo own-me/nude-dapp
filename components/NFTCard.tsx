@@ -2,8 +2,9 @@ import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
+import { useAppSelector } from "../redux/hooks";
 
-const NFTCardContainer = styled(Link)`
+const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
     height: 280px;
     width: 200px;
@@ -17,8 +18,8 @@ const NFTCardContainer = styled(Link)`
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
-    color: black;
-    background: white;
+    color: ${props => (props.$isDarkMode ? "white" : "black")};
+    background: ${props => (props.$isDarkMode ? "#0d0018" : "#D8CBFF")};
 
     :hover {
         transform: translateY(-5px);
@@ -67,8 +68,10 @@ interface NFTCardProps {
 }
 
 const NFTCard = memo(({ tokenId, title, owner, price, rarity, image }: NFTCardProps) => {
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
     return (
-        <NFTCardContainer to={`/nft/${tokenId}`}>
+        <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>
             <NFTCardImage src={image} />
             <NFTCardTitle>{title}</NFTCardTitle>
             <NFTCardOwner>{shortenAddress(owner, 18)}</NFTCardOwner>

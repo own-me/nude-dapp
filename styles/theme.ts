@@ -8,7 +8,7 @@ export const theme: DefaultTheme = {
     },
     dark: {
         backgroundColor: "rgb(14 0 26)",
-        backgroundColor2: "rgb(27 0 50)",
+        backgroundColor2: "rgb(16 0 30)",
         textColor: "white"
     },
     light: {
