@@ -5,7 +5,7 @@ interface AppState {
 }
 
 const initialState: AppState = {
-    isDarkMode: false
+    isDarkMode: true
 };
 
 export const appSlice = createSlice({
