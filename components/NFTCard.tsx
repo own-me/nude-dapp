@@ -19,7 +19,7 @@ const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
     transition: all 0.3s ease;
     text-decoration: none;
     color: ${props => (props.$isDarkMode ? "white" : "black")};
-    background: ${props => (props.$isDarkMode ? "#0d0018" : "#D8CBFF")};
+    background: ${props => (props.$isDarkMode ? "#0d0018" : "white")};
 
     :hover {
         transform: translateY(-5px);
