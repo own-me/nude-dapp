@@ -13,20 +13,24 @@ import { TOTAL_HEIGHT } from "./components/Navbar";
 import MintPage from "./pages/mint/MintPage";
 import NftPage from "./pages/nft/NftPage";
 
-const MainContainer = styled.div<{ $isLoggedIn: boolean }>`
+const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
     margin-top: ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px;
     width: 100%;
     overflow-y: auto;
     position: relative;
+    background-color: ${props => props.$isDarkMode ? props.theme.dark.backgroundColor : props.theme.light.backgroundColor};
+    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
 `;
 
 export default function Main() {
     const loggedIn = useAppSelector(state => state.user.loggedIn);
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
     const location = useLocation();
 
     return (
-        <MainContainer $isLoggedIn={loggedIn}>
+        <MainContainer $isLoggedIn={loggedIn} $isDarkMode={isDarkMode}>
             <Routes>
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />

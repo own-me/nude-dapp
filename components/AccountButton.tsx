@@ -7,6 +7,7 @@ import { useAppSelector } from "../redux/hooks";
 import { useAppDispatch } from "../redux/hooks";
 import { setUserLoggedIn } from "../redux/slices/user";
 import { Link } from "react-router-dom";
+import { toggleDarkMode } from "../redux/slices/app";
 
 const AccountButtonTemplate = styled.button`
     font-family: Poppins, Open Sans;
@@ -75,6 +76,10 @@ export default function AccountButton() {
         dispatch(setUserLoggedIn(false));
     };
 
+    const handleToggleDarkMode = () => {
+        dispatch(toggleDarkMode());
+    };
+
     return (
         <>
             <AccountButtonTemplate type="button" onClick={() => setIsOpen(!isOpen)}>
@@ -88,6 +93,7 @@ export default function AccountButton() {
                     <AccountInfo>{email}</AccountInfo>
                     <Link to={`/${address}`}><EditProfileButton>Edit Profile</EditProfileButton></Link>
                     <Link to={"/mint"}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
+                    <EditProfileButton onClick={handleToggleDarkMode}>Toggle UI Mode</EditProfileButton>
                 </div>
                 <br />
                 <LogoutText onClick={handleLogout}>

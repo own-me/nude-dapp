@@ -18,6 +18,7 @@ const NFTCardContainer = styled(Link)`
     transition: all 0.3s ease;
     text-decoration: none;
     color: black;
+    background: white;
 
     :hover {
         transform: translateY(-5px);

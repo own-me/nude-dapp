@@ -9,11 +9,13 @@ import { userApi } from "./api/user";
 import { unfollowApi } from "./api/unfollow";
 import { nftDbApi } from "./api/nft-db";
 import { nftApi } from "./api/nft";
+import appReducer from "./slices/app";
 import userReducer from "./slices/user";
 import walletReducer from "./slices/wallet";
 
 export const store = configureStore({
     reducer: {
+        app: appReducer,
         user: userReducer,
         wallet: walletReducer,
         [loginApi.reducerPath]: loginApi.reducer,

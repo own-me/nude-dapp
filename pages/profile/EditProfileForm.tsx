@@ -43,9 +43,7 @@ const EditProfileImageButton = styled(FormFileInputButton)`
 `;
 
 const EditBannerButton = styled(FormFileInputButton)`
-    position: absolute;
-    right: 15px;
-    top: 210px;
+
 `;
 
 const InputContainer = styled.div`

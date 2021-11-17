@@ -7,14 +7,15 @@ import { useLocation } from "react-router-dom";
 import { ZIndex } from "../lib/zindex";
 import hamburgerIcon from "../media/hamburger.svg";
 import SideNav from "./SideNav";
+import { useAppSelector } from "../redux/hooks";
 
 export const NAVBAR_HEIGHT = 50;
 export const NAVBAR_PADDING = 20;
 export const TOTAL_HEIGHT = NAVBAR_HEIGHT + (NAVBAR_PADDING * 2);
 
-const NavbarContainer = styled.div`
+const NavbarContainer = styled.div<{ $isDarkMode: boolean }>`
     height: ${NAVBAR_HEIGHT}px;
-    background-color: white;
+    background-color: ${props => props.$isDarkMode ? props.theme.dark.backgroundColor2 : props.theme.light.backgroundColor};
     padding: ${NAVBAR_PADDING}px;
     position: fixed;
     right: 0;
@@ -97,9 +98,11 @@ const Navbar = memo(() => {
 
     const [isSideNavOpen, setIsSideNavOpen] = useState<boolean>(false);
 
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
     return (
         <>
-            <NavbarContainer>
+            <NavbarContainer $isDarkMode={isDarkMode}>
                 <NavLogo src={navLogo} />
                 <NavbarItems>
                     {

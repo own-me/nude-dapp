@@ -16,13 +16,16 @@ import { Following, usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import FollowerList from "./FollowerList";
 import { NftInterface } from "../../redux/api/nft";
+import { useAppSelector } from "../../redux/hooks";
 
-const ProfileContainer = styled.div`
+const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     min-height: 100%;
     width: 50%;
     margin: 0 auto;
     background-color: white;
     transition: width 0.5s ease-in-out;
+    background-color: ${props => props.$isDarkMode ? props.theme.dark.backgroundColor2 : props.theme.light.backgroundColor};
+    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
 
     @media (max-width: 1200px) {
         width: 100%;
@@ -48,7 +51,6 @@ const ProfileImage = styled.img`
 
 const ProfileName = styled.h1`
     font-family: "Poppins", sans-serif;
-    color: #1B1B1B;
     font-size: 36px;
     text-align: center;
     margin-top: 80px;
@@ -56,7 +58,6 @@ const ProfileName = styled.h1`
 
 const ProfileDescription = styled.p`
     font-family: "Poppins", sans-serif;
-    color: #1B1B1B;
     font-size: 20px;
     text-align: center;
 `;
@@ -93,7 +94,6 @@ const SocialIcon = styled.img`
 
 const SocialHandle = styled.a`
     font-family: Poppins, Open Sans;
-    color: #1B1B1B;
     text-decoration: none;
     padding: 0 10px;
 `;
@@ -158,6 +158,8 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
 
     const formattedAddress = useMemo(() => shortenAddress(profileAddress, 16), [profileAddress]);
     const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
+
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const [postFollow, {
         isSuccess: isPostFollowSuccess,
@@ -226,7 +228,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
     }, [isFollowing, isFollowButtonHovered]);
 
     return (
-        <ProfileContainer>
+        <ProfileContainer $isDarkMode={isDarkMode}>
             <ProfileBannerImage src={defaultBanner} />
             <ProfileImage src={profileImageUrl || defaultProfile} />
             <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
