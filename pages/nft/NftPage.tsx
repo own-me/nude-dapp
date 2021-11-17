@@ -6,7 +6,6 @@ import Navbar from "../../components/Navbar";
 import { useGetNftQuery } from "../../redux/api/nft";
 
 const NftPageContainer = styled.div`
-    color: black;
     padding: 80px;
     display: flex;
 
@@ -91,7 +90,6 @@ const NftPriceValue = styled.div`
 
 const NftPriceTicker = styled.div`
     font-size: 30px;
-    color: black;
     padding-left: 10px;
 `;
 
