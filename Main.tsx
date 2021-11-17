@@ -21,6 +21,7 @@ const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>
     position: relative;
     background-color: ${props => props.$isDarkMode ? props.theme.dark.backgroundColor : props.theme.light.backgroundColor};
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
+    transition: background 500ms ease-in, color 500ms ease-in;
 `;
 
 export default function Main() {

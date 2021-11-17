@@ -26,6 +26,7 @@ const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     transition: width 0.5s ease-in-out;
     background-color: ${props => props.$isDarkMode ? props.theme.dark.backgroundColor2 : props.theme.light.backgroundColor};
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
+    transition: background 500ms ease-in, color 500ms ease-in;
 
     @media (max-width: 1200px) {
         width: 100%;

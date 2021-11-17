@@ -26,6 +26,7 @@ const NavbarContainer = styled.div<{ $isDarkMode: boolean }>`
     align-items: center;
     z-index: ${ZIndex.NAVBAR};
     border-bottom: 1px solid #fdf3ff;
+    transition: background 500ms ease-in, color 500ms ease-in;
 `;
 
 const NavbarItems = styled.div`
