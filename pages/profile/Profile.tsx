@@ -152,10 +152,11 @@ interface ProfileProps{
     userNfts: NftInterface[];
     following: Following[];
     profileImageUrl: string;
+    bannerImageUrl: string;
     userRefetch: () => void;
 }
 
-const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, following, profileImageUrl, userRefetch}: ProfileProps) => {
+const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, following, profileImageUrl, bannerImageUrl, userRefetch}: ProfileProps) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
 
@@ -232,7 +233,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
 
     return (
         <ProfileContainer $isDarkMode={isDarkMode}>
-            <ProfileBannerImage src={defaultBanner} />
+            <ProfileBannerImage src={bannerImageUrl || defaultBanner} />
             <ProfileImage src={profileImageUrl || defaultProfile} />
             <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
             <a href={`https://ropsten.etherscan.io/address/${address}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
@@ -305,7 +306,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
             <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
                 <EditProfileForm
                     address={profileAddress}
-                    bannerImage={defaultBanner}
+                    bannerImageUrl={bannerImageUrl || defaultBanner}
                     profileImageUrl={profileImageUrl}
                     onCancel={() => setIsEditProfileOpen(false)}
                     currentName={name}

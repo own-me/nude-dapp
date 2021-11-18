@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Follower } from "./follow";
+import { Following } from "./follow";
 
 interface UserRequest {
     address: string
@@ -16,7 +16,7 @@ interface UserResponse {
     bannerImageUrl?: string;
     bio?: string;
     isFollowing?: boolean;
-    following?: Follower[];
+    following?: Following[];
     message?: string;
     error?: string;
 }
@@ -30,6 +30,17 @@ interface UploadProfileImageResponse {
     message?: string,
     error?: string
     profileImageUrl?: string
+}
+
+interface UploadProfileBannerRequest  {
+    address: string;
+    formData: FormData;
+}
+
+interface UploadProfileBannerResponse {
+    message?: string,
+    error?: string
+    bannerImageUrl?: string
 }
 
 interface UserEditResponse {
@@ -68,6 +79,17 @@ export const userApi = createApi({
                 }
             }),
         }),
+        uploadProfileBanner: builder.mutation<UploadProfileBannerResponse, UploadProfileBannerRequest>({
+            query: ({ address, formData }) => ({
+                url: `user/profile-banner/${address}`,
+                method: "POST",
+                contentType: "multipart/form-data",
+                body: formData,
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            }),
+        }),
         editUser: builder.mutation<UserEditResponse, UserEditRequest>({
             query: ({ address, name, bio, profileImageUrl, bannerImageUrl }) => ({
                 url: `user/edit/${address}`,
@@ -86,4 +108,4 @@ export const userApi = createApi({
     }),
 });
 
-export const { useGetUserQuery, useUploadProfileImageMutation, useEditUserMutation } = userApi;
+export const { useGetUserQuery, useUploadProfileImageMutation, useUploadProfileBannerMutation, useEditUserMutation } = userApi;

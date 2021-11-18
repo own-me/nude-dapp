@@ -45,6 +45,7 @@ const ProfilePage = memo(() => {
             {!isUserLoading && userData &&
                 <Profile
                     profileImageUrl={userData.profileImageUrl}
+                    bannerImageUrl={userData.bannerImageUrl}
                     name={userData.name}
                     bio={userData.bio}
                     profileAddress={userData.address}

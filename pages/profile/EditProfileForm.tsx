@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
-import { useEditUserMutation, useUploadProfileImageMutation } from "../../redux/api/user";
+import { useEditUserMutation, useUploadProfileImageMutation, useUploadProfileBannerMutation } from "../../redux/api/user";
 import { useNavigate } from "react-router-dom";
 import FormFileInputButton from "../../components/FormFileInputButton";
 
@@ -104,7 +104,7 @@ const CustomInput = styled(FormInput)`
 
 interface EditProfileFormProps {
     address: string;
-    bannerImage: string;
+    bannerImageUrl: string;
     profileImageUrl: string;
     currentName: string;
     currentBio: string;
@@ -112,13 +112,18 @@ interface EditProfileFormProps {
     userRefetch: () => void;
 }
 
-const EditProfileForm = memo(({ address, bannerImage, profileImageUrl, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
+const EditProfileForm = memo(({ address, bannerImageUrl, profileImageUrl, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
+    const navigate = useNavigate();
+
     const [name, setName] = useState<string>(currentName ?? "");
     const [bio, setBio] = useState<string>(currentBio ?? "");
     const [profileImagePreview, setProfileImagePreview] = useState<string>(null);
     const [profileImageFile, setProfileImageFile] = useState<File>(null);
+    const [profileBannerPreview, setProfileBannerPreview] = useState<string>(null);
+    const [profileBannerFile, setProfileBannerFile] = useState<File>(null);
 
-    const navigate = useNavigate();
+    const [uploadProfileImage] = useUploadProfileImageMutation();
+    const [uploadProfileBanner] = useUploadProfileBannerMutation();
 
     const [postEditUser, {
         isSuccess: isEditUserSuccess,
@@ -129,6 +134,12 @@ const EditProfileForm = memo(({ address, bannerImage, profileImageUrl, currentNa
             const formData = new FormData();
             formData.append("image", profileImageFile);
             const ipfsResponse = await uploadProfileImage({ address, formData });
+            console.log(ipfsResponse);
+        }
+        if (profileBannerFile) {
+            const formData = new FormData();
+            formData.append("image", profileBannerFile);
+            const ipfsResponse = await uploadProfileBanner({ address, formData });
             console.log(ipfsResponse);
         }
         await postEditUser({
@@ -146,13 +157,16 @@ const EditProfileForm = memo(({ address, bannerImage, profileImageUrl, currentNa
         }
     }, [address, isEditUserSuccess, navigate, onCancel, userRefetch]);
 
-    const [uploadProfileImage] = useUploadProfileImageMutation();
-
     return (
         <EditProfileFormContainer>
             <Header>Edit Profile</Header>
-            <BannerImage src={bannerImage} />
-            <EditBannerButton onFile={(file) => console.log("save banner!", file)}>Edit Banner</EditBannerButton>
+            <BannerImage src={profileBannerPreview || bannerImageUrl} />
+            <EditBannerButton
+                onData={(data) => setProfileBannerPreview(data)}
+                onFile={(file) => setProfileBannerFile(file)}
+            >
+                Edit Banner
+            </EditBannerButton>
             <ProfileImageContainer>
                 <ProfileImage src={profileImagePreview || profileImageUrl} />
                 <EditProfileImageButton
