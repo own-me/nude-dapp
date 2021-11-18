@@ -74,6 +74,7 @@ const ProfileAddress = styled.button`
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     margin: 20px 20px 0 0;
     float: right;
+    cursor: pointer;
 `;
 
 const SocialHandles = styled.div`
@@ -234,7 +235,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
             <ProfileBannerImage src={defaultBanner} />
             <ProfileImage src={profileImageUrl || defaultProfile} />
             <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
-            <ProfileAddress>{formattedAddress}</ProfileAddress>
+            <a href={`https://ropsten.etherscan.io/address/${address}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
             <ProfileName>{name}</ProfileName>
             <ProfileDescription>{bio}</ProfileDescription>
             <SocialHandles>
