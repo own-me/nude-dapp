@@ -93,10 +93,11 @@ const SocialIcon = styled.img`
     height: 30px;
 `;
 
-const SocialHandle = styled.a`
+const SocialHandle = styled.a<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
     text-decoration: none;
     padding: 0 10px;
+    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
 `;
 
 const ActionButtons = styled.div`
@@ -249,7 +250,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
                         });
                         return <SocialHandleContainer key={index}>
                             {icon && <SocialIcon src={icon} />}
-                            <SocialHandle href={url} target="_blank">
+                            <SocialHandle href={url} target="_blank" $isDarkMode={isDarkMode}>
                                 {handle || url}
                             </SocialHandle>
                         </SocialHandleContainer>;

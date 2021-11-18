@@ -1,8 +1,10 @@
 import React, { InputHTMLAttributes, memo, useState } from "react";
 import styled, { css } from "styled-components";
+import { useAppSelector } from "../redux/hooks";
 
-export const formStyles = css<{ $isError?: boolean }>`
-    background-color: #FFFDFF;
+export const formStyles = css<{ $isError?: boolean, $isDarkMode: boolean }>`
+    background-color: ${props => props.$isDarkMode ? "#1c012a" : "#FFFDFF"};
+    color: ${props => props.$isDarkMode ? "white" : "black"};
     border: 1px solid ${props => props.$isError ? "red" : "#DC68F9"};
     padding: 10px 15px;
     border-radius: 5px;
@@ -18,7 +20,7 @@ const FormInputContainer = styled.div`
     position: relative;
 `;
 
-const Input = styled.input<{ $isError: boolean }>`
+const Input = styled.input<{ $isError: boolean, $isDarkMode: boolean }>`
     ${formStyles};
 `;
 
@@ -56,6 +58,8 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
     const [value, setValue] = useState<string>(inputValue || "");
     const [error, setError] = useState<string>("");
 
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
     const handleChange = (e) => {
         const value = e.target?.value;
         if (!value && !optional) {
@@ -72,7 +76,7 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
             <Label htmlFor={`${label}-input`}>{label}</Label>
             {error && <ErrorText>{error}</ErrorText>}
             {optional && !error && <OptionalText>optional</OptionalText>}
-            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeholder} min={min} $isError={error} />
+            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeholder} min={min} $isError={error} $isDarkMode={isDarkMode} />
         </FormInputContainer>
     );
 });

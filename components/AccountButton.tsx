@@ -27,13 +27,11 @@ const AccountButtonTemplate = styled.button`
 
 const AccountAddress = styled.div`
     font-family: Poppins, Open Sans;
-    color: #282828;
     font-size: 24px;
 `;
 
 const AccountInfo = styled.div`
     font-family: Poppins, Open Sans;
-    color: #282828;
     font-size: 18px;
     margin: 10px 0;
 `;

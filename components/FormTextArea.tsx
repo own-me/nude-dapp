@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import styled from "styled-components";
+import { useAppSelector } from "../redux/hooks";
 import { formStyles } from "./FormInput";
 
 const FormTextAreaContainer = styled.div`
@@ -9,7 +10,7 @@ const FormTextAreaContainer = styled.div`
     position: relative;
 `;
 
-const Textarea = styled.textarea<{ $isError: boolean }>`
+const Textarea = styled.textarea<{ $isError: boolean, $isDarkMode: boolean }>`
     ${formStyles};
     max-width: 100%;
 `;
@@ -39,6 +40,8 @@ const FormTextArea = memo(({ label, onChange, inputValue, errorMessage, placeHol
     const [value, setValue] = useState<string>(inputValue || "");
     const [error, setError] = useState<string>("");
 
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
     const handleChange = (e) => {
         const value = e.target?.value;
         if (!value) {
@@ -52,7 +55,7 @@ const FormTextArea = memo(({ label, onChange, inputValue, errorMessage, placeHol
         <FormTextAreaContainer>
             <Label htmlFor={`${label}-textarea`}>{label}</Label>
             <Error>{error}</Error>
-            <Textarea id={`${label}-textarea`} onChange={handleChange} value={value} placeholder={placeHolder} $isError={error} />
+            <Textarea id={`${label}-textarea`} onChange={handleChange} value={value} placeholder={placeHolder} $isError={error} $isDarkMode={isDarkMode} />
         </FormTextAreaContainer>
     );
 });

@@ -39,9 +39,9 @@ const NFTCardTitle = styled.div`
     margin-top: 10px;
 `;
 
-const NFTCardOwner = styled.div`
+const NFTCardOwner = styled.div<{ $isDarkMode: boolean }>`
     text-align: left;
-    color: #595959;
+    color: ${props => (props.$isDarkMode ? "#a9a9a9" : "#595959")};
     font-size: 12px;
 `;
 
@@ -51,11 +51,11 @@ const NFTCardPrice = styled.div`
     font-weight: 600;
 `;
 
-const NFTCardRarity = styled.div`
+const NFTCardRarity = styled.div<{ $isDarkMode: boolean }>`
     position: absolute;
     bottom: 10px;
     right: 20px;
-    color: #595959;
+    color: ${props => (props.$isDarkMode ? "#a9a9a9" : "#595959")};
 `;
 
 interface NFTCardProps {
@@ -74,9 +74,9 @@ const NFTCard = memo(({ tokenId, title, owner, price, rarity, image }: NFTCardPr
         <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>
             <NFTCardImage src={image} />
             <NFTCardTitle>{title}</NFTCardTitle>
-            <NFTCardOwner>{shortenAddress(owner, 18)}</NFTCardOwner>
+            <NFTCardOwner $isDarkMode={isDarkMode}>{shortenAddress(owner, 18)}</NFTCardOwner>
             <NFTCardPrice>{price}</NFTCardPrice>
-            <NFTCardRarity>{`${rarity[0]} / ${rarity[1]}`}</NFTCardRarity>
+            <NFTCardRarity $isDarkMode={isDarkMode}>{`${rarity[0]} / ${rarity[1]}`}</NFTCardRarity>
         </NFTCardContainer>
     );
 });
