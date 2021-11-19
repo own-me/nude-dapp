@@ -10,6 +10,14 @@ export interface TokenURIInterface {
     image: string;
 }
 
+interface GetUserNftsRequest {
+    address: string;
+}
+
+interface GetUserNftsResponse {
+    userNfts: NftInterface[];
+}
+
 export interface NftInterface {
     tokenId: number;
     recipient: string;
@@ -33,8 +41,17 @@ export const nftApi = createApi({
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             }),
+        }),
+        getUserNfts: builder.query<GetUserNftsResponse, GetUserNftsRequest>({
+            query: ({ address }) => ({
+                url: `nft/user/${address}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            }),
         })
     }),
 });
 
-export const { useGetNftQuery } = nftApi;
+export const { useGetNftQuery, useGetUserNftsQuery } = nftApi;

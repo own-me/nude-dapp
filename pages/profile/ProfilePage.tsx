@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useMemo } from "react";
 import { useGetUserQuery } from "../../redux/api/user";
-import { useGetUserNftsQuery } from "../../redux/api/nft-db";
+import { useGetUserNftsQuery } from "../../redux/api/nft";
 import Navbar from "../../components/Navbar";
 import Profile from "./Profile";
 import Profile404 from "./Profile404";
