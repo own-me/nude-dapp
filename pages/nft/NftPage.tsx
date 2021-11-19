@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../../components/Navbar";
+import { shortenAddress } from "../../lib/helpers";
 import { useGetNftQuery } from "../../redux/api/nft";
 
 const NftPageContainer = styled.div`
@@ -186,7 +187,7 @@ const NftPage = memo(() => {
 
     useEffect(() => {
         if (nftData) {
-            setTokenUriData(nftData.tokenURI);
+            setTokenUriData(nftData.nft.tokenURI);
         }
     }, [nftData]);
 
@@ -211,9 +212,11 @@ const NftPage = memo(() => {
                 <InfoSection>
                     <TopItems>
                         <TopItem>
-                            <TopItemHeader>Creator</TopItemHeader>
+                            <TopItemHeader>Owner</TopItemHeader>
                             <TopItemValue>
-                                <Link to={`/${nftData?.recipient}`}>Nicki Minaj</Link>
+                                <Link to={`/${nftData?.nft.recipient}`}>
+                                    {nftData?.ownerName || shortenAddress(nftData?.nft.recipient, 12)}
+                                </Link>
                             </TopItemValue>
                         </TopItem>
                         <TopItem>

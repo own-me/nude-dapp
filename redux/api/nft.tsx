@@ -4,6 +4,11 @@ interface GetNftRequest {
     tokenId: string;
 }
 
+interface GetNftResponse {
+    nft: NftInterface;
+    ownerName: string;
+}
+
 export interface TokenURIInterface {
     title: string;
     description: string;
@@ -33,7 +38,7 @@ export const nftApi = createApi({
     reducerPath: "nftApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
-        getNft: builder.query<NftInterface, GetNftRequest>({
+        getNft: builder.query<GetNftResponse, GetNftRequest>({
             query: ({ tokenId }) => ({
                 url: `nft/${tokenId}`,
                 method: "GET",
