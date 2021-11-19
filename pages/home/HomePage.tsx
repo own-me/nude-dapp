@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../../components/Navbar";
 import SendNudeForm from "../../components/SendNudeForm";
 
 const HomePageContainer = styled.div`
@@ -13,12 +12,9 @@ const HomePageContainer = styled.div`
 
 export default function HomePage() {
     return (
-        <>
-            <Navbar />
-            <HomePageContainer>
-                <h1>Own Me!</h1>
-                <SendNudeForm />
-            </HomePageContainer>
-        </>
+        <HomePageContainer>
+            <h1>Own Me!</h1>
+            <SendNudeForm />
+        </HomePageContainer>
     );
 }

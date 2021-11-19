@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Navbar from "../../components/Navbar";
 import catNft from "../../media/defaults/catnft.png";
 import NFTCard from "../../components/NFTCard";
 import pinkCandy from "../../media/pink-candy.svg";
@@ -115,50 +114,47 @@ export default function MintPage() {
     };
 
     return (
-        <>
-            <Navbar />
-            <MintPageContainer>
-                <MintFormHeader>
-                    <MintFormHeaderTitle>Mint an NFT</MintFormHeaderTitle>
-                    <MintFormHeaderCandy src={pinkCandy} />
-                </MintFormHeader>
-                <ImagesRow>
-                    <DragDropInput
-                        onBase64={(image) => setImagePreview(image)}
-                        onChange={(image) => setImageData(image)}
-                        onClear={clearImage}
-                    />
-                    <NFTCard
-                        title={title || "King Tobi"}
-                        owner={"@thecatdad"}
-                        price={price + "ETH" || "? ETH"}
-                        rarity={[1, 8]}
-                        image={imagePreview || catNft}
-                    />
-                </ImagesRow>
-                <FormInput
-                    type="text"
-                    label="Title"
-                    onChange={(e) => setTitle(e.target.value)}
-                    errorMessage="Title is required."
+        <MintPageContainer>
+            <MintFormHeader>
+                <MintFormHeaderTitle>Mint an NFT</MintFormHeaderTitle>
+                <MintFormHeaderCandy src={pinkCandy} />
+            </MintFormHeader>
+            <ImagesRow>
+                <DragDropInput
+                    onBase64={(image) => setImagePreview(image)}
+                    onChange={(image) => setImageData(image)}
+                    onClear={clearImage}
                 />
-                <FormInput
-                    type="number"
-                    label="Price"
-                    onChange={(e) => setPrice(e.target.value)}
-                    errorMessage="Price is required."
-                    min={0}
+                <NFTCard
+                    title={title || "King Tobi"}
+                    owner={"@thecatdad"}
+                    price={price + "ETH" || "? ETH"}
+                    rarity={[1, 8]}
+                    image={imagePreview || catNft}
                 />
-                <FormTextArea
-                    label="Description"
-                    onChange={(value) => setDescription(value)}
-                    errorMessage="Description is required."
-                />
-                <MintFormFooter>
-                    <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
-                    <SubmitButton onClick={handleMintSubmit}>MINT</SubmitButton>
-                </MintFormFooter>
-            </MintPageContainer>
-        </>
+            </ImagesRow>
+            <FormInput
+                type="text"
+                label="Title"
+                onChange={(e) => setTitle(e.target.value)}
+                errorMessage="Title is required."
+            />
+            <FormInput
+                type="number"
+                label="Price"
+                onChange={(e) => setPrice(e.target.value)}
+                errorMessage="Price is required."
+                min={0}
+            />
+            <FormTextArea
+                label="Description"
+                onChange={(value) => setDescription(value)}
+                errorMessage="Description is required."
+            />
+            <MintFormFooter>
+                <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
+                <SubmitButton onClick={handleMintSubmit}>MINT</SubmitButton>
+            </MintFormFooter>
+        </MintPageContainer>
     );
 }

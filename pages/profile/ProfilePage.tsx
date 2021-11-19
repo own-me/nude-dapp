@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useMemo } from "react";
 import { useGetUserQuery } from "../../redux/api/user";
 import { useGetUserNftsQuery } from "../../redux/api/nft";
-import Navbar from "../../components/Navbar";
 import Profile from "./Profile";
 import Profile404 from "./Profile404";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -40,7 +39,6 @@ const ProfilePage = memo(() => {
 
     return (
         <>
-            <Navbar />
             {!isUserLoading && !userData && <Profile404 />}
             {!isUserLoading && userData &&
                 <Profile

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../../components/Navbar";
 
 const CandyShopPageContainer = styled.div`
     height: 100%;
@@ -12,11 +11,8 @@ const CandyShopPageContainer = styled.div`
 
 export default function CandyShopPage() {
     return (
-        <>
-            <Navbar />
-            <CandyShopPageContainer>
-                <h1>Candy Shop!</h1>
-            </CandyShopPageContainer>
-        </>
+        <CandyShopPageContainer>
+            <h1>Candy Shop!</h1>
+        </CandyShopPageContainer>
     );
 }

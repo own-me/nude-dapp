@@ -9,7 +9,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import CandyShopPage from "./pages/candyshop/CandyshopPage";
 import AuctionHousePage from "./pages/auctionhouse/AuctionhousePage";
 import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
-import { TOTAL_HEIGHT } from "./components/Navbar";
+import Navbar, { TOTAL_HEIGHT } from "./components/Navbar";
 import MintPage from "./pages/mint/MintPage";
 import NftPage from "./pages/nft/NftPage";
 
@@ -32,6 +32,7 @@ export default function Main() {
 
     return (
         <MainContainer $isLoggedIn={loggedIn} $isDarkMode={isDarkMode}>
+            {loggedIn && <Navbar />}
             <Routes>
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Navbar from "../../components/Navbar";
 
 const GumballMachinePageContainer = styled.div`
     height: 100%;
@@ -12,11 +11,8 @@ const GumballMachinePageContainer = styled.div`
 
 export default function GumballMachinePage() {
     return (
-        <>
-            <Navbar />
-            <GumballMachinePageContainer>
-                <h1>Gumball Machine!</h1>
-            </GumballMachinePageContainer>
-        </>
+        <GumballMachinePageContainer>
+            <h1>Gumball Machine!</h1>
+        </GumballMachinePageContainer>
     );
 }

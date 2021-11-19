@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Navbar from "../../components/Navbar";
 import { shortenAddress } from "../../lib/helpers";
 import { useGetNftQuery } from "../../redux/api/nft";
 
@@ -192,48 +191,45 @@ const NftPage = memo(() => {
     }, [nftData]);
 
     return (
-        <>
-            <Navbar />
-            <NftPageContainer>
-                <MainSection>
-                    <NftImage src={tokenUriData?.image || "https://via.placeholder.com/300x300"} />
-                    <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
-                    <NftStatsRow>
-                        <NftPriceContainer>
-                            <NftPriceValue>{tokenUriData?.price || "69.0"}</NftPriceValue>
-                            <NftPriceTicker>{"ETH"}</NftPriceTicker>
-                        </NftPriceContainer>
-                        <NftRarityContainer>
-                            <NftPriceValue>{tokenUriData?.price || "3 / 12"}</NftPriceValue>
-                            <NftPriceTicker>{"Rarity"}</NftPriceTicker>
-                        </NftRarityContainer>
-                    </NftStatsRow>
-                </MainSection>
-                <InfoSection>
-                    <TopItems>
-                        <TopItem>
-                            <TopItemHeader>Owner</TopItemHeader>
-                            <TopItemValue>
-                                <Link to={`/${nftData?.nft.recipient}`}>
-                                    {nftData?.ownerName || shortenAddress(nftData?.nft.recipient, 12)}
-                                </Link>
-                            </TopItemValue>
-                        </TopItem>
-                        <TopItem>
-                            <TopItemHeader>Views</TopItemHeader>
-                            <TopItemValue>57235</TopItemValue>
-                        </TopItem>
-                        <TopItem>
-                            <TopItemHeader>Likes</TopItemHeader>
-                            <TopItemValue>5345</TopItemValue>
-                        </TopItem>
-                    </TopItems>
-                    <InfoDescriptionHeader>Description</InfoDescriptionHeader>
-                    <InfoDescriptionText>{tokenUriData?.description || "-"}</InfoDescriptionText>
-                    <OwnMeButton>Own Me (69.123 ETH)</OwnMeButton>
-                </InfoSection>
-            </NftPageContainer>
-        </>
+        <NftPageContainer>
+            <MainSection>
+                <NftImage src={tokenUriData?.image || "https://via.placeholder.com/300x300"} />
+                <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
+                <NftStatsRow>
+                    <NftPriceContainer>
+                        <NftPriceValue>{tokenUriData?.price || "69.0"}</NftPriceValue>
+                        <NftPriceTicker>{"ETH"}</NftPriceTicker>
+                    </NftPriceContainer>
+                    <NftRarityContainer>
+                        <NftPriceValue>{tokenUriData?.price || "3 / 12"}</NftPriceValue>
+                        <NftPriceTicker>{"Rarity"}</NftPriceTicker>
+                    </NftRarityContainer>
+                </NftStatsRow>
+            </MainSection>
+            <InfoSection>
+                <TopItems>
+                    <TopItem>
+                        <TopItemHeader>Owner</TopItemHeader>
+                        <TopItemValue>
+                            <Link to={`/${nftData?.nft.recipient}`}>
+                                {nftData?.ownerName || shortenAddress(nftData?.nft.recipient, 12)}
+                            </Link>
+                        </TopItemValue>
+                    </TopItem>
+                    <TopItem>
+                        <TopItemHeader>Views</TopItemHeader>
+                        <TopItemValue>57235</TopItemValue>
+                    </TopItem>
+                    <TopItem>
+                        <TopItemHeader>Likes</TopItemHeader>
+                        <TopItemValue>5345</TopItemValue>
+                    </TopItem>
+                </TopItems>
+                <InfoDescriptionHeader>Description</InfoDescriptionHeader>
+                <InfoDescriptionText>{tokenUriData?.description || "-"}</InfoDescriptionText>
+                <OwnMeButton>Own Me (69.123 ETH)</OwnMeButton>
+            </InfoSection>
+        </NftPageContainer>
     );
 });
 
