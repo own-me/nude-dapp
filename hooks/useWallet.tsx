@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BigNumber, ethers } from "ethers";
 import { setUserLoggedIn } from "../redux/slices/user";
 import { useAppDispatch } from "../redux/hooks";
+import { fetchNudeABI } from "../lib/helpers";
 
 export default function useWallet() {
     const dispatch = useAppDispatch();
@@ -21,7 +22,9 @@ export default function useWallet() {
             setSigner(signer);
             const signerAddress = await signer.getAddress();
             setAddress(signerAddress);
-            setBalance(await provider.getBalance(signerAddress));
+            const abi = await fetchNudeABI();
+            const nudeContract = new ethers.Contract(abi.networks["3"].address, abi.abi, provider);
+            setBalance(await nudeContract.balanceOf(signerAddress));
             setNetwork(await provider.getNetwork());
         }
         getBalance();
