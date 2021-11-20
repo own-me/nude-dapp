@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/own-me/frontend",
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@fontsource/poppins": "^4.5.0",
     "@fontsource/rock-salt": "^4.5.0",
     "@fontsource/shadows-into-light": "^4.5.0",
