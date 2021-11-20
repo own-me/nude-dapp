@@ -3,7 +3,9 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../../lib/helpers";
-import { useGetNftQuery } from "../../redux/api/nft";
+import { useGetNftQuery, usePostNftLikeMutation } from "../../redux/api/nft";
+import { HeartOutlined, HeartFilled } from "@ant-design/icons";
+import useWallet from "../../hooks/useWallet";
 
 const NftPageContainer = styled.div`
     padding: 80px;
@@ -174,12 +176,24 @@ const OwnMeButton = styled.button`
     }
 `;
 
+const LikeIconEmpty = styled(HeartOutlined)`
+    cursor: pointer;
+`;
+
+const LikeIconFilled = styled(HeartFilled)`
+    cursor: pointer;
+`;
+
 const NftPage = memo(() => {
     const params = useParams();
     const [tokenUriData, setTokenUriData] = useState(null);
+    const [isLikeHovering, setIsLikeHovering] = useState(false);
+    const { address } = useWallet();
+
+    const [postNftLike] = usePostNftLikeMutation();
 
     const {
-        data: nftData,
+        data: nftData
     } = useGetNftQuery({ tokenId: params.tokenId }, {
         skip: !params.tokenId,
     });
@@ -189,6 +203,12 @@ const NftPage = memo(() => {
             setTokenUriData(nftData.nft.tokenURI);
         }
     }, [nftData]);
+
+    const handleLikeClick = () => {
+        if (!nftData?.isLiked) {
+            postNftLike({ fromAddress: address, tokenId: params.tokenId });
+        }
+    };
 
     return (
         <NftPageContainer>
@@ -222,7 +242,12 @@ const NftPage = memo(() => {
                     </TopItem>
                     <TopItem>
                         <TopItemHeader>Likes</TopItemHeader>
-                        <TopItemValue>5345</TopItemValue>
+                        <TopItemValue>
+                            5345 {nftData?.isLiked || isLikeHovering ? 
+                                <LikeIconFilled onMouseLeave={() => setIsLikeHovering(false)} onClick={handleLikeClick} /> : 
+                                <LikeIconEmpty onMouseEnter={() => setIsLikeHovering(true)} onClick={handleLikeClick} />
+                            }
+                        </TopItemValue>
                     </TopItem>
                 </TopItems>
                 <InfoDescriptionHeader>Description</InfoDescriptionHeader>

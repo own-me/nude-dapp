@@ -7,6 +7,7 @@ interface GetNftRequest {
 interface GetNftResponse {
     nft: NftInterface;
     ownerName: string;
+    isLiked: boolean;
 }
 
 export interface TokenURIInterface {
@@ -21,6 +22,15 @@ interface GetUserNftsRequest {
 
 interface GetUserNftsResponse {
     userNfts: NftInterface[];
+}
+
+interface PostNftLikeRequest {
+    fromAddress: string;
+    tokenId: string;
+}
+
+interface PostNftLikeResponse {
+    message: string;
 }
 
 export interface NftInterface {
@@ -45,7 +55,7 @@ export const nftApi = createApi({
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
-            }),
+            })
         }),
         getUserNfts: builder.query<GetUserNftsResponse, GetUserNftsRequest>({
             query: ({ address }) => ({
@@ -54,9 +64,22 @@ export const nftApi = createApi({
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
-            }),
+            })
+        }),
+        postNftLike: builder.mutation<PostNftLikeResponse, PostNftLikeRequest>({
+            query: ({ fromAddress, tokenId }) => ({
+                url: "nft/like",
+                method: "POST",
+                body: {
+                    fromAddress,
+                    tokenId
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
         })
-    }),
+    })
 });
 
-export const { useGetNftQuery, useGetUserNftsQuery } = nftApi;
+export const { useGetNftQuery, useGetUserNftsQuery, usePostNftLikeMutation } = nftApi;
