@@ -9,6 +9,7 @@ interface GetNftResponse {
     ownerName: string;
     isLiked: boolean;
     likesCount: number;
+    viewsCount: number;
 }
 
 export interface TokenURIInterface {

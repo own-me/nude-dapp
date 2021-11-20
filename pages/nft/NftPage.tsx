@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../../lib/helpers";
 import { useGetNftQuery, usePostNftLikeMutation } from "../../redux/api/nft";
-import { HeartOutlined, HeartFilled } from "@ant-design/icons";
+import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 
 const NftPageContainer = styled.div`
@@ -238,7 +238,7 @@ const NftPage = memo(() => {
                     </TopItem>
                     <TopItem>
                         <TopItemHeader>Views</TopItemHeader>
-                        <TopItemValue>57235</TopItemValue>
+                        <TopItemValue>{nftData?.viewsCount} <EyeOutlined /></TopItemValue>
                     </TopItem>
                     <TopItem>
                         <TopItemHeader>Likes</TopItemHeader>
