@@ -20,7 +20,7 @@ import { useAppSelector } from "../../redux/hooks";
 
 const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     min-height: 100%;
-    width: 50%;
+    width: 100%;
     margin: 0 auto;
     background-color: white;
     transition: width 0.5s ease-in-out;
