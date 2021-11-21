@@ -2,9 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export interface Following {
     fromAddress: string;
-    id: number;
     toAddress: string;
     toProfileImageUrl: string;
+    name: string;
 }
 
 interface FollowRequest {
@@ -30,9 +30,9 @@ export const followApi = createApi({
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
-            }),
-        }),
-    }),
+            })
+        })
+    })
 });
 
 export const { usePostFollowMutation } = followApi;

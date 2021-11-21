@@ -5,10 +5,10 @@ import defaultProfile from "../../media/defaults/missing-profile.png";
 import { shortenAddress } from "../../lib/helpers";
 import { usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
-import nftStatsIcon from "../../media/card.png";
-import followerStatsIcon from "../../media/user.png";
 import useWallet from "../../hooks/useWallet";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
+import { TeamOutlined, FileImageOutlined } from "@ant-design/icons";
 
 interface FollowListProps {
     followers?: Following[];
@@ -20,16 +20,17 @@ const FollowerListContainer = styled.div`
     font-family: Poppins, Open Sans;
 `;
 
-const FollowerListRow = styled(Link)`
+const FollowerListRow = styled(Link)<{ $isDarkMode: boolean }>`
     display: flex;
     padding: 20px 40px;
     border-bottom: 1px solid #ebebeb;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     text-decoration: none;
+    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
 
     :hover {
-        background-color: #fef9ff;
+        background-color: ${props => props.$isDarkMode ? "#170030" : "#fef9ff"};
     }
 `;
 
@@ -44,7 +45,13 @@ const FollowerProfileImage = styled.img`
 
 const FollowerInfoContainer = styled.div`
     display: flex;
-    padding: 20px 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 40px;
+`;
+
+const FollowerInfoName = styled.div`
+    font-size: 25px;
 `;
 
 const FollowerInfoAddress = styled.div`
@@ -61,7 +68,7 @@ const FollowButton = styled.button`
     border-radius: 25px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     height: 25px;
-    margin-left: 20px;
+    margin-top: 20px;
     cursor: pointer;
 
     :hover {
@@ -77,28 +84,23 @@ const StatsContainer = styled.div`
     flex-grow: 2;
 `;
 
-const StatsIcon = styled.img`
-    height: 20px;
-    margin-right: 5px;
-`;
-
-const FollowerStats = styled.div`
+const Stats = styled.div`
     display: flex;
     align-items: center;
-`;
+    font-size: 20px;
 
-
-const NftStats = styled.div`
-    display: flex;
-    align-items: center;
+    .anticon {
+        padding-right: 10px;
+    }
 `;
 
 const FollowerList = memo(({ followers = [] }: FollowListProps) => {
     const { address } = useWallet();
 
     const [postFollow] = usePostFollowMutation();
-
     const [postUnfollow] = usePostUnfollowMutation();
+
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const handleFollowButton = useCallback((follower: Following) => {
         if (address === follower.fromAddress) {
@@ -112,21 +114,22 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
         <FollowerListContainer>
             {
                 followers.map((follower: Following, index) =>
-                    <FollowerListRow to={`/${follower.toAddress}`} key={index}>
+                    <FollowerListRow to={`/${follower.toAddress}`} key={index} $isDarkMode={isDarkMode}>
                         <FollowerProfileImage src={follower.toProfileImageUrl || defaultProfile} />
                         <FollowerInfoContainer>
+                            <FollowerInfoName>{follower.name}</FollowerInfoName>
                             <FollowerInfoAddress>{shortenAddress(follower.toAddress, 16)}</FollowerInfoAddress>
                             <FollowButton onClick={() => handleFollowButton(follower)}>
                                 {address === follower.fromAddress ? "Unfollow" : "Follow"}
                             </FollowButton>
                         </FollowerInfoContainer>
                         <StatsContainer>
-                            <FollowerStats>
-                                <StatsIcon src={followerStatsIcon} /> {123}
-                            </FollowerStats>
-                            <NftStats>
-                                <StatsIcon src={nftStatsIcon} /> {12}
-                            </NftStats>
+                            <Stats>
+                                <TeamOutlined /> {123}
+                            </Stats>
+                            <Stats>
+                                <FileImageOutlined /> {12}
+                            </Stats>
                         </StatsContainer>
                     </FollowerListRow>
                 )
