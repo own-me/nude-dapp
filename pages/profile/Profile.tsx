@@ -271,7 +271,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
                     </ActionButtons>
             }
             <br />
-            <Tabs tabs={useMemo(() => ["NFTs", "Posts", "Following", "Activity"], [])}>
+            <Tabs tabs={useMemo(() => [`NFTs (${userNfts?.length || 0})`, "Posts", "Following", "Activity"], [userNfts])}>
                 <TabContent>
                     <NftCards>
                         {
