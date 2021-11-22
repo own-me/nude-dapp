@@ -8,6 +8,8 @@ const SwitchContainer = styled.div`
     border-radius: 20px;
     background: #FBE0FF;
     user-select: none;
+    cursor: pointer;
+    margin-top: 20px;
 `;
 
 const SwitchThumb = styled.div<{ $isActive: boolean }>`

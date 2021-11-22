@@ -8,14 +8,15 @@ const TabsContainer = styled.div`
 const TabsHeader = styled.div`
     font-family: Poppins, Open Sans;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     border-bottom: 1px #e0e0e0 solid;
 `;
 
 const Tab = styled.div<{ $isActive: boolean }>`
     cursor: pointer;
-    padding: 10px 20px;
     opacity: 0.8;
+    font-size: 16px;
+    padding: 10px 80px;
 
     ${props => props.$isActive && css`
         border-bottom: 3px solid #D14FFF;
@@ -26,6 +27,10 @@ const Tab = styled.div<{ $isActive: boolean }>`
     &:hover {
         border-bottom: 3px solid #d972ff;
         opacity: 1;
+    }
+
+    @media (max-width: 1200px) {
+        padding: 10px 20px;
     }
 `;
 
