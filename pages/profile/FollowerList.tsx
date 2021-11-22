@@ -10,10 +10,6 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { TeamOutlined, FileImageOutlined } from "@ant-design/icons";
 
-interface FollowListProps {
-    followers?: Following[];
-}
-
 const FollowerListContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -40,7 +36,7 @@ const FollowerProfileImage = styled.img`
     border-radius: 100%;
     border: 5px solid white;
     background: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `;
 
 const FollowerInfoContainer = styled.div`
@@ -66,7 +62,7 @@ const FollowButton = styled.button<{ $isFollowing: boolean }>`
     border: none;
     padding: 0px 15px;
     border-radius: 25px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     height: 25px;
     margin-top: 20px;
     cursor: pointer;
@@ -94,6 +90,10 @@ const Stats = styled.div`
     }
 `;
 
+interface FollowListProps {
+    followers?: Following[];
+}
+
 const FollowerList = memo(({ followers = [] }: FollowListProps) => {
     const { address } = useWallet();
 
@@ -104,7 +104,9 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
 
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
-    const handleFollowButton = useCallback((follower: Following) => {
+    const handleFollowButton = useCallback((e, follower: Following) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (address === follower.fromAddress) {
             postUnfollow({ toAddress: follower.toAddress });
         } else {
@@ -123,7 +125,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
                             <FollowerInfoAddress>{shortenAddress(follower.toAddress, 16)}</FollowerInfoAddress>
                             {address === follower.fromAddress &&
                                 <FollowButton 
-                                    onClick={() => handleFollowButton(follower)}
+                                    onClick={(e) => handleFollowButton(e, follower)}
                                     onMouseEnter={() =>setIsFollowHovered(true)}
                                     onMouseLeave={() =>setIsFollowHovered(false)}
                                     $isFollowing={address === follower.fromAddress}
