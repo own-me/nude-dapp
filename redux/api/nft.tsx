@@ -44,6 +44,7 @@ export interface NftInterface {
     blockHash: string;
     blockNumber: number;
     tokenURI: TokenURIInterface;
+    price: number;
 }
 
 export const nftApi = createApi({

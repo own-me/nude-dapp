@@ -217,7 +217,7 @@ const NftPage = memo(() => {
                 <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
                 <NftStatsRow>
                     <NftPriceContainer>
-                        <NftPriceValue>{tokenUriData?.price || "69.0"}</NftPriceValue>
+                        <NftPriceValue>{nftData?.nft?.price || "69.0"}</NftPriceValue>
                         <NftPriceTicker>{"ETH"}</NftPriceTicker>
                     </NftPriceContainer>
                     <NftRarityContainer>

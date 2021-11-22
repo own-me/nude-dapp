@@ -102,7 +102,7 @@ export default function MintPage() {
                 description,
                 image: ipfsResponse.data.ipfsUrl
             };
-            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata));
+            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata), price);
             console.log(tx);
         } else {
             // image did not upload correctly

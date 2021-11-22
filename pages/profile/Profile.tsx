@@ -211,7 +211,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
                 title: nft.tokenURI.title,
                 description: nft.tokenURI.description,
                 owner: nft.recipient,
-                price: "2.45 ETH",
+                price: `${nft.price} ETH`,
                 rarity: [1, 8],
                 image: nft.tokenURI.image,
                 tokenId: nft.tokenId,
