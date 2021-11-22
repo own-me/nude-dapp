@@ -104,7 +104,7 @@ const ActionButtons = styled.div`
 
 function getFollowButtonHoverColor(isFollowing: boolean, isHovered: boolean) {
     if (isFollowing) {
-        return isHovered ? "red" : "green";
+        return isHovered ? "#ff1f3d" : "#71A1FF";
     }
     return "#FF81EB";
 }

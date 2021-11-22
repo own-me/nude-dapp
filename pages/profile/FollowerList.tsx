@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useState } from "react";
 import styled from "styled-components";
 import { Following } from "../../redux/api/follow";
 import defaultProfile from "../../media/defaults/missing-profile.png";
@@ -58,7 +58,7 @@ const FollowerInfoAddress = styled.div`
     font-size: 18px;
 `;
 
-const FollowButton = styled.button`
+const FollowButton = styled.button<{ $isFollowing: boolean }>`
     font-family: Poppins, Open Sans;
     font-size: 14px;
     background-color: #71A1FF;
@@ -72,7 +72,7 @@ const FollowButton = styled.button`
     cursor: pointer;
 
     :hover {
-        background-color: #3e7fff;
+        background-color:  ${props => props.$isFollowing ? "#ff1f3d" : "#3e7fff"};
     }
 `;
 
@@ -100,6 +100,8 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
     const [postFollow] = usePostFollowMutation();
     const [postUnfollow] = usePostUnfollowMutation();
 
+    const [isFollowHovered, setIsFollowHovered] = useState<boolean>(false);
+
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const handleFollowButton = useCallback((follower: Following) => {
@@ -119,9 +121,18 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
                         <FollowerInfoContainer>
                             <FollowerInfoName>{follower.name}</FollowerInfoName>
                             <FollowerInfoAddress>{shortenAddress(follower.toAddress, 16)}</FollowerInfoAddress>
-                            <FollowButton onClick={() => handleFollowButton(follower)}>
-                                {address === follower.fromAddress ? "Unfollow" : "Follow"}
-                            </FollowButton>
+                            {address === follower.fromAddress &&
+                                <FollowButton 
+                                    onClick={() => handleFollowButton(follower)}
+                                    onMouseEnter={() =>setIsFollowHovered(true)}
+                                    onMouseLeave={() =>setIsFollowHovered(false)}
+                                    $isFollowing={address === follower.fromAddress}
+                                >
+                                    {isFollowHovered && address === follower.fromAddress ? "Unfollow" : 
+                                        isFollowHovered && address !== follower.fromAddress ? "Follow" : "Following"
+                                    }
+                                </FollowButton>
+                            }
                         </FollowerInfoContainer>
                         <StatsContainer>
                             <Stats>
