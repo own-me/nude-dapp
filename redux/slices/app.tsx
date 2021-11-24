@@ -5,7 +5,7 @@ interface AppState {
 }
 
 const initialState: AppState = {
-    isDarkMode: true
+    isDarkMode: window.localStorage.getItem("isDarkMode") === "true",
 };
 
 export const appSlice = createSlice({
@@ -14,6 +14,7 @@ export const appSlice = createSlice({
     reducers: {
         toggleDarkMode: (state: AppState) => {
             state.isDarkMode = !state.isDarkMode;
+            window.localStorage.setItem("isDarkMode", (state.isDarkMode).toString());
         }
     }
 });
