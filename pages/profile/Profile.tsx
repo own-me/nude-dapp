@@ -232,7 +232,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
             <ProfileBannerImage src={bannerImageUrl || defaultBanner} />
             <ProfileImage src={profileImageUrl || defaultProfile} />
             <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
-            <a href={`https://ropsten.etherscan.io/address/${address}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
+            <a href={`https://ropsten.etherscan.io/address/${profileAddress}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
             <ProfileName>{name}</ProfileName>
             <ProfileDescription>{bio}</ProfileDescription>
             <SocialHandles>
