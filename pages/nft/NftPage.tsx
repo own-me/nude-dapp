@@ -252,7 +252,7 @@ const NftPage = memo(() => {
                 </TopItems>
                 <InfoDescriptionHeader>Description</InfoDescriptionHeader>
                 <InfoDescriptionText>{tokenUriData?.description || "-"}</InfoDescriptionText>
-                <OwnMeButton>Own Me (69.123 ETH)</OwnMeButton>
+                <OwnMeButton>Own Me ({nftData?.nft?.price} ETH)</OwnMeButton>
             </InfoSection>
         </NftPageContainer>
     );
