@@ -102,7 +102,7 @@ export default function MintPage() {
                 description,
                 image: ipfsResponse.data.ipfsUrl
             };
-            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata), price);
+            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata), ethers.utils.parseEther(price));
             console.log(tx);
         } else {
             // image did not upload correctly
@@ -128,7 +128,7 @@ export default function MintPage() {
                 <NFTCard
                     title={title || "King Tobi"}
                     owner={"@thecatdad"}
-                    price={price + "ETH" || "? ETH"}
+                    price={price}
                     rarity={[1, 8]}
                     image={imagePreview || catNft}
                 />

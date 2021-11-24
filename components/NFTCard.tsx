@@ -1,3 +1,4 @@
+import { BigNumber, ethers } from "ethers";
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -75,7 +76,7 @@ const NFTCard = memo(({ tokenId, title, owner, price, rarity, image }: NFTCardPr
             <NFTCardImage src={image} />
             <NFTCardTitle>{title}</NFTCardTitle>
             <NFTCardOwner $isDarkMode={isDarkMode}>{shortenAddress(owner, 18)}</NFTCardOwner>
-            <NFTCardPrice>{price}</NFTCardPrice>
+            <NFTCardPrice>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0} NUDE</NFTCardPrice>
             <NFTCardRarity $isDarkMode={isDarkMode}>{`${rarity[0]} / ${rarity[1]}`}</NFTCardRarity>
         </NFTCardContainer>
     );

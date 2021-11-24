@@ -6,6 +6,7 @@ import { shortenAddress } from "../../lib/helpers";
 import { useGetNftQuery, usePostNftLikeMutation } from "../../redux/api/nft";
 import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
+import { BigNumber, ethers } from "ethers";
 
 const NftPageContainer = styled.div`
     padding: 80px;
@@ -217,12 +218,12 @@ const NftPage = memo(() => {
                 <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
                 <NftStatsRow>
                     <NftPriceContainer>
-                        <NftPriceValue>{nftData?.nft?.price || "69.0"}</NftPriceValue>
-                        <NftPriceTicker>{"ETH"}</NftPriceTicker>
+                        <NftPriceValue>{nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0}</NftPriceValue>
+                        <NftPriceTicker>NUDE</NftPriceTicker>
                     </NftPriceContainer>
                     <NftRarityContainer>
-                        <NftPriceValue>{tokenUriData?.price || "3 / 12"}</NftPriceValue>
-                        <NftPriceTicker>{"Rarity"}</NftPriceTicker>
+                        <NftPriceValue>3 / 12</NftPriceValue>
+                        <NftPriceTicker>Rarity</NftPriceTicker>
                     </NftRarityContainer>
                 </NftStatsRow>
             </MainSection>
@@ -252,7 +253,7 @@ const NftPage = memo(() => {
                 </TopItems>
                 <InfoDescriptionHeader>Description</InfoDescriptionHeader>
                 <InfoDescriptionText>{tokenUriData?.description || "-"}</InfoDescriptionText>
-                <OwnMeButton>Own Me ({nftData?.nft?.price} ETH)</OwnMeButton>
+                <OwnMeButton>Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)</OwnMeButton>
             </InfoSection>
         </NftPageContainer>
     );
