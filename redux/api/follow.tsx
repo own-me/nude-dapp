@@ -5,6 +5,7 @@ export interface Following {
     toAddress: string;
     toProfileImageUrl: string;
     name: string;
+    followersCount: number;
 }
 
 interface FollowRequest {
