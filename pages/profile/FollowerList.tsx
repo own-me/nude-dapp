@@ -141,7 +141,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
                                 <TeamOutlined /> {follower.followersCount}
                             </Stats>
                             <Stats>
-                                <FileImageOutlined /> {12}
+                                <FileImageOutlined /> {follower.nftsCount}
                             </Stats>
                         </StatsContainer>
                     </FollowerListRow>

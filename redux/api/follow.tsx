@@ -6,6 +6,7 @@ export interface Following {
     toProfileImageUrl: string;
     name: string;
     followersCount: number;
+    nftsCount: number;
 }
 
 interface FollowRequest {
