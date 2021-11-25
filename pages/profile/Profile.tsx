@@ -4,10 +4,10 @@ import defaultBanner from "../../media/defaults/stars-banner.png";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import useWallet from "../../hooks/useWallet";
 import { shortenAddress } from "../../lib/helpers";
-import twitterIcon from "../../media/icons/socials/color/twitter.svg";
-import instagramIcon from "../../media/icons/socials/color/instagram.svg";
-import linkedinIcon from "../../media/icons/socials/color/linkedin.svg";
-import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
+// import twitterIcon from "../../media/icons/socials/color/twitter.svg";
+// import instagramIcon from "../../media/icons/socials/color/instagram.svg";
+// import linkedinIcon from "../../media/icons/socials/color/linkedin.svg";
+// import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
 import Tabs, { TabContent } from "../../components/Tabs";
 import NFTCard from "../../components/NFTCard";
 import Modal from "../../components/Modal";
@@ -73,29 +73,29 @@ const ProfileAddress = styled.button`
     cursor: pointer;
 `;
 
-const SocialHandles = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-`;
+// const SocialHandles = styled.div`
+//     display: flex;
+//     justify-content: center;
+//     flex-wrap: wrap;
+// `;
 
-const SocialHandleContainer = styled.div`
-    display: flex;
-    align-items: center;
-    margin: 10px;
-`;
+// const SocialHandleContainer = styled.div`
+//     display: flex;
+//     align-items: center;
+//     margin: 10px;
+// `;
 
-const SocialIcon = styled.img`
-    width: 30px;
-    height: 30px;
-`;
+// const SocialIcon = styled.img`
+//     width: 30px;
+//     height: 30px;
+// `;
 
-const SocialHandle = styled.a<{ $isDarkMode: boolean }>`
-    font-family: Poppins, Open Sans;
-    text-decoration: none;
-    padding: 0 10px;
-    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
-`;
+// const SocialHandle = styled.a<{ $isDarkMode: boolean }>`
+//     font-family: Poppins, Open Sans;
+//     text-decoration: none;
+//     padding: 0 10px;
+//     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
+// `;
 
 const ActionButtons = styled.div`
     display: flex;
@@ -173,37 +173,37 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
         userRefetch();
     }, [userRefetch, isPostFollowSuccess, isPostUnfollowSuccess,]);
 
-    const mockSocials = [
-        "https://www.instagram.com/christopher.trimboli/",
-        "https://www.linkedin.com/in/christophertrimboli/"
-    ];
+    // const mockSocials = [
+    //     "https://www.instagram.com/christopher.trimboli/",
+    //     "https://www.linkedin.com/in/christophertrimboli/"
+    // ];
 
-    const supportedSocials = useMemo(() => [
-        {
-            name: "Instagram",
-            icon: instagramIcon,
-            domainRegex: /www\.instagram\.com/,
-            getHandle: (url: string) => url.split("/")[3]
-        },
-        {
-            name: "Twitter",
-            icon: twitterIcon,
-            domainRegex: /www\.twitter\.com/,
-            getHandle: (url: string) => url.split("/")[3]
-        },
-        {
-            name: "Linkedin",
-            icon: linkedinIcon,
-            domainRegex: /www\.linkedin\.com/,
-            getHandle: (url: string) => url.split("/")[4]
-        },
-        {
-            name: "Youtube",
-            icon: youtubeIcon,
-            domainRegex: /www\.youtube\.com/,
-            getHandle: (url: string) => url.split("/")[4]
-        }
-    ], []);
+    // const supportedSocials = useMemo(() => [
+    //     {
+    //         name: "Instagram",
+    //         icon: instagramIcon,
+    //         domainRegex: /www\.instagram\.com/,
+    //         getHandle: (url: string) => url.split("/")[3]
+    //     },
+    //     {
+    //         name: "Twitter",
+    //         icon: twitterIcon,
+    //         domainRegex: /www\.twitter\.com/,
+    //         getHandle: (url: string) => url.split("/")[3]
+    //     },
+    //     {
+    //         name: "Linkedin",
+    //         icon: linkedinIcon,
+    //         domainRegex: /www\.linkedin\.com/,
+    //         getHandle: (url: string) => url.split("/")[4]
+    //     },
+    //     {
+    //         name: "Youtube",
+    //         icon: youtubeIcon,
+    //         domainRegex: /www\.youtube\.com/,
+    //         getHandle: (url: string) => url.split("/")[4]
+    //     }
+    // ], []);
 
     const parseRawNfts = (nfts: NftInterface[]): NftInterface[] => {
         return nfts.map((nft: NftInterface) => {
@@ -235,7 +235,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
             <a href={`https://ropsten.etherscan.io/address/${profileAddress}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
             <ProfileName>{name}</ProfileName>
             <ProfileDescription>{bio}</ProfileDescription>
-            <SocialHandles>
+            {/* <SocialHandles>
                 {
                     mockSocials.map((url, index) => {
                         let handle = "";
@@ -254,7 +254,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
                         </SocialHandleContainer>;
                     })
                 }
-            </SocialHandles>
+            </SocialHandles> */}
             {
                 profileAddress !== address &&
                     <ActionButtons>
