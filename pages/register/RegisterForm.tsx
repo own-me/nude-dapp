@@ -75,8 +75,8 @@ export default function RegisterForm() {
 
     const { address } = useWallet();
 
-    const [email, setEmail] = useState<string>("");
-    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>(null);
+    const [name, setName] = useState<string>(null);
     const [isAgeConfirmed, setIsAgeConfirmed] = useState<boolean>(false);
 
     const [postRegister, {
