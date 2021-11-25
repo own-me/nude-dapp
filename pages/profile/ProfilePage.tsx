@@ -46,6 +46,7 @@ const ProfilePage = memo(() => {
                     bannerImageUrl={userData.bannerImageUrl}
                     name={userData.name}
                     bio={userData.bio}
+                    link={userData.link}
                     profileAddress={userData.address}
                     isFollowing={userData.isFollowing}
                     userRefetch={userRefetch}

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Following } from "./follow";
 
 interface UserRequest {
-    address: string
+    address: string;
 }
 
 interface UserResponse {
@@ -15,6 +15,7 @@ interface UserResponse {
     profileImageUrl?: string;
     bannerImageUrl?: string;
     bio?: string;
+    link?: string;
     isFollowing?: boolean;
     following?: Following[];
     message?: string;
@@ -27,9 +28,9 @@ interface UploadProfileImageRequest  {
 }
 
 interface UploadProfileImageResponse {
-    message?: string,
-    error?: string
-    profileImageUrl?: string
+    message?: string;
+    error?: string;
+    profileImageUrl?: string;
 }
 
 interface UploadProfileBannerRequest  {
@@ -38,21 +39,22 @@ interface UploadProfileBannerRequest  {
 }
 
 interface UploadProfileBannerResponse {
-    message?: string,
-    error?: string
-    bannerImageUrl?: string
+    message?: string;
+    error?: string;
+    bannerImageUrl?: string;
 }
 
 interface UserEditResponse {
-    message?: string,
-    error?: string
+    message?: string;
+    error?: string;
 }
 interface UserEditRequest {
     address: string;
-    name?: string,
-    bio?: string,
-    profileImageUrl?: string,
-    bannerImageUrl?: string
+    name?: string;
+    bio?: string;
+    link?: string;
+    profileImageUrl?: string;
+    bannerImageUrl?: string;
 }
 
 export const userApi = createApi({
@@ -91,12 +93,13 @@ export const userApi = createApi({
             }),
         }),
         editUser: builder.mutation<UserEditResponse, UserEditRequest>({
-            query: ({ address, name, bio, profileImageUrl, bannerImageUrl }) => ({
+            query: ({ address, name, bio, link, profileImageUrl, bannerImageUrl }) => ({
                 url: `user/edit/${address}`,
                 method: "POST",
                 body: {
                     name,
                     bio,
+                    link,
                     profileImageUrl,
                     bannerImageUrl
                 },

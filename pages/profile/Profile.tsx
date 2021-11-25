@@ -49,13 +49,20 @@ const ProfileImage = styled.img`
 const ProfileName = styled.h1`
     font-family: "Poppins", sans-serif;
     font-size: 36px;
-    text-align: center;
     margin-top: 80px;
 `;
 
 const ProfileDescription = styled.p`
     font-family: "Poppins", sans-serif;
     font-size: 20px;
+`;
+
+const ProfileLink = styled.a`
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+`;
+
+const ProfileInfo = styled.div`
     text-align: center;
 `;
 
@@ -144,6 +151,7 @@ interface ProfileProps{
     profileAddress: string;
     name: string;
     bio: string;
+    link: string;
     isFollowing: boolean;
     userNfts: NftInterface[];
     following: Following[];
@@ -152,7 +160,7 @@ interface ProfileProps{
     userRefetch: () => void;
 }
 
-const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, following, profileImageUrl, bannerImageUrl, userRefetch}: ProfileProps) => {
+const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, following, profileImageUrl, bannerImageUrl, userRefetch}: ProfileProps) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
 
@@ -233,8 +241,11 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
             <ProfileImage src={profileImageUrl || defaultProfile} />
             <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
             <a href={`https://ropsten.etherscan.io/address/${profileAddress}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
-            <ProfileName>{name}</ProfileName>
-            <ProfileDescription>{bio}</ProfileDescription>
+            <ProfileInfo>
+                <ProfileName>{name}</ProfileName>
+                <ProfileDescription>{bio}</ProfileDescription>
+                <ProfileLink href={link} target={"_blank"}>{link}</ProfileLink>
+            </ProfileInfo>
             {/* <SocialHandles>
                 {
                     mockSocials.map((url, index) => {
@@ -312,6 +323,7 @@ const Profile = memo(({ profileAddress, name, bio, isFollowing, userNfts, follow
                     onCancel={() => setIsEditProfileOpen(false)}
                     currentName={name}
                     currentBio={bio}
+                    currentLink={link}
                     userRefetch={userRefetch}
                 />
             </Modal>

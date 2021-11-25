@@ -108,15 +108,18 @@ interface EditProfileFormProps {
     profileImageUrl: string;
     currentName: string;
     currentBio: string;
+    currentLink: string;
     onCancel: () => void;
     userRefetch: () => void;
 }
 
-const EditProfileForm = memo(({ address, bannerImageUrl, profileImageUrl, currentName, currentBio, onCancel, userRefetch }: EditProfileFormProps) => {
+const EditProfileForm = memo(({ address, bannerImageUrl, profileImageUrl, currentName, currentBio, currentLink, onCancel, userRefetch }: EditProfileFormProps) => {
     const navigate = useNavigate();
 
     const [name, setName] = useState<string>(currentName ?? "");
     const [bio, setBio] = useState<string>(currentBio ?? "");
+    const [link, setLink] = useState<string>(currentLink ?? "");
+
     const [profileImagePreview, setProfileImagePreview] = useState<string>(null);
     const [profileImageFile, setProfileImageFile] = useState<File>(null);
     const [profileBannerPreview, setProfileBannerPreview] = useState<string>(null);
@@ -145,7 +148,8 @@ const EditProfileForm = memo(({ address, bannerImageUrl, profileImageUrl, curren
         await postEditUser({
             address,
             name,
-            bio
+            bio,
+            link
         });
     };
 
@@ -191,6 +195,14 @@ const EditProfileForm = memo(({ address, bannerImageUrl, profileImageUrl, curren
                     errorMessage="Bio is required."
                     placeHolder="Tell the world about yourself and everything you have to offer :)"
                     inputValue={currentBio}
+                />
+                <CustomInput
+                    type="text"
+                    label="Link"
+                    onChange={(e) => setLink(e.target.value)}
+                    errorMessage="Link is required."
+                    placeholder="Add a URL or link to your website."
+                    inputValue={currentLink}
                 />
             </InputContainer>
             <Footer>
