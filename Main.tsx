@@ -6,7 +6,6 @@ import { useAppSelector } from "./redux/hooks";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import ProfilePage from "./pages/profile/ProfilePage";
-import CandyShopPage from "./pages/candyshop/CandyshopPage";
 import AuctionHousePage from "./pages/auctionhouse/AuctionhousePage";
 import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
 import Navbar, { TOTAL_HEIGHT } from "./components/Navbar";
@@ -37,7 +36,7 @@ export default function Main() {
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
                 <Route path="/candyshop" element={
-                    loggedIn ? <CandyShopPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
+                    loggedIn ? <MintPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
                 <Route path="/auctionhouse" element={
                     loggedIn ? <AuctionHousePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
