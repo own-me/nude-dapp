@@ -100,7 +100,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
     const [postFollow] = usePostFollowMutation();
     const [postUnfollow] = usePostUnfollowMutation();
 
-    const [isFollowHovered, setIsFollowHovered] = useState<boolean>(false);
+    const [hoveredFollowAddress, setHoveredFollowAddress] = useState<string>(null);
 
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
@@ -126,12 +126,12 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
                             {address === follower.fromAddress &&
                                 <FollowButton 
                                     onClick={(e) => handleFollowButton(e, follower)}
-                                    onMouseEnter={() =>setIsFollowHovered(true)}
-                                    onMouseLeave={() =>setIsFollowHovered(false)}
+                                    onMouseEnter={() => setHoveredFollowAddress(follower.toAddress)}
+                                    onMouseLeave={() => setHoveredFollowAddress(null)}
                                     $isFollowing={address === follower.fromAddress}
                                 >
-                                    {isFollowHovered && address === follower.fromAddress ? "Unfollow" : 
-                                        isFollowHovered && address !== follower.fromAddress ? "Follow" : "Following"
+                                    {hoveredFollowAddress === follower.toAddress && address === follower.fromAddress ? "Unfollow" : 
+                                        hoveredFollowAddress === follower.toAddress && address !== follower.fromAddress ? "Follow" : "Following"
                                     }
                                 </FollowButton>
                             }
