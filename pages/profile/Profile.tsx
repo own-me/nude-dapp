@@ -17,6 +17,7 @@ import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import FollowerList from "./FollowerList";
 import { NftInterface } from "../../redux/api/nft";
 import { useAppSelector } from "../../redux/hooks";
+import CreatePost from "../posts/CreatePost";
 
 const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     min-height: 100%;
@@ -306,7 +307,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                     </NftCards>
                 </TabContent>
                 <TabContent>
-                    <h1>Posts bro</h1>
+                    {address === profileAddress && <CreatePost profileImageUrl={profileImageUrl} />}
                 </TabContent>
                 <TabContent>
                     <FollowerList followers={following} />

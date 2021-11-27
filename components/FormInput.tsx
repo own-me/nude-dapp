@@ -28,6 +28,7 @@ const Label = styled.label`
     text-align: left;
     display: block;
     font-size: 26px;
+    padding: 10px 0px;
 `;
 
 const InfoText = styled.span`

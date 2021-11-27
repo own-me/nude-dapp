@@ -2,7 +2,8 @@ import React, { ReactNode, useState, useEffect, memo } from "react";
 import styled, {css} from "styled-components";
 
 const TabsContainer = styled.div`
-
+    width: 80%;
+    margin: 0 auto;
 `;
 
 const TabsHeader = styled.div`
