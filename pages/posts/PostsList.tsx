@@ -84,11 +84,11 @@ const PostsList = memo(({ posts }: PostsListProps) => {
                     </PostContent>
                     <PostActions>
                         <PostAction>
-                            <PostActionValue>34</PostActionValue>
+                            <PostActionValue>{post.likesCount}</PostActionValue>
                             <HeartOutlined />
                         </PostAction>
                         <PostAction>
-                            <PostActionValue>5</PostActionValue>
+                            <PostActionValue>{post.commentsCount}</PostActionValue>
                             <CommentOutlined />
                         </PostAction>
                         <PostAction>

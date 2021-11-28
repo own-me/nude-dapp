@@ -4,6 +4,10 @@ import styled, {css} from "styled-components";
 const TabsContainer = styled.div`
     width: 80%;
     margin: 0 auto;
+
+    @media (max-width: 1200px) {
+        width: 100%;
+    }
 `;
 
 const TabsHeader = styled.div`
