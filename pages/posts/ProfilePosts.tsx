@@ -19,7 +19,8 @@ const ProfilePosts = memo(({ profileImageUrl, profileAddress, userAddress, profi
     const [parsedUserPosts, setParsedUserPosts] = useState<Post[]>([]);
 
     const {
-        data: userPosts
+        data: userPosts,
+        refetch: userPostsRefetch
     } = useGetUserPostsQuery({ userAddress: profileAddress }, {
         skip: !profileAddress,
     });
@@ -38,7 +39,7 @@ const ProfilePosts = memo(({ profileImageUrl, profileAddress, userAddress, profi
 
     return (
         <ProfilePostsContainer>
-            {userAddress === profileAddress && <CreatePost profileImageUrl={profileImageUrl} />}
+            {userAddress === profileAddress && <CreatePost profileImageUrl={profileImageUrl} userPostsRefetch={userPostsRefetch} />}
             <PostsList posts={parsedUserPosts} />
         </ProfilePostsContainer>
     );

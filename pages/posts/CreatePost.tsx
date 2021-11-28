@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import FormTextArea from "../../components/FormTextArea";
 import defaultProfile from "../../media/defaults/missing-profile.png";
@@ -75,17 +75,19 @@ const CreatePostButton = styled.button<{ $disabled: boolean }>`
 
 interface CreatePostProps {
     profileImageUrl?: string;
-    userAddress?: string;
+    userPostsRefetch: () => void;
 }
 
-const CreatePost = memo(({ profileImageUrl }: CreatePostProps) => {
+const CreatePost = memo(({ profileImageUrl, userPostsRefetch }: CreatePostProps) => {
     const { address } = useWallet();
 
     const [postText, setPostText] = useState<string>(null);
     // const [postImage, setPostImage] = useState<string>(null);
     const [postImageUrl] = useState<string>(null);
 
-    const [postsPost] = usePostsPostMutation();
+    const [postsPost, {
+        isSuccess: isPostsPostSuccess
+    }] = usePostsPostMutation();
 
     const handlePostSubmit = () => {
         postsPost({
@@ -95,6 +97,12 @@ const CreatePost = memo(({ profileImageUrl }: CreatePostProps) => {
             imageUrl: postImageUrl,
         });
     };
+
+    useEffect(() => {
+        if (isPostsPostSuccess) {
+            userPostsRefetch();
+        }
+    }, [isPostsPostSuccess, userPostsRefetch]);
 
     return (
         <CreatePostContainer>

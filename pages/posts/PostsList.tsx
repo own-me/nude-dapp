@@ -11,6 +11,7 @@ const PostsListContainer = styled.div`
 
 const PostContainer = styled.div`
     display: flex;
+    border-bottom: 1px #e0e0e0 solid;
 `;
 
 const PostProfileImage = styled.img`
@@ -24,7 +25,7 @@ const PostProfileImage = styled.img`
 `;
 
 const PostUserName = styled.div`
-    font-size: 25px;
+    font-size: 20px;
 `;
 
 const PostContent = styled.div`
@@ -32,6 +33,11 @@ const PostContent = styled.div`
     flex-direction: column;
     width: 100%;
     padding: 20px;
+`;
+
+const PostText = styled.div`
+    font-size: 24px;
+    padding: 20px 0px;
 `;
 
 const PostActions = styled.div`
@@ -54,22 +60,23 @@ const PostActionValue = styled.div`
 `;
 
 const PostDate = styled.div`
-    
+    font-size: 15px;
+    opacity: 0.75;
 `;
 
 interface PostsListProps {
-    posts: unknown[];
+    posts: Post[];
 }
 
 const PostsList = memo(({ posts }: PostsListProps) => {
     return (
         <PostsListContainer>
-            {posts && posts.map((post: Post) =>
-                <PostContainer>
+            {posts && posts.reverse().map((post: Post, index) =>
+                <PostContainer key={index}>
                     <PostProfileImage src={post.profileImageUrl || defaultProfile} />
                     <PostContent>
                         <PostUserName>{post.userName}</PostUserName>
-                        <p>{post.text}</p>
+                        <PostText>{post.text}</PostText>
                         <PostDate>
                             {new Date(post.dateCreated).toLocaleString()}
                         </PostDate>
