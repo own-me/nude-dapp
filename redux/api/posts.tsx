@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface Post {
+export interface Post {
     id: string;
     childOf?: string;
     text: string;
     userAddress: string;
-    creatorName?: string;
+    userName?: string;
     dateCreated: string;
     likesCount: number;
     commentCount: number;

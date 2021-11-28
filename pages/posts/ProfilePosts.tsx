@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useGetUserPostsQuery } from "../../redux/api/posts";
+import { Post, useGetUserPostsQuery } from "../../redux/api/posts";
 import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";
 
@@ -12,9 +12,11 @@ interface ProfilePostsProps {
     profileImageUrl?: string;
     profileAddress: string;
     userAddress: string;
+    profileName: string;
 }
 
-const ProfilePosts = memo(({ profileImageUrl, profileAddress, userAddress }: ProfilePostsProps) => {
+const ProfilePosts = memo(({ profileImageUrl, profileAddress, userAddress, profileName }: ProfilePostsProps) => {
+    const [parsedUserPosts, setParsedUserPosts] = useState<Post[]>([]);
 
     const {
         data: userPosts
@@ -22,10 +24,22 @@ const ProfilePosts = memo(({ profileImageUrl, profileAddress, userAddress }: Pro
         skip: !profileAddress,
     });
 
+    useEffect(() => {
+        if (userPosts) {
+            setParsedUserPosts(
+                userPosts.map((post) => ({
+                    ...post,
+                    profileImageUrl,
+                    userName: profileName
+                }))
+            );
+        }
+    }, [profileImageUrl, profileName, userPosts]);
+
     return (
         <ProfilePostsContainer>
             {userAddress === profileAddress && <CreatePost profileImageUrl={profileImageUrl} />}
-            <PostsList posts={userPosts} />
+            <PostsList posts={parsedUserPosts} />
         </ProfilePostsContainer>
     );
 });

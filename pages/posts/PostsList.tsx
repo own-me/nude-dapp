@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import styled from "styled-components";
 import defaultProfile from "../../media/defaults/missing-profile.png";
+import { Post } from "../../redux/api/posts";
 
 const PostsListContainer = styled.div`
     display: flex;
@@ -36,12 +37,12 @@ interface PostsListProps {
 const PostsList = memo(({ posts }: PostsListProps) => {
     return (
         <PostsListContainer>
-            {posts && posts.map((post) =>
+            {posts && posts.map((post: Post) =>
                 <PostContainer>
                     <PostProfileImage src={post.profileImageUrl || defaultProfile} />
                     <PostContent>
-                        <h3>{post.title}</h3>
-                        <p>{post.content}</p>
+                        <h3>{post.userName}</h3>
+                        <p>{post.text}</p>
                     </PostContent>
                 </PostContainer>
             )}

@@ -227,7 +227,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                     </NftCards>
                 </TabContent>
                 <TabContent>
-                    <ProfilePosts profileImageUrl={profileImageUrl} profileAddress={profileAddress} userAddress={address} />
+                    <ProfilePosts profileImageUrl={profileImageUrl} profileAddress={profileAddress} userAddress={address} profileName={name} />
                 </TabContent>
                 <TabContent>
                     <FollowerList followers={following} />
