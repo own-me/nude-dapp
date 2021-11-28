@@ -1,10 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface GetPostRequest {
-    postId: string;
-}
-
-interface GetPostResponse {
+interface Post {
     id: string;
     childOf?: string;
     text: string;
@@ -15,6 +11,14 @@ interface GetPostResponse {
     commentCount: number;
     imageUrl?: string;
     profileImageUrl?: string;
+}
+
+interface GetPostRequest {
+    postId: string;
+}
+
+interface GetUserPostsRequest {
+    userAddress: string;
 }
 
 interface PostsPostRequest {
@@ -33,9 +37,18 @@ export const postsApi = createApi({
     reducerPath: "postsApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
-        getPost: builder.query<GetPostResponse, GetPostRequest>({
+        getPost: builder.query<Post, GetPostRequest>({
             query: ({ postId }) => ({
                 url: `posts/${postId}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+        }),
+        getUserPosts: builder.query<Post[], GetUserPostsRequest>({
+            query: ({ userAddress }) => ({
+                url: `posts/user/${userAddress}`,
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -60,4 +73,4 @@ export const postsApi = createApi({
     })
 });
 
-export const { useGetPostQuery, usePostsPostMutation } = postsApi;
+export const { useGetPostQuery, useGetUserPostsQuery, usePostsPostMutation } = postsApi;
