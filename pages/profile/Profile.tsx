@@ -4,10 +4,6 @@ import defaultBanner from "../../media/defaults/stars-banner.png";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import useWallet from "../../hooks/useWallet";
 import { shortenAddress } from "../../lib/helpers";
-// import twitterIcon from "../../media/icons/socials/color/twitter.svg";
-// import instagramIcon from "../../media/icons/socials/color/instagram.svg";
-// import linkedinIcon from "../../media/icons/socials/color/linkedin.svg";
-// import youtubeIcon from "../../media/icons/socials/color/youtube.svg";
 import Tabs, { TabContent } from "../../components/Tabs";
 import NFTCard from "../../components/NFTCard";
 import Modal from "../../components/Modal";
@@ -17,7 +13,7 @@ import { usePostUnfollowMutation } from "../../redux/api/unfollow";
 import FollowerList from "./FollowerList";
 import { NftInterface } from "../../redux/api/nft";
 import { useAppSelector } from "../../redux/hooks";
-import CreatePost from "../posts/CreatePost";
+import ProfilePosts from "../posts/ProfilePosts";
 
 const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     min-height: 100%;
@@ -80,30 +76,6 @@ const ProfileAddress = styled.button`
     float: right;
     cursor: pointer;
 `;
-
-// const SocialHandles = styled.div`
-//     display: flex;
-//     justify-content: center;
-//     flex-wrap: wrap;
-// `;
-
-// const SocialHandleContainer = styled.div`
-//     display: flex;
-//     align-items: center;
-//     margin: 10px;
-// `;
-
-// const SocialIcon = styled.img`
-//     width: 30px;
-//     height: 30px;
-// `;
-
-// const SocialHandle = styled.a<{ $isDarkMode: boolean }>`
-//     font-family: Poppins, Open Sans;
-//     text-decoration: none;
-//     padding: 0 10px;
-//     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
-// `;
 
 const ActionButtons = styled.div`
     display: flex;
@@ -182,38 +154,6 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
         userRefetch();
     }, [userRefetch, isPostFollowSuccess, isPostUnfollowSuccess,]);
 
-    // const mockSocials = [
-    //     "https://www.instagram.com/christopher.trimboli/",
-    //     "https://www.linkedin.com/in/christophertrimboli/"
-    // ];
-
-    // const supportedSocials = useMemo(() => [
-    //     {
-    //         name: "Instagram",
-    //         icon: instagramIcon,
-    //         domainRegex: /www\.instagram\.com/,
-    //         getHandle: (url: string) => url.split("/")[3]
-    //     },
-    //     {
-    //         name: "Twitter",
-    //         icon: twitterIcon,
-    //         domainRegex: /www\.twitter\.com/,
-    //         getHandle: (url: string) => url.split("/")[3]
-    //     },
-    //     {
-    //         name: "Linkedin",
-    //         icon: linkedinIcon,
-    //         domainRegex: /www\.linkedin\.com/,
-    //         getHandle: (url: string) => url.split("/")[4]
-    //     },
-    //     {
-    //         name: "Youtube",
-    //         icon: youtubeIcon,
-    //         domainRegex: /www\.youtube\.com/,
-    //         getHandle: (url: string) => url.split("/")[4]
-    //     }
-    // ], []);
-
     const parseRawNfts = (nfts: NftInterface[]): NftInterface[] => {
         return nfts.map((nft: NftInterface) => {
             return {
@@ -247,26 +187,6 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                 <ProfileDescription>{bio}</ProfileDescription>
                 <ProfileLink href={link} target={"_blank"}>{link}</ProfileLink>
             </ProfileInfo>
-            {/* <SocialHandles>
-                {
-                    mockSocials.map((url, index) => {
-                        let handle = "";
-                        let icon = "";
-                        supportedSocials.forEach((social) => {
-                            if (social.domainRegex.test(url)) {
-                                handle = social.getHandle(url);
-                                icon = social.icon;
-                            }
-                        });
-                        return <SocialHandleContainer key={index}>
-                            {icon && <SocialIcon src={icon} />}
-                            <SocialHandle href={url} target="_blank" $isDarkMode={isDarkMode}>
-                                {handle || url}
-                            </SocialHandle>
-                        </SocialHandleContainer>;
-                    })
-                }
-            </SocialHandles> */}
             {
                 profileAddress !== address &&
                     <ActionButtons>
@@ -307,7 +227,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                     </NftCards>
                 </TabContent>
                 <TabContent>
-                    {address === profileAddress && <CreatePost profileImageUrl={profileImageUrl} />}
+                    <ProfilePosts profileImageUrl={profileImageUrl} profileAddress={profileAddress} userAddress={address} />
                 </TabContent>
                 <TabContent>
                     <FollowerList followers={following} />

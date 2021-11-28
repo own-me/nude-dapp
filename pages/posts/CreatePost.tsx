@@ -75,6 +75,7 @@ const CreatePostButton = styled.button<{ $disabled: boolean }>`
 
 interface CreatePostProps {
     profileImageUrl?: string;
+    userAddress?: string;
 }
 
 const CreatePost = memo(({ profileImageUrl }: CreatePostProps) => {
