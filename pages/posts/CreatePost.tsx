@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import styled from "styled-components";
 import FormTextArea from "../../components/FormTextArea";
 import defaultProfile from "../../media/defaults/missing-profile.png";
@@ -54,7 +54,7 @@ const CreatePostAttachment = styled.div`
     }
 `;
 
-const CreatePostButton = styled.button`
+const CreatePostButton = styled.button<{ $disabled: boolean }>`
     font-family: Poppins, Open Sans;
     font-size: 22px;
     background-color: #FF81EB;
@@ -63,7 +63,8 @@ const CreatePostButton = styled.button`
     padding: 5px 40px;
     border-radius: 50px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    cursor: pointer;
+    cursor: ${props => props.$disabled ? "not-allowed" : "pointer"};
+    opacity: ${props => props.$disabled ? 0.7 : 1};
 
     :hover {
         background-color: #fb5de1;
@@ -75,18 +76,20 @@ interface CreatePostProps {
 }
 
 const CreatePost = memo(({ profileImageUrl }: CreatePostProps) => {
+    const [postText, setPostText] = useState<string>(null);
+
     return (
         <CreatePostContainer>
             <CreatePostProfileImage src={profileImageUrl || defaultProfile} />
             <CreatePostForm>
-                <FormTextArea label="Create a Post" />
+                <FormTextArea label="Create a Post" onChange={(value) => setPostText(value)} />
                 <CreatePostBottomActions>
                     <CreatePostAttachments>
                         <CreatePostAttachment>
                             <FileImageOutlined />
                         </CreatePostAttachment>
                     </CreatePostAttachments>
-                    <CreatePostButton>
+                    <CreatePostButton $disabled={!postText}>
                         Post
                     </CreatePostButton>
                 </CreatePostBottomActions>
