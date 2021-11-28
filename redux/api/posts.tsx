@@ -8,7 +8,7 @@ interface GetPostResponse {
     id: string;
     childOf?: string;
     text: string;
-    creatorAddress: string;
+    userAddress: string;
     creatorName?: string;
     dateCreated: string;
     likesCount: number;
@@ -20,7 +20,7 @@ interface GetPostResponse {
 interface PostsPostRequest {
     childOf?: string;
     text: string;
-    creatorAddress: string;
+    userAddress: string;
     imageUrl?: string;
 }
 
@@ -43,13 +43,13 @@ export const postsApi = createApi({
             })
         }),
         postsPost: builder.mutation<PostsPostResponse, PostsPostRequest>({
-            query: ({ childOf, text, creatorAddress, imageUrl }) => ({
+            query: ({ childOf, text, userAddress, imageUrl }) => ({
                 url: "posts/",
                 method: "POST",
                 body: {
                     childOf,
                     text,
-                    creatorAddress,
+                    userAddress,
                     imageUrl
                 },
                 headers: {

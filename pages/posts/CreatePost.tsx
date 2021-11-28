@@ -3,6 +3,8 @@ import styled from "styled-components";
 import FormTextArea from "../../components/FormTextArea";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { FileImageOutlined } from "@ant-design/icons";
+import { usePostsPostMutation } from "../../redux/api/posts";
+import useWallet from "../../hooks/useWallet";
 
 const CreatePostContainer = styled.div`
     display: flex;
@@ -76,7 +78,22 @@ interface CreatePostProps {
 }
 
 const CreatePost = memo(({ profileImageUrl }: CreatePostProps) => {
+    const { address } = useWallet();
+
     const [postText, setPostText] = useState<string>(null);
+    // const [postImage, setPostImage] = useState<string>(null);
+    const [postImageUrl] = useState<string>(null);
+
+    const [postsPost] = usePostsPostMutation();
+
+    const handlePostSubmit = () => {
+        postsPost({
+            childOf: null,
+            text: postText,
+            userAddress: address,
+            imageUrl: postImageUrl,
+        });
+    };
 
     return (
         <CreatePostContainer>
@@ -89,7 +106,7 @@ const CreatePost = memo(({ profileImageUrl }: CreatePostProps) => {
                             <FileImageOutlined />
                         </CreatePostAttachment>
                     </CreatePostAttachments>
-                    <CreatePostButton $disabled={!postText}>
+                    <CreatePostButton $disabled={!postText} onClick={handlePostSubmit}>
                         Post
                     </CreatePostButton>
                 </CreatePostBottomActions>
