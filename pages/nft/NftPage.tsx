@@ -244,8 +244,8 @@ const NftPage = memo(() => {
                     <TopItem>
                         <TopItemHeader>Likes</TopItemHeader>
                         <TopItemValue>
-                            {nftData?.likesCount} {nftData?.isLiked || isLikeHovering ? 
-                                <LikeIconFilled onMouseLeave={() => setIsLikeHovering(false)} onClick={handleLikeClick} /> : 
+                            {nftData?.likesCount} {nftData?.isLiked || isLikeHovering ?
+                                <LikeIconFilled onMouseLeave={() => setIsLikeHovering(false)} onClick={handleLikeClick} /> :
                                 <LikeIconEmpty onMouseEnter={() => setIsLikeHovering(true)} onClick={handleLikeClick} />
                             }
                         </TopItemValue>

@@ -120,7 +120,7 @@ const EditProfileButton = styled(ProfileAddress)`
     }
 `;
 
-interface ProfileProps{
+interface ProfileProps {
     profileAddress: string;
     name: string;
     bio: string;
@@ -133,7 +133,7 @@ interface ProfileProps{
     userRefetch: () => void;
 }
 
-const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, following, profileImageUrl, bannerImageUrl, userRefetch}: ProfileProps) => {
+const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, following, profileImageUrl, bannerImageUrl, userRefetch }: ProfileProps) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
 
@@ -189,24 +189,24 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
             </ProfileInfo>
             {
                 profileAddress !== address &&
-                    <ActionButtons>
-                        <ActionButton
-                            onClick={() => isFollowing ? postUnfollow({ toAddress: profileAddress }) : postFollow({ toAddress: profileAddress })}
-                            $isFollowing={isFollowing}
-                            $isHovered={isFollowButtonHovered}
-                            onMouseEnter={() => setIsFollowButtonHovered(true)}
-                            onMouseOut={() => setIsFollowButtonHovered(false)}
-                        >
-                            {followButtonText}
-                        </ActionButton>
-                        <ActionButton>Subscribe</ActionButton>
-                    </ActionButtons>
+                <ActionButtons>
+                    <ActionButton
+                        onClick={() => isFollowing ? postUnfollow({ toAddress: profileAddress }) : postFollow({ toAddress: profileAddress })}
+                        $isFollowing={isFollowing}
+                        $isHovered={isFollowButtonHovered}
+                        onMouseEnter={() => setIsFollowButtonHovered(true)}
+                        onMouseOut={() => setIsFollowButtonHovered(false)}
+                    >
+                        {followButtonText}
+                    </ActionButton>
+                    <ActionButton>Subscribe</ActionButton>
+                </ActionButtons>
             }
             <br />
             <Tabs tabs={useMemo(() => [
-                `NFTs (${userNfts?.length || 0})`, 
-                "Posts (0)", 
-                `Following (${following?.length || 0})`, 
+                `NFTs (${userNfts?.length || 0})`,
+                "Posts (0)",
+                `Following (${following?.length || 0})`,
                 "Activity"
             ], [userNfts, following])}>
                 <TabContent>
