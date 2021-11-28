@@ -36,6 +36,7 @@ const PostContent = styled.div`
 `;
 
 const PostText = styled.div`
+    white-space: break-spaces;
     font-size: 24px;
     padding: 20px 0px;
 `;
