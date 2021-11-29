@@ -1,9 +1,11 @@
 import { CommentOutlined, EllipsisOutlined, HeartOutlined } from "@ant-design/icons";
 import React, { memo } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { useGetPostQuery } from "../../redux/api/posts";
+import { useAppSelector } from "../../redux/hooks";
 import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";
 
@@ -28,8 +30,15 @@ const PostPageProfileImage = styled.img`
     margin: 50px 20px;
 `;
 
-const PostUserName = styled.div`
+const PostUserName = styled(Link)<{ $isDarkMode: boolean }>`
     font-size: 30px;
+    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
+    text-decoration: none;
+
+    :hover {
+        color: #bb00eb;
+        text-decoration: underline;
+    }
 `;
 
 const PostContent = styled.div`
@@ -71,6 +80,7 @@ const PostDate = styled.div`
 
 const PostPage = memo(() => {
     const params = useParams();
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const {
         data: postData,
@@ -84,7 +94,7 @@ const PostPage = memo(() => {
             <PostContainer>
                 <PostPageProfileImage src={postData?.profileImageUrl || defaultProfile} />
                 <PostContent>
-                    <PostUserName>{postData?.userName}</PostUserName>
+                    <PostUserName to={`/${postData?.userAddress}`} $isDarkMode={isDarkMode}>{postData?.userName}</PostUserName>
                     <PostText>{postData?.text}</PostText>
                     <PostDate>
                         {new Date(postData?.dateCreated).toLocaleString()}

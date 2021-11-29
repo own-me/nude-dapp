@@ -33,8 +33,15 @@ const PostProfileImage = styled.img`
     margin: 20px;
 `;
 
-const PostUserName = styled.div`
+const PostUserName = styled(Link)<{ $isDarkMode: boolean }>`
     font-size: 20px;
+    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
+    text-decoration: none;
+
+    :hover {
+        color: #bb00eb;
+        text-decoration: underline;
+    }
 `;
 
 const PostContent = styled.div`
@@ -87,7 +94,7 @@ const PostsList = memo(({ posts }: PostsListProps) => {
                 <PostContainer to={`/post/${post.id}`} key={index} $isDarkMode={isDarkMode}>
                     <PostProfileImage src={post.profileImageUrl || defaultProfile} />
                     <PostContent>
-                        <PostUserName>{post.userName}</PostUserName>
+                        <PostUserName to={`/${post.userAddress}`} $isDarkMode={isDarkMode}>{post.userName}</PostUserName>
                         <PostText>{post.text}</PostText>
                         <PostDate>
                             {new Date(post.dateCreated).toLocaleString()}
