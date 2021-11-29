@@ -180,7 +180,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
         <ProfileContainer $isDarkMode={isDarkMode}>
             <ProfileBannerImage src={bannerImageUrl || defaultBanner} />
             <ProfileImage src={profileImageUrl || defaultProfile} />
-            <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>
+            {address === profileAddress && <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>}
             <a href={`https://ropsten.etherscan.io/address/${profileAddress}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
             <ProfileInfo>
                 <ProfileName>{name}</ProfileName>
