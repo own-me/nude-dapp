@@ -5,6 +5,7 @@ import styled from "styled-components";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { useGetPostQuery } from "../../redux/api/posts";
 import CreatePost from "./CreatePost";
+import PostsList from "./PostsList";
 
 const PostPageContainer = styled.div`
     width: 70%;
@@ -103,7 +104,8 @@ const PostPage = memo(() => {
                     </PostAction>
                 </PostActions>
             </PostContainer>
-            <CreatePost refetch={postRefetch} title={"Comment on this Post"} buttonText={"Comment"} />
+            <CreatePost refetch={postRefetch} title={"Comment on this Post"} buttonText={"Comment"} childOf={postData?.id} />
+            <PostsList posts={postData?.comments || []} />
         </PostPageContainer>
     );
 });

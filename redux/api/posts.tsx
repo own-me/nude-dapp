@@ -11,6 +11,7 @@ export interface Post {
     commentsCount: number;
     imageUrl?: string | null;
     profileImageUrl?: string;
+    comments: Post[];
 }
 
 interface GetPostRequest {
@@ -22,10 +23,10 @@ interface GetUserPostsRequest {
 }
 
 interface PostsPostRequest {
-    childOf?: string;
+    childOf?: number | null;
     text: string;
     userAddress: string;
-    imageUrl?: string;
+    imageUrl?: string | null;
 }
 
 interface PostsPostResponse {

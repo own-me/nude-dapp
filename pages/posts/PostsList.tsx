@@ -83,7 +83,7 @@ const PostsList = memo(({ posts }: PostsListProps) => {
 
     return (
         <PostsListContainer>
-            {posts && posts.reverse().map((post: Post, index) =>
+            {posts && posts.map((post: Post, index) =>
                 <PostContainer to={`/post/${post.id}`} key={index} $isDarkMode={isDarkMode}>
                     <PostProfileImage src={post.profileImageUrl || defaultProfile} />
                     <PostContent>

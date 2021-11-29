@@ -78,9 +78,10 @@ interface CreatePostProps {
     refetch: () => void;
     title?: string;
     buttonText?: string;
+    childOf?: number;
 }
 
-const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText }: CreatePostProps) => {
+const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText, childOf }: CreatePostProps) => {
     const { address } = useWallet();
 
     const [postText, setPostText] = useState<string>(null);
@@ -93,7 +94,7 @@ const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText }: Create
 
     const handlePostSubmit = () => {
         postsPost({
-            childOf: null,
+            childOf,
             text: postText,
             userAddress: address,
             imageUrl: postImageUrl,
