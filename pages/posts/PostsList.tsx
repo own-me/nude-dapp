@@ -4,16 +4,19 @@ import defaultProfile from "../../media/defaults/missing-profile.png";
 import { Post } from "../../redux/api/posts";
 import { HeartOutlined, CommentOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useAppSelector } from "../../redux/hooks";
+import { Link } from "react-router-dom";
 
 const PostsListContainer = styled.div`
     font-family: Poppins, Open Sans;
     border-bottom: 1px solid #ebebeb;
 `;
 
-const PostContainer = styled.div<{ $isDarkMode: boolean }>`
+const PostContainer = styled(Link)<{ $isDarkMode: boolean }>`
     display: flex;
     border-bottom: 1px #e0e0e0 solid;
     cursor: pointer;
+    color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
+    text-decoration: none;
 
     :hover {
         background-color: ${props => props.$isDarkMode ? "#170030" : "#fef9ff"};
@@ -81,7 +84,7 @@ const PostsList = memo(({ posts }: PostsListProps) => {
     return (
         <PostsListContainer>
             {posts && posts.reverse().map((post: Post, index) =>
-                <PostContainer key={index} $isDarkMode={isDarkMode}>
+                <PostContainer to={`/post/${post.id}`} key={index} $isDarkMode={isDarkMode}>
                     <PostProfileImage src={post.profileImageUrl || defaultProfile} />
                     <PostContent>
                         <PostUserName>{post.userName}</PostUserName>

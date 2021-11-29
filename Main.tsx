@@ -11,6 +11,7 @@ import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
 import Navbar, { TOTAL_HEIGHT } from "./components/Navbar";
 import MintPage from "./pages/mint/MintPage";
 import NftPage from "./pages/nft/NftPage";
+import PostPage from "./pages/posts/PostPage";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -52,6 +53,9 @@ export default function Main() {
                 } />
                 <Route path="/:name" element={
                     loggedIn ? <ProfilePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
+                } />
+                <Route path="/post/:postId" element={
+                    loggedIn ? <PostPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
                 <Route path="/" element={
                     loggedIn ? <HomePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
