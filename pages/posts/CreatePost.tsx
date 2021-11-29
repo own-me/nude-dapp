@@ -75,10 +75,12 @@ const CreatePostButton = styled.button<{ $disabled: boolean }>`
 
 interface CreatePostProps {
     profileImageUrl?: string;
-    userPostsRefetch: () => void;
+    refetch: () => void;
+    title?: string;
+    buttonText?: string;
 }
 
-const CreatePost = memo(({ profileImageUrl, userPostsRefetch }: CreatePostProps) => {
+const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText }: CreatePostProps) => {
     const { address } = useWallet();
 
     const [postText, setPostText] = useState<string>(null);
@@ -100,15 +102,15 @@ const CreatePost = memo(({ profileImageUrl, userPostsRefetch }: CreatePostProps)
 
     useEffect(() => {
         if (isPostsPostSuccess) {
-            userPostsRefetch();
+            refetch();
         }
-    }, [isPostsPostSuccess, userPostsRefetch]);
+    }, [isPostsPostSuccess, refetch]);
 
     return (
         <CreatePostContainer>
             <CreatePostProfileImage src={profileImageUrl || defaultProfile} />
             <CreatePostForm>
-                <FormTextArea label="Create a Post" onChange={(value) => setPostText(value)} />
+                <FormTextArea label={title || "Create a Post"} onChange={(value) => setPostText(value)} />
                 <CreatePostBottomActions>
                     <CreatePostAttachments>
                         <CreatePostAttachment>
@@ -116,7 +118,7 @@ const CreatePost = memo(({ profileImageUrl, userPostsRefetch }: CreatePostProps)
                         </CreatePostAttachment>
                     </CreatePostAttachments>
                     <CreatePostButton $disabled={!postText} onClick={handlePostSubmit}>
-                        Post
+                        {buttonText || "Post"}
                     </CreatePostButton>
                 </CreatePostBottomActions>
             </CreatePostForm>

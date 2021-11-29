@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { useGetPostQuery } from "../../redux/api/posts";
+import CreatePost from "./CreatePost";
 
 const PostPageContainer = styled.div`
     width: 70%;
@@ -71,7 +72,8 @@ const PostPage = memo(() => {
     const params = useParams();
 
     const {
-        data: postData
+        data: postData,
+        refetch: postRefetch
     } = useGetPostQuery({ postId: params.postId }, {
         skip: !params.postId,
     });
@@ -101,6 +103,7 @@ const PostPage = memo(() => {
                     </PostAction>
                 </PostActions>
             </PostContainer>
+            <CreatePost refetch={postRefetch} title={"Comment on this Post"} buttonText={"Comment"} />
         </PostPageContainer>
     );
 });
