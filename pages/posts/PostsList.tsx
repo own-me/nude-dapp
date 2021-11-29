@@ -3,15 +3,21 @@ import styled from "styled-components";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { Post } from "../../redux/api/posts";
 import { HeartOutlined, CommentOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { useAppSelector } from "../../redux/hooks";
 
 const PostsListContainer = styled.div`
     font-family: Poppins, Open Sans;
     border-bottom: 1px solid #ebebeb;
 `;
 
-const PostContainer = styled.div`
+const PostContainer = styled.div<{ $isDarkMode: boolean }>`
     display: flex;
     border-bottom: 1px #e0e0e0 solid;
+    cursor: pointer;
+
+    :hover {
+        background-color: ${props => props.$isDarkMode ? "#170030" : "#fef9ff"};
+    }
 `;
 
 const PostProfileImage = styled.img`
@@ -70,10 +76,12 @@ interface PostsListProps {
 }
 
 const PostsList = memo(({ posts }: PostsListProps) => {
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
     return (
         <PostsListContainer>
             {posts && posts.reverse().map((post: Post, index) =>
-                <PostContainer key={index}>
+                <PostContainer key={index} $isDarkMode={isDarkMode}>
                     <PostProfileImage src={post.profileImageUrl || defaultProfile} />
                     <PostContent>
                         <PostUserName>{post.userName}</PostUserName>
