@@ -54,6 +54,12 @@ const PostText = styled.div`
     padding: 20px 0px;
 `;
 
+const PostImage = styled.img`
+    width: 75%;
+    height: 100%;
+    margin-bottom: 10px;
+`;
+
 const PostActions = styled.div`
     display: flex;
     flex-direction: column;
@@ -96,6 +102,7 @@ const PostPage = memo(() => {
                 <PostContent>
                     <PostUserName to={`/${postData?.userAddress}`} $isDarkMode={isDarkMode}>{postData?.userName}</PostUserName>
                     <PostText>{postData?.text}</PostText>
+                    {postData?.imageUrl && <PostImage src={postData?.imageUrl} />}
                     <PostDate>
                         {new Date(postData?.dateCreated).toLocaleString()}
                     </PostDate>

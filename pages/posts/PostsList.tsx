@@ -81,6 +81,12 @@ const PostDate = styled.div`
     opacity: 0.75;
 `;
 
+const PostImage = styled.img`
+    width: 75%;
+    height: 100%;
+    margin-bottom: 10px;
+`;
+
 interface PostsListProps {
     posts: Post[];
 }
@@ -96,6 +102,7 @@ const PostsList = memo(({ posts }: PostsListProps) => {
                     <PostContent>
                         <PostUserName to={`/${post.userAddress}`} $isDarkMode={isDarkMode}>{post.userName}</PostUserName>
                         <PostText>{post.text}</PostText>
+                        {post.imageUrl && <PostImage src={post.imageUrl} alt="post" />}
                         <PostDate>
                             {new Date(post.dateCreated).toLocaleString()}
                         </PostDate>
