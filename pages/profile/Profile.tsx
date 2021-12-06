@@ -110,13 +110,13 @@ const NftCards = styled.div`
 `;
 
 const EditProfileButton = styled(ProfileAddress)`
-    background-color: #1212ff;
+    background-color: #8336ff;
     float: left;
     margin-left: 20px;
     cursor: pointer;
 
     :hover {
-        background-color: #b005ff;
+        background-color: #5f23ff;
     }
 `;
 
