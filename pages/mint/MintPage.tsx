@@ -79,7 +79,7 @@ const ImagesRow = styled.div`
 
 export default function MintPage() {
     const [title, setTitle] = useState<string>("");
-    const [price, setPrice] = useState<string>("");
+    const [price, setPrice] = useState<string>("0");
     const [description, setDescription] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string>();
     const [imageData, setImageData] = useState<File>();
@@ -128,7 +128,7 @@ export default function MintPage() {
                 <NFTCard
                     title={title || "King Tobi"}
                     owner={"@thecatdad"}
-                    price={price}
+                    price={ethers.utils.parseUnits(price).toString()}
                     rarity={[1, 8]}
                     image={imagePreview || catNft}
                 />
