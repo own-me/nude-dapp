@@ -5,6 +5,8 @@ import defaultProfile from "../../media/defaults/missing-profile.png";
 import { FileImageOutlined } from "@ant-design/icons";
 import { usePostsPostMutation } from "../../redux/api/posts";
 import useWallet from "../../hooks/useWallet";
+import FormFileInputButton from "../../components/FormFileInputButton";
+import { usePostIpfsUploadMutation } from "../../redux/api/ipfs";
 
 const CreatePostContainer = styled.div`
     display: flex;
@@ -40,7 +42,7 @@ const CreatePostAttachments = styled.div`
     display: flex;
 `;
 
-const CreatePostAttachment = styled.div`
+const CreatePostAttachment = styled(FormFileInputButton)`
     height: 37px;
     width: 37px;
     background-color: #FF81EB;
@@ -73,6 +75,10 @@ const CreatePostButton = styled.button<{ $disabled: boolean }>`
     }
 `;
 
+const ImagePreview = styled.img`
+    width: 75%;
+`;
+
 interface CreatePostProps {
     profileImageUrl?: string;
     refetch: () => void;
@@ -85,19 +91,28 @@ const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText, childOf 
     const { address } = useWallet();
 
     const [postText, setPostText] = useState<string>(null);
-    // const [postImage, setPostImage] = useState<string>(null);
-    const [postImageUrl] = useState<string>(null);
+    const [postImageFile, setPostImageFile] = useState<File>(null);
+    const [postImagePreview, setPostImagePreview] = useState<string | ArrayBuffer>(null);
+
+    const [postIpfsUpload] = usePostIpfsUploadMutation();
 
     const [postsPost, {
         isSuccess: isPostsPostSuccess
     }] = usePostsPostMutation();
 
-    const handlePostSubmit = () => {
+    const handlePostSubmit = async () => {
+        let imageUrl = null;
+        if (postImageFile) {
+            const formData = new FormData();
+            formData.append("image", postImageFile);
+            const ipfsResponse = await postIpfsUpload(formData);
+            imageUrl = ipfsResponse.data.ipfsUrl;
+        }
         postsPost({
             childOf,
             text: postText,
             userAddress: address,
-            imageUrl: postImageUrl,
+            imageUrl
         });
     };
 
@@ -112,9 +127,10 @@ const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText, childOf 
             <CreatePostProfileImage src={profileImageUrl || defaultProfile} />
             <CreatePostForm>
                 <FormTextArea label={title || "Create a Post"} onChange={(value) => setPostText(value)} />
+                {postImagePreview && <ImagePreview src={postImagePreview} />}
                 <CreatePostBottomActions>
                     <CreatePostAttachments>
-                        <CreatePostAttachment>
+                        <CreatePostAttachment onData={value => setPostImagePreview(value)} onFile={file => setPostImageFile(file)}>
                             <FileImageOutlined />
                         </CreatePostAttachment>
                     </CreatePostAttachments>
