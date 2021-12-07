@@ -22,10 +22,6 @@ interface GetUserNftsRequest {
     address: string;
 }
 
-interface GetUserNftsResponse {
-    userNfts: NftInterface[];
-}
-
 interface PostNftLikeRequest {
     fromAddress: string;
     tokenId: string;
@@ -60,7 +56,7 @@ export const nftApi = createApi({
                 }
             })
         }),
-        getUserNfts: builder.query<GetUserNftsResponse, GetUserNftsRequest>({
+        getUserNfts: builder.query<NftInterface[], GetUserNftsRequest>({
             query: ({ address }) => ({
                 url: `nft/user/${address}`,
                 method: "GET",

@@ -30,7 +30,7 @@ const ProfilePage = memo(() => {
     });
 
     useEffect(() => {
-        dispatch(setUserNfts(userNftsData?.userNfts));
+        dispatch(setUserNfts(userNftsData));
     }, [dispatch, userNftsData]);
 
     useEffect(() => {
