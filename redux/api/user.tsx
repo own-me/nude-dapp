@@ -23,7 +23,6 @@ interface UserResponse {
 }
 
 interface UploadProfileImageRequest  {
-    address: string;
     formData: FormData;
 }
 
@@ -34,7 +33,6 @@ interface UploadProfileImageResponse {
 }
 
 interface UploadProfileBannerRequest  {
-    address: string;
     formData: FormData;
 }
 
@@ -49,7 +47,6 @@ interface UserEditResponse {
     error?: string;
 }
 interface UserEditRequest {
-    address: string;
     name?: string;
     bio?: string;
     link?: string;
@@ -71,8 +68,8 @@ export const userApi = createApi({
             }),
         }),
         uploadProfileImage: builder.mutation<UploadProfileImageResponse, UploadProfileImageRequest>({
-            query: ({ address, formData }) => ({
-                url: `user/profile-image/${address}`,
+            query: ({ formData }) => ({
+                url: "user/profile-image",
                 method: "POST",
                 contentType: "multipart/form-data",
                 body: formData,
@@ -82,8 +79,8 @@ export const userApi = createApi({
             }),
         }),
         uploadProfileBanner: builder.mutation<UploadProfileBannerResponse, UploadProfileBannerRequest>({
-            query: ({ address, formData }) => ({
-                url: `user/profile-banner/${address}`,
+            query: ({ formData }) => ({
+                url: "user/profile-banner",
                 method: "POST",
                 contentType: "multipart/form-data",
                 body: formData,
@@ -93,8 +90,8 @@ export const userApi = createApi({
             }),
         }),
         editUser: builder.mutation<UserEditResponse, UserEditRequest>({
-            query: ({ address, name, bio, link, profileImageUrl, bannerImageUrl }) => ({
-                url: `user/edit/${address}`,
+            query: ({ name, bio, link, profileImageUrl, bannerImageUrl }) => ({
+                url: "user/edit",
                 method: "POST",
                 body: {
                     name,

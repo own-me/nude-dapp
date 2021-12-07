@@ -28,7 +28,7 @@ const ProfileImageContainer = styled.div`
     position: absolute;
     left: calc(50% - 75px);
     top: 160px;
-`; 
+`;
 
 const ProfileImage = styled.img`
     width: 100%;
@@ -136,17 +136,16 @@ const EditProfileForm = memo(({ address, bannerImageUrl, profileImageUrl, curren
         if (profileImageFile) {
             const formData = new FormData();
             formData.append("image", profileImageFile);
-            const ipfsResponse = await uploadProfileImage({ address, formData });
+            const ipfsResponse = await uploadProfileImage({ formData });
             console.log(ipfsResponse);
         }
         if (profileBannerFile) {
             const formData = new FormData();
             formData.append("image", profileBannerFile);
-            const ipfsResponse = await uploadProfileBanner({ address, formData });
+            const ipfsResponse = await uploadProfileBanner({ formData });
             console.log(ipfsResponse);
         }
         await postEditUser({
-            address,
             name,
             bio,
             link
