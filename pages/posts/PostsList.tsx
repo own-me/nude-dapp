@@ -1,8 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import styled from "styled-components";
 import defaultProfile from "../../media/defaults/missing-profile.png";
-import { Post } from "../../redux/api/posts";
-import { HeartOutlined, CommentOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { Post, useLikePostMutation, useUnlikePostMutation } from "../../redux/api/posts";
+import { HeartOutlined, HeartFilled, CommentOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const PostsListContainer = styled.div`
     border-bottom: 1px solid #ebebeb;
 `;
 
-const PostContainer = styled(Link)<{ $isDarkMode: boolean }>`
+const PostContainer = styled(Link) <{ $isDarkMode: boolean }>`
     display: flex;
     border-bottom: 1px #e0e0e0 solid;
     cursor: pointer;
@@ -70,6 +70,12 @@ const PostAction = styled.div`
     align-items: center;
     justify-content: flex-end;
     padding-bottom: 10px;
+
+    :hover {
+        .anticon {
+            color: #D842FE;
+        }
+    }
 `;
 
 const PostActionValue = styled.div`
@@ -89,10 +95,34 @@ const PostImage = styled.img`
 
 interface PostsListProps {
     posts: Post[];
+    refreshPosts: () => void;
 }
 
-const PostsList = memo(({ posts }: PostsListProps) => {
+const PostsList = memo(({ posts, refreshPosts }: PostsListProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
+    const [likePost, {
+        isSuccess: likePostIsSuccess,
+    }] = useLikePostMutation();
+
+    const [unlikePost, {
+        isSuccess: unlikePostIsSuccess,
+    }] = useUnlikePostMutation();
+
+    const handleLike = (e, postId: number) => {
+        e.preventDefault();
+        likePost({ postId });
+        refreshPosts();
+    };
+
+    const handleUnlike = (e, postId: number) => {
+        e.preventDefault();
+        unlikePost({ postId });
+    };
+
+    useEffect(() => {
+        refreshPosts();
+    }, [likePostIsSuccess, unlikePostIsSuccess, refreshPosts]);
 
     return (
         <PostsListContainer>
@@ -110,7 +140,7 @@ const PostsList = memo(({ posts }: PostsListProps) => {
                     <PostActions>
                         <PostAction>
                             <PostActionValue>{post.likesCount}</PostActionValue>
-                            <HeartOutlined />
+                            {post?.isLiked ? <HeartFilled onClick={(e) => handleUnlike(e, post.id)} /> : <HeartOutlined onClick={(e) => handleLike(e, post.id)} />}
                         </PostAction>
                         <PostAction>
                             <PostActionValue>{post.commentsCount}</PostActionValue>

@@ -40,7 +40,7 @@ const ProfilePosts = memo(({ profileImageUrl, profileAddress, userAddress, profi
     return (
         <ProfilePostsContainer>
             {userAddress === profileAddress && <CreatePost profileImageUrl={profileImageUrl} refetch={userPostsRefetch} />}
-            <PostsList posts={parsedUserPosts} />
+            <PostsList posts={parsedUserPosts} refreshPosts={userPostsRefetch} />
         </ProfilePostsContainer>
     );
 });

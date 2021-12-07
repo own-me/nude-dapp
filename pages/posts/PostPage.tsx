@@ -122,7 +122,7 @@ const PostPage = memo(() => {
                 </PostActions>
             </PostContainer>
             <CreatePost refetch={postRefetch} title={"Comment on this Post"} buttonText={"Comment"} childOf={postData?.id} />
-            <PostsList posts={postData?.comments || []} />
+            <PostsList posts={postData?.comments || []} refreshPosts={postRefetch} />
         </PostPageContainer>
     );
 });

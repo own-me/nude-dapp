@@ -12,6 +12,7 @@ export interface Post {
     imageUrl?: string | null;
     profileImageUrl?: string;
     comments: Post[];
+    isLiked: boolean;
 }
 
 interface GetPostRequest {
@@ -30,6 +31,22 @@ interface PostsPostRequest {
 }
 
 interface PostsPostResponse {
+    message?: string;
+    error?: string;
+}
+
+interface LikePostRequest {
+    postId: number;
+}
+interface LikePostResponse {
+    message?: string;
+    error?: string;
+}
+
+interface UnlikePostRequest {
+    postId: number;
+}
+interface UnlikePostResponse {
     message?: string;
     error?: string;
 }
@@ -70,8 +87,32 @@ export const postsApi = createApi({
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
+        }),
+        likePost: builder.mutation<LikePostResponse, LikePostRequest>({
+            query: ({ postId }) => ({
+                url: `posts/like/${postId}`,
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+        }),
+        unlikePost: builder.mutation<UnlikePostResponse, UnlikePostRequest>({
+            query: ({ postId }) => ({
+                url: `posts/unlike/${postId}`,
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
         })
     })
 });
 
-export const { useGetPostQuery, useGetUserPostsQuery, usePostsPostMutation } = postsApi;
+export const {
+    useGetPostQuery,
+    useGetUserPostsQuery,
+    usePostsPostMutation,
+    useLikePostMutation,
+    useUnlikePostMutation
+} = postsApi;
