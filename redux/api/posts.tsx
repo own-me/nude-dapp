@@ -26,7 +26,6 @@ interface GetUserPostsRequest {
 interface PostsPostRequest {
     childOf?: number | null;
     text: string;
-    userAddress: string;
     imageUrl?: string | null;
 }
 
@@ -74,13 +73,12 @@ export const postsApi = createApi({
             })
         }),
         postsPost: builder.mutation<PostsPostResponse, PostsPostRequest>({
-            query: ({ childOf, text, userAddress, imageUrl }) => ({
+            query: ({ childOf, text, imageUrl }) => ({
                 url: "posts/",
                 method: "POST",
                 body: {
                     childOf,
                     text,
-                    userAddress,
                     imageUrl
                 },
                 headers: {

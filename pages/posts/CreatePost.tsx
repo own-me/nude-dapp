@@ -4,7 +4,6 @@ import FormTextArea from "../../components/FormTextArea";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { FileImageOutlined } from "@ant-design/icons";
 import { usePostsPostMutation } from "../../redux/api/posts";
-import useWallet from "../../hooks/useWallet";
 import FormFileInputButton from "../../components/FormFileInputButton";
 import { usePostIpfsUploadMutation } from "../../redux/api/ipfs";
 
@@ -88,8 +87,6 @@ interface CreatePostProps {
 }
 
 const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText, childOf }: CreatePostProps) => {
-    const { address } = useWallet();
-
     const [postText, setPostText] = useState<string>(null);
     const [postImageFile, setPostImageFile] = useState<File>(null);
     const [postImagePreview, setPostImagePreview] = useState<string | ArrayBuffer>(null);
@@ -111,7 +108,6 @@ const CreatePost = memo(({ profileImageUrl, refetch, title, buttonText, childOf 
         postsPost({
             childOf,
             text: postText,
-            userAddress: address,
             imageUrl
         });
     };
