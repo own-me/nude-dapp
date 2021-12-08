@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
-import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
+import { EyeOutlined, HeartOutlined, EllipsisOutlined } from "@ant-design/icons";
 
 const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
@@ -47,8 +47,6 @@ const NFTCardOwner = styled.div<{ $isDarkMode: boolean }>`
 `;
 
 const NFTCardPrice = styled.div`
-    position: absolute;
-    bottom: 10px;
     font-weight: 600;
 `;
 
@@ -88,6 +86,11 @@ const ViewsIcon = styled(EyeOutlined)`
     padding-right: 5px;
 `;
 
+const ExtrasIcon = styled(EllipsisOutlined)`
+    cursor: pointer;
+    padding-right: 5px;
+`;
+
 const NftHashTags = styled.div`
     display: flex;
     align-items: center;
@@ -98,6 +101,16 @@ const NftHashTags = styled.div`
 
 const NftHashTag = styled.span`
     padding-right: 5px;
+`;
+
+const BottomItems = styled.div`
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 5px;
+    width: 92%;
 `;
 
 interface NFTCardProps {
@@ -132,10 +145,13 @@ const NFTCard = memo(({ tokenId, title, owner, price, image }: NFTCardProps) => 
                     <NftHashTag>#hot</NftHashTag>
                     <NftHashTag>#russian</NftHashTag>
                 </NftHashTags>
-                <NFTCardPrice>
-                    <PriceAmount>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0}</PriceAmount>
-                    <PriceTokenName>NUDE</PriceTokenName>
-                </NFTCardPrice>
+                <BottomItems>
+                    <NFTCardPrice>
+                        <PriceAmount>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0}</PriceAmount>
+                        <PriceTokenName>NUDE</PriceTokenName>
+                    </NFTCardPrice>
+                    <ExtrasIcon />
+                </BottomItems>
             </NFTCardContent>
         </NFTCardContainer>
     );
