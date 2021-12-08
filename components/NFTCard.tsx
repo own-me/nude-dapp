@@ -7,13 +7,12 @@ import { useAppSelector } from "../redux/hooks";
 
 const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
-    height: 280px;
-    width: 200px;
+    height: 375px;
+    width: 290px;
     border: 1px solid #D8CBFF;
     border-radius: 10px;
     margin: 15px;
     text-align: center;
-    padding: 20px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     position: relative;
     cursor: pointer;
@@ -32,12 +31,12 @@ const NFTCardImage = styled.img`
     width: 100%;
     max-height: 70%;
     object-fit: cover;
+    border-radius: 10px 10px 0 0;
 `;
 
 const NFTCardTitle = styled.div`
     text-align: left;
     font-weight: 600;
-    margin-top: 10px;
 `;
 
 const NFTCardOwner = styled.div<{ $isDarkMode: boolean }>`
@@ -52,11 +51,8 @@ const NFTCardPrice = styled.div`
     font-weight: 600;
 `;
 
-const NFTCardRarity = styled.div<{ $isDarkMode: boolean }>`
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-    color: ${props => (props.$isDarkMode ? "#a9a9a9" : "#595959")};
+const NFTCardContent = styled.div`
+    padding: 20px;
 `;
 
 interface NFTCardProps {
@@ -68,16 +64,17 @@ interface NFTCardProps {
     image: string;
 }
 
-const NFTCard = memo(({ tokenId, title, owner, price, rarity, image }: NFTCardProps) => {
+const NFTCard = memo(({ tokenId, title, owner, price, image }: NFTCardProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     return (
         <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>
             <NFTCardImage src={image} />
-            <NFTCardTitle>{title}</NFTCardTitle>
-            <NFTCardOwner $isDarkMode={isDarkMode}>{shortenAddress(owner, 18)}</NFTCardOwner>
-            <NFTCardPrice>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0} NUDE</NFTCardPrice>
-            <NFTCardRarity $isDarkMode={isDarkMode}>{`${rarity[0]} / ${rarity[1]}`}</NFTCardRarity>
+            <NFTCardContent>
+                <NFTCardTitle>{title}</NFTCardTitle>
+                <NFTCardOwner $isDarkMode={isDarkMode}>{shortenAddress(owner, 18)}</NFTCardOwner>
+                <NFTCardPrice>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0} NUDE</NFTCardPrice>
+            </NFTCardContent>
         </NFTCardContainer>
     );
 });
