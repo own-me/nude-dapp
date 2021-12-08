@@ -8,7 +8,7 @@ import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 
 const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
-    height: 375px;
+    height: 400px;
     width: 290px;
     border: 1px solid #D8CBFF;
     border-radius: 10px;
@@ -52,14 +52,24 @@ const NFTCardPrice = styled.div`
     font-weight: 600;
 `;
 
+const PriceAmount = styled.span`
+    padding-right: 5px;
+    color: #E127FF;
+`;
+
+const PriceTokenName = styled.span`
+    font-size: 14px;
+`;
+
 const NFTCardContent = styled.div`
-    padding: 15px;
+    padding: 10px 15px;
 `;
 
 const NftStats = styled.div`
     display: flex;
     align-items: center;
-    padding: 10px 0px;
+    padding-top: 10px;
+    font-size: 14px;
 `;
 
 const NftStatItem = styled.div`
@@ -78,9 +88,17 @@ const ViewsIcon = styled(EyeOutlined)`
     padding-right: 5px;
 `;
 
-// const LikeIconFilled = styled(HeartFilled)`
-//     cursor: pointer;
-// `;
+const NftHashTags = styled.div`
+    display: flex;
+    align-items: center;
+    color: #138EFF;
+    font-size: 12px;
+    padding-top: 5px;
+`;
+
+const NftHashTag = styled.span`
+    padding-right: 5px;
+`;
 
 interface NFTCardProps {
     tokenId?: string;
@@ -102,13 +120,22 @@ const NFTCard = memo(({ tokenId, title, owner, price, image }: NFTCardProps) => 
                 <NFTCardOwner $isDarkMode={isDarkMode}>{shortenAddress(owner, 18)}</NFTCardOwner>
                 <NftStats>
                     <NftStatItem>
-                        <LikeIconEmpty /> 64
+                        <LikeIconEmpty /> 69
                     </NftStatItem>
                     <NftStatItem>
-                        <ViewsIcon /> 64
+                        <ViewsIcon /> 69
                     </NftStatItem>
                 </NftStats>
-                <NFTCardPrice>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0} NUDE</NFTCardPrice>
+                <NftHashTags>
+                    <NftHashTag>#nft</NftHashTag>
+                    <NftHashTag>#sexy</NftHashTag>
+                    <NftHashTag>#hot</NftHashTag>
+                    <NftHashTag>#russian</NftHashTag>
+                </NftHashTags>
+                <NFTCardPrice>
+                    <PriceAmount>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0}</PriceAmount>
+                    <PriceTokenName>NUDE</PriceTokenName>
+                </NFTCardPrice>
             </NFTCardContent>
         </NFTCardContainer>
     );
