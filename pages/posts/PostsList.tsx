@@ -8,12 +8,11 @@ import { Link } from "react-router-dom";
 
 const PostsListContainer = styled.div`
     font-family: Poppins, Open Sans;
-    border-bottom: 1px solid #ebebeb;
 `;
 
 const PostContainer = styled(Link) <{ $isDarkMode: boolean }>`
     display: flex;
-    border-bottom: 1px #e0e0e0 solid;
+    border-bottom: 1px #d7d7d747 solid;
     cursor: pointer;
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
     text-decoration: none;

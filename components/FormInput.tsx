@@ -5,7 +5,7 @@ import { useAppSelector } from "../redux/hooks";
 export const formStyles = css<{ $isError?: boolean, $isDarkMode: boolean }>`
     background-color: ${props => props.$isDarkMode ? "#1c012a" : "#FFFDFF"};
     color: ${props => props.$isDarkMode ? "white" : "black"};
-    border: 1px solid ${props => props.$isError ? "red" : "#DC68F9"};
+    border: 1px solid ${props => props.$isError ? "red" : "#cc00ff"};
     padding: 10px 15px;
     border-radius: 5px;
     font-size: 20px;
