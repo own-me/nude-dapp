@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
+import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 
 const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
@@ -29,7 +30,7 @@ const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
 
 const NFTCardImage = styled.img`
     width: 100%;
-    max-height: 70%;
+    max-height: 62%;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
 `;
@@ -52,8 +53,34 @@ const NFTCardPrice = styled.div`
 `;
 
 const NFTCardContent = styled.div`
-    padding: 20px;
+    padding: 15px;
 `;
+
+const NftStats = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 10px 0px;
+`;
+
+const NftStatItem = styled.div`
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+`;
+
+const LikeIconEmpty = styled(HeartOutlined)`
+    cursor: pointer;
+    padding-right: 5px;
+`;
+
+const ViewsIcon = styled(EyeOutlined)`
+    cursor: pointer;
+    padding-right: 5px;
+`;
+
+// const LikeIconFilled = styled(HeartFilled)`
+//     cursor: pointer;
+// `;
 
 interface NFTCardProps {
     tokenId?: string;
@@ -73,6 +100,14 @@ const NFTCard = memo(({ tokenId, title, owner, price, image }: NFTCardProps) => 
             <NFTCardContent>
                 <NFTCardTitle>{title}</NFTCardTitle>
                 <NFTCardOwner $isDarkMode={isDarkMode}>{shortenAddress(owner, 18)}</NFTCardOwner>
+                <NftStats>
+                    <NftStatItem>
+                        <LikeIconEmpty /> 64
+                    </NftStatItem>
+                    <NftStatItem>
+                        <ViewsIcon /> 64
+                    </NftStatItem>
+                </NftStats>
                 <NFTCardPrice>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0} NUDE</NFTCardPrice>
             </NFTCardContent>
         </NFTCardContainer>
