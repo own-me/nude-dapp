@@ -72,13 +72,6 @@ const NftStatsRow = styled.div`
     justify-content: space-between;
 `;
 
-const NftRarityContainer = styled.div`
-    font-family: Poppins, Open Sans;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-`;
-
 const NftPriceContainer = styled.div`
     font-family: Poppins, Open Sans;
     display: flex;
@@ -221,10 +214,6 @@ const NftPage = memo(() => {
                         <NftPriceValue>{nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0}</NftPriceValue>
                         <NftPriceTicker>NUDE</NftPriceTicker>
                     </NftPriceContainer>
-                    <NftRarityContainer>
-                        <NftPriceValue>3 / 12</NftPriceValue>
-                        <NftPriceTicker>Rarity</NftPriceTicker>
-                    </NftRarityContainer>
                 </NftStatsRow>
             </MainSection>
             <InfoSection>

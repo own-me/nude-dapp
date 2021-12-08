@@ -154,21 +154,6 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
         userRefetch();
     }, [userRefetch, isPostFollowSuccess, isPostUnfollowSuccess,]);
 
-    const parseRawNfts = (nfts: NftInterface[]): NftInterface[] => {
-        return nfts.map((nft: NftInterface) => {
-            return {
-                title: nft.tokenURI.title,
-                description: nft.tokenURI.description,
-                owner: nft.recipient,
-                price: nft.price,
-                rarity: [1, 8],
-                image: nft.tokenURI.image,
-                tokenId: nft.tokenId,
-                transactionHash: nft.transactionHash
-            };
-        });
-    };
-
     const followButtonText = useMemo(() => {
         if (isFollowing) {
             return isFollowButtonHovered ? "Unfollow" : "Following";
@@ -212,14 +197,13 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                 <TabContent>
                     <NftCards>
                         {
-                            userNfts?.length > 0 && parseRawNfts(userNfts).map((nft: NftInterface, index: number) => {
+                            userNfts?.length > 0 && userNfts.map((nft: NftInterface, index: number) => {
                                 return <NFTCard
                                     tokenId={nft.tokenId}
-                                    title={nft.title}
-                                    owner={nft.owner}
+                                    title={nft.tokenURI.title}
+                                    recipient={nft.recipient}
                                     price={nft.price}
-                                    rarity={nft.rarity}
-                                    image={nft.image}
+                                    image={nft.tokenURI.image}
                                     key={index}
                                 />;
                             })

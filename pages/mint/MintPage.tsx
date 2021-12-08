@@ -129,7 +129,6 @@ export default function MintPage() {
                     title={title || "King Tobi"}
                     owner={"@thecatdad"}
                     price={ethers.utils.parseUnits(price).toString()}
-                    rarity={[1, 8]}
                     image={imagePreview || catNft}
                 />
             </ImagesRow>
