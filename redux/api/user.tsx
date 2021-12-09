@@ -22,7 +22,7 @@ interface UserResponse {
     error?: string;
 }
 
-interface UploadProfileImageRequest  {
+interface UploadProfileImageRequest {
     formData: FormData;
 }
 
@@ -32,7 +32,7 @@ interface UploadProfileImageResponse {
     profileImageUrl?: string;
 }
 
-interface UploadProfileBannerRequest  {
+interface UploadProfileBannerRequest {
     formData: FormData;
 }
 
@@ -52,6 +52,24 @@ interface UserEditRequest {
     link?: string;
     profileImageUrl?: string;
     bannerImageUrl?: string;
+}
+
+interface GetSearchUsersRequest {
+    query: string;
+}
+
+interface SearchUser {
+    toProfileImageUrl: string;
+    name: string;
+    toAddress: string;
+    followersCount: number;
+    nftsCount: number;
+}
+
+interface GetSearchUsersResponse {
+    message?: string;
+    error?: string;
+    users?: SearchUser[];
 }
 
 export const userApi = createApi({
@@ -105,7 +123,22 @@ export const userApi = createApi({
                 }
             }),
         }),
+        getSearchUsers: builder.query<GetSearchUsersResponse, GetSearchUsersRequest>({
+            query: ({ query }) => ({
+                url: `user/search/${query}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+        })
     }),
 });
 
-export const { useGetUserQuery, useUploadProfileImageMutation, useUploadProfileBannerMutation, useEditUserMutation } = userApi;
+export const {
+    useGetUserQuery,
+    useUploadProfileImageMutation,
+    useUploadProfileBannerMutation,
+    useEditUserMutation,
+    useGetSearchUsersQuery
+} = userApi;

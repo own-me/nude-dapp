@@ -4,8 +4,10 @@ import NFTCard from "../../components/NFTCard";
 import Tabs, { TabContent, Tab } from "../../components/Tabs";
 import { NftInterface, useGetSearchNftsQuery } from "../../redux/api/nft";
 import { useGetSearchPostsQuery } from "../../redux/api/posts";
+import { useGetSearchUsersQuery } from "../../redux/api/user";
 import { useAppSelector } from "../../redux/hooks";
 import PostsList from "../posts/PostsList";
+import FollowerList from "../profile/FollowerList";
 
 const SearchPageContainer = styled.div`
     width: 70%;
@@ -63,6 +65,11 @@ const SearchPage = memo(() => {
         refetch: searchPostsRefetch
     } = useGetSearchPostsQuery({ query: searchValue || "*" });
 
+    const {
+        data: searchUsersData,
+        refetch: searchUsersRefetch
+    } = useGetSearchUsersQuery({ query: searchValue || "*" });
+
     useEffect(() => {
         if (activeTab === `NFTs (${searchNftsData?.nfts?.length || 0})`) {
             searchNftsRefetch();
@@ -74,6 +81,12 @@ const SearchPage = memo(() => {
             searchPostsRefetch();
         }
     }, [searchValue, searchPostsRefetch, activeTab, searchPostsData?.posts?.length]);
+
+    useEffect(() => {
+        if (activeTab === `Users (${searchUsersData?.users?.length || 0})`) {
+            searchUsersRefetch();
+        }
+    }, [searchValue, searchUsersRefetch, activeTab, searchUsersData?.users?.length]);
 
     return (
         <SearchPageContainer>
@@ -87,9 +100,9 @@ const SearchPage = memo(() => {
                 tabs={useMemo(() => [
                     `NFTs (${searchNftsData?.nfts?.length || 0})`,
                     `Posts (${searchPostsData?.posts?.length || 0})`,
-                    "Users",
+                    `Users (${searchUsersData?.users?.length || 0})`,
                     "Activity"
-                ], [searchNftsData?.nfts?.length, searchPostsData?.posts?.length])}
+                ], [searchNftsData?.nfts?.length, searchPostsData?.posts?.length, searchUsersData?.users?.length])}
                 onTabChange={(tab) => setActiveTab(tab)}
             >
                 <TabContent>
@@ -112,7 +125,7 @@ const SearchPage = memo(() => {
                     <PostsList posts={searchPostsData?.posts || []} refreshPosts={searchPostsRefetch} />
                 </TabContent>
                 <TabContent>
-
+                    <FollowerList followers={searchUsersData?.users} />
                 </TabContent>
                 <TabContent>
 
