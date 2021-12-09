@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import NFTCard from "../../components/NFTCard";
 import Tabs, { TabContent, Tab } from "../../components/Tabs";
-import { useGetSearchNftsQuery } from "../../redux/api/nft";
+import { NftInterface, useGetSearchNftsQuery } from "../../redux/api/nft";
 import { useAppSelector } from "../../redux/hooks";
 
 const SearchPageContainer = styled.div`
@@ -66,7 +66,7 @@ const SearchPage = memo(() => {
                 onChange={(e) => setSearchValue(e.target.value)}
             />
             <SearchTabs tabs={[
-                "NFTs",
+                `NFTs (${searchNftsData?.nfts?.length || 0})`,
                 "Posts",
                 "Users",
                 "Activity"
