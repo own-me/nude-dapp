@@ -127,7 +127,7 @@ export default function MintPage() {
                 />
                 <NFTCard
                     title={title || "King Tobi"}
-                    owner={"@thecatdad"}
+                    recipient={"@thecatdad"}
                     price={ethers.utils.parseUnits(price).toString()}
                     image={imagePreview || catNft}
                 />

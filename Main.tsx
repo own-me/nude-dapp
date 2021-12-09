@@ -4,7 +4,7 @@ import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
 import { useAppSelector } from "./redux/hooks";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import HomePage from "./pages/home/HomePage";
+// import HomePage from "./pages/home/HomePage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AuctionHousePage from "./pages/auctionhouse/AuctionhousePage";
 import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
@@ -12,6 +12,7 @@ import Navbar, { TOTAL_HEIGHT } from "./components/Navbar";
 import MintPage from "./pages/mint/MintPage";
 import NftPage from "./pages/nft/NftPage";
 import PostPage from "./pages/posts/PostPage";
+import SearchPage from "./pages/search/SearchPage";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -58,7 +59,7 @@ export default function Main() {
                     loggedIn ? <PostPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
                 <Route path="/" element={
-                    loggedIn ? <HomePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
+                    loggedIn ? <SearchPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
             </Routes>
         </MainContainer>

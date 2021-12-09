@@ -1,8 +1,8 @@
 import React, { ReactNode, useState, useEffect, memo } from "react";
 import styled, {css} from "styled-components";
 
-const TabsContainer = styled.div`
-    width: 80%;
+export const TabsContainer = styled.div`
+    width: 100%;
     margin: 0 auto;
 
     @media (max-width: 1200px) {
@@ -17,7 +17,7 @@ const TabsHeader = styled.div`
     border-bottom: 1px #e0e0e0 solid;
 `;
 
-const Tab = styled.div<{ $isActive: boolean }>`
+export const Tab = styled.div<{ $isActive: boolean }>`
     cursor: pointer;
     opacity: 0.8;
     font-size: 16px;
@@ -46,9 +46,10 @@ export const TabContent = styled.div`
 interface TabsProps {
     children: ReactNode;
     tabs: Array<string>;
+    className?: string;
 }
 
-const Tabs = memo(({ children, tabs }: TabsProps) => {
+const Tabs = memo(({ children, tabs, className }: TabsProps) => {
     const [activeTab, setActiveTab] = useState<string>();
 
     useEffect(() => {
@@ -56,7 +57,7 @@ const Tabs = memo(({ children, tabs }: TabsProps) => {
     }, [tabs]);
 
     return (
-        <TabsContainer>
+        <TabsContainer className={className}>
             <TabsHeader>
                 {tabs.map((tab: string, index: number) => {
                     return <Tab key={index} $isActive={tab === activeTab} onClick={() => setActiveTab(tab)}>{tab}</Tab>;
