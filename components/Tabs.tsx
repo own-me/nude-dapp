@@ -47,20 +47,26 @@ interface TabsProps {
     children: ReactNode;
     tabs: Array<string>;
     className?: string;
+    onTabChange?: (tab: string) => void;
 }
 
-const Tabs = memo(({ children, tabs, className }: TabsProps) => {
+const Tabs = memo(({ children, tabs, className, onTabChange }: TabsProps) => {
     const [activeTab, setActiveTab] = useState<string>();
 
     useEffect(() => {
         setActiveTab(tabs && tabs.length > 0 ? tabs[0] : null);
     }, [tabs]);
 
+    const handleTabChange = (tab: string) => {
+        setActiveTab(tab);
+        onTabChange && onTabChange(tab);
+    };
+
     return (
         <TabsContainer className={className}>
             <TabsHeader>
                 {tabs.map((tab: string, index: number) => {
-                    return <Tab key={index} $isActive={tab === activeTab} onClick={() => setActiveTab(tab)}>{tab}</Tab>;
+                    return <Tab key={index} $isActive={tab === activeTab} onClick={() => handleTabChange(tab)}>{tab}</Tab>;
                 })}
             </TabsHeader>
             {tabs && tabs.length > 0 && children[tabs.indexOf(activeTab)]}

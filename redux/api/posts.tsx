@@ -50,6 +50,16 @@ interface UnlikePostResponse {
     error?: string;
 }
 
+interface GetSearchPostsRequest {
+    query: string;
+}
+
+interface GetSearchPostsResponse {
+    message?: string;
+    error?: string;
+    posts?: Post[];
+}
+
 export const postsApi = createApi({
     reducerPath: "postsApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
@@ -103,6 +113,15 @@ export const postsApi = createApi({
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
+        }),
+        getSearchPosts: builder.query<GetSearchPostsResponse, GetSearchPostsRequest>({
+            query: ({ query }) => ({
+                url: `posts/search/${query}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
         })
     })
 });
@@ -112,5 +131,6 @@ export const {
     useGetUserPostsQuery,
     usePostsPostMutation,
     useLikePostMutation,
-    useUnlikePostMutation
+    useUnlikePostMutation,
+    useGetSearchPostsQuery
 } = postsApi;

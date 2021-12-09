@@ -1,9 +1,11 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import NFTCard from "../../components/NFTCard";
 import Tabs, { TabContent, Tab } from "../../components/Tabs";
 import { NftInterface, useGetSearchNftsQuery } from "../../redux/api/nft";
+import { useGetSearchPostsQuery } from "../../redux/api/posts";
 import { useAppSelector } from "../../redux/hooks";
+import PostsList from "../posts/PostsList";
 
 const SearchPageContainer = styled.div`
     width: 70%;
@@ -35,6 +37,7 @@ const SearchBar = styled.input<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
     background-color: ${props => props.$isDarkMode ? "#1c012a" : "#FFFDFF"};
     color: ${props => props.$isDarkMode ? "white" : "black"};
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
 `;
 
 const NftCards = styled.div`
@@ -46,6 +49,8 @@ const NftCards = styled.div`
 
 const SearchPage = memo(() => {
     const [searchValue, setSearchValue] = useState("*");
+    const [activeTab, setActiveTab] = useState("");
+
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const {
@@ -53,9 +58,22 @@ const SearchPage = memo(() => {
         refetch: searchNftsRefetch
     } = useGetSearchNftsQuery({ query: searchValue || "*" });
 
+    const {
+        data: searchPostsData,
+        refetch: searchPostsRefetch
+    } = useGetSearchPostsQuery({ query: searchValue || "*" });
+
     useEffect(() => {
-        searchNftsRefetch();
-    }, [searchValue, searchNftsRefetch]);
+        if (activeTab === `NFTs (${searchNftsData?.nfts?.length || 0})`) {
+            searchNftsRefetch();
+        }
+    }, [searchValue, searchNftsRefetch, activeTab, searchNftsData?.nfts?.length]);
+
+    useEffect(() => {
+        if (activeTab === `Posts (${searchPostsData?.posts?.length || 0})`) {
+            searchPostsRefetch();
+        }
+    }, [searchValue, searchPostsRefetch, activeTab, searchPostsData?.posts?.length]);
 
     return (
         <SearchPageContainer>
@@ -65,12 +83,15 @@ const SearchPage = memo(() => {
                 $isDarkMode={isDarkMode} 
                 onChange={(e) => setSearchValue(e.target.value)}
             />
-            <SearchTabs tabs={[
-                `NFTs (${searchNftsData?.nfts?.length || 0})`,
-                "Posts",
-                "Users",
-                "Activity"
-            ]}>
+            <SearchTabs 
+                tabs={useMemo(() => [
+                    `NFTs (${searchNftsData?.nfts?.length || 0})`,
+                    `Posts (${searchPostsData?.posts?.length || 0})`,
+                    "Users",
+                    "Activity"
+                ], [searchNftsData?.nfts?.length, searchPostsData?.posts?.length])}
+                onTabChange={(tab) => setActiveTab(tab)}
+            >
                 <TabContent>
                     <NftCards>
                         {
@@ -88,7 +109,7 @@ const SearchPage = memo(() => {
                     </NftCards>
                 </TabContent>
                 <TabContent>
-
+                    <PostsList posts={searchPostsData?.posts || []} refreshPosts={searchPostsRefetch} />
                 </TabContent>
                 <TabContent>
 
