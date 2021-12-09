@@ -67,7 +67,7 @@ const SearchPage = memo(() => {
             />
             <SearchTabs tabs={[
                 "NFTs",
-                "Posts (0)",
+                "Posts",
                 "Users",
                 "Activity"
             ]}>
