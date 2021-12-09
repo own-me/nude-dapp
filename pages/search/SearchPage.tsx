@@ -1,6 +1,8 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
+import NFTCard from "../../components/NFTCard";
 import Tabs, { TabContent, Tab } from "../../components/Tabs";
+import { useGetSearchNftsQuery } from "../../redux/api/nft";
 import { useAppSelector } from "../../redux/hooks";
 
 const SearchPageContainer = styled.div`
@@ -35,12 +37,34 @@ const SearchBar = styled.input<{ $isDarkMode: boolean }>`
     color: ${props => props.$isDarkMode ? "white" : "black"};
 `;
 
+const NftCards = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 0px;
+`;
+
 const SearchPage = memo(() => {
+    const [searchValue, setSearchValue] = useState("*");
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
+    const {
+        data: searchNftsData,
+        refetch: searchNftsRefetch
+    } = useGetSearchNftsQuery({ query: searchValue || "*" });
+
+    useEffect(() => {
+        searchNftsRefetch();
+    }, [searchValue, searchNftsRefetch]);
 
     return (
         <SearchPageContainer>
-            <SearchBar type="text" placeholder="Search..." $isDarkMode={isDarkMode} />
+            <SearchBar 
+                type="text" 
+                placeholder="Search..." 
+                $isDarkMode={isDarkMode} 
+                onChange={(e) => setSearchValue(e.target.value)}
+            />
             <SearchTabs tabs={[
                 "NFTs",
                 "Posts (0)",
@@ -48,7 +72,20 @@ const SearchPage = memo(() => {
                 "Activity"
             ]}>
                 <TabContent>
-
+                    <NftCards>
+                        {
+                            searchNftsData?.nfts?.length > 0 && searchNftsData?.nfts?.map((nft: NftInterface, index: number) => {
+                                return <NFTCard
+                                    tokenId={nft.tokenId}
+                                    title={nft.tokenURI.title}
+                                    recipient={nft.recipient}
+                                    price={nft.price}
+                                    image={nft.tokenURI.image}
+                                    key={index}
+                                />;
+                            })
+                        }
+                    </NftCards>
                 </TabContent>
                 <TabContent>
 

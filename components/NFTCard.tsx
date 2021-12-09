@@ -6,7 +6,7 @@ import { shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
 import { EyeOutlined, HeartOutlined, EllipsisOutlined } from "@ant-design/icons";
 
-const NFTCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
+const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
     height: 400px;
     width: 290px;

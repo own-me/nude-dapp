@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, useEffect, memo } from "react";
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 export const TabsContainer = styled.div`
     width: 100%;

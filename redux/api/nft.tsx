@@ -31,6 +31,16 @@ interface PostNftLikeResponse {
     message: string;
 }
 
+interface GetSearchNftsRequest {
+    query: string;
+}
+
+interface GetSearchNftsResponse {
+    message?: string;
+    error?: string;
+    nfts?: NftInterface[];
+}
+
 export interface NftInterface {
     tokenId: number;
     recipient: string;
@@ -77,8 +87,17 @@ export const nftApi = createApi({
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
+        }),
+        getSearchNfts: builder.query<GetSearchNftsResponse, GetSearchNftsRequest>({
+            query: ({ query }) => ({
+                url: `nft/search/${query}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
         })
     })
 });
 
-export const { useGetNftQuery, useGetUserNftsQuery, usePostNftLikeMutation } = nftApi;
+export const { useGetNftQuery, useGetUserNftsQuery, usePostNftLikeMutation, useGetSearchNftsQuery } = nftApi;
