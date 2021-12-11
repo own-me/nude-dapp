@@ -3,7 +3,7 @@ import styled from "styled-components";
 import xIcon from "../../media/icons/x.svg";
 
 const DragDropInputContainer = styled.div`
-    width: 300px;
+    width: 100%;
     height: 200px;
     border: 3px dashed #f296ff;
     display: flex;

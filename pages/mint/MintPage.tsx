@@ -77,6 +77,22 @@ const ImagesRow = styled.div`
     align-items: center;
 `;
 
+const LeftRow = styled.div`
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-around;
+`;
+
+
+const RightRow = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+`;
+
 export default function MintPage() {
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<string>("0");
@@ -120,30 +136,34 @@ export default function MintPage() {
                 <MintFormHeaderCandy src={pinkCandy} />
             </MintFormHeader>
             <ImagesRow>
-                <DragDropInput
-                    onBase64={(image) => setImagePreview(image)}
-                    onChange={(image) => setImageData(image)}
-                    onClear={clearImage}
-                />
-                <NFTCard
-                    title={title || "King Tobi"}
-                    recipient={"@thecatdad"}
-                    price={ethers.utils.parseUnits(price).toString()}
-                    image={imagePreview || catNft}
-                />
+                <LeftRow>
+                    <DragDropInput
+                        onBase64={(image) => setImagePreview(image)}
+                        onChange={(image) => setImageData(image)}
+                        onClear={clearImage}
+                    />
+                    <FormInput
+                        type="number"
+                        label="Price"
+                        onChange={(e) => setPrice(e.target.value)}
+                        errorMessage="Price is required."
+                        min={0}
+                    />
+                </LeftRow>
+                <RightRow>
+                    <NFTCard
+                        title={title || "King Tobi"}
+                        recipient={"@thecatdad"}
+                        price={ethers.utils.parseUnits(price).toString()}
+                        image={imagePreview || catNft}
+                    />
+                </RightRow>
             </ImagesRow>
             <FormInput
                 type="text"
                 label="Title"
                 onChange={(e) => setTitle(e.target.value)}
                 errorMessage="Title is required."
-            />
-            <FormInput
-                type="number"
-                label="Price"
-                onChange={(e) => setPrice(e.target.value)}
-                errorMessage="Price is required."
-                min={0}
             />
             <FormTextArea
                 label="Description"
