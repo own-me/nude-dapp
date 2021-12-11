@@ -10,7 +10,7 @@ import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { Following, usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
-import FollowerList from "./FollowerList";
+import FollowerList, { FollowerListContainer } from "./FollowerList";
 import { NftInterface } from "../../redux/api/nft";
 import { useAppSelector } from "../../redux/hooks";
 import ProfilePosts from "../posts/ProfilePosts";
@@ -24,6 +24,13 @@ const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     background-color: ${props => props.$isDarkMode ? props.theme.dark.backgroundColor2 : props.theme.light.backgroundColor};
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
     transition: background 500ms ease-in, color 500ms ease-in;
+`;
+
+const ProfileFollowerList = styled(FollowerList)`
+    &${FollowerListContainer} {
+        width: 75%;
+        margin: 0 auto;
+    }
 `;
 
 const ProfileBannerImage = styled.img`
@@ -214,7 +221,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                     <ProfilePosts profileImageUrl={profileImageUrl} profileAddress={profileAddress} userAddress={address} profileName={name} />
                 </TabContent>
                 <TabContent>
-                    <FollowerList followers={following} />
+                    <ProfileFollowerList followers={following} />
                 </TabContent>
                 <TabContent>
                     <h1>Activity bro</h1>

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { TeamOutlined, FileImageOutlined } from "@ant-design/icons";
 
-const FollowerListContainer = styled.div`
+export const FollowerListContainer = styled.div`
     display: flex;
     flex-direction: column;
     font-family: Poppins, Open Sans;
@@ -92,9 +92,10 @@ const Stats = styled.div`
 
 interface FollowListProps {
     followers?: Following[];
+    className: string;
 }
 
-const FollowerList = memo(({ followers = [] }: FollowListProps) => {
+const FollowerList = memo(({ followers = [], className }: FollowListProps) => {
     const { address } = useWallet();
 
     const [postFollow] = usePostFollowMutation();
@@ -115,7 +116,7 @@ const FollowerList = memo(({ followers = [] }: FollowListProps) => {
     }, [address, postFollow, postUnfollow]);
 
     return (
-        <FollowerListContainer>
+        <FollowerListContainer className={className}>
             {
                 followers.map((follower: Following, index) =>
                     <FollowerListRow to={`/${follower.toAddress}`} key={index} $isDarkMode={isDarkMode}>

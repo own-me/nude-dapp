@@ -5,7 +5,8 @@ import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";
 
 const ProfilePostsContainer = styled.div`
-
+    width: 75%;
+    margin: 0 auto;
 `;
 
 interface ProfilePostsProps {
