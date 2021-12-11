@@ -119,9 +119,11 @@ interface NFTCardProps {
     recipient: string;
     price: string;
     image: string;
+    likesCount: number;
+    viewsCount: number;
 }
 
-const NFTCard = memo(({ tokenId, title, recipient, price, image }: NFTCardProps) => {
+const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, viewsCount }: NFTCardProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     return (
@@ -132,10 +134,10 @@ const NFTCard = memo(({ tokenId, title, recipient, price, image }: NFTCardProps)
                 <NFTCardOwner $isDarkMode={isDarkMode}>{shortenAddress(recipient, 18)}</NFTCardOwner>
                 <NftStats>
                     <NftStatItem>
-                        <LikeIconEmpty /> 69
+                        <LikeIconEmpty /> {likesCount || 0}
                     </NftStatItem>
                     <NftStatItem>
-                        <ViewsIcon /> 69
+                        <ViewsIcon /> {viewsCount || 0}
                     </NftStatItem>
                 </NftStats>
                 <NftHashTags>

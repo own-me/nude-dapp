@@ -156,6 +156,8 @@ export default function MintPage() {
                         recipient={"@thecatdad"}
                         price={ethers.utils.parseUnits(price).toString()}
                         image={imagePreview || catNft}
+                        likesCount={0}
+                        viewsCount={0}
                     />
                 </RightRow>
             </ImagesRow>

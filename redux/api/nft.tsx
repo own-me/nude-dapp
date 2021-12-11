@@ -6,8 +6,8 @@ interface GetNftRequest {
 
 interface GetNftResponse {
     nft: NftInterface;
-    ownerName: string;
-    isLiked: boolean;
+    ownerName?: string;
+    isLiked?: boolean;
     likesCount: number;
     viewsCount: number;
 }
@@ -51,6 +51,10 @@ export interface NftInterface {
     blockNumber: number;
     tokenURI: TokenURIInterface;
     price: string;
+    ownerName?: string;
+    isLiked?: boolean;
+    likesCount: number;
+    viewsCount: number;
 }
 
 export const nftApi = createApi({
