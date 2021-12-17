@@ -13,6 +13,8 @@ import MintPage from "./pages/mint/MintPage";
 import NftPage from "./pages/nft/NftPage";
 import PostPage from "./pages/posts/PostPage";
 import SearchPage from "./pages/search/SearchPage";
+import { Helmet } from "react-helmet";
+import { routes } from "./lib/routes";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -33,6 +35,9 @@ export default function Main() {
 
     return (
         <MainContainer $isLoggedIn={loggedIn} $isDarkMode={isDarkMode}>
+            <Helmet>
+                <title>Own Me | {routes[location.pathname]?.title || "App"}</title>
+            </Helmet>
             {loggedIn && <Navbar />}
             <Routes>
                 <Route path="login" element={<LoginPage />} />

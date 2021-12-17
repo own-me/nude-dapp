@@ -1,5 +1,6 @@
 import { CommentOutlined, EllipsisOutlined, HeartOutlined } from "@ant-design/icons";
 import React, { memo } from "react";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -97,6 +98,9 @@ const PostPage = memo(() => {
 
     return (
         <PostPageContainer>
+            <Helmet>
+                <title>Own Me | {`Post - ${postData?.text}`}</title>
+            </Helmet>
             <PostContainer>
                 <PostPageProfileImage src={postData?.profileImageUrl || defaultProfile} />
                 <PostContent>

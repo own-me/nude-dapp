@@ -6,6 +6,8 @@ import Profile404 from "./Profile404";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setUserNfts } from "../../redux/slices/user";
 import { useLocation } from "react-router";
+import { Helmet } from "react-helmet";
+import { shortenAddress } from "../../lib/helpers";
 
 const ProfilePage = memo(() => {
     const dispatch = useAppDispatch();
@@ -39,6 +41,9 @@ const ProfilePage = memo(() => {
 
     return (
         <>
+            <Helmet>
+                <title>Own Me | {shortenAddress(profileAddress, 16) || "App"}</title>
+            </Helmet>
             {!isUserLoading && !userData && <Profile404 />}
             {!isUserLoading && userData &&
                 <Profile

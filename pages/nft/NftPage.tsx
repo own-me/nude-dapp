@@ -7,6 +7,7 @@ import { useGetNftQuery, usePostNftLikeMutation } from "../../redux/api/nft";
 import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
+import { Helmet } from "react-helmet";
 
 const NftPageContainer = styled.div`
     padding: 80px;
@@ -206,6 +207,9 @@ const NftPage = memo(() => {
 
     return (
         <NftPageContainer>
+            <Helmet>
+                <title>Own Me | {`NFT - ${tokenUriData?.title}`}</title>
+            </Helmet>
             <MainSection>
                 <NftImage src={tokenUriData?.image || "https://via.placeholder.com/300x300"} />
                 <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
