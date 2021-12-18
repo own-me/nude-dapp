@@ -47,7 +47,7 @@ const OptionalText = styled(InfoText)`
     color: #505050;
 `;
 
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     type: "text" | "email" | "password" | "number" | "select" | "checkbox" | "radio";
     inputValue?: string;

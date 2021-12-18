@@ -11,6 +11,7 @@ import { fetchNudeNftABI } from "../../lib/helpers";
 import useWallet from "../../hooks/useWallet";
 import { ethers } from "ethers";
 import { usePostIpfsUploadMutation } from "../../redux/api/ipfs";
+import FormHashtagInput from "../../components/FormHashtagInput";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -97,6 +98,7 @@ export default function MintPage() {
     const [title, setTitle] = useState<string>("");
     const [price, setPrice] = useState<string>("0");
     const [description, setDescription] = useState<string>("");
+    const [hashtags, setHashtags] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string>();
     const [imageData, setImageData] = useState<File>();
 
@@ -116,6 +118,7 @@ export default function MintPage() {
             const metadata = {
                 title,
                 description,
+                hashtags,
                 image: ipfsResponse.data.ipfsUrl
             };
             const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata), ethers.utils.parseEther(price));
@@ -171,6 +174,12 @@ export default function MintPage() {
                 label="Description"
                 onChange={(value) => setDescription(value)}
                 errorMessage="Description is required."
+            />
+            <FormHashtagInput
+                type="text"
+                label="Hashtags"
+                onChange={(e) => setHashtags(e.target.value)}
+                errorMessage="Hashtags are required."
             />
             <MintFormFooter>
                 <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
