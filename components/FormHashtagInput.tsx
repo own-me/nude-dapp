@@ -9,9 +9,24 @@ const HashtagInput = styled(FormInput)`
     position: relative;
 `;
 
-const FormHashtagInput = memo((props: FormInputProps) => {
+interface FormHashtagInputProps extends FormInputProps {
+    onChange: (value) => void;
+}
+
+const FormHashtagInput = memo((props: FormHashtagInputProps) => {
+    const handleChange = (e) => {
+        let value = String(e.target.value);
+        if (value.charAt(0) !== "#") {
+            value = "#" + value;
+        }
+        if (value.charAt(value.length - 1) === " ") {
+            value = value + "#";
+        }
+        props.onChange(value);
+    };
+
     return (
-        <HashtagInput {...props} type="text" />
+        <HashtagInput label="Hashtags" type="text" onChange={handleChange} inputValue={String(props.value)} />
     );
 });
 

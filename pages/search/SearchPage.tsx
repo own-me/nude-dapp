@@ -117,6 +117,7 @@ const SearchPage = memo(() => {
                                     image={nft.tokenURI.image}
                                     likesCount={nft.likesCount}
                                     viewsCount={nft.viewsCount}
+                                    hashtags={nft.tokenURI.hashtags}
                                     key={index}
                                 />;
                             })

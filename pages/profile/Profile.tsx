@@ -213,6 +213,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                                     image={nft.tokenURI.image}
                                     likesCount={nft.likesCount}
                                     viewsCount={nft.viewsCount}
+                                    hashtags={nft.tokenURI.hashtags || []}
                                     key={index}
                                 />;
                             })

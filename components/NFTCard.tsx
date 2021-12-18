@@ -92,8 +92,10 @@ const ExtrasIcon = styled(EllipsisOutlined)`
 `;
 
 const NftHashTags = styled.div`
-    display: flex;
-    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
     color: #138EFF;
     font-size: 12px;
     padding-top: 5px;
@@ -121,9 +123,10 @@ interface NFTCardProps {
     image: string;
     likesCount: number;
     viewsCount: number;
+    hashtags: string[];
 }
 
-const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, viewsCount }: NFTCardProps) => {
+const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, viewsCount, hashtags = [] }: NFTCardProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     return (
@@ -141,10 +144,11 @@ const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, vie
                     </NftStatItem>
                 </NftStats>
                 <NftHashTags>
-                    <NftHashTag>#nft</NftHashTag>
-                    <NftHashTag>#sexy</NftHashTag>
-                    <NftHashTag>#hot</NftHashTag>
-                    <NftHashTag>#russian</NftHashTag>
+                    {
+                        typeof hashtags === "object" && hashtags.map((hashtag, index) => (
+                            <NftHashTag key={index}>{hashtag}</NftHashTag>
+                        ))
+                    }
                 </NftHashTags>
                 <BottomItems>
                     <NFTCardPrice>

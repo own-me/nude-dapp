@@ -16,6 +16,7 @@ export interface TokenURIInterface {
     title: string;
     description: string;
     image: string;
+    hashtags: string[];
 }
 
 interface GetUserNftsRequest {

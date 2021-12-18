@@ -118,7 +118,7 @@ export default function MintPage() {
             const metadata = {
                 title,
                 description,
-                hashtags,
+                hashtags: hashtags.split(" "),
                 image: ipfsResponse.data.ipfsUrl
             };
             const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata), ethers.utils.parseEther(price));
@@ -161,6 +161,7 @@ export default function MintPage() {
                         image={imagePreview || catNft}
                         likesCount={0}
                         viewsCount={0}
+                        hashtags={hashtags.split(" ")}
                     />
                 </RightRow>
             </ImagesRow>
@@ -178,8 +179,10 @@ export default function MintPage() {
             <FormHashtagInput
                 type="text"
                 label="Hashtags"
-                onChange={(e) => setHashtags(e.target.value)}
+                onChange={(value) => setHashtags(value)}
+                value={hashtags}
                 errorMessage="Hashtags are required."
+                placeholder="#"
             />
             <MintFormFooter>
                 <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>

@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, memo, useState } from "react";
+import React, { InputHTMLAttributes, memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { useAppSelector } from "../redux/hooks";
 
@@ -71,6 +71,10 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
         setValue(value);
         onChange && onChange(e);
     };
+
+    useEffect(() => {
+        inputValue && setValue(inputValue || "");
+    }, [inputValue]);
 
     return (
         <FormInputContainer>
