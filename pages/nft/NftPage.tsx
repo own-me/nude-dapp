@@ -22,6 +22,7 @@ const NftPageContainer = styled.div`
 
 const MainSection = styled.div`
     width: 50%;
+    text-align: center;
 
     @media (max-width: 1200px) {
         width: 80%;
@@ -49,7 +50,9 @@ const InfoSection = styled.div`
 `;
 
 const NftImage = styled.img`
-    width: 75vh;
+    height: 100%;
+    max-height: 80vh;
+    width: auto;
     max-width: 100%;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -58,7 +61,7 @@ const NftImage = styled.img`
 const NftTitle = styled.div`
     font-family: Poppins, Open Sans;
     font-size: 50px;
-    padding: 20px 0px;
+    font-weight: 600;
 
     @media (max-width: 640px) {
         font-size: 30px;
@@ -81,18 +84,18 @@ const NftPriceContainer = styled.div`
 `;
 
 const NftPriceValue = styled.div`
-    font-size: 40px;
+    font-size: 38px;
     color: #D842FE;
 `;
 
 const NftPriceTicker = styled.div`
-    font-size: 30px;
+    font-size: 25px;
     padding-left: 10px;
 `;
 
 const TopItems = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     text-align: center;
     padding-bottom: 40px;
 
@@ -106,7 +109,7 @@ const TopItem = styled.div`
 `;
 
 const TopItemHeader = styled.div`
-    font-size: 40px;
+    font-size: 35px;
 
     @media (max-width: 640px) {
         font-size: 20px;
@@ -114,7 +117,7 @@ const TopItemHeader = styled.div`
 `;
 
 const TopItemValue = styled.div`
-    font-size: 30px;
+    font-size: 25px;
     color: #D842FE;
 
     a {
@@ -136,7 +139,8 @@ const TopItemValue = styled.div`
 
 const InfoDescriptionHeader = styled.div`
     font-family: Poppins, Open Sans;
-    font-size: 30px;
+    font-size: 32px;
+    margin-top: 40px;
 
     @media (max-width: 640px) {
         font-size: 25px;
@@ -155,7 +159,7 @@ const InfoDescriptionText = styled.div`
 
 const OwnMeButton = styled.button`
     font-family: Poppins, Open Sans;
-    font-size: 22px;
+    font-size: 30px;
     background-color: #FF81EB;
     color: white;
     border: none;
@@ -212,6 +216,8 @@ const NftPage = memo(() => {
             </Helmet>
             <MainSection>
                 <NftImage src={tokenUriData?.image || "https://via.placeholder.com/300x300"} />
+            </MainSection>
+            <InfoSection>
                 <NftTitle>{tokenUriData?.title || "-"}</NftTitle>
                 <NftStatsRow>
                     <NftPriceContainer>
@@ -219,11 +225,11 @@ const NftPage = memo(() => {
                         <NftPriceTicker>NUDE</NftPriceTicker>
                     </NftPriceContainer>
                 </NftStatsRow>
-            </MainSection>
-            <InfoSection>
+                <InfoDescriptionHeader>Description</InfoDescriptionHeader>
+                <InfoDescriptionText>{tokenUriData?.description || "-"}</InfoDescriptionText>
                 <TopItems>
                     <TopItem>
-                        <TopItemHeader>Owner</TopItemHeader>
+                        <TopItemHeader>Creator</TopItemHeader>
                         <TopItemValue>
                             <Link to={`/${nftData?.nft.recipient}`}>
                                 {nftData?.ownerName || shortenAddress(nftData?.nft.recipient, 12)}
@@ -244,8 +250,6 @@ const NftPage = memo(() => {
                         </TopItemValue>
                     </TopItem>
                 </TopItems>
-                <InfoDescriptionHeader>Description</InfoDescriptionHeader>
-                <InfoDescriptionText>{tokenUriData?.description || "-"}</InfoDescriptionText>
                 <OwnMeButton>Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)</OwnMeButton>
             </InfoSection>
         </NftPageContainer>
