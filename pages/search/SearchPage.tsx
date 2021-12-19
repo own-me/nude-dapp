@@ -101,7 +101,7 @@ const SearchPage = memo(() => {
                     `NFTs (${searchNftsData?.nfts?.length || 0})`,
                     `Posts (${searchPostsData?.posts?.length || 0})`,
                     `Users (${searchUsersData?.users?.length || 0})`,
-                    "Activity"
+                    "Hashtags"
                 ], [searchNftsData?.nfts?.length, searchPostsData?.posts?.length, searchUsersData?.users?.length])}
                 onTabChange={(tab) => setActiveTab(tab)}
             >

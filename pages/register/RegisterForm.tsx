@@ -10,10 +10,10 @@ const RegisterFormContainer = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #FFEAFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: white;
+    box-shadow: 1px 10px 10px rgb(0 0 0 / 25%);
     border-radius: 25px;
-    border: 1px solid #FEB8FF;
+    border: 1px solid #fc2aff;
     padding: 2rem 2rem;
     color: black;
     margin: 2rem;
