@@ -8,12 +8,5 @@ export function formatEth(value: BigNumber) {
     return value && ethers.FixedNumber.fromValue(value, 18).round(4).toString();
 }
 
-export async function fetchNudeABI() {
-    const res = await fetch("https://raw.githubusercontent.com/own-me/contracts/master/build/Nude.json");
-    return res.json();
-}
-
-export async function fetchNudeNftABI() {
-    const res = await fetch("https://raw.githubusercontent.com/own-me/contracts/master/build/NudeNFT.json");
-    return res.json();
-}
+export const NudeNFT_ADDRESS = "0x85E9dd3521B9c2Fd7AE9B6C4C9b394f040Bea136";
+export const Nude_ADDRESS = "0x7B22b4F9d5cD7881cFB6107f5D389b6F5f74229C";

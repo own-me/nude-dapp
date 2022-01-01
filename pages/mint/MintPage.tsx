@@ -7,11 +7,12 @@ import DragDropInput from "./DragDropInput";
 import Switch from "./Switch";
 import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
-import { fetchNudeNftABI } from "../../lib/helpers";
 import useWallet from "../../hooks/useWallet";
 import { ethers } from "ethers";
 import { usePostIpfsUploadMutation } from "../../redux/api/ipfs";
 import FormHashtagInput from "../../components/FormHashtagInput";
+import { NudeNFT_ADDRESS } from "../../lib/helpers";
+import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -111,8 +112,7 @@ export default function MintPage() {
         formData.append("image", imageData);
         const ipfsResponse = await postIpfsUpload(formData);
         if (ipfsResponse) {
-            const abi = await fetchNudeNftABI();
-            const nudeNftContract = new ethers.Contract(abi.networks["3"].address, abi.abi, provider);
+            const nudeNftContract = NudeNFT__factory.connect(NudeNFT_ADDRESS, provider);
             const nudeNftWithSigner = nudeNftContract.connect(signer);
             console.log(nudeNftWithSigner);
             const metadata = {
