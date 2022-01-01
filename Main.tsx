@@ -6,7 +6,7 @@ import { useAppSelector } from "./redux/hooks";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 // import HomePage from "./pages/home/HomePage";
 import ProfilePage from "./pages/profile/ProfilePage";
-import AuctionHousePage from "./pages/auctionhouse/AuctionhousePage";
+import AuctionHousePage from "./pages/auctionhouse/AuctionHousePage";
 import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
 import Navbar, { TOTAL_HEIGHT } from "./components/Navbar";
 import MintPage from "./pages/mint/MintPage";
