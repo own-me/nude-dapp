@@ -58,6 +58,15 @@ const SearchPostsList = styled(PostsList)`
     }
 `;
 
+const SearchUsersList = styled(FollowerList)`
+    width: 50%;
+    margin: 0 auto;
+
+    @media (max-width: 1200px) {
+        width: 100%;
+    }
+`;
+
 const SearchPage = memo(() => {
     const [searchValue, setSearchValue] = useState("*");
     const [activeTab, setActiveTab] = useState("");
@@ -140,7 +149,7 @@ const SearchPage = memo(() => {
                     />
                 </TabContent>
                 <TabContent>
-                    <FollowerList followers={searchUsersData?.users} />
+                    <SearchUsersList followers={searchUsersData?.users} />
                 </TabContent>
                 <TabContent>
 
