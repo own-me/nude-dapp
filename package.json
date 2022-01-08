@@ -1,0 +1,48 @@
+{
+  "name": "gumball-machine",
+  "version": "0.0.1",
+  "description": "3D animated NFT gumball slot machine, put in some $NUDE and draw a random $NUDE_NFT from a creator. Three.js / Blender / React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/own-me/gumball-machine.git"
+  },
+  "author": "Own Me Inc.",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/own-me/gumball-machine/issues"
+  },
+  "homepage": "https://github.com/own-me/gumball-machine#readme",
+  "dependencies": {
+    "@react-three/fiber": "^7.0.24",
+    "three": "^0.136.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "styled-components": "^5.3.3",
+    "@types/styled-components": "^5.1.15"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-transform-runtime": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "@babel/runtime": "^7.16.0",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "babel-loader": "^8.2.3",
+    "copy-webpack-plugin": "^9.0.1",
+    "css-loader": "^6.5.1",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "typescript": "^4.4.4",
+    "webpack": "^5.62.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  }
+}
