@@ -1,6 +1,12 @@
 # own-me-frontend
 Frontend for the Own Me web app.
 
+# Dev Setup
+
+1.) `npm install`
+
+2.) `npm run dev`
+
 ## Community
 
 ![Navbar](https://user-images.githubusercontent.com/27584221/137842947-f80ab90a-cbba-4382-b729-dfb94e0e32f0.png)

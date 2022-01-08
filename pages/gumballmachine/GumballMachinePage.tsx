@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Canvas from "./Canvas";
 
 const GumballMachinePageContainer = styled.div`
     height: 100%;
@@ -12,7 +13,7 @@ const GumballMachinePageContainer = styled.div`
 export default function GumballMachinePage() {
     return (
         <GumballMachinePageContainer>
-            <h1>Gumball Machine!</h1>
+            <Canvas />
         </GumballMachinePageContainer>
     );
 }
