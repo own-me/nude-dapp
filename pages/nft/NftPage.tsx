@@ -250,7 +250,11 @@ const NftPage = memo(() => {
                         </TopItemValue>
                     </TopItem>
                 </TopItems>
-                <OwnMeButton>Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)</OwnMeButton>
+                {
+                    address && address === nftData?.nft.recipient ?
+                        <OwnMeButton>Owned</OwnMeButton> :
+                        <OwnMeButton>Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)</OwnMeButton>
+                }
             </InfoSection>
         </NftPageContainer>
     );
