@@ -6,7 +6,7 @@ import { HeartOutlined, HeartFilled, CommentOutlined, EllipsisOutlined } from "@
 import { useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 
-const PostsListContainer = styled.div`
+export const PostsListContainer = styled.div`
     font-family: Poppins, Open Sans;
 `;
 
@@ -95,9 +95,10 @@ const PostImage = styled.img`
 interface PostsListProps {
     posts: Post[];
     refreshPosts: () => void;
+    className?: string;
 }
 
-const PostsList = memo(({ posts, refreshPosts }: PostsListProps) => {
+const PostsList = memo(({ posts, refreshPosts, className }: PostsListProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const [likePost, {
@@ -124,7 +125,7 @@ const PostsList = memo(({ posts, refreshPosts }: PostsListProps) => {
     }, [likePostIsSuccess, unlikePostIsSuccess, refreshPosts]);
 
     return (
-        <PostsListContainer>
+        <PostsListContainer className={className}>
             {posts && posts.map((post: Post, index) =>
                 <PostContainer to={`/post/${post.id}`} key={index} $isDarkMode={isDarkMode}>
                     <PostProfileImage src={post.profileImageUrl || defaultProfile} />

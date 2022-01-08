@@ -92,7 +92,7 @@ const Stats = styled.div`
 
 interface FollowListProps {
     followers?: Following[];
-    className: string;
+    className?: string;
 }
 
 const FollowerList = memo(({ followers = [], className }: FollowListProps) => {

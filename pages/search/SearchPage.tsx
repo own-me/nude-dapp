@@ -10,7 +10,7 @@ import PostsList from "../posts/PostsList";
 import FollowerList from "../profile/FollowerList";
 
 const SearchPageContainer = styled.div`
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
     padding-top: 40px;
     display: flex;
@@ -29,13 +29,13 @@ const SearchTabs = styled(Tabs)`
 `;
 
 const SearchBar = styled.input<{ $isDarkMode: boolean }>`
-    width: 80%;
+    width: 50%;
     border-radius: 50px;
     border: 4px #DF83FF solid;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: center;
     font-size: 25px;
-    padding: 20px;
+    padding: 10px 20px;
     font-family: Poppins, Open Sans;
     background-color: ${props => props.$isDarkMode ? "#1c012a" : "#FFFDFF"};
     color: ${props => props.$isDarkMode ? "white" : "black"};
@@ -47,6 +47,15 @@ const NftCards = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     padding: 20px 0px;
+`;
+
+const SearchPostsList = styled(PostsList)`
+    width: 50%;
+    margin: 0 auto;
+
+    @media (max-width: 1200px) {
+        width: 100%;
+    }
 `;
 
 const SearchPage = memo(() => {
@@ -125,7 +134,10 @@ const SearchPage = memo(() => {
                     </NftCards>
                 </TabContent>
                 <TabContent>
-                    <PostsList posts={searchPostsData?.posts || []} refreshPosts={searchPostsRefetch} />
+                    <SearchPostsList
+                        posts={searchPostsData?.posts || []}
+                        refreshPosts={searchPostsRefetch}
+                    />
                 </TabContent>
                 <TabContent>
                     <FollowerList followers={searchUsersData?.users} />
