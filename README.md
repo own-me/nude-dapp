@@ -1,7 +1,7 @@
 # own-me-frontend
 Frontend for the Own Me web app.
 
-# Dev Setup
+## Dev Setup
 
 1.) `npm install`
 
