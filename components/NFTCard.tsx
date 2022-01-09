@@ -32,7 +32,7 @@ const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
 
 const NFTCardImage = styled.img`
     width: 100%;
-    max-height: 62%;
+    height: 62%;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
 `;
