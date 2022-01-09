@@ -1,10 +1,11 @@
 import { BigNumber, ethers } from "ethers";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
-import { EyeOutlined, HeartOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
+import EllipseExtras, { ExtraAction } from "./EllipseExtras";
 
 const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
@@ -21,6 +22,7 @@ const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     text-decoration: none;
     color: ${props => (props.$isDarkMode ? "white" : "black")};
     background: ${props => (props.$isDarkMode ? "#0d0018" : "white")};
+
 
     :hover {
         transform: translateY(-5px);
@@ -86,11 +88,6 @@ const ViewsIcon = styled(EyeOutlined)`
     padding-right: 5px;
 `;
 
-const ExtrasIcon = styled(EllipsisOutlined)`
-    cursor: pointer;
-    padding-right: 5px;
-`;
-
 const NftHashTags = styled.div`
     white-space: nowrap;
     overflow: hidden;
@@ -129,6 +126,20 @@ interface NFTCardProps {
 const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, viewsCount, hashtags = [] }: NFTCardProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
+    const extraActions: ExtraAction[] = useMemo(() => [
+        {
+            text: "Edit",
+            onClick: () => console.log("Edit")
+        },
+        {
+            text: "Delete",
+            onClick: () => console.log("Delete")
+        },        {
+            text: "Report",
+            onClick: () => console.log("Report")
+        }
+    ], []);
+
     return (
         <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>
             <NFTCardImage src={image} />
@@ -155,7 +166,7 @@ const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, vie
                         <PriceAmount>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0}</PriceAmount>
                         <PriceTokenName>NUDE</PriceTokenName>
                     </NFTCardPrice>
-                    <ExtrasIcon />
+                    <EllipseExtras extraActions={extraActions} />
                 </BottomItems>
             </NFTCardContent>
         </NFTCardContainer>

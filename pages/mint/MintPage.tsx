@@ -22,6 +22,7 @@ const MintPageContainer = styled.div`
     align-items: center;
     flex-direction: column;
     width: 50%;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0px 5%;
     transition: width 0.5s ease-in-out;
