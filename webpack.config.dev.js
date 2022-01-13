@@ -1,23 +1,23 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
-    mode: 'development',
-    entry: path.join(__dirname, 'App.tsx'),
+    mode: "development",
+    entry: path.join(__dirname, "App.tsx"),
     devtool: "eval-source-map",
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dev'),
+            directory: path.join(__dirname, "dev"),
         },
-        port: "auto",
+        port: "80",
         open: true,
         historyApiFallback: true,
     },
     output: {
-        path: path.join(__dirname, 'dev'),
-        filename: 'own-me-frontend.bundle.dev.js',
+        path: path.join(__dirname, "dev"),
+        filename: "own-me-frontend.bundle.dev.js",
     },
     module: {
         rules: [
@@ -37,11 +37,11 @@ module.exports = {
             },
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: ["style-loader", "css-loader"],
             },
             {
                 test: /\.(png|jpe?g|gif|woff(2)?|svg)$/i,
-                type: 'asset/resource'
+                type: "asset/resource"
             },
         ]
     },
@@ -51,7 +51,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             inject: true,
-            template: path.join(__dirname, 'index.html'),
+            template: path.join(__dirname, "index.html"),
         }),
         new CopyPlugin({
             patterns: [
