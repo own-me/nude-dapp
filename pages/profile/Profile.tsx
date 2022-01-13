@@ -10,7 +10,7 @@ import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { Following, usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
-import FollowerList, { FollowerListContainer } from "./FollowerList";
+import FollowerList from "./FollowerList";
 import { NftInterface } from "../../redux/api/nft";
 import { useAppSelector } from "../../redux/hooks";
 import ProfilePosts from "../posts/ProfilePosts";
@@ -27,9 +27,11 @@ const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
 `;
 
 const ProfileFollowerList = styled(FollowerList)`
-    &${FollowerListContainer} {
-        width: 75%;
-        margin: 0 auto;
+    width: 50%;
+    margin: 0 auto;
+
+    @media (max-width: 1200px) {
+        width: 100%;
     }
 `;
 

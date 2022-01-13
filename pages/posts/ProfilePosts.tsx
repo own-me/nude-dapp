@@ -5,8 +5,12 @@ import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";
 
 const ProfilePostsContainer = styled.div`
-    width: 75%;
+    width: 50%;
     margin: 0 auto;
+
+    @media (max-width: 1200px) {
+        width: 100%;
+    }
 `;
 
 interface ProfilePostsProps {
