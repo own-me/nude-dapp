@@ -23,10 +23,25 @@ const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     color: ${props => (props.$isDarkMode ? "white" : "black")};
     background: ${props => (props.$isDarkMode ? "#0d0018" : "white")};
 
-
     :hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+
+    ::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(244, 246, 248, ${props => props.$isDarkMode ? 0.025 : 0.05});
+        transition: background-color 100ms ease-out, opacity 100ms ease-out;
+        opacity: 0;
+    }
+
+    :hover::after {
+        opacity: 1;
     }
 `;
 
