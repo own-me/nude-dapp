@@ -10,10 +10,10 @@ import Modal from "../../components/Modal";
 import EditProfileForm from "./EditProfileForm";
 import { Following, usePostFollowMutation } from "../../redux/api/follow";
 import { usePostUnfollowMutation } from "../../redux/api/unfollow";
-import FollowerList from "./FollowerList";
 import { NftInterface } from "../../redux/api/nft";
 import { useAppSelector } from "../../redux/hooks";
 import ProfilePosts from "../posts/ProfilePosts";
+import ProfileCardList from "./ProfileCardList";
 
 const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     min-height: 100%;
@@ -26,7 +26,7 @@ const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     transition: background 500ms ease-in, color 500ms ease-in;
 `;
 
-const ProfileFollowerList = styled(FollowerList)`
+const ProfileFollowerList = styled(ProfileCardList)`
     width: 50%;
     margin: 0 auto;
 
@@ -226,7 +226,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                     <ProfilePosts profileImageUrl={profileImageUrl} profileAddress={profileAddress} userAddress={address} profileName={name} />
                 </TabContent>
                 <TabContent>
-                    <ProfileFollowerList followers={following} />
+                    <ProfileFollowerList users={following} />
                 </TabContent>
                 <TabContent>
                     <h1>Activity bro</h1>

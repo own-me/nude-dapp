@@ -7,7 +7,7 @@ import { useGetSearchPostsQuery } from "../../redux/api/posts";
 import { useGetSearchUsersQuery } from "../../redux/api/user";
 import { useAppSelector } from "../../redux/hooks";
 import PostsList from "../posts/PostsList";
-import FollowerList from "../profile/FollowerList";
+import ProfileCardList from "../profile/ProfileCardList";
 
 const SearchPageContainer = styled.div`
     width: 100%;
@@ -58,8 +58,8 @@ const SearchPostsList = styled(PostsList)`
     }
 `;
 
-const SearchUsersList = styled(FollowerList)`
-    width: 50%;
+const SearchProfilesList = styled(ProfileCardList)`
+    width: 100%;
     margin: 0 auto;
 
     @media (max-width: 1200px) {
@@ -149,7 +149,7 @@ const SearchPage = memo(() => {
                     />
                 </TabContent>
                 <TabContent>
-                    <SearchUsersList followers={searchUsersData?.users} />
+                    <SearchProfilesList users={searchUsersData?.users} />
                 </TabContent>
                 <TabContent>
 
