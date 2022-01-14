@@ -72,6 +72,14 @@ interface GetSearchUsersResponse {
     users?: SearchUser[];
 }
 
+export interface InitialLoginInfoResponse {
+    address?: string;
+    name?: string;
+    profileImageUrl?: string;
+    message?: string;
+    error?: string;
+}
+
 export const userApi = createApi({
     reducerPath: "userApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
@@ -131,6 +139,15 @@ export const userApi = createApi({
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
+        }),
+        getInitialLoginInfo: builder.query<InitialLoginInfoResponse, void>({
+            query: () => ({
+                url: "user/initial-login-info",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
         })
     }),
 });
@@ -140,5 +157,6 @@ export const {
     useUploadProfileImageMutation,
     useUploadProfileBannerMutation,
     useEditUserMutation,
-    useGetSearchUsersQuery
+    useGetSearchUsersQuery,
+    useGetInitialLoginInfoQuery
 } = userApi;
