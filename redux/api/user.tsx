@@ -72,6 +72,10 @@ interface GetSearchUsersResponse {
     users?: SearchUser[];
 }
 
+interface InitialLoginInfoRequest {
+    token: string;
+}
+
 export interface InitialLoginInfoResponse {
     address?: string;
     name?: string;
@@ -140,12 +144,12 @@ export const userApi = createApi({
                 }
             })
         }),
-        getInitialLoginInfo: builder.query<InitialLoginInfoResponse, void>({
-            query: () => ({
+        getInitialLoginInfo: builder.query<InitialLoginInfoResponse, InitialLoginInfoRequest>({
+            query: ({ token }) => ({
                 url: "user/initial-login-info",
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    Authorization: `Bearer ${localStorage.getItem("token") || token}`
                 }
             })
         })

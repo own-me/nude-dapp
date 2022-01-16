@@ -3,11 +3,12 @@ import styled, { css } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
-import { setUserLoggedIn } from "../../redux/slices/user";
+import { setInitialLoginInfo, setUserToken } from "../../redux/slices/user";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
 import { usePostAuthMutation } from "../../redux/api/auth";
+import { useGetInitialLoginInfoQuery } from "../../redux/api/user";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -71,6 +72,8 @@ export const LoginForm = memo(() => {
     const location = useLocation();
 
     const loggedIn = useAppSelector(state => state.user.loggedIn);
+    const userToken = useAppSelector(state => state.user.token);
+
     const { address, signer } = useWallet();
 
     const [postLogin, {
@@ -86,8 +89,22 @@ export const LoginForm = memo(() => {
         data: postAuthData,
     }] = usePostAuthMutation();
 
+    const {
+        data: initialLoginInfoData,
+        isSuccess: isGetInitialLoginInfoSuccess,
+        refetch: getInitialLoginInfoRefetch
+    } = useGetInitialLoginInfoQuery({ token: userToken }, {
+        skip: !userToken || !address || loggedIn,
+    });
+
     useEffect(() => {
-        if (window.localStorage.getItem("token")) {
+        if (isGetInitialLoginInfoSuccess) {
+            dispatch(setInitialLoginInfo(initialLoginInfoData));
+        }
+    }, [isGetInitialLoginInfoSuccess, initialLoginInfoData, dispatch]);
+
+    useEffect(() => {
+        if (window.localStorage.getItem("token") && address) {
             postLogin({ address });
         }
     }, [address, postLogin]);
@@ -105,7 +122,7 @@ export const LoginForm = memo(() => {
                     postAuth({ address, signature, nonce: postLoginData.nonce });
                 });
             } else {
-                dispatch(setUserLoggedIn(true));
+                dispatch(setUserToken(window.localStorage.getItem("token")));
             }
         }
     }, [postLoginData, isPostLoginSuccess, signer, postAuth, address, dispatch]);
@@ -117,9 +134,15 @@ export const LoginForm = memo(() => {
     }, [isPostLoginError]);
 
     useEffect(() => {
+        if (userToken && loggedIn) {
+            getInitialLoginInfoRefetch();
+        }
+    }, [getInitialLoginInfoRefetch, loggedIn, userToken]);
+
+    useEffect(() => {
         if (isPostAuthSuccess && postAuthData && postAuthData.token) {
             window.localStorage.setItem("token", postAuthData.token);
-            dispatch(setUserLoggedIn(true));
+            dispatch(setUserToken(postAuthData.token));
         }
     }, [dispatch, isPostAuthSuccess, postAuthData]);
 

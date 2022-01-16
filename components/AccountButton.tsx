@@ -5,9 +5,11 @@ import useWallet from "../hooks/useWallet";
 import { formatEth, shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
 import { useAppDispatch } from "../redux/hooks";
-import { setUserLoggedIn } from "../redux/slices/user";
+import { logoutUser } from "../redux/slices/user";
 import { Link } from "react-router-dom";
 import { toggleDarkMode } from "../redux/slices/app";
+import AvatarCircle from "./AvatarCircle";
+import defaultProfile from "../media/defaults/missing-profile.png";
 
 const AccountButtonTemplate = styled.button`
     font-family: Poppins, Open Sans;
@@ -66,12 +68,13 @@ export default function AccountButton() {
     const { balance, address } = useWallet();
     const email = useAppSelector(state => state.user.email);
     const name = useAppSelector(state => state.user.name);
+    const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
 
     const formattedBalance = useMemo(() => formatEth(balance), [balance]);
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
 
     const handleLogout = () => {
-        dispatch(setUserLoggedIn(false));
+        dispatch(logoutUser());
     };
 
     const handleToggleDarkMode = () => {
@@ -83,6 +86,7 @@ export default function AccountButton() {
             <AccountButtonTemplate type="button" onClick={() => setIsOpen(!isOpen)}>
                 {formattedBalance} NUDE
             </AccountButtonTemplate>
+            <AvatarCircle image={profileImageUrl || defaultProfile} />
             <Dropdown isOpen={isOpen}>
                 <div>
                     <AccountAddress>{formattedAddress}</AccountAddress>
