@@ -55,6 +55,10 @@ const NFTCardImage = styled.img`
 const NFTCardTitle = styled.div`
     text-align: left;
     font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
 `;
 
 const NFTCardOwner = styled.div<{ $isDarkMode: boolean }>`
