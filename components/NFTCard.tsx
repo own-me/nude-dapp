@@ -6,6 +6,7 @@ import { shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
 import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import EllipseExtras, { ExtraAction } from "./EllipseExtras";
+import LazyImage, { Image, LazyImageContainer, LoadingImage } from "./LazyImage";
 
 const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
@@ -45,11 +46,23 @@ const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     }
 `;
 
-const NFTCardImage = styled.img`
-    width: 100%;
-    height: 62%;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
+const NFTCardImage = styled(LazyImage)`
+    ${Image} {
+        width: 100%;
+        height: 62%;
+        object-fit: cover;
+        border-radius: 10px 10px 0 0;
+    }
+
+    ${LazyImageContainer} {
+        width: 100%;
+        height: 62%;
+        border-radius: 10px 10px 0 0;
+    }
+    ${LoadingImage} {
+        border-radius: 10px 10px 0 0;
+        height: 62%;
+    }
 `;
 
 const NFTCardTitle = styled.div`
@@ -153,7 +166,7 @@ const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, vie
         {
             text: "Delete",
             onClick: () => console.log("Delete")
-        },        {
+        }, {
             text: "Report",
             onClick: () => console.log("Report")
         }
