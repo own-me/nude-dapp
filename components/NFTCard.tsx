@@ -59,6 +59,7 @@ const NFTCardImage = styled(LazyImage)`
         height: 62%;
         border-radius: 10px 10px 0 0;
     }
+
     ${LoadingImage} {
         border-radius: 10px 10px 0 0;
         height: 62%;

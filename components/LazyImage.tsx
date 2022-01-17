@@ -35,7 +35,7 @@ const LazyImage = memo(({ src, alt, className }: LazyImageProps) => {
                     setImgSrc(src);
                     setTimeout(() => {
                         setLoaded(true);
-                    }, 500);
+                    }, 1000);
                 }
             });
         }
