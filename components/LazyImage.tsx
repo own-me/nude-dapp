@@ -18,10 +18,11 @@ export const LoadingImage = styled(ContentLoader)`
 
 interface LazyImageProps {
     src: string;
+    alt?: string;
     className?: string;
 }
 
-const LazyImage = memo(({ src, className }: LazyImageProps) => {
+const LazyImage = memo(({ src, alt, className }: LazyImageProps) => {
     const [loaded, setLoaded] = useState(false);
     const [imgSrc, setImgSrc] = useState("");
 
@@ -42,7 +43,7 @@ const LazyImage = memo(({ src, className }: LazyImageProps) => {
 
     return <LazyImageContainer className={className}>
         {
-            loaded ? <Image src={imgSrc} /> : <LoadingImage
+            loaded ? <Image src={imgSrc} alt={alt || "NUDE NFT Image"} /> : <LoadingImage
                 speed={2}
                 backgroundColor={isDarkMode ? "#10001e" : "#fffaff"}
                 foregroundColor={isDarkMode ? "#270049" : "#fff0f9"}
