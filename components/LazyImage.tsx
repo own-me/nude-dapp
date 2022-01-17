@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import ContentLoader from "react-content-loader";
 import styled from "styled-components";
+import { useAppSelector } from "../redux/hooks";
 
 export const LazyImageContainer = styled.div`
 
@@ -24,6 +25,8 @@ const LazyImage = memo(({ src, className }: LazyImageProps) => {
     const [loaded, setLoaded] = useState(false);
     const [imgSrc, setImgSrc] = useState("");
 
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+
     useEffect(() => {
         if (src) {
             fetch(src).then(res => {
@@ -31,7 +34,7 @@ const LazyImage = memo(({ src, className }: LazyImageProps) => {
                     setImgSrc(src);
                     setTimeout(() => {
                         setLoaded(true);
-                    }, 1000);
+                    }, 500);
                 }
             });
         }
@@ -41,8 +44,8 @@ const LazyImage = memo(({ src, className }: LazyImageProps) => {
         {
             loaded ? <Image src={imgSrc} /> : <LoadingImage
                 speed={2}
-                backgroundColor="#fffaff"
-                foregroundColor="#fff0f9"
+                backgroundColor={isDarkMode ? "#10001e" : "#fffaff"}
+                foregroundColor={isDarkMode ? "#270049" : "#fff0f9"}
             >
                 <rect width="100%" height="100%" />
             </LoadingImage>
