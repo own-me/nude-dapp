@@ -8,7 +8,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AuctionHousePage from "./pages/auctionhouse/AuctionHousePage";
 import GumballMachinePage from "./pages/gumballmachine/GumballMachinePage";
-import Navbar, { TOTAL_HEIGHT } from "./components/Navbar";
+import Navbar, { TOTAL_HEIGHT } from "./components/nav/Navbar";
 import MintPage from "./pages/mint/MintPage";
 import NftPage from "./pages/nft/NftPage";
 import PostPage from "./pages/posts/PostPage";

@@ -1,13 +1,13 @@
 import React, { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import navLogo from "../media/own-me-logo.svg";
-import AccountButton from "./AccountButton";
+import navLogo from "../../media/own-me-logo.svg";
+import NavWallet from "./NavWallet";
 import { useLocation } from "react-router-dom";
-import { ZIndex } from "../lib/zindex";
-import hamburgerIcon from "../media/hamburger.svg";
+import { ZIndex } from "../../lib/zindex";
+import hamburgerIcon from "../../media/hamburger.svg";
 import SideNav from "./SideNav";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 
 export const NAVBAR_HEIGHT = 50;
 export const NAVBAR_PADDING = 20;
@@ -113,7 +113,7 @@ const Navbar = memo(() => {
                     }
                 </NavbarItems>
                 <NavButtons>
-                    <AccountButton />
+                    <NavWallet />
                     <Hamburger src={hamburgerIcon} onClick={() => setIsSideNavOpen(!isSideNavOpen)} $isOpen={isSideNavOpen} />
                 </NavButtons>
             </NavbarContainer>

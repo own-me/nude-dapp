@@ -1,15 +1,15 @@
 import React, { useState, useMemo } from "react";
 import styled from "styled-components";
-import Dropdown from "./Dropdown";
-import useWallet from "../hooks/useWallet";
-import { formatEth, shortenAddress } from "../lib/helpers";
-import { useAppSelector } from "../redux/hooks";
-import { useAppDispatch } from "../redux/hooks";
-import { logoutUser } from "../redux/slices/user";
+import Dropdown from "./../Dropdown";
+import useWallet from "../../hooks/useWallet";
+import { formatEth, shortenAddress } from "../../lib/helpers";
+import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
+import { logoutUser } from "../../redux/slices/user";
 import { Link } from "react-router-dom";
-import { toggleDarkMode } from "../redux/slices/app";
-import AvatarCircle from "./AvatarCircle";
-import defaultProfile from "../media/defaults/missing-profile.png";
+import { toggleDarkMode } from "../../redux/slices/app";
+import AvatarCircle from "./../AvatarCircle";
+import defaultProfile from "../../media/defaults/missing-profile.png";
 
 const AccountButtonTemplate = styled.button`
     font-family: Poppins, Open Sans;
