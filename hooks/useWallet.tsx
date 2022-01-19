@@ -15,20 +15,51 @@ export default function useWallet() {
     const [signer, setSigner] = useState(null);
 
     useEffect(() => {
-        async function getBalance() {
-            await window.ethereum.request({ method: "eth_requestAccounts" });
+        if (!provider) {
+            console.log("lol");
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             setProvider(provider);
-            const signer = provider.getSigner();
-            setSigner(signer);
-            const signerAddress = await signer.getAddress();
-            setAddress(signerAddress);
-            const nudeContract = Nude__factory.connect(Nude_ADDRESS, provider);
-            setBalance(await nudeContract.balanceOf(signerAddress));
+        }
+    }, [provider]);
+
+    useEffect(() => {
+        async function getAddress() {
+            setAddress(await signer.getAddress());
+        }
+        if (signer) {
+            getAddress();
+        }
+    }, [signer]);
+
+    useEffect(() => {
+        async function getNetwork() {
             setNetwork(await provider.getNetwork());
         }
-        getBalance();
-    }, [address]);
+        if (provider) {
+            getNetwork();
+        }
+    }, [provider]);
+
+
+    useEffect(() => {
+        async function getSigner() {
+            setSigner(provider.getSigner());
+        }
+        if (provider) {
+            getSigner();
+        }
+    }, [provider]);
+
+    useEffect(() => {
+        async function getBalance() {
+            await window.ethereum.request({ method: "eth_requestAccounts" });
+            const nudeContract = Nude__factory.connect(Nude_ADDRESS, provider);
+            setBalance(await nudeContract.balanceOf(address));
+        }
+        if (network && provider && address) {
+            getBalance();
+        }
+    }, [address, network, provider]);
 
     useEffect(() => {
         window.ethereum.on("accountsChanged", (accounts: Array<string>) => {
