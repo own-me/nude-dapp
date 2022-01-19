@@ -86,7 +86,7 @@ export default function AccountButton() {
             <AccountButtonTemplate type="button" onClick={() => setIsOpen(!isOpen)}>
                 {formattedBalance} NUDE
             </AccountButtonTemplate>
-            <AvatarCircle image={profileImageUrl || defaultProfile} />
+            <AvatarCircle image={profileImageUrl || defaultProfile} onClick={() => setIsOpen(!isOpen)} />
             <Dropdown isOpen={isOpen}>
                 <div>
                     <AccountAddress>{formattedAddress}</AccountAddress>

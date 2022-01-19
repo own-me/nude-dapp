@@ -20,11 +20,12 @@ const AvatarImage = styled.img`
 
 interface AvatarCircleProps {
     image: string;
+    onClick: () => void;
 }
 
-const AvatarCircle = memo(({ image }: AvatarCircleProps) => {
+const AvatarCircle = memo(({ image, onClick }: AvatarCircleProps) => {
     return (
-        <AvatarCircleContainer>
+        <AvatarCircleContainer onClick={onClick}>
             <AvatarImage src={image} />
         </AvatarCircleContainer>
     );
