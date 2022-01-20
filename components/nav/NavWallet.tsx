@@ -65,7 +65,7 @@ const LogoutText = styled.div`
 export default function NavWallet() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { balance, address, network } = useWallet();
+    const { balance, address } = useWallet();
     const email = useAppSelector(state => state.user.email);
     const name = useAppSelector(state => state.user.name);
     const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
