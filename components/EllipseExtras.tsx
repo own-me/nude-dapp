@@ -1,5 +1,6 @@
 import { EllipsisOutlined } from "@ant-design/icons";
 import React, { memo, useState } from "react";
+import { Transition } from "react-transition-group";
 import styled from "styled-components";
 
 export const EllipseExtrasContainer = styled.div`
@@ -28,6 +29,14 @@ const ExtrasPanelContainer = styled.div`
     border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     padding: 5px;
+
+    &.entering {
+        opacity: 0;
+    }
+
+    &.entered {
+        opacity: 1;
+    }
 `;
 
 const ExtrasPanelAction = styled.div`
@@ -78,9 +87,11 @@ const EllipseExtras = memo(({ extraActions = [], className }: EllispeExtrasProps
     return (
         <EllipseExtrasContainer className={className} onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
             <ExtrasIcon onClick={handleEllipseClick} />
-            {
-                isOpen && <ExtrasPanel extraActions={extraActions} />
-            }
+            <Transition in={isOpen} timeout={250} mountOnEnter unmountOnExit>
+                {transitionState => (
+                    <ExtrasPanel className={transitionState} extraActions={extraActions} />
+                )}
+            </Transition>
         </EllipseExtrasContainer>
     );
 });
