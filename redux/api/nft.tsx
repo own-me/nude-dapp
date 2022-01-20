@@ -34,6 +34,7 @@ interface PostNftLikeResponse {
 
 interface GetSearchNftsRequest {
     query: string;
+    page: number;
 }
 
 interface GetSearchNftsResponse {
@@ -94,8 +95,8 @@ export const nftApi = createApi({
             })
         }),
         getSearchNfts: builder.query<GetSearchNftsResponse, GetSearchNftsRequest>({
-            query: ({ query }) => ({
-                url: `nft/search/${query}`,
+            query: ({ query, page }) => ({
+                url: `nft/search/${query}?page=${page}`,
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`

@@ -68,15 +68,17 @@ const SearchProfilesList = styled(ProfileCardList)`
 `;
 
 const SearchPage = memo(() => {
-    const [searchValue, setSearchValue] = useState("*");
-    const [activeTab, setActiveTab] = useState("");
+    const [searchValue, setSearchValue] = useState<string>("*");
+    const [activeTab, setActiveTab] = useState<string>("");
+    const [pageNumber, setPageNumber] = useState<number>(0);
+    const [nfts, setNfts] = useState<NftInterface[]>([]);
 
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const {
         data: searchNftsData,
         refetch: searchNftsRefetch
-    } = useGetSearchNftsQuery({ query: searchValue || "*" });
+    } = useGetSearchNftsQuery({ query: searchValue || "*", page: pageNumber });
 
     const {
         data: searchPostsData,
@@ -95,6 +97,12 @@ const SearchPage = memo(() => {
     }, [searchValue, searchNftsRefetch, activeTab, searchNftsData?.nfts?.length]);
 
     useEffect(() => {
+        if (searchNftsData?.nfts?.length > 0) {
+            setNfts((prevValue) => prevValue.concat(searchNftsData.nfts));
+        }
+    }, [searchNftsData?.nfts, searchNftsData?.nfts?.length]);
+
+    useEffect(() => {
         if (activeTab === `Posts (${searchPostsData?.posts?.length || 0})`) {
             searchPostsRefetch();
         }
@@ -105,6 +113,18 @@ const SearchPage = memo(() => {
             searchUsersRefetch();
         }
     }, [searchValue, searchUsersRefetch, activeTab, searchUsersData?.users?.length]);
+
+    useEffect(() => {
+        const mainContainer = document.getElementById("main-container");
+        if (mainContainer) {
+            mainContainer.addEventListener("scroll", () => {
+                if (mainContainer.scrollTop + mainContainer.clientHeight >= mainContainer.scrollHeight) {
+                    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+                }
+            });
+            return () => mainContainer.removeEventListener("scroll", () => null);
+        }
+    }, []);
 
     return (
         <SearchPageContainer>
@@ -126,7 +146,7 @@ const SearchPage = memo(() => {
                 <TabContent>
                     <NftCards>
                         {
-                            searchNftsData?.nfts?.length > 0 && searchNftsData?.nfts?.map((nft: NftInterface, index: number) => {
+                            nfts.length > 0 && nfts.map((nft: NftInterface, index: number) => {
                                 return <NFTCard
                                     tokenId={nft.tokenId}
                                     title={nft.tokenURI.title}

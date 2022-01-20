@@ -13,7 +13,7 @@ import defaultProfile from "../../media/defaults/missing-profile.png";
 
 const BalanceButton = styled.button`
     font-family: Poppins, Open Sans;
-    font-size: 22px;
+    font-size: 20px;
     background-color: #FF81EB;
     color: white;
     border: none;

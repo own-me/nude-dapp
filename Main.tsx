@@ -34,7 +34,7 @@ export default function Main() {
     const location = useLocation();
 
     return (
-        <MainContainer $isLoggedIn={loggedIn} $isDarkMode={isDarkMode}>
+        <MainContainer $isLoggedIn={loggedIn} $isDarkMode={isDarkMode} id="main-container">
             <Helmet>
                 <title>Own Me | {routes[location.pathname]?.title || "App"}</title>
             </Helmet>
