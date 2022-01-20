@@ -23,12 +23,13 @@ const ExtrasPanelContainer = styled.div`
     min-width: 80px;
     background-color: #FF81EB;
     position: absolute;
-    bottom: 25px;
+    bottom: 30px;
     right: 5px;
     z-index: 4;
     border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    padding: 5px;
+    padding: 5px 10px;
+    text-align: right;
 
     &.entering {
         opacity: 0;
@@ -43,8 +44,18 @@ const ExtrasPanelAction = styled.div`
     color: white;
     cursor: pointer;
 
+    a {
+        text-decoration: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: #8336ff;
+    }
+
     :hover {
-        color: #E127FF;
+        color: #8336ff;
     }
 `;
 
