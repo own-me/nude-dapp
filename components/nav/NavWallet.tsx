@@ -11,7 +11,7 @@ import { toggleDarkMode } from "../../redux/slices/app";
 import AvatarCircle from "./../AvatarCircle";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 
-const AccountButtonTemplate = styled.button`
+const BalanceButton = styled.button`
     font-family: Poppins, Open Sans;
     font-size: 22px;
     background-color: #FF81EB;
@@ -42,7 +42,7 @@ const Divider = styled.hr`
     border-color: #FFB0F7;
 `;
 
-const EditProfileButton = styled(AccountButtonTemplate)`
+const EditProfileButton = styled(BalanceButton)`
     width: 100%;
     margin-left: 0;
     padding: 6px 10px;
@@ -62,10 +62,10 @@ const LogoutText = styled.div`
     }
 `;
 
-export default function AccountButton() {
+export default function NavWallet() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { balance, address } = useWallet();
+    const { balance, address, network } = useWallet();
     const email = useAppSelector(state => state.user.email);
     const name = useAppSelector(state => state.user.name);
     const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
@@ -83,9 +83,9 @@ export default function AccountButton() {
 
     return (
         <>
-            <AccountButtonTemplate type="button" onClick={() => setIsOpen(!isOpen)}>
+            <BalanceButton type="button" onClick={() => setIsOpen(!isOpen)}>
                 {formattedBalance} NUDE
-            </AccountButtonTemplate>
+            </BalanceButton>
             <AvatarCircle image={profileImageUrl || defaultProfile} onClick={() => setIsOpen(!isOpen)} />
             <Dropdown isOpen={isOpen}>
                 <div>

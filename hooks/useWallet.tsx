@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BigNumber, ethers } from "ethers";
 import { setUserLoggedIn } from "../redux/slices/user";
+import { setWalletAddress, setWalletBalance, setWalletNetwork } from "../redux/slices/wallet";
 import { useAppDispatch } from "../redux/hooks";
 import { Nude_ADDRESS } from "../lib/helpers";
 import { Nude__factory } from "../typechain/factories/Nude__factory";
@@ -16,7 +17,7 @@ export default function useWallet() {
 
     useEffect(() => {
         if (!provider) {
-            console.log("lol");
+            console.log("Getting new wallet provider...");
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             setProvider(provider);
         }
@@ -24,26 +25,29 @@ export default function useWallet() {
 
     useEffect(() => {
         async function getAddress() {
-            setAddress(await signer.getAddress());
+            const address = await signer.getAddress();
+            setAddress(address);
+            dispatch(setWalletAddress(address));
         }
         if (signer) {
             getAddress();
         }
-    }, [signer]);
+    }, [dispatch, signer]);
 
     useEffect(() => {
         async function getNetwork() {
-            setNetwork(await provider.getNetwork());
+            const network = await provider.getNetwork();
+            setNetwork(network);
+            dispatch(setWalletNetwork(network));
         }
         if (provider) {
             getNetwork();
         }
-    }, [provider]);
-
+    }, [dispatch, provider]);
 
     useEffect(() => {
         async function getSigner() {
-            setSigner(provider.getSigner());
+            setSigner(await provider.getSigner());
         }
         if (provider) {
             getSigner();
@@ -54,12 +58,14 @@ export default function useWallet() {
         async function getBalance() {
             await window.ethereum.request({ method: "eth_requestAccounts" });
             const nudeContract = Nude__factory.connect(Nude_ADDRESS, provider);
-            setBalance(await nudeContract.balanceOf(address));
+            const balance = await nudeContract.balanceOf(address);
+            setBalance(balance);
+            dispatch(setWalletBalance(balance.toString()));
         }
         if (network && provider && address) {
             getBalance();
         }
-    }, [address, network, provider]);
+    }, [address, dispatch, network, provider]);
 
     useEffect(() => {
         window.ethereum.on("accountsChanged", (accounts: Array<string>) => {
