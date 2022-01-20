@@ -76,7 +76,7 @@ const EllipseExtras = memo(({ extraActions = [], className }: EllispeExtrasProps
     };
 
     return (
-        <EllipseExtrasContainer className={className}>
+        <EllipseExtrasContainer className={className} onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
             <ExtrasIcon onClick={handleEllipseClick} />
             {
                 isOpen && <ExtrasPanel extraActions={extraActions} />
