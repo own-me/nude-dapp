@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
 import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
-import EllipseExtras, { ExtraAction } from "./EllipseExtras";
+import EllipseExtras, { EllipseExtrasContainer, ExtraAction } from "./EllipseExtras";
 import LazyImage, { Image, LazyImageContainer, LoadingImage } from "./LazyImage";
 
 const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
@@ -145,6 +145,12 @@ const BottomItems = styled.div`
     width: 92%;
 `;
 
+const ExtraActions = styled(EllipseExtras)`
+    &${EllipseExtrasContainer} {
+        z-index: 5;
+    }
+`;
+
 interface NFTCardProps {
     tokenId?: number;
     title: string;
@@ -199,7 +205,7 @@ const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, vie
                         <PriceAmount>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0}</PriceAmount>
                         <PriceTokenName>NUDE</PriceTokenName>
                     </NFTCardPrice>
-                    <EllipseExtras extraActions={extraActions} />
+                    <ExtraActions extraActions={extraActions} />
                 </BottomItems>
             </NFTCardContent>
         </NFTCardContainer>

@@ -2,7 +2,7 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import React, { memo, useState } from "react";
 import styled from "styled-components";
 
-const EllipseExtrasContainer = styled.div`
+export const EllipseExtrasContainer = styled.div`
     position: relative;
 `;
 
@@ -44,6 +44,7 @@ export interface ExtraAction {
 
 interface EllispeExtrasProps {
     extraActions: ExtraAction[];
+    className?: string;
 }
 
 const ExtrasPanel = memo(({ extraActions = [] }: EllispeExtrasProps) => {
@@ -60,7 +61,7 @@ const ExtrasPanel = memo(({ extraActions = [] }: EllispeExtrasProps) => {
     );
 });
 
-const EllipseExtras = memo(({ extraActions = [] }: EllispeExtrasProps) => {
+const EllipseExtras = memo(({ extraActions = [], className }: EllispeExtrasProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleEllipseClick = (e) => {
@@ -70,7 +71,7 @@ const EllipseExtras = memo(({ extraActions = [] }: EllispeExtrasProps) => {
     };
 
     return (
-        <EllipseExtrasContainer>
+        <EllipseExtrasContainer className={className}>
             <ExtrasIcon onClick={handleEllipseClick} />
             {
                 isOpen && <ExtrasPanel extraActions={extraActions} />
