@@ -61,7 +61,7 @@ const ExtrasPanelAction = styled.div`
 
 export interface ExtraAction {
     text: string;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     link?: string;
 }
 
