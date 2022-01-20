@@ -108,13 +108,13 @@ const SearchPage = memo(() => {
 
     return (
         <SearchPageContainer>
-            <SearchBar 
-                type="text" 
-                placeholder="Search..." 
-                $isDarkMode={isDarkMode} 
+            <SearchBar
+                type="text"
+                placeholder="Search..."
+                $isDarkMode={isDarkMode}
                 onChange={(e) => setSearchValue(e.target.value)}
             />
-            <SearchTabs 
+            <SearchTabs
                 tabs={useMemo(() => [
                     `NFTs (${searchNftsData?.nfts?.length || 0})`,
                     `Posts (${searchPostsData?.posts?.length || 0})`,
@@ -136,6 +136,7 @@ const SearchPage = memo(() => {
                                     likesCount={nft.likesCount}
                                     viewsCount={nft.viewsCount}
                                     hashtags={nft.tokenURI.hashtags}
+                                    transactionHash={nft.transactionHash}
                                     key={index}
                                 />;
                             })

@@ -9,6 +9,8 @@ export const EllipseExtrasContainer = styled.div`
 const ExtrasIcon = styled(EllipsisOutlined)`
     cursor: pointer;
     padding-right: 5px;
+    font-size: 20px;
+    padding: 5px;
 
     :hover {
         color: #FF81EB;
@@ -39,7 +41,8 @@ const ExtrasPanelAction = styled.div`
 
 export interface ExtraAction {
     text: string;
-    onClick: () => void;
+    onClick?: () => void;
+    link?: string;
 }
 
 interface EllispeExtrasProps {
@@ -53,7 +56,9 @@ const ExtrasPanel = memo(({ extraActions = [] }: EllispeExtrasProps) => {
             {
                 extraActions.map((item, index) => (
                     <ExtrasPanelAction key={index} onClick={item.onClick}>
-                        {item.text}
+                        {
+                            item.link ? <a href={item.link} target="_blank">{item.text}</a> : item.text
+                        }
                     </ExtrasPanelAction>
                 ))
             }

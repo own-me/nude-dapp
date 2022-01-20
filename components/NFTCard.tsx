@@ -160,24 +160,36 @@ interface NFTCardProps {
     likesCount: number;
     viewsCount: number;
     hashtags: string[];
+    transactionHash?: string;
 }
 
-const NFTCard = memo(({ tokenId, title, recipient, price, image, likesCount, viewsCount, hashtags = [] }: NFTCardProps) => {
+const NFTCard = memo(({
+    tokenId,
+    title,
+    recipient,
+    price,
+    image,
+    likesCount,
+    viewsCount,
+    hashtags = [],
+    transactionHash
+}: NFTCardProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const extraActions: ExtraAction[] = useMemo(() => [
         {
-            text: "Edit",
-            onClick: () => console.log("Edit")
+            text: "Polyscan",
+            link: `https://mumbai.polygonscan.com/tx/${transactionHash}`,
+            onClick: (e) => e.stopPropagation()
         },
         {
             text: "Delete",
-            onClick: () => console.log("Delete")
+            onClick: (e) => e.stopPropagation()
         }, {
             text: "Report",
-            onClick: () => console.log("Report")
+            onClick: (e) => e.stopPropagation()
         }
-    ], []);
+    ], [transactionHash]);
 
     return (
         <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>
