@@ -1,5 +1,6 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
+import HashtagWordCloud from "../../components/HashtagWordCloud";
 import NFTCard from "../../components/NFTCard";
 import Tabs, { TabContent, Tab } from "../../components/Tabs";
 import { NftInterface, useGetSearchNftsQuery } from "../../redux/api/nft";
@@ -11,6 +12,7 @@ import ProfileCardList from "../profile/ProfileCardList";
 
 const SearchPageContainer = styled.div`
     width: 100%;
+    height: 100%;
     margin: 0 auto;
     padding-top: 40px;
     display: flex;
@@ -23,8 +25,14 @@ const SearchPageContainer = styled.div`
 `;
 
 const SearchTabs = styled(Tabs)`
+    height: 100%;
+
     ${Tab} {
         font-size: 20px;
+    }
+
+    ${TabContent} {
+        height: 100%;
     }
 `;
 
@@ -126,8 +134,11 @@ const SearchPage = memo(() => {
         }
     }, []);
 
+    const wordCloudParent = useRef<HTMLDivElement>(null);
+    const allHashtags = useMemo(() => nfts.map(nft => nft.tokenURI.hashtags).flat(), [nfts]);
+
     return (
-        <SearchPageContainer>
+        <SearchPageContainer ref={wordCloudParent}>
             <SearchBar
                 type="text"
                 placeholder="Search..."
@@ -173,7 +184,11 @@ const SearchPage = memo(() => {
                     <SearchProfilesList users={searchUsersData?.users} />
                 </TabContent>
                 <TabContent>
-
+                    <HashtagWordCloud
+                        width={wordCloudParent?.current?.clientWidth * 0.9 || 500}
+                        height={wordCloudParent?.current?.clientHeight * 0.8 || 500}
+                        hashtags={allHashtags}
+                    />
                 </TabContent>
             </SearchTabs>
         </SearchPageContainer>
