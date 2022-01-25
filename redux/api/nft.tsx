@@ -24,11 +24,18 @@ interface GetUserNftsRequest {
 }
 
 interface PostNftLikeRequest {
-    fromAddress: string;
     tokenId: string;
 }
 
 interface PostNftLikeResponse {
+    message: string;
+}
+
+interface PostNftUnlikeRequest {
+    tokenId: string;
+}
+
+interface PostNftUnlikeResponse {
     message: string;
 }
 
@@ -82,13 +89,18 @@ export const nftApi = createApi({
             })
         }),
         postNftLike: builder.mutation<PostNftLikeResponse, PostNftLikeRequest>({
-            query: ({ fromAddress, tokenId }) => ({
-                url: "nft/like",
+            query: ({ tokenId }) => ({
+                url: `nft/like/${tokenId}`,
                 method: "POST",
-                body: {
-                    fromAddress,
-                    tokenId
-                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+        }),
+        postNftUnlike: builder.mutation<PostNftUnlikeResponse, PostNftUnlikeRequest>({
+            query: ({ tokenId }) => ({
+                url: `nft/unlike/${tokenId}`,
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
@@ -106,4 +118,10 @@ export const nftApi = createApi({
     })
 });
 
-export const { useGetNftQuery, useGetUserNftsQuery, usePostNftLikeMutation, useGetSearchNftsQuery } = nftApi;
+export const {
+    useGetNftQuery,
+    useGetUserNftsQuery,
+    usePostNftLikeMutation,
+    usePostNftUnlikeMutation,
+    useGetSearchNftsQuery
+} = nftApi;
