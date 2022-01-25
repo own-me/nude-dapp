@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../../lib/helpers";
-import { useGetNftQuery, usePostNftLikeMutation } from "../../redux/api/nft";
+import { useGetNftQuery, usePostNftLikeMutation, usePostNftUnlikeMutation } from "../../redux/api/nft";
 import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
@@ -189,10 +189,17 @@ const NftPage = memo(() => {
     const [isLikeHovering, setIsLikeHovering] = useState(false);
     const { address } = useWallet();
 
-    const [postNftLike] = usePostNftLikeMutation();
+    const [postNftLike, {
+        isSuccess: isNftLikeSuccess,
+    }] = usePostNftLikeMutation();
+
+    const [postNftUnlike, {
+        isSuccess: isNftUnlikeSuccess,
+    }] = usePostNftUnlikeMutation();
 
     const {
-        data: nftData
+        data: nftData,
+        refetch: nftRefetch,
     } = useGetNftQuery({ tokenId: params.tokenId }, {
         skip: !params.tokenId,
     });
@@ -203,9 +210,15 @@ const NftPage = memo(() => {
         }
     }, [nftData]);
 
+    useEffect(() => {
+        nftRefetch();
+    }, [isNftLikeSuccess, isNftUnlikeSuccess, nftRefetch]);
+
     const handleLikeClick = () => {
         if (!nftData?.isLiked) {
-            postNftLike({ fromAddress: address, tokenId: params.tokenId });
+            postNftLike({ tokenId: params.tokenId });
+        } else {
+            postNftUnlike({ tokenId: params.tokenId });
         }
     };
 
