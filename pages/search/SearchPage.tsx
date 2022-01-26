@@ -58,11 +58,13 @@ const NftCards = styled.div`
 `;
 
 const SearchPostsList = styled(PostsList)`
-    width: 50%;
+    width: 40%;
+    min-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
 
     @media (max-width: 1200px) {
-        width: 100%;
+        width: 90%;
     }
 `;
 

@@ -11,8 +11,14 @@ import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";
 
 const PostPageContainer = styled.div`
-    width: 70%;
+    width: 40%;
+    min-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
+
+    @media (max-width: 1200px) {
+        width: 90%;
+    }
 `;
 
 const PostContainer = styled.div`
