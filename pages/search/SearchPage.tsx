@@ -1,3 +1,4 @@
+import { SearchOutlined } from "@ant-design/icons";
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import HashtagWordCloud from "../../components/HashtagWordCloud";
@@ -36,8 +37,13 @@ const SearchTabs = styled(Tabs)`
     }
 `;
 
-const SearchBar = styled.input<{ $isDarkMode: boolean }>`
+const SearchBarContainer = styled.div`
+    position: relative;
     width: 50%;
+`;
+
+const SearchInput = styled.input<{ $isDarkMode: boolean }>`
+    width: 100%;
     border-radius: 50px;
     border: 4px #DF83FF solid;
     margin-bottom: 30px;
@@ -48,6 +54,14 @@ const SearchBar = styled.input<{ $isDarkMode: boolean }>`
     background-color: ${props => props.$isDarkMode ? "#1c012a" : "#FFFDFF"};
     color: ${props => props.$isDarkMode ? "white" : "black"};
     box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+`;
+
+const SearchIcon = styled(SearchOutlined)`
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 28px;
+    color: #ff86df;
 `;
 
 const NftCards = styled.div`
@@ -141,12 +155,15 @@ const SearchPage = memo(() => {
 
     return (
         <SearchPageContainer ref={wordCloudParent}>
-            <SearchBar
-                type="text"
-                placeholder="Search..."
-                $isDarkMode={isDarkMode}
-                onChange={(e) => setSearchValue(e.target.value)}
-            />
+            <SearchBarContainer>
+                <SearchInput
+                    type="text"
+                    placeholder="Search..."
+                    $isDarkMode={isDarkMode}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                />
+                <SearchIcon />
+            </SearchBarContainer>
             <SearchTabs
                 tabs={useMemo(() => [
                     `NFTs (${searchNftsData?.nfts?.length || 0})`,
