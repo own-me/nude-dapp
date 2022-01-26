@@ -70,6 +70,7 @@ const ProfileLink = styled.a`
 
 const ProfileInfo = styled.div`
     text-align: center;
+    padding-bottom: 20px;
 `;
 
 const ProfileAddress = styled.button`
