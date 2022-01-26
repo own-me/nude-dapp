@@ -92,6 +92,13 @@ const PostImage = styled.img`
     margin-bottom: 10px;
 `;
 
+const NoPostsMessage = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 75px 20px;
+    font-family: "Poppins", sans-serif;
+`;
+
 interface PostsListProps {
     posts: Post[];
     refreshPosts: () => void;
@@ -152,6 +159,7 @@ const PostsList = memo(({ posts, refreshPosts, className }: PostsListProps) => {
                     </PostActions>
                 </PostContainer>
             )}
+            {posts?.length === 0 && <NoPostsMessage>No posts yet...</NoPostsMessage>}
         </PostsListContainer>
     );
 });

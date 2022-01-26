@@ -129,6 +129,13 @@ const EditProfileButton = styled(ProfileAddress)`
     }
 `;
 
+const NoItemsMessage = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 75px 20px;
+    font-family: "Poppins", sans-serif;
+`;
+
 interface ProfileProps {
     profileAddress: string;
     name: string;
@@ -206,7 +213,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                 <TabContent>
                     <NftCards>
                         {
-                            userNfts?.length > 0 && userNfts.map((nft: NftInterface, index: number) => {
+                            userNfts?.length > 0 ? userNfts.map((nft: NftInterface, index: number) => {
                                 return <NFTCard
                                     tokenId={nft.tokenId}
                                     title={nft.tokenURI.title}
@@ -219,7 +226,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                                     transactionHash={nft.transactionHash}
                                     key={index}
                                 />;
-                            })
+                            }) : <NoItemsMessage>No NFTs yet...</NoItemsMessage>
                         }
                     </NftCards>
                 </TabContent>
@@ -227,10 +234,12 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                     <ProfilePosts profileImageUrl={profileImageUrl} profileAddress={profileAddress} userAddress={address} profileName={name} />
                 </TabContent>
                 <TabContent>
-                    <ProfileFollowerList users={following} />
+                    {
+                        following?.length > 0 ? <ProfileFollowerList users={following} /> : <NoItemsMessage>Not following anyone yet...</NoItemsMessage>
+                    }
                 </TabContent>
                 <TabContent>
-                    <h1>Activity bro</h1>
+                    <NoItemsMessage>No activity yet...</NoItemsMessage>
                 </TabContent>
             </Tabs>
             <Modal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)}>
