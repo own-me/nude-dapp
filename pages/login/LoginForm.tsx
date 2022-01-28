@@ -5,6 +5,7 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../redux/api/login";
 import { setInitialLoginInfo, setUserToken } from "../../redux/slices/user";
 import loadingSpinner from "../../media/own-me-spinner.svg";
+import metamaskLogo from "../../media/metamask.svg";
 import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
 import { usePostAuthMutation } from "../../redux/api/auth";
@@ -36,7 +37,7 @@ const LoginHeader = styled.h1`
 
 const SubmitButton = styled.button<{ $disabled?: boolean }>`
     margin: 20px;
-    background: #f455fa;
+    background: #ffd390;
     border: 1px solid #707070;
     box-sizing: border-box;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -49,13 +50,13 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     opacity: ${props => props.$disabled ? 0.8 : 1};
 
     :hover{
-        background: #ff44e6;  
+        background: #f6b95d;  
     }
 
     ${props => props.$disabled && css`
         cursor: not-allowed;
         :hover{
-            background: #f455fa;  
+            background: #f6b95d;  
         }
     `}
 `;
@@ -157,8 +158,9 @@ export const LoginForm = memo(() => {
             <LoginHeader>Login</LoginHeader>
             <ErrorMessage>{isPostLoginError && postLoginError?.data?.error}</ErrorMessage>
             {
-                isPostLoginLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleSubmit}>Metamask</SubmitButton>
+                isPostLoginLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleSubmit}><img src={metamaskLogo} /></SubmitButton>
             }
+            <br />
             <Link to="/register">Register</Link>
         </LoginFormContainer>
     );
