@@ -68,7 +68,7 @@ const NftCards = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 20px 0px;
+    padding: 20px 0px 200px 0px;
 `;
 
 const SearchPostsList = styled(PostsList)`
@@ -95,6 +95,7 @@ const SearchPage = memo(() => {
     const [searchValue, setSearchValue] = useState<string>("*");
     const [activeTab, setActiveTab] = useState<string>("");
     const [pageNumber, setPageNumber] = useState<number>(0);
+    const [pageMaxed, setPageMaxed] = useState<boolean>(false);
     const [nfts, setNfts] = useState<NftInterface[]>([]);
 
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
@@ -102,7 +103,9 @@ const SearchPage = memo(() => {
     const {
         data: searchNftsData,
         refetch: searchNftsRefetch
-    } = useGetSearchNftsQuery({ query: searchValue || "*", page: pageNumber });
+    } = useGetSearchNftsQuery({ query: searchValue || "*", page: pageNumber }, {
+        skip: pageMaxed
+    });
 
     const {
         data: searchPostsData,
@@ -115,14 +118,17 @@ const SearchPage = memo(() => {
     } = useGetSearchUsersQuery({ query: searchValue || "*" });
 
     useEffect(() => {
-        if (activeTab === `NFTs (${searchNftsData?.nfts?.length || 0})`) {
+        if (!pageMaxed && activeTab === `NFTs (${searchNftsData?.nfts?.length || 0})`) {
             searchNftsRefetch();
         }
-    }, [searchValue, searchNftsRefetch, activeTab, searchNftsData?.nfts?.length]);
+    }, [searchValue, searchNftsRefetch, activeTab, searchNftsData?.nfts?.length, pageMaxed]);
 
     useEffect(() => {
         if (searchNftsData?.nfts?.length > 0) {
             setNfts((prevValue) => prevValue.concat(searchNftsData.nfts));
+        }
+        if (searchNftsData?.nfts?.length === 0) {
+            setPageMaxed(true);
         }
     }, [searchNftsData?.nfts, searchNftsData?.nfts?.length]);
 
@@ -142,13 +148,13 @@ const SearchPage = memo(() => {
         const mainContainer = document.getElementById("main-container");
         if (mainContainer) {
             mainContainer.addEventListener("scroll", () => {
-                if (mainContainer.scrollTop + mainContainer.clientHeight >= mainContainer.scrollHeight) {
+                if (!pageMaxed && mainContainer.scrollTop + mainContainer.clientHeight >= mainContainer.scrollHeight) {
                     setPageNumber((prevPageNumber) => prevPageNumber + 1);
                 }
             });
             return () => mainContainer.removeEventListener("scroll", () => null);
         }
-    }, []);
+    }, [pageMaxed]);
 
     const wordCloudParent = useRef<HTMLDivElement>(null);
     const allHashtags = useMemo(() => nfts.map(nft => nft.tokenURI.hashtags).flat(), [nfts]);
