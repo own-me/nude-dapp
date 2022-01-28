@@ -10,6 +10,7 @@ import { useGetSearchUsersQuery } from "../../redux/api/user";
 import { useAppSelector } from "../../redux/hooks";
 import PostsList from "../posts/PostsList";
 import ProfileCardList from "../profile/ProfileCardList";
+import loadingSpinner from "../../media/own-me-spinner.svg";
 
 const SearchPageContainer = styled.div`
     width: 100%;
@@ -68,7 +69,7 @@ const NftCards = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 20px 0px 200px 0px;
+    padding: 20px 0px;
 `;
 
 const SearchPostsList = styled(PostsList)`
@@ -91,6 +92,17 @@ const SearchProfilesList = styled(ProfileCardList)`
     }
 `;
 
+const PaginationMessage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+`;
+
+const NoItemsMessage = styled.div`
+    font-family: "Poppins", sans-serif;
+`;
+
 const SearchPage = memo(() => {
     const [searchValue, setSearchValue] = useState<string>("*");
     const [activeTab, setActiveTab] = useState<string>("");
@@ -102,7 +114,8 @@ const SearchPage = memo(() => {
 
     const {
         data: searchNftsData,
-        refetch: searchNftsRefetch
+        refetch: searchNftsRefetch,
+        isLoading: isSearchNftsLoading,
     } = useGetSearchNftsQuery({ query: searchValue || "*", page: pageNumber }, {
         skip: pageMaxed
     });
@@ -198,6 +211,14 @@ const SearchPage = memo(() => {
                             })
                         }
                     </NftCards>
+                    <PaginationMessage>
+                        {
+                            isSearchNftsLoading && <img src={loadingSpinner} />
+                        }
+                        {
+                            !isSearchNftsLoading && pageMaxed && <NoItemsMessage>No more items...</NoItemsMessage>
+                        }
+                    </PaginationMessage>
                 </TabContent>
                 <TabContent>
                     <SearchPostsList
