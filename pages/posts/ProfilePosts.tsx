@@ -5,7 +5,7 @@ import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";
 
 const ProfilePostsContainer = styled.div`
-    width: 40%;
+    width: 50%;
     min-width: 800px;
     max-width: 1200px;
     margin: 0 auto;
