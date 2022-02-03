@@ -3,10 +3,11 @@ import React, { memo, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import EllipseExtras, { EllipseExtrasContainer, ExtraAction } from "./EllipseExtras";
 import LazyImage, { Image, LazyImageContainer, LoadingImage } from "./LazyImage";
+import { toggleReportModal } from "../redux/slices/app";
 
 const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
@@ -174,6 +175,7 @@ const NFTCard = memo(({
     hashtags = [],
     transactionHash
 }: NFTCardProps) => {
+    const dispatch = useAppDispatch();
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
     const extraActions: ExtraAction[] = useMemo(() => [
@@ -187,9 +189,13 @@ const NFTCard = memo(({
             onClick: (e) => e.stopPropagation()
         }, {
             text: "Report",
-            onClick: (e) => e.stopPropagation()
+            onClick: (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                dispatch(toggleReportModal());
+            }
         }
-    ], [transactionHash]);
+    ], [dispatch, transactionHash]);
 
     return (
         <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>

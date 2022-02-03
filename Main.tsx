@@ -15,6 +15,7 @@ import PostPage from "./pages/posts/PostPage";
 import SearchPage from "./pages/search/SearchPage";
 import { Helmet } from "react-helmet";
 import { routes } from "./lib/routes";
+import ReportModal from "./components/ReportModal";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -67,6 +68,7 @@ export default function Main() {
                     loggedIn ? <SearchPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
             </Routes>
+            {loggedIn && <ReportModal />}
         </MainContainer>
     );
 }
