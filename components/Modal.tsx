@@ -14,7 +14,7 @@ const ModalContainer = styled.div`
     align-content: center;
     justify-content: center;
     align-items: center;
-    background: #0000005e;
+    background: #000000a6;
     z-index: 10;
     top: 0;
 `;
@@ -25,7 +25,7 @@ const ModalContent = styled.div<{ $isDarkMode: boolean }>`
     width: 60%;
     max-width: 800px;
     border-radius: 20px;
-    border: 1px solid #0000005e;
+    border: 1px solid #000000a6;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     position: relative;
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};

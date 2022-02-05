@@ -162,6 +162,7 @@ interface NFTCardProps {
     viewsCount: number;
     hashtags: string[];
     transactionHash?: string;
+    onReport: (tokenId: number) => void;
 }
 
 const NFTCard = memo(({
@@ -173,7 +174,8 @@ const NFTCard = memo(({
     likesCount,
     viewsCount,
     hashtags = [],
-    transactionHash
+    transactionHash,
+    onReport,
 }: NFTCardProps) => {
     const dispatch = useAppDispatch();
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
@@ -193,9 +195,10 @@ const NFTCard = memo(({
                 e.stopPropagation();
                 e.preventDefault();
                 dispatch(toggleReportModal());
+                onReport && onReport(tokenId);
             }
         }
-    ], [dispatch, transactionHash]);
+    ], [dispatch, onReport, tokenId, transactionHash]);
 
     return (
         <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>

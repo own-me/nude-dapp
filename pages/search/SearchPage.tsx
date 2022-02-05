@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
-import React, { memo, useEffect, useMemo, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import HashtagWordCloud from "../../components/HashtagWordCloud";
 import NFTCard from "../../components/NFTCard";
@@ -11,6 +11,7 @@ import { useAppSelector } from "../../redux/hooks";
 import PostsList from "../posts/PostsList";
 import ProfileCardList from "../profile/ProfileCardList";
 import loadingSpinner from "../../media/own-me-spinner.svg";
+import NftReportModal from "../../components/NftReportModal";
 
 const SearchPageContainer = styled.div`
     width: 100%;
@@ -109,6 +110,7 @@ const SearchPage = memo(() => {
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [pageMaxed, setPageMaxed] = useState<boolean>(false);
     const [nfts, setNfts] = useState<NftInterface[]>([]);
+    const [reportingNft, setReportingNft] = useState<NftInterface | null>(null);
 
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
 
@@ -172,72 +174,80 @@ const SearchPage = memo(() => {
     const wordCloudParent = useRef<HTMLDivElement>(null);
     const allHashtags = useMemo(() => nfts.map(nft => nft.tokenURI.hashtags).flat(), [nfts]);
 
+    const handleNftReport = useCallback((tokenId: number) => {
+        setReportingNft(nfts.find(nft => nft.tokenId === tokenId));
+    }, [nfts]);
+
     return (
-        <SearchPageContainer ref={wordCloudParent}>
-            <SearchBarContainer>
-                <SearchInput
-                    type="text"
-                    placeholder="Search..."
-                    $isDarkMode={isDarkMode}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                />
-                <SearchIcon />
-            </SearchBarContainer>
-            <SearchTabs
-                tabs={useMemo(() => [
-                    `NFTs (${searchNftsData?.nfts?.length || 0})`,
-                    `Posts (${searchPostsData?.posts?.length || 0})`,
-                    `Users (${searchUsersData?.users?.length || 0})`,
-                    "Hashtags"
-                ], [searchNftsData?.nfts?.length, searchPostsData?.posts?.length, searchUsersData?.users?.length])}
-                onTabChange={(tab) => setActiveTab(tab)}
-            >
-                <TabContent>
-                    <NftCards>
-                        {
-                            nfts.length > 0 && nfts.map((nft: NftInterface, index: number) => {
-                                return <NFTCard
-                                    tokenId={nft.tokenId}
-                                    title={nft.tokenURI.title}
-                                    recipient={nft.recipient}
-                                    price={nft.price}
-                                    image={nft.tokenURI.image}
-                                    likesCount={nft.likesCount}
-                                    viewsCount={nft.viewsCount}
-                                    hashtags={nft.tokenURI.hashtags}
-                                    transactionHash={nft.transactionHash}
-                                    key={index}
-                                />;
-                            })
-                        }
-                    </NftCards>
-                    <PaginationMessage>
-                        {
-                            isSearchNftsLoading && <img src={loadingSpinner} />
-                        }
-                        {
-                            !isSearchNftsLoading && pageMaxed && <NoItemsMessage>No more items...</NoItemsMessage>
-                        }
-                    </PaginationMessage>
-                </TabContent>
-                <TabContent>
-                    <SearchPostsList
-                        posts={searchPostsData?.posts || []}
-                        refreshPosts={searchPostsRefetch}
+        <>
+            <SearchPageContainer ref={wordCloudParent}>
+                <SearchBarContainer>
+                    <SearchInput
+                        type="text"
+                        placeholder="Search..."
+                        $isDarkMode={isDarkMode}
+                        onChange={(e) => setSearchValue(e.target.value)}
                     />
-                </TabContent>
-                <TabContent>
-                    <SearchProfilesList users={searchUsersData?.users} />
-                </TabContent>
-                <TabContent>
-                    <HashtagWordCloud
-                        width={wordCloudParent?.current?.clientWidth * 0.9 || 500}
-                        height={wordCloudParent?.current?.clientHeight * 0.8 || 500}
-                        hashtags={allHashtags}
-                    />
-                </TabContent>
-            </SearchTabs>
-        </SearchPageContainer>
+                    <SearchIcon />
+                </SearchBarContainer>
+                <SearchTabs
+                    tabs={useMemo(() => [
+                        `NFTs (${searchNftsData?.nfts?.length || 0})`,
+                        `Posts (${searchPostsData?.posts?.length || 0})`,
+                        `Users (${searchUsersData?.users?.length || 0})`,
+                        "Hashtags"
+                    ], [searchNftsData?.nfts?.length, searchPostsData?.posts?.length, searchUsersData?.users?.length])}
+                    onTabChange={(tab) => setActiveTab(tab)}
+                >
+                    <TabContent>
+                        <NftCards>
+                            {
+                                nfts.length > 0 && nfts.map((nft: NftInterface, index: number) => {
+                                    return <NFTCard
+                                        tokenId={nft.tokenId}
+                                        title={nft.tokenURI.title}
+                                        recipient={nft.recipient}
+                                        price={nft.price}
+                                        image={nft.tokenURI.image}
+                                        likesCount={nft.likesCount}
+                                        viewsCount={nft.viewsCount}
+                                        hashtags={nft.tokenURI.hashtags}
+                                        transactionHash={nft.transactionHash}
+                                        key={index}
+                                        onReport={() => handleNftReport(nft.tokenId)}
+                                    />;
+                                })
+                            }
+                        </NftCards>
+                        <PaginationMessage>
+                            {
+                                isSearchNftsLoading && <img src={loadingSpinner} />
+                            }
+                            {
+                                !isSearchNftsLoading && pageMaxed && <NoItemsMessage>No more items...</NoItemsMessage>
+                            }
+                        </PaginationMessage>
+                    </TabContent>
+                    <TabContent>
+                        <SearchPostsList
+                            posts={searchPostsData?.posts || []}
+                            refreshPosts={searchPostsRefetch}
+                        />
+                    </TabContent>
+                    <TabContent>
+                        <SearchProfilesList users={searchUsersData?.users} />
+                    </TabContent>
+                    <TabContent>
+                        <HashtagWordCloud
+                            width={wordCloudParent?.current?.clientWidth * 0.9 || 500}
+                            height={wordCloudParent?.current?.clientHeight * 0.8 || 500}
+                            hashtags={allHashtags}
+                        />
+                    </TabContent>
+                </SearchTabs>
+            </SearchPageContainer>
+            {reportingNft && <NftReportModal nft={reportingNft} />}
+        </>
     );
 });
 
