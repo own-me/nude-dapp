@@ -14,6 +14,12 @@ module.exports = {
         port: "80",
         open: true,
         historyApiFallback: true,
+        client: {
+            overlay: {
+                errors: true,
+                warnings: false,
+            },
+        },
     },
     output: {
         path: path.join(__dirname, "dev"),
