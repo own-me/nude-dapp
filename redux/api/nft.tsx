@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface GetNftRequest {
-    tokenId: string;
+    tokenId: number;
 }
 
 interface GetNftResponse {
@@ -24,7 +24,7 @@ interface GetUserNftsRequest {
 }
 
 interface PostNftLikeRequest {
-    tokenId: string;
+    tokenId: number;
 }
 
 interface PostNftLikeResponse {
@@ -32,11 +32,20 @@ interface PostNftLikeResponse {
 }
 
 interface PostNftUnlikeRequest {
-    tokenId: string;
+    tokenId: number;
 }
 
 interface PostNftUnlikeResponse {
     message: string;
+}
+
+interface PostNftReportRequest {
+    tokenId: number;
+    reason: string;
+}
+
+interface PostNftReportResponse {
+    message?: string;
 }
 
 interface GetSearchNftsRequest {
@@ -114,6 +123,18 @@ export const nftApi = createApi({
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
+        }),
+        postNftReport: builder.mutation<PostNftReportResponse, PostNftReportRequest>({
+            query: ({ tokenId, reason }) => ({
+                url: `nft/report/${tokenId}`,
+                method: "POST",
+                body: {
+                    reason
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
         })
     })
 });
@@ -123,5 +144,6 @@ export const {
     useGetUserNftsQuery,
     usePostNftLikeMutation,
     usePostNftUnlikeMutation,
+    usePostNftReportMutation,
     useGetSearchNftsQuery
 } = nftApi;
