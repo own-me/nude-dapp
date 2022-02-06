@@ -21,20 +21,20 @@ const ModalContent = styled.div`
 
 const SubmitButton = styled.button<{ $disabled?: boolean }>`
     font-family: Poppins, Open Sans;
-    font-size: 30px;
-    background-color: #FE4848;
+    font-size: 22px;
+    background-color: ${props => props.$disabled ? "#a3a3a3" : "#FE4848"};
     color: white;
     border: none;
     padding: 8px 15px;
     border-radius: 6px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     cursor: ${props => props.$disabled ? "not-allowed" : "pointer"};
-    width: 100%;
+    width: 80%;
     align-self: flex-end;
     opacity: ${props => props.$disabled ? 0.8 : 1};
 
     :hover {
-        background-color: #fa2a2a;
+        background-color: ${props => props.$disabled ? "#8a8a8a" : "#fa2a2a"};
     }
 `;
 
@@ -69,6 +69,11 @@ const NftOwner = styled.div`
 
 `;
 
+const FormFooter = styled.div`
+    display: flex;
+    justify-content: center;
+`;
+
 interface NftReportModalProps {
     nft?: NftInterface;
 }
@@ -80,7 +85,9 @@ const NftReportModal = memo(({ nft }: NftReportModalProps) => {
     const [reason, setReason] = useState<string>("");
     const [confirmation, setConfirmation] = useState<boolean>(false);
 
-    const [postNftReport] = usePostNftReportMutation();
+    const [postNftReport, {
+        isSuccess: isNftReportSuccess,
+    }] = usePostNftReportMutation();
 
     const submitConditions = reason && confirmation;
 
@@ -101,21 +108,30 @@ const NftReportModal = memo(({ nft }: NftReportModalProps) => {
                         <NftOwner>{shortenAddress(nft.recipient, 18)}</NftOwner>
                     </NftInfo>
                 </NftInfoContainer>
-                <FormContainer>
-                    <FormTextArea
-                        label="Reason for Report"
-                        onChange={(value) => setReason(value)}
-                        errorMessage="Reason is required."
-                        placeHolder="Please explain why you are reporting this NFT..."
-                    />
-                    <br />
-                    <FormCheckboxInput
-                        label="I verify my report is valid and represents a fair complaint. I accept that if I am an idiot spammer abusing this report system, my Own Me account may be terminated."
-                        onChecked={(checked) => setConfirmation(checked)}
-                    />
-                    <br />
-                    <SubmitButton onClick={handleSubmitReport} $disabled={!submitConditions}>Submit Report</SubmitButton>
-                </FormContainer>
+                {
+                    !isNftReportSuccess ? (
+                        <FormContainer>
+                            <FormTextArea
+                                label="Reason for Report"
+                                onChange={(value) => setReason(value)}
+                                errorMessage="Reason is required."
+                                placeHolder="Please explain why you are reporting this NFT..."
+                            />
+                            <br />
+                            <FormCheckboxInput
+                                label="I verify my report is valid and represents a fair complaint. I accept that if I am an idiot spammer abusing this report system, my Own Me account may be terminated."
+                                onChecked={(checked) => setConfirmation(checked)}
+                            />
+                            <br />
+                            <br />
+                            <FormFooter>
+                                <SubmitButton onClick={handleSubmitReport} $disabled={!submitConditions}>Submit Report</SubmitButton>
+                            </FormFooter>
+                        </FormContainer>
+                    ) : (
+                        <></>
+                    )
+                }
             </ModalContent>
         </Modal>
     );
