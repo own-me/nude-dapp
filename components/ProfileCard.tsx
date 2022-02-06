@@ -6,6 +6,7 @@ import { shortenAddress } from "../lib/helpers";
 import { useAppSelector } from "../redux/hooks";
 import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import EllipseExtras, { ExtraAction } from "./EllipseExtras";
+import LazyImage from "./LazyImage";
 
 const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
@@ -30,7 +31,7 @@ const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     }
 `;
 
-const NFTCardImage = styled.img`
+const NFTCardImage = styled(LazyImage)`
     width: 100%;
     height: 62%;
     object-fit: cover;

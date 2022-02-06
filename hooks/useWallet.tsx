@@ -62,7 +62,7 @@ export default function useWallet() {
             setBalance(balance);
             dispatch(setWalletBalance(balance.toString()));
         }
-        if (network && provider && address) {
+        if (network && provider) {
             getBalance();
         }
     }, [address, dispatch, network, provider]);
