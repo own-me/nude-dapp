@@ -74,6 +74,15 @@ const FormFooter = styled.div`
     justify-content: center;
 `;
 
+const ResponseContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0px;
+    font-size: 25px;
+    font-family: Poppins, Open Sans;
+`;
+
 interface NftReportModalProps {
     nft?: NftInterface;
 }
@@ -129,7 +138,9 @@ const NftReportModal = memo(({ nft }: NftReportModalProps) => {
                             </FormFooter>
                         </FormContainer>
                     ) : (
-                        <></>
+                        <ResponseContainer>
+                            <p>Thank you for your report!</p>
+                        </ResponseContainer>
                     )
                 }
             </ModalContent>
