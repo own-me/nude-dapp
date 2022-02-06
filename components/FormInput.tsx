@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { useAppSelector } from "../redux/hooks";
 
 export const formStyles = css<{ $isError?: boolean, $isDarkMode: boolean }>`
+    font-family: Poppins, Open Sans;
     background-color: ${props => props.$isDarkMode ? "#1c012a" : "#FFFDFF"};
     color: ${props => props.$isDarkMode ? "white" : "black"};
     border: 1px solid ${props => props.$isError ? "red" : "#cc00ff"};
@@ -35,7 +36,7 @@ const InfoText = styled.span`
     color: red;
     position: absolute;
     right: 15px;
-    top: 15px;
+    top: 25px;
 `;
 
 const ErrorText = styled(InfoText)`

@@ -7,6 +7,7 @@ export const FormFileInputContainer = styled.div<{ $isDarkMode: boolean }>`
     cursor: pointer;
     font-family: Poppins, Open Sans;
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
+    display: flex;
 `;
 
 const CheckboxInput = styled.input`

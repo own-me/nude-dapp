@@ -26,7 +26,7 @@ const Error = styled.span`
     color: red;
     position: absolute;
     right: 15px;
-    top: 15px;
+    top: 25px;
 `;
 
 interface FormTextAreaProps {
