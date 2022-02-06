@@ -187,9 +187,6 @@ const NFTCard = memo(({
             onClick: (e) => e.stopPropagation()
         },
         {
-            text: "Delete",
-            onClick: (e) => e.stopPropagation()
-        }, {
             text: "Report",
             onClick: (e) => {
                 e.stopPropagation();

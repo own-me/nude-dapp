@@ -19,7 +19,7 @@ const ExtrasIcon = styled(EllipsisOutlined)`
 `;
 
 const ExtrasPanelContainer = styled.div`
-    min-height: 80px;
+    min-height: 60px;
     min-width: 80px;
     background-color: #FF81EB;
     position: absolute;
