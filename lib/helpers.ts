@@ -8,5 +8,5 @@ export function formatEth(value: BigNumber) {
     return value && ethers.FixedNumber.fromValue(value, 18).round(4).toString();
 }
 
-export const NudeNFT_ADDRESS = "0x85E9dd3521B9c2Fd7AE9B6C4C9b394f040Bea136";
-export const Nude_ADDRESS = "0x7B22b4F9d5cD7881cFB6107f5D389b6F5f74229C";
+export const NudeNFT_ADDRESS = "0x075ad9DBCE55dfF029B2399b5DA353EF6ddA52F2";
+export const Nude_ADDRESS = "0x47157541ae981412E8B2585b4b58573B8D27C0A7";
