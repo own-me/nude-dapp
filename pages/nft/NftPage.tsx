@@ -2,12 +2,13 @@ import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { shortenAddress } from "../../lib/helpers";
+import { NudeNFT_ADDRESS, shortenAddress } from "../../lib/helpers";
 import { useGetNftQuery, usePostNftLikeMutation, usePostNftUnlikeMutation } from "../../redux/api/nft";
 import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
 import { Helmet } from "react-helmet";
+import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
 
 const NftPageContainer = styled.div`
     padding: 80px;
@@ -187,7 +188,7 @@ const NftPage = memo(() => {
     const params = useParams();
     const [tokenUriData, setTokenUriData] = useState(null);
     const [isLikeHovering, setIsLikeHovering] = useState(false);
-    const { address } = useWallet();
+    const { address, provider, signer } = useWallet();
 
     const [postNftLike, {
         isSuccess: isNftLikeSuccess,
@@ -219,6 +220,30 @@ const NftPage = memo(() => {
             postNftLike({ tokenId: params.tokenId });
         } else {
             postNftUnlike({ tokenId: params.tokenId });
+        }
+    };
+
+    const handleOwnMe = async () => {
+        const nudeNftContract = NudeNFT__factory.connect(NudeNFT_ADDRESS, provider);
+        const nudeNftWithSigner = nudeNftContract.connect(signer);
+        try {
+            const tx = await nudeNftWithSigner.buyNFT(params.tokenId, {
+                value: nftData?.nft?.price,
+            });
+            console.log(tx);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const approveNft = async () => {
+        const nudeNftContract = NudeNFT__factory.connect(NudeNFT_ADDRESS, provider);
+        const nudeNftWithSigner = nudeNftContract.connect(signer);
+        try {
+            const tx = await nudeNftWithSigner.approve("0x2f725CB27fCE374efC7F68c5D7106215f2cf91b4", params.tokenId);
+            console.log(tx);
+        } catch (e) {
+            console.log(e);
         }
     };
 
@@ -265,8 +290,10 @@ const NftPage = memo(() => {
                 </TopItems>
                 {
                     address && address === nftData?.nft.recipient ?
-                        <OwnMeButton>Owned</OwnMeButton> :
-                        <OwnMeButton>Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)</OwnMeButton>
+                        <OwnMeButton onClick={approveNft}>Owned</OwnMeButton> :
+                        <OwnMeButton onClick={handleOwnMe}>
+                            Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)
+                        </OwnMeButton>
                 }
             </InfoSection>
         </NftPageContainer>
