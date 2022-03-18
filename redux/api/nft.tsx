@@ -1,62 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface GetNftRequest {
-    tokenId: number;
-}
-
-interface GetNftResponse {
-    nft: NftInterface;
-    ownerName?: string;
-    isLiked?: boolean;
-    likesCount: number;
-    viewsCount: number;
-}
-
 export interface TokenURIInterface {
     title: string;
     description: string;
     image: string;
     hashtags: string[];
-}
-
-interface GetUserNftsRequest {
-    address: string;
-}
-
-interface PostNftLikeRequest {
-    tokenId: number;
-}
-
-interface PostNftLikeResponse {
-    message: string;
-}
-
-interface PostNftUnlikeRequest {
-    tokenId: number;
-}
-
-interface PostNftUnlikeResponse {
-    message: string;
-}
-
-interface PostNftReportRequest {
-    tokenId: number;
-    reason: string;
-}
-
-interface PostNftReportResponse {
-    message?: string;
-}
-
-interface GetSearchNftsRequest {
-    query: string;
-    page: number;
-}
-
-interface GetSearchNftsResponse {
-    message?: string;
-    error?: string;
-    nfts?: NftInterface[];
 }
 
 export interface NftInterface {
@@ -75,56 +23,64 @@ export interface NftInterface {
     viewsCount: number;
 }
 
+interface GetNftResponse {
+    nft: NftInterface;
+    ownerName?: string;
+    isLiked?: boolean;
+    likesCount: number;
+    viewsCount: number;
+}
+
 export const nftApi = createApi({
     reducerPath: "nftApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
-        getNft: builder.query<GetNftResponse, GetNftRequest>({
+        getNft: builder.query<GetNftResponse, { tokenId: number }>({
             query: ({ tokenId }) => ({
                 url: `nft/${tokenId}`,
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        getUserNfts: builder.query<NftInterface[], GetUserNftsRequest>({
+        getUserNfts: builder.query<NftInterface[], { address: string }>({
             query: ({ address }) => ({
                 url: `nft/user/${address}`,
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        postNftLike: builder.mutation<PostNftLikeResponse, PostNftLikeRequest>({
+        postNftLike: builder.mutation<{ message?: string }, { tokenId: number }>({
             query: ({ tokenId }) => ({
                 url: `nft/like/${tokenId}`,
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        postNftUnlike: builder.mutation<PostNftUnlikeResponse, PostNftUnlikeRequest>({
+        postNftUnlike: builder.mutation<{ message?: string }, { tokenId: number }>({
             query: ({ tokenId }) => ({
                 url: `nft/unlike/${tokenId}`,
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        getSearchNfts: builder.query<GetSearchNftsResponse, GetSearchNftsRequest>({
+        getSearchNfts: builder.query<{ nfts: NftInterface[], message?: string, error?: string }, { query: string, page: number }>({
             query: ({ query, page }) => ({
                 url: `nft/search/${query}?page=${page}`,
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        postNftReport: builder.mutation<PostNftReportResponse, PostNftReportRequest>({
+        postNftReport: builder.mutation<{ message?: string }, { tokenId: number, reason: string }>({
             query: ({ tokenId, reason }) => ({
                 url: `nft/report/${tokenId}`,
                 method: "POST",
@@ -132,7 +88,7 @@ export const nftApi = createApi({
                     reason
                 },
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         })

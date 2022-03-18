@@ -140,12 +140,16 @@ const SearchPage = memo(() => {
 
     useEffect(() => {
         if (searchNftsData?.nfts?.length > 0) {
-            setNfts((prevValue) => prevValue.concat(searchNftsData.nfts));
+            if (searchValue) {
+                setNfts(searchNftsData.nfts);
+            } else {
+                setNfts((prevValue) => prevValue.concat(searchNftsData.nfts));
+            }
         }
         if (searchNftsData?.nfts?.length === 0) {
             setPageMaxed(true);
         }
-    }, [searchNftsData?.nfts, searchNftsData?.nfts?.length]);
+    }, [searchNftsData?.nfts, searchValue]);
 
     useEffect(() => {
         if (activeTab === `Posts (${searchPostsData?.posts?.length || 0})`) {
