@@ -1,6 +1,8 @@
 # own-me-frontend
 Frontend for the Own Me web app.
 
+**DO NOT COMMIT ANY NUDE OR SEXUAL CONTENT - CLEAN CODE ONLY OR YOU ARE BANNED, NO SECOND CHANCES, NO MERCY**
+
 ## Dev Setup
 
 1.) `npm install`
@@ -23,4 +25,6 @@ https://ownme.io/
 
 ## Rules / Code of Conduct
 
-1. Absolutely no adult content, nude content or pornography is allowed to be commited to Github. We only publish clean code.
+Read the CODE_OF_CONDUCT.md for more details.
+
+**OUR MAIN RULE:** Absolutely no adult content, nude content or pornography is allowed to be commited to Github. We only publish clean code.
