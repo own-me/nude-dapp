@@ -3,6 +3,7 @@
 ## Our pledge from Own Me to the Github community:
 
 Absolutely no adult content, nude content or pornography is allowed to be commited to Github. We only publish clean code.
+
 DO NOT COMMIT ANY NUDE OR SEXUAL CONTENT - CLEAN CODE ONLY OR YOU ARE BANNED, NO SECOND CHANCES, NO MERCY
 
 We as members, contributors, and leaders pledge to make participation in our
