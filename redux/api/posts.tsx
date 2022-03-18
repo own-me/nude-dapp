@@ -15,75 +15,30 @@ export interface Post {
     isLiked: boolean;
 }
 
-interface GetPostRequest {
-    postId: string;
-}
-
-interface GetUserPostsRequest {
-    userAddress: string;
-}
-
-interface PostsPostRequest {
-    childOf?: number | null;
-    text: string;
-    imageUrl?: string | null;
-}
-
-interface PostsPostResponse {
-    message?: string;
-    error?: string;
-}
-
-interface LikePostRequest {
-    postId: number;
-}
-interface LikePostResponse {
-    message?: string;
-    error?: string;
-}
-
-interface UnlikePostRequest {
-    postId: number;
-}
-interface UnlikePostResponse {
-    message?: string;
-    error?: string;
-}
-
-interface GetSearchPostsRequest {
-    query: string;
-}
-
-interface GetSearchPostsResponse {
-    message?: string;
-    error?: string;
-    posts?: Post[];
-}
-
 export const postsApi = createApi({
     reducerPath: "postsApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
-        getPost: builder.query<Post, GetPostRequest>({
+        getPost: builder.query<Post, { postId: string }>({
             query: ({ postId }) => ({
                 url: `posts/${postId}`,
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        getUserPosts: builder.query<Post[], GetUserPostsRequest>({
+        getUserPosts: builder.query<Post[], { userAddress: string }>({
             query: ({ userAddress }) => ({
                 url: `posts/user/${userAddress}`,
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        postsPost: builder.mutation<PostsPostResponse, PostsPostRequest>({
-            query: ({ childOf, text, imageUrl }) => ({
+        postsPost: builder.mutation<{ message?: string, error?: string }, { text: string, childOf?: number, imageUrl?: string }>({
+            query: ({ text, childOf, imageUrl }) => ({
                 url: "posts/",
                 method: "POST",
                 body: {
@@ -92,34 +47,34 @@ export const postsApi = createApi({
                     imageUrl
                 },
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        likePost: builder.mutation<LikePostResponse, LikePostRequest>({
+        likePost: builder.mutation<{ message?: string, error?: string }, { postId: number }>({
             query: ({ postId }) => ({
                 url: `posts/like/${postId}`,
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        unlikePost: builder.mutation<UnlikePostResponse, UnlikePostRequest>({
+        unlikePost: builder.mutation<{ message?: string, error?: string }, { postId: number }>({
             query: ({ postId }) => ({
                 url: `posts/unlike/${postId}`,
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         }),
-        getSearchPosts: builder.query<GetSearchPostsResponse, GetSearchPostsRequest>({
+        getSearchPosts: builder.query<{ posts?: Post[], message?: string, error?: string }, { query: string }>({
             query: ({ query }) => ({
                 url: `posts/search/${query}`,
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         })

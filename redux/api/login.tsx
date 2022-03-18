@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface LoginRequest {
-    address?: string;
-}
-
 interface LoginResponse {
     address: string;
     message: string;
@@ -15,7 +11,7 @@ export const loginApi = createApi({
     reducerPath: "loginApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
-        postLogin: builder.mutation<LoginResponse, LoginRequest>({
+        postLogin: builder.mutation<LoginResponse, { address?: string }>({
             query: ({ address }) => ({
                 url: "auth/login/",
                 method: "POST",
@@ -23,11 +19,11 @@ export const loginApi = createApi({
                     address
                 },
                 headers: {
-                    ...(localStorage.getItem("token") && {Authorization: `Bearer ${localStorage.getItem("token")}`})
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
-            }),
-        }),
-    }),
+            })
+        })
+    })
 });
 
 export const { usePostLoginMutation } = loginApi;

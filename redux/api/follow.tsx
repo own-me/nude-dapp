@@ -9,20 +9,11 @@ export interface Following {
     nftsCount: number;
 }
 
-interface FollowRequest {
-    toAddress: string;
-}
-
-interface FollowResponse {
-    message: string;
-    ok: boolean;
-}
-
 export const followApi = createApi({
     reducerPath: "followApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
-        postFollow: builder.mutation<FollowResponse, FollowRequest>({
+        postFollow: builder.mutation<{ message: string, ok: boolean }, { toAddress: string }>({
             query: ({ toAddress }) => ({
                 url: "follow/",
                 method: "POST",
@@ -30,7 +21,7 @@ export const followApi = createApi({
                     toAddress
                 },
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
             })
         })

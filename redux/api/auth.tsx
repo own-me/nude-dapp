@@ -25,9 +25,9 @@ export const authApi = createApi({
                     signature,
                     nonce
                 }
-            }),
-        }),
-    }),
+            })
+        })
+    })
 });
 
 export const { usePostAuthMutation } = authApi;

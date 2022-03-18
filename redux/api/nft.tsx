@@ -55,8 +55,11 @@ export const nftApi = createApi({
         }),
         postNftLike: builder.mutation<{ message?: string }, { tokenId: number }>({
             query: ({ tokenId }) => ({
-                url: `nft/like/${tokenId}`,
+                url: "nft/like",
                 method: "POST",
+                body: {
+                    tokenId
+                },
                 headers: {
                     ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
@@ -64,8 +67,11 @@ export const nftApi = createApi({
         }),
         postNftUnlike: builder.mutation<{ message?: string }, { tokenId: number }>({
             query: ({ tokenId }) => ({
-                url: `nft/unlike/${tokenId}`,
+                url: "nft/unlike",
                 method: "POST",
+                body: {
+                    tokenId
+                },
                 headers: {
                     ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
                 }
@@ -82,9 +88,10 @@ export const nftApi = createApi({
         }),
         postNftReport: builder.mutation<{ message?: string }, { tokenId: number, reason: string }>({
             query: ({ tokenId, reason }) => ({
-                url: `nft/report/${tokenId}`,
+                url: "nft/report",
                 method: "POST",
                 body: {
+                    tokenId,
                     reason
                 },
                 headers: {

@@ -7,23 +7,11 @@ interface RegisterRequest {
     email?: string;
 }
 
-interface RegisterResponse {
-    message: string;
-}
-
-interface VerifyEmailRequest {
-    email: string;
-}
-
-interface VerifyEmailResponse {
-    message: string;
-}
-
 export const registerApi = createApi({
     reducerPath: "registerApi",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     endpoints: (builder) => ({
-        postRegister: builder.mutation<RegisterResponse, RegisterRequest>({
+        postRegister: builder.mutation<{ message: string }, RegisterRequest>({
             query: ({ address, isAgeConfirmed, name, email }) => ({
                 url: "auth/register/",
                 method: "POST",
@@ -33,16 +21,16 @@ export const registerApi = createApi({
                     name,
                     email
                 }
-            }),
+            })
         }),
-        verifyEmail: builder.mutation<VerifyEmailResponse, VerifyEmailRequest>({
+        verifyEmail: builder.mutation<{ email: string }, { email: string }>({
             query: ({ email }) => ({
                 url: "register/verify-email",
                 method: "POST",
                 body: {
                     email
                 }
-            }),
+            })
         }),
     }),
 });
