@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { usePostRegisterMutation } from "../../redux/api/register";
+import { usePostRegisterMutation } from "../../api/register";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import FormInput from "../../components/FormInput";
 import useWallet from "../../hooks/useWallet";

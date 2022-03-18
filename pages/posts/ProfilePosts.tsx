@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Post, useGetUserPostsQuery } from "../../redux/api/posts";
+import { Post, useGetUserPostsQuery } from "../../api/posts";
 import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";
 

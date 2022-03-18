@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import defaultProfile from "../../media/defaults/missing-profile.png";
-import { useGetPostQuery } from "../../redux/api/posts";
+import { useGetPostQuery } from "../../api/posts";
 import { useAppSelector } from "../../redux/hooks";
 import CreatePost from "./CreatePost";
 import PostsList from "./PostsList";

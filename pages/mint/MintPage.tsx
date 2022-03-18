@@ -9,7 +9,7 @@ import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
 import useWallet from "../../hooks/useWallet";
 import { ethers } from "ethers";
-import { usePostIpfsUploadMutation } from "../../redux/api/ipfs";
+import { usePostIpfsUploadMutation } from "../../api/ipfs";
 import FormHashtagInput from "../../components/FormHashtagInput";
 import { NudeNFT_ADDRESS } from "../../lib/helpers";
 import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";

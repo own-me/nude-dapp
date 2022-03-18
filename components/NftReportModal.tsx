@@ -1,7 +1,7 @@
 import React, { memo, useState } from "react";
 import styled from "styled-components";
 import { shortenAddress } from "../lib/helpers";
-import { NftInterface, usePostNftReportMutation } from "../redux/api/nft";
+import { NftInterface, usePostNftReportMutation } from "../api/nft";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { toggleReportModal } from "../redux/slices/app";
 import FormCheckboxInput from "./FormCheckboxInput";

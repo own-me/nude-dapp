@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
-import { useEditUserMutation, useUploadProfileImageMutation, useUploadProfileBannerMutation } from "../../redux/api/user";
+import { useEditUserMutation, useUploadProfileImageMutation, useUploadProfileBannerMutation } from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import FormFileInputButton from "../../components/FormFileInputButton";
 

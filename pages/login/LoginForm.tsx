@@ -2,14 +2,14 @@ import React, { memo, useCallback, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { usePostLoginMutation } from "../../redux/api/login";
+import { usePostLoginMutation } from "../../api/login";
 import { setInitialLoginInfo, setUserToken } from "../../redux/slices/user";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import metamaskLogo from "../../media/metamask.svg";
 import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
-import { usePostAuthMutation } from "../../redux/api/auth";
-import { useGetInitialLoginInfoQuery } from "../../redux/api/user";
+import { usePostAuthMutation } from "../../api/auth";
+import { useGetInitialLoginInfoQuery } from "../../api/user";
 
 const LoginFormContainer = styled.form`
     display: flex;

@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { NudeNFT_ADDRESS, shortenAddress } from "../../lib/helpers";
-import { useGetNftQuery, usePostNftLikeMutation, usePostNftUnlikeMutation } from "../../redux/api/nft";
+import { useGetNftQuery, usePostNftLikeMutation, usePostNftUnlikeMutation } from "../../api/nft";
 import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
