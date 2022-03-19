@@ -56,7 +56,7 @@ const FormTextArea = memo(({ label, onChange, inputValue, errorMessage, placeHol
         <FormTextAreaContainer>
             <Label htmlFor={`${label}-textarea`}>{label}</Label>
             <Error>{error}</Error>
-            <Textarea id={`${label}-textarea`} onChange={handleChange} value={value} placeholder={placeHolder} $isError={error} $isDarkMode={isDarkMode} />
+            <Textarea id={`${label}-textarea`} onChange={handleChange} value={value} placeholder={placeHolder} $isError={!!error} $isDarkMode={isDarkMode} />
         </FormTextAreaContainer>
     );
 });

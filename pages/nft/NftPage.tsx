@@ -201,7 +201,7 @@ const NftPage = memo(() => {
     const {
         data: nftData,
         refetch: nftRefetch,
-    } = useGetNftQuery({ tokenId: params.tokenId }, {
+    } = useGetNftQuery({ tokenId: Number(params.tokenId) }, {
         skip: !params.tokenId,
     });
 
@@ -217,9 +217,9 @@ const NftPage = memo(() => {
 
     const handleLikeClick = () => {
         if (!nftData?.isLiked) {
-            postNftLike({ tokenId: params.tokenId });
+            postNftLike({ tokenId: Number(params.tokenId) });
         } else {
-            postNftUnlike({ tokenId: params.tokenId });
+            postNftUnlike({ tokenId: Number(params.tokenId) });
         }
     };
 

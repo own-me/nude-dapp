@@ -226,6 +226,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                                     hashtags={nft.tokenURI.hashtags || []}
                                     transactionHash={nft.transactionHash}
                                     key={index}
+                                    onReport={() => console.log("report")}
                                 />;
                             }) : <NoItemsMessage>No NFTs yet...</NoItemsMessage>
                         }

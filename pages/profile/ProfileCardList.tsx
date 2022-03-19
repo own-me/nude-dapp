@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import { Following } from "../../redux/api/follow";
+import { Following } from "../../api/follow";
 import ProfileCard from "./ProfileCard";
 
 const ProfileCardListContainer = styled.div`

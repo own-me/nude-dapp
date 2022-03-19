@@ -163,6 +163,7 @@ export default function MintPage() {
                         likesCount={0}
                         viewsCount={0}
                         hashtags={hashtags.split(" ")}
+                        onReport={() => console.log("report")}
                     />
                 </RightRow>
             </ImagesRow>

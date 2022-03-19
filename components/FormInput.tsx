@@ -21,7 +21,7 @@ const FormInputContainer = styled.div`
     position: relative;
 `;
 
-const Input = styled.input<{ $isError: boolean, $isDarkMode: boolean }>`
+const Input = styled.input<{ $isError?: boolean, $isDarkMode: boolean }>`
     ${formStyles};
 `;
 
@@ -82,7 +82,7 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
             <Label htmlFor={`${label}-input`}>{label}</Label>
             {error && <ErrorText>{error}</ErrorText>}
             {optional && !error && <OptionalText>optional</OptionalText>}
-            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeholder} min={min} $isError={error} $isDarkMode={isDarkMode} />
+            <Input id={`${label}-input`} onChange={handleChange} value={value} type={type} placeholder={placeholder} min={min} $isError={!!error} $isDarkMode={isDarkMode} />
         </FormInputContainer>
     );
 });

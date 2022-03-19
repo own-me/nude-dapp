@@ -4,7 +4,7 @@ import defaultProfile from "../../media/defaults/missing-profile.png";
 import { shortenAddress } from "../../lib/helpers";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
-import { Following } from "../../redux/api/follow";
+import { Following } from "../../api/follow";
 
 const ProfileCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
     display: flex;
@@ -75,7 +75,6 @@ interface ProfileCardProps {
 
 const ProfileCard = memo(({ user, className }: ProfileCardProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
-
     return (
         <ProfileCardContainer to={`/${user.toAddress}`} $isDarkMode={isDarkMode} className={className}>
             <ProfileImage src={user.toProfileImageUrl || defaultProfile} />
