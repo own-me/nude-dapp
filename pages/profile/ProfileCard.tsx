@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { Following } from "../../api/follow";
 
-const ProfileCardContainer = styled(Link)<{ $isDarkMode: boolean }>`
+const ProfileCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     display: flex;
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
     font-family: Poppins,Open Sans;
@@ -57,6 +57,9 @@ const InfoContainer = styled.div`
     justify-content: flex-end;
     padding: 20px;
     z-index: 3;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom, transparent, transparent, #100016c9);
+    width: 100%;
     text-align: left;
 `;
 
