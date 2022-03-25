@@ -123,27 +123,23 @@ const SearchPage = memo(() => {
 
     const {
         data: searchNftsData,
-        refetch: searchNftsRefetch,
         isLoading: isSearchNftsLoading,
     } = useGetSearchNftsQuery({ query: searchValue || "*", page: pageNumber }, {
-        skip: pageMaxed
+        skip: pageMaxed && activeTab !== TabOptions.NFTS,
     });
 
     const {
         data: searchPostsData,
         refetch: searchPostsRefetch
-    } = useGetSearchPostsQuery({ query: searchValue || "*" });
+    } = useGetSearchPostsQuery({ query: searchValue || "*" }, {
+        skip: activeTab !== TabOptions.POSTS,
+    });
 
     const {
-        data: searchUsersData,
-        refetch: searchUsersRefetch
-    } = useGetSearchUsersQuery({ query: searchValue || "*" });
-
-    useEffect(() => {
-        if (!pageMaxed && activeTab === TabOptions.NFTS) {
-            searchNftsRefetch();
-        }
-    }, [searchValue, searchNftsRefetch, activeTab, searchNftsData?.nfts?.length, pageMaxed]);
+        data: searchUsersData
+    } = useGetSearchUsersQuery({ query: searchValue || "*" }, {
+        skip: activeTab !== TabOptions.USERS,
+    });
 
     useEffect(() => {
         if (searchNftsData?.nfts?.length > 0) {
@@ -157,18 +153,6 @@ const SearchPage = memo(() => {
             setPageMaxed(true);
         }
     }, [searchNftsData?.nfts, searchValue]);
-
-    useEffect(() => {
-        if (activeTab === TabOptions.POSTS) {
-            searchPostsRefetch();
-        }
-    }, [searchValue, searchPostsRefetch, activeTab, searchPostsData?.posts?.length]);
-
-    useEffect(() => {
-        if (activeTab === TabOptions.USERS) {
-            searchUsersRefetch();
-        }
-    }, [searchValue, searchUsersRefetch, activeTab, searchUsersData?.users?.length]);
 
     useEffect(() => {
         const mainContainer = document.getElementById("main-container");
