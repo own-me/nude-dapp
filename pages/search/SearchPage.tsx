@@ -104,9 +104,16 @@ const NoItemsMessage = styled.div`
     font-family: "Poppins", sans-serif;
 `;
 
+enum TabOptions {
+    NFTS = "NFTs",
+    POSTS = "Posts",
+    USERS = "Users",
+    HASHTAGS = "Hashtags"
+}
+
 const SearchPage = memo(() => {
     const [searchValue, setSearchValue] = useState<string>("*");
-    const [activeTab, setActiveTab] = useState<string>("");
+    const [activeTab, setActiveTab] = useState<TabOptions>(TabOptions.NFTS);
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [pageMaxed, setPageMaxed] = useState<boolean>(false);
     const [nfts, setNfts] = useState<NftInterface[]>([]);
@@ -133,7 +140,7 @@ const SearchPage = memo(() => {
     } = useGetSearchUsersQuery({ query: searchValue || "*" });
 
     useEffect(() => {
-        if (!pageMaxed && activeTab === `NFTs (${searchNftsData?.nfts?.length || 0})`) {
+        if (!pageMaxed && activeTab === TabOptions.NFTS) {
             searchNftsRefetch();
         }
     }, [searchValue, searchNftsRefetch, activeTab, searchNftsData?.nfts?.length, pageMaxed]);
@@ -152,13 +159,13 @@ const SearchPage = memo(() => {
     }, [searchNftsData?.nfts, searchValue]);
 
     useEffect(() => {
-        if (activeTab === `Posts (${searchPostsData?.posts?.length || 0})`) {
+        if (activeTab === TabOptions.POSTS) {
             searchPostsRefetch();
         }
     }, [searchValue, searchPostsRefetch, activeTab, searchPostsData?.posts?.length]);
 
     useEffect(() => {
-        if (activeTab === `Users (${searchUsersData?.users?.length || 0})`) {
+        if (activeTab === TabOptions.USERS) {
             searchUsersRefetch();
         }
     }, [searchValue, searchUsersRefetch, activeTab, searchUsersData?.users?.length]);
@@ -196,12 +203,12 @@ const SearchPage = memo(() => {
                 </SearchBarContainer>
                 <SearchTabs
                     tabs={useMemo(() => [
-                        `NFTs (${searchNftsData?.nfts?.length || 0})`,
-                        `Posts (${searchPostsData?.posts?.length || 0})`,
-                        `Users (${searchUsersData?.users?.length || 0})`,
-                        "Hashtags"
-                    ], [searchNftsData?.nfts?.length, searchPostsData?.posts?.length, searchUsersData?.users?.length])}
-                    onTabChange={(tab) => setActiveTab(tab)}
+                        TabOptions.NFTS,
+                        TabOptions.POSTS,
+                        TabOptions.USERS,
+                        TabOptions.HASHTAGS
+                    ], [])}
+                    onTabChange={(tab) => setActiveTab((tab as TabOptions))}
                 >
                     <TabContent>
                         <NftCards>
