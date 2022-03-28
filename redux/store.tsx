@@ -9,6 +9,7 @@ import { userApi } from "../api/user";
 import { unfollowApi } from "../api/unfollow";
 import { nftApi } from "../api/nft";
 import { postsApi } from "../api/posts";
+import { verifyApi } from "../api/verify";
 import appReducer from "./slices/app";
 import userReducer from "./slices/user";
 import walletReducer from "./slices/wallet";
@@ -26,7 +27,8 @@ export const store = configureStore({
         [followApi.reducerPath]: followApi.reducer,
         [unfollowApi.reducerPath]: unfollowApi.reducer,
         [nftApi.reducerPath]: nftApi.reducer,
-        [postsApi.reducerPath]: postsApi.reducer
+        [postsApi.reducerPath]: postsApi.reducer,
+        [verifyApi.reducerPath]: verifyApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         loginApi.middleware,
@@ -37,7 +39,8 @@ export const store = configureStore({
         followApi.middleware,
         unfollowApi.middleware,
         nftApi.middleware,
-        postsApi.middleware
+        postsApi.middleware,
+        verifyApi.middleware
     ),
 });
 
