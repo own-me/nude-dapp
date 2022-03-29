@@ -17,7 +17,7 @@ interface Document {
 interface Verification {
     callback: string;
     person: Person;
-    document: Document;
+    document?: Document;
     vendorData?: string;
     timestamp: string;
 }
@@ -48,7 +48,8 @@ export const verifyApi = createApi({
                 method: "POST",
                 body,
                 headers: {
-                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
+                    "X-AUTH-CLIENT": "abc8c2f3-41ae-44bc-97bf-fff9d0ae0864",
+                    "Content-Type": "application/json"
                 }
             })
         })
