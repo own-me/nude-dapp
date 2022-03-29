@@ -14,6 +14,7 @@ import { NftInterface } from "../../api/nft";
 import { useAppSelector } from "../../redux/hooks";
 import ProfilePosts from "../posts/ProfilePosts";
 import ProfileCardList from "./ProfileCardList";
+import VerifyStepper from "../../components/VerifyStepper";
 
 const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     min-height: 100%;
@@ -130,6 +131,16 @@ const EditProfileButton = styled(ProfileAddress)`
     }
 `;
 
+const GetVerifiedButton = styled(ProfileAddress)`
+    background-color: #8336ff;
+    float: right;
+    cursor: pointer;
+
+    :hover {
+        background-color: #5f23ff;
+    }
+`;
+
 const NoItemsMessage = styled.div`
     display: flex;
     justify-content: center;
@@ -150,9 +161,21 @@ interface ProfileProps {
     userRefetch: () => void;
 }
 
-const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, following, profileImageUrl, bannerImageUrl, userRefetch }: ProfileProps) => {
+const Profile = memo(({
+    profileAddress,
+    name,
+    bio,
+    link,
+    isFollowing,
+    userNfts,
+    following,
+    profileImageUrl,
+    bannerImageUrl,
+    userRefetch
+}: ProfileProps) => {
     const { address } = useWallet();
     const [isEditProfileOpen, setIsEditProfileOpen] = useState<boolean>(false);
+    const [isVerifyOpen, setIsVerifyOpen] = useState<boolean>(false);
 
     const formattedAddress = useMemo(() => shortenAddress(profileAddress, 16), [profileAddress]);
     const [isFollowButtonHovered, setIsFollowButtonHovered] = useState(false);
@@ -182,8 +205,18 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
         <ProfileContainer $isDarkMode={isDarkMode}>
             <ProfileBannerImage src={bannerImageUrl || defaultBanner} />
             <ProfileImage src={profileImageUrl || defaultProfile} />
-            {address === profileAddress && <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>Edit Profile</EditProfileButton>}
-            <a href={`https://mumbai.polygonscan.com/address/${profileAddress}`} target="_blank"><ProfileAddress>{formattedAddress}</ProfileAddress></a>
+            {
+                address === profileAddress &&
+                <EditProfileButton onClick={() => setIsEditProfileOpen(true)}>
+                    Edit Profile
+                </EditProfileButton>
+            }
+            <a href={`https://mumbai.polygonscan.com/address/${profileAddress}`} target="_blank">
+                <ProfileAddress>{formattedAddress}</ProfileAddress>
+            </a>
+            <GetVerifiedButton onClick={() => setIsVerifyOpen(true)}>
+                Get Verified
+            </GetVerifiedButton>
             <ProfileInfo>
                 <ProfileName>{name}</ProfileName>
                 <ProfileDescription>{bio}</ProfileDescription>
@@ -256,6 +289,7 @@ const Profile = memo(({ profileAddress, name, bio, link, isFollowing, userNfts, 
                     userRefetch={userRefetch}
                 />
             </Modal>
+            {isVerifyOpen && <VerifyStepper userAddress={address} onClose={() => setIsVerifyOpen(false)} />}
         </ProfileContainer>
     );
 });
