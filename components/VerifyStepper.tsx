@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { createVeriffFrame } from "@veriff/incontext-sdk";
+import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import Modal from "./Modal";
 import FormInput from "./FormInput";
 import { useCreateVerifySessionMutation } from "../api/verify";
@@ -64,14 +64,31 @@ const VerifyStepper = memo(({ userAddress, onClose }: VerifyStepperInterface) =>
                     lastName,
                     idNumber: userAddress
                 },
-                timestamp: "2016-05-19T08:30:25.597Z"
+                timestamp: new Date().toISOString()
             }
         });
     }, [firstName, lastName, postCreateVerifySession, userAddress]);
 
     useEffect(() => {
         if (isCreateVerifySessionSuccess && createVerifySessionData?.verification?.url) {
-            createVeriffFrame({ url: createVerifySessionData.verification.url });
+            createVeriffFrame({
+                url: createVerifySessionData.verification.url,
+                onEvent: msg => {
+                    switch (msg) {
+                    case MESSAGES.STARTED:
+                        console.log("STARTED verification");
+                        break;
+                    
+                    case MESSAGES.CANCELED:
+                        console.log("CANCELED verification");
+                        break;
+                    
+                    case MESSAGES.FINISHED:
+                        console.log("FINISHED verification");
+                        break;
+                    }   
+                }
+            });
         }
     }, [createVerifySessionData?.verification?.url, isCreateVerifySessionSuccess]);
 
