@@ -39,17 +39,20 @@ const ProfileImage = styled.img`
 `;
 
 const EditProfileImageButton = styled(FormFileInputButton)`
-
+    position: absolute;
+    top: 150px;
 `;
 
 const EditBannerButton = styled(FormFileInputButton)`
-
+    position: absolute;
+    top: 265px;
+    left: 40px;
 `;
 
 const InputContainer = styled.div`
     margin-top: 60px;
     padding: 0px 40px;
-    height: 305px;
+    height: 430px;
     overflow-y: auto;
 `;
 

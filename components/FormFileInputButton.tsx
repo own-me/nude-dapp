@@ -36,9 +36,10 @@ interface FormFileInputProps {
     onFile?: (file: File) => void;
     onData?: (data: string | ArrayBuffer) => void;
     children?: ReactNode;
+    className?: string;
 }
 
-const FormFileInput = memo(({ onFile, onData, children }: FormFileInputProps) => {
+const FormFileInput = memo(({ onFile, onData, children, className }: FormFileInputProps) => {
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -53,7 +54,7 @@ const FormFileInput = memo(({ onFile, onData, children }: FormFileInputProps) =>
     };
 
     return (
-        <FormFileInputContainer>
+        <FormFileInputContainer className={className}>
             <Input onChange={handleChange} type="file" />
             <Button>{children}</Button>
         </FormFileInputContainer>
