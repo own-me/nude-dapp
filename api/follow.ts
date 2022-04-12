@@ -11,7 +11,7 @@ export interface Following {
 
 export const followApi = createApi({
     reducerPath: "followApi",
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "http://api.ownme.io:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "https://api.ownme.io/" }),
     endpoints: (builder) => ({
         postFollow: builder.mutation<{ message: string, ok: boolean }, { toAddress: string }>({
             query: ({ toAddress }) => ({

@@ -17,7 +17,7 @@ export interface Post {
 
 export const postsApi = createApi({
     reducerPath: "postsApi",
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "http://api.ownme.io:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "https://api.ownme.io/" }),
     endpoints: (builder) => ({
         getPost: builder.query<Post, { postId: string }>({
             query: ({ postId }) => ({
