@@ -14,7 +14,7 @@ interface AuthResponse {
 
 export const authApi = createApi({
     reducerPath: "authApi",
-    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "https://api.ownme.io/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV === "true" ? "http://localhost:3000/" : "https://api.ownme.io/" }),
     endpoints: (builder) => ({
         postAuth: builder.mutation<AuthResponse, AuthRequest>({
             query: ({ address, signature, nonce }) => ({
