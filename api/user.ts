@@ -44,7 +44,7 @@ export interface InitialLoginInfoResponse {
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "http://api.ownme.io:3000/" }),
     endpoints: (builder) => ({
         getUser: builder.query<User, { address: string }>({
             query: ({ address }) => ({

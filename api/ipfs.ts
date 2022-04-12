@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const ipfsApi = createApi({
     reducerPath: "ipfsApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "http://api.ownme.io:3000/" }),
     endpoints: (builder) => ({
         postIpfsUpload: builder.mutation<{ ipfsUrl?: string, message?: string, error?: string }, FormData>({
             query: (formData) => ({

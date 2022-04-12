@@ -9,7 +9,7 @@ interface LoginResponse {
 
 export const loginApi = createApi({
     reducerPath: "loginApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "http://api.ownme.io:3000/" }),
     endpoints: (builder) => ({
         postLogin: builder.mutation<LoginResponse, { address?: string }>({
             query: ({ address }) => ({

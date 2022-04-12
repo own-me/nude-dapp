@@ -33,7 +33,7 @@ interface GetNftResponse {
 
 export const nftApi = createApi({
     reducerPath: "nftApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "http://api.ownme.io:3000/" }),
     endpoints: (builder) => ({
         getNft: builder.query<GetNftResponse, { tokenId: number }>({
             query: ({ tokenId }) => ({

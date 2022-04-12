@@ -9,7 +9,7 @@ interface RegisterRequest {
 
 export const registerApi = createApi({
     reducerPath: "registerApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV ? "http://localhost:3000/" : "http://api.ownme.io:3000/" }),
     endpoints: (builder) => ({
         postRegister: builder.mutation<{ message: string }, RegisterRequest>({
             query: ({ address, isAgeConfirmed, name, email }) => ({

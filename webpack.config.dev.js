@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
     mode: "development",
@@ -67,5 +68,8 @@ module.exports = {
         new ESLintPlugin({
             extensions: ["js", "jsx", "ts", "tsx"],
         }),
+        new Dotenv({
+            path: ".dev.env"
+        })
     ]
 };
