@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import styled from "styled-components";
 import { Transition } from "react-transition-group";
 import { useAppSelector } from "../redux/hooks";
+import { ZIndex } from "../lib/zindex";
 
 const DropdownContainer = styled.div<{ $isDarkMode: boolean }>`
     padding: 40px 40px 20px 40px;
@@ -17,6 +18,7 @@ const DropdownContainer = styled.div<{ $isDarkMode: boolean }>`
     border: 1px solid #FECDFF;
     transition: opacity 150ms ease-in-out;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    z-index: ${ZIndex.DROPDOWN};
 
     &.entering {
         opacity: 0;

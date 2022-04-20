@@ -1,4 +1,6 @@
 export enum ZIndex {
     DEFAULT,
-    NAVBAR
+    OPAQUE_BACKGROUND,
+    NAVBAR,
+    DROPDOWN,
 }

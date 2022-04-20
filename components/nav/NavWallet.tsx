@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { toggleDarkMode } from "../../redux/slices/app";
 import AvatarCircle from "./../AvatarCircle";
 import defaultProfile from "../../media/defaults/missing-profile.png";
+import { OpaqueBackground } from "./SideNav";
+import { TOTAL_HEIGHT } from "./Navbar";
 
 const BalanceButton = styled.button`
     font-family: Poppins, Open Sans;
@@ -62,6 +64,13 @@ const LogoutText = styled.div`
     }
 `;
 
+const DropDownOpaqueBackground = styled(OpaqueBackground)`
+    top: ${() => TOTAL_HEIGHT}px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+`;
+
 export default function NavWallet() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -102,6 +111,7 @@ export default function NavWallet() {
                     Logout
                 </LogoutText>
             </Dropdown>
+            {isOpen && <DropDownOpaqueBackground onClick={() => setIsOpen(false)}/>}
         </>
     );
 }

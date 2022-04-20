@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Transition } from "react-transition-group";
 import { navLinks } from "./Navbar";
 import { Link } from "react-router-dom";
+import { ZIndex } from "../../lib/zindex";
 
 const SideNavTimeout = 300;
 
@@ -43,11 +44,11 @@ const NavLink = styled(Link) <{ $isActive: boolean }>`
     }
 `;
 
-const OpaqueBackground = styled.div`
+export const OpaqueBackground = styled.div`
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 2;
+    z-index: ${ZIndex.OPAQUE_BACKGROUND};
     background-color: rgb(253 117 255 / 20%);
     transition: opacity ${SideNavTimeout}ms ease-in-out;
 

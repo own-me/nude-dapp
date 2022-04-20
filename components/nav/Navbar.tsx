@@ -1,9 +1,8 @@
 import React, { memo, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import navLogo from "../../media/own-me-logo.svg";
 import NavWallet from "./NavWallet";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { ZIndex } from "../../lib/zindex";
 import hamburgerIcon from "../../media/hamburger.svg";
 import SideNav from "./SideNav";
@@ -53,6 +52,7 @@ const NavLink = styled(Link) <{ $isActive: boolean }>`
 
 const NavLogo = styled.img`
     height: 100%;
+    cursor: pointer;
 `;
 
 const Hamburger = styled.img<{ $isOpen: boolean }>`
@@ -97,6 +97,8 @@ export const navLinks = [
 const Navbar = memo(() => {
     const location = useLocation();
 
+    const navigate = useNavigate();
+
     const [isSideNavOpen, setIsSideNavOpen] = useState<boolean>(false);
 
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
@@ -104,7 +106,7 @@ const Navbar = memo(() => {
     return (
         <>
             <NavbarContainer $isDarkMode={isDarkMode}>
-                <NavLogo src={navLogo} />
+                <NavLogo src={navLogo} onClick={() => navigate("/")}/>
                 <NavbarItems>
                     {
                         navLinks.map(({ text, link }, index) => {
