@@ -24,11 +24,22 @@ const RegisterPageContainer = styled.div`
 const LogoImg = styled.img`
     margin: 0 auto;
     height: 5rem;
+    position: absolute;
+    top: 50px;
+    left: 50px;
 
-    @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
+    @media (max-width: ${props => props.theme.breakpoints.tablet}px) {
         position: absolute;
-        top: 50px;
-        left: 50px;
+        top: 30px;
+        left: 30px;
+        height: 4rem;
+    }
+    
+    @media (max-width: ${props => props.theme.breakpoints.mobile}px) {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        height: 3rem;
     }
 `;
 

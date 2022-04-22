@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostRegisterMutation } from "../../api/register";
 import loadingSpinner from "../../media/own-me-spinner.svg";
-import FormInput from "../../components/FormInput";
+import FormInput, { Label } from "../../components/FormInput";
 import useWallet from "../../hooks/useWallet";
 
 const RegisterFormContainer = styled.form`
@@ -14,22 +14,33 @@ const RegisterFormContainer = styled.form`
     box-shadow: 1px 10px 10px rgb(0 0 0 / 25%);
     border-radius: 25px;
     border: 1px solid #fc2aff;
-    padding: 2rem 2rem;
+    padding: 1rem 3rem;
     color: black;
     margin: 2rem;
     height: 62vh;
     overflow-y: auto;
     font-family: Poppins, Open Sans;
 
-    @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
-        padding: 3rem 5rem;
+    @media (min-width: ${props => props.theme.breakpoints.desktop}px) {
+        padding: 2.5rem 4.5rem;
         height: fit-content;
+    }
+
+    ${Label} {
+        @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
+        font-size: 16px;
+        }
     }
 `;
 
 const RegisterHeader = styled.h1`
     font-family: Rock Salt, Open Sans;
     color: #c931ff;
+
+    @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
+        margin: 0px;
+        font-size: 25px;
+    }
 `;
 
 const SubmitButton = styled.button<{ $disabled?: boolean }>`
@@ -56,6 +67,10 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
             background: #f455fa;  
         }
     `}
+
+    @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
+        margin: 15px;
+    }
 `;
 
 const AgeVerify = styled.div`

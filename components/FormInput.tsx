@@ -12,6 +12,10 @@ export const formStyles = css<{ $isError?: boolean, $isDarkMode: boolean }>`
     font-size: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 100%;
+    
+    @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
+        padding: 5px 15px;
+    }
 `;
 
 const FormInputContainer = styled.div`
@@ -25,7 +29,7 @@ const Input = styled.input<{ $isError?: boolean, $isDarkMode: boolean }>`
     ${formStyles};
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
     text-align: left;
     display: block;
     font-size: 26px;
@@ -46,6 +50,9 @@ const ErrorText = styled(InfoText)`
 
 const OptionalText = styled(InfoText)`
     color: #505050;
+    @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
+        top: 16px;
+    }
 `;
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -54,9 +61,10 @@ export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
     inputValue?: string;
     errorMessage?: string;
     optional?: boolean;
+    className?: string;
 }
 
-const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeholder, min, optional }: FormInputProps) => {
+const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, placeholder, min, optional, className }: FormInputProps) => {
     const [value, setValue] = useState<string>(inputValue || "");
     const [error, setError] = useState<string>("");
 
@@ -78,7 +86,7 @@ const FormInput = memo(({ label, onChange, inputValue, errorMessage, type, place
     }, [inputValue]);
 
     return (
-        <FormInputContainer>
+        <FormInputContainer className={className}>
             <Label htmlFor={`${label}-input`}>{label}</Label>
             {error && <ErrorText>{error}</ErrorText>}
             {optional && !error && <OptionalText>optional</OptionalText>}

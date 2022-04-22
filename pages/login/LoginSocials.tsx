@@ -55,8 +55,8 @@ const SocialsGrid = styled.div`
 `;
 
 const SocialsIcon = styled.img`
-    margin: 25px;
-    width: 35px;
+    margin: 20px;
+    width: 30px;
     height: auto;
 
     @media screen and (max-width: 640px){
