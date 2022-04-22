@@ -93,7 +93,7 @@ export default function NavWallet() {
                     <Divider />
                     <AccountInfo>{name}</AccountInfo>
                     <AccountInfo>{email}</AccountInfo>
-                    <Link to={`/${address}`}><EditProfileButton>Edit Profile</EditProfileButton></Link>
+                    <Link to={`/${address}`}><EditProfileButton>Profile</EditProfileButton></Link>
                     <Link to={"/mint"}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
                     <EditProfileButton onClick={handleToggleDarkMode}>Toggle UI Mode</EditProfileButton>
                 </div>
