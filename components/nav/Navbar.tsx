@@ -104,7 +104,7 @@ const Navbar = memo(() => {
     return (
         <>
             <NavbarContainer $isDarkMode={isDarkMode}>
-                <NavLogo src={navLogo} />
+                <Link to="/"><NavLogo src={navLogo} /></Link>
                 <NavbarItems>
                     {
                         navLinks.map(({ text, link }, index) => {
