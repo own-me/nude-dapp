@@ -14,12 +14,13 @@ const RegisterFormContainer = styled.form`
     box-shadow: 1px 10px 10px rgb(0 0 0 / 25%);
     border-radius: 25px;
     border: 1px solid #fc2aff;
-    padding: 1rem 3rem;
+    padding: 0.7rem 3rem;
     color: black;
     margin: 2rem;
     height: 62vh;
     overflow-y: auto;
     font-family: Poppins, Open Sans;
+    overflow-x: hidden;
 
     @media (min-width: ${props => props.theme.breakpoints.desktop}px) {
         padding: 2.5rem 4.5rem;
@@ -28,7 +29,8 @@ const RegisterFormContainer = styled.form`
 
     ${Label} {
         @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
-        font-size: 16px;
+        font-size: 15px;
+        padding: 5px 0px;
         }
     }
 `;
@@ -39,7 +41,7 @@ const RegisterHeader = styled.h1`
 
     @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
         margin: 0px;
-        font-size: 25px;
+        font-size: 19px;
     }
 `;
 
@@ -64,12 +66,14 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     ${props => props.$disabled && css`
         cursor: not-allowed;
         :hover{
-            background: #f455fa;  
+            background: #f411fb;  
         }
     `}
 
     @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
-        margin: 15px;
+        margin: 8px;
+        font-size: 13px;
+        padding: 7px 25px;
     }
 `;
 
@@ -79,6 +83,11 @@ const AgeVerify = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 15px 0px;
+    
+    @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
+        padding: 5px;
+        font-size: 13px;
+    }
 `;
 
 const CheckBox = styled.input`

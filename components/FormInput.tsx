@@ -51,7 +51,8 @@ const ErrorText = styled(InfoText)`
 const OptionalText = styled(InfoText)`
     color: #505050;
     @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
-        top: 16px;
+        top: 5px;
+        font-size: 12px;
     }
 `;
 
