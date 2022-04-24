@@ -71,7 +71,7 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     `}
 
     @media (max-width: ${props => props.theme.breakpoints.desktop}px) {
-        margin: 8px;
+        margin: 7px;
         font-size: 13px;
         padding: 7px 25px;
     }
