@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import gears from "./../../media/gears.svg";
+import { Link } from "react-router-dom";
 
 const Position = styled.div`
   position: fixed;
@@ -96,7 +97,9 @@ export default function SuccessNotification() {
                     Please note, your NFT may take up to 5 minutes to show up in your collection!
                 </Content>
                 <Actions>
-                    <Button> Okay ! </Button>
+                    <Link to="/">
+                        <Button> Okay ! </Button>
+                    </Link>
                 </Actions >
             </Container>
         </Position>

@@ -13,6 +13,8 @@ import { usePostIpfsUploadMutation } from "../../api/ipfs";
 import FormHashtagInput from "../../components/FormHashtagInput";
 import { NudeNFT_ADDRESS } from "../../lib/helpers";
 import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
+import SuccessNotification from "../../components/notifications/SuccessNotification";
+import ErrorNotification from "../../components/notifications/ErrorNotification";
 
 const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -71,6 +73,7 @@ const SubmitButton = styled.button`
 
 const EncryptedLabel = styled.h3`
     margin: 0;
+    margin-bottom: 50px;
 `;
 
 const ImagesRow = styled.div`
@@ -88,7 +91,6 @@ const LeftRow = styled.div`
     flex-direction: column;
     justify-content: space-around;
 `;
-
 
 const RightRow = styled.div`
     display: flex;
@@ -124,7 +126,11 @@ export default function MintPage() {
             };
             const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata), ethers.utils.parseEther(price));
             console.log(tx);
+            SuccessNotification();
+
         } else {
+            console.log("ipfsResponse is null");
+            ErrorNotification();
             // image did not upload correctly
         }
     };

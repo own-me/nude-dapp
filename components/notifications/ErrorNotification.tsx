@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import brokenheart from "./../../media/brokenheart.svg";
+import { useState } from "react";
 
-const Position = styled.div`
+const Position = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -84,8 +85,10 @@ const Gears = styled.img`
 `;
 
 export default function ErrorNotification() {
+    const [show, setShow] = useState(true); 
+
     return (
-        <Position>
+        <Position $isOpen={show}>
             <Container>
                 <Title>Error !!</Title>
                 <Gears src={brokenheart} />
@@ -96,7 +99,7 @@ export default function ErrorNotification() {
                     Please try again!
                 </Content>
                 <Actions>
-                    <Button> Okay ! </Button>
+                    <Button onClick={() => setShow(false)}> Okay ! </Button>
                 </Actions >
             </Container>
         </Position>
