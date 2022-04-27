@@ -3,7 +3,7 @@ import styled from "styled-components";
 import brokenheart from "./../../media/brokenheart.svg";
 import { useState } from "react";
 
-const Position = styled.div<{ $isOpen: boolean }>`
+const Position = styled.div`
   position: fixed;
   top: 0;
   right: 0;
@@ -85,23 +85,27 @@ const Gears = styled.img`
 `;
 
 export default function ErrorNotification() {
-    const [show, setShow] = useState(true); 
+    const [active, setActive] = useState(true);
 
     return (
-        <Position $isOpen={show}>
-            <Container>
-                <Title>Error !!</Title>
-                <Gears src={brokenheart} />
-                <SubTitle>
-                    Something Happened!
-                </SubTitle>
-                <Content>
-                    Please try again!
-                </Content>
-                <Actions>
-                    <Button onClick={() => setShow(false)}> Okay ! </Button>
-                </Actions >
-            </Container>
-        </Position>
+        <>
+            {active ? (
+                <Position>
+                    <Container>
+                        <Title>Error !!</Title>
+                        <Gears src={brokenheart} />
+                        <SubTitle>
+              Something Happened!
+                        </SubTitle>
+                        <Content>
+              Please try again!
+                        </Content>
+                        <Actions>
+                            <Button onClick={() => setActive(false)} > Okay ! </Button>
+                        </Actions >
+                    </Container>
+                </Position>
+            ) : null}
+        </>
     );
 }
