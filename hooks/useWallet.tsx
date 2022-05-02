@@ -24,15 +24,13 @@ export default function useWallet() {
     }, [provider]);
 
     useEffect(() => {
-        async function getAddress() {
-            const address = await signer.getAddress();
-            setAddress(address);
-            dispatch(setWalletAddress(address));
+        async function getSigner() {
+            setSigner(await provider.getSigner());
         }
-        if (signer) {
-            getAddress();
+        if (provider) {
+            getSigner();
         }
-    }, [dispatch, signer]);
+    }, [provider]);
 
     useEffect(() => {
         async function getNetwork() {
@@ -46,13 +44,15 @@ export default function useWallet() {
     }, [dispatch, provider]);
 
     useEffect(() => {
-        async function getSigner() {
-            setSigner(await provider.getSigner());
+        async function getAddress() {
+            const address = await signer.getAddress();
+            setAddress(address);
+            dispatch(setWalletAddress(address));
         }
-        if (provider) {
-            getSigner();
+        if (signer && window?.ethereum?.selectedAddress) {
+            getAddress();
         }
-    }, [provider]);
+    }, [dispatch, signer]);
 
     useEffect(() => {
         async function getBalance() {
@@ -62,7 +62,7 @@ export default function useWallet() {
             setBalance(balance);
             dispatch(setWalletBalance(balance.toString()));
         }
-        if (network && provider) {
+        if (network && provider && address) {
             getBalance();
         }
     }, [address, dispatch, network, provider]);
