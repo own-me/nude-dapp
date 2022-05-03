@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../api/login";
-import { setInitialLoginInfo, setUserToken } from "../../redux/slices/user";
+import { setInitialLoginInfo, setUserLoggedIn, setUserToken } from "../../redux/slices/user";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import metamaskLogo from "../../media/metamask.svg";
 import { Link } from "react-router-dom";
@@ -117,13 +117,14 @@ export const LoginForm = memo(() => {
 
     useEffect(() => {
         if (isPostLoginSuccess && postLoginData) {
-            if (postLoginData.nonce) {
+            if (postLoginData?.nonce) {
                 window.localStorage.removeItem("token");
                 signer.signMessage(postLoginData.nonce).then(signature => {
                     postAuth({ address, signature, nonce: postLoginData.nonce });
                 });
             } else {
                 dispatch(setUserToken(window.localStorage.getItem("token")));
+                dispatch(setUserLoggedIn(true));
             }
         }
     }, [postLoginData, isPostLoginSuccess, signer, postAuth, address, dispatch]);

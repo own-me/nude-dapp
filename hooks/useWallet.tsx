@@ -35,8 +35,10 @@ export default function useWallet() {
     useEffect(() => {
         async function getNetwork() {
             const network = await provider.getNetwork();
-            setNetwork(network);
-            dispatch(setWalletNetwork(network));
+            if (network) {
+                setNetwork(network);
+                dispatch(setWalletNetwork(network.name));
+            }
         }
         if (provider) {
             getNetwork();

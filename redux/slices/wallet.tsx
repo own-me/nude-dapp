@@ -3,13 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface WalletState {
     address: string,
     balance: string,
-    network: string
+    networkName: string 
 }
 
 const initialState: WalletState = {
     address: "",
     balance: "",
-    network: ""
+    networkName: ""
 };
 
 export const walletSlice = createSlice({
@@ -23,7 +23,7 @@ export const walletSlice = createSlice({
             state.balance = action.payload;
         },
         setWalletNetwork: (state, action: PayloadAction<string>) => {
-            state.network = action.payload;
+            state.networkName = action.payload;
         }
     }
 });
