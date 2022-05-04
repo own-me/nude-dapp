@@ -51,10 +51,10 @@ export default function useWallet() {
             setAddress(address);
             dispatch(setWalletAddress(address));
         }
-        if (signer && window?.ethereum?.selectedAddress) {
+        if (signer && !address) {
             getAddress();
         }
-    }, [dispatch, signer]);
+    }, [dispatch, signer, address]);
 
     useEffect(() => {
         async function getBalance() {
