@@ -21,4 +21,4 @@ jobs:
         run: npm install && npm run build
 
       - name: Deploy to S3 bucket
-        run: aws s3 sync ./build/ s3://ownme.io --delete
+        run: aws s3 sync ./dist/ s3://ownme.io --delete
