@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
 import { usePostAuthMutation } from "../../api/auth";
 import { useGetInitialLoginInfoQuery } from "../../api/user";
+import Web3AuthLogin from "./Web3AuthLogin";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -161,6 +162,8 @@ export const LoginForm = memo(() => {
             {
                 isPostLoginLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleSubmit}><img src={metamaskLogo} /></SubmitButton>
             }
+            <br />
+            <Web3AuthLogin />
             <br />
             <Link to="/register">Register</Link>
         </LoginFormContainer>

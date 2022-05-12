@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const webpack = require("webpack");
 
 module.exports = {
     mode: "production",
@@ -10,7 +11,7 @@ module.exports = {
     devtool: "source-map",
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "own-me-frontend.bundle.prod.js",
+        filename: "own-me-frontend.bundle.prod.js"
     },
     module: {
         rules: [
@@ -23,39 +24,48 @@ module.exports = {
                         presets: [
                             "@babel/preset-env",
                             "@babel/preset-react",
-                            "@babel/preset-typescript",
-                        ],
-                    },
-                },
+                            "@babel/preset-typescript"
+                        ]
+                    }
+                }
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                use: ["style-loader", "css-loader"]
             },
             {
                 test: /\.(png|jpe?g|gif|woff(2)?|svg)$/i,
                 type: "asset/resource"
-            },
+            }
         ]
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js", ".css"],
+        alias: {
+            https: path.resolve("node_modules/https-browserify"),
+            http: path.resolve("node_modules/stream-http"),
+            os: path.resolve("node_modules/os-browserify"),
+            stream: path.resolve("node_modules/stream-browserify"),
+            crypto: path.resolve("node_modules/crypto-browserify")
+        }
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            Buffer: ["buffer", "Buffer"],
+            process: "process/browser"
+        }),
         new HtmlWebpackPlugin({
             inject: true,
-            template: path.join(__dirname, "index.html"),
+            template: path.join(__dirname, "index.html")
         }),
         new CopyPlugin({
             patterns: [
-                { from: "media/favicons/", to: "media/favicons/" },
-            ],
+                { from: "media/favicons/", to: "media/favicons/" }
+            ]
         }),
         new ESLintPlugin({
-            extensions: ["js", "jsx", "ts", "tsx"],
+            extensions: ["js", "jsx", "ts", "tsx"]
         }),
-        new Dotenv({
-            path: ".prod.env"
-        })
+        new Dotenv()
     ]
 };

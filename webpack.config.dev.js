@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const webpack = require("webpack");
 
 module.exports = {
     mode: "development",
@@ -10,7 +11,7 @@ module.exports = {
     devtool: "eval-source-map",
     devServer: {
         static: {
-            directory: path.join(__dirname, "dev"),
+            directory: path.join(__dirname, "dev")
         },
         port: "80",
         open: true,
@@ -18,13 +19,13 @@ module.exports = {
         client: {
             overlay: {
                 errors: true,
-                warnings: false,
-            },
-        },
+                warnings: false
+            }
+        }
     },
     output: {
         path: path.join(__dirname, "dev"),
-        filename: "own-me-frontend.bundle.dev.js",
+        filename: "own-me-frontend.bundle.dev.js"
     },
     module: {
         rules: [
@@ -37,39 +38,48 @@ module.exports = {
                         presets: [
                             "@babel/preset-env",
                             "@babel/preset-react",
-                            "@babel/preset-typescript",
-                        ],
-                    },
-                },
+                            "@babel/preset-typescript"
+                        ]
+                    }
+                }
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                use: ["style-loader", "css-loader"]
             },
             {
                 test: /\.(png|jpe?g|gif|woff(2)?|svg)$/i,
                 type: "asset/resource"
-            },
+            }
         ]
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js", ".css"],
+        alias: {
+            https: path.resolve("node_modules/https-browserify"),
+            http: path.resolve("node_modules/stream-http"),
+            os: path.resolve("node_modules/os-browserify"),
+            stream: path.resolve("node_modules/stream-browserify"),
+            crypto: path.resolve("node_modules/crypto-browserify")
+        }
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            Buffer: ["buffer", "Buffer"],
+            process: "process/browser"
+        }),
         new HtmlWebpackPlugin({
             inject: true,
-            template: path.join(__dirname, "index.html"),
+            template: path.join(__dirname, "index.html")
         }),
         new CopyPlugin({
             patterns: [
-                { from: "media/favicons/", to: "media/favicons/" },
-            ],
+                { from: "media/favicons/", to: "media/favicons/" }
+            ]
         }),
         new ESLintPlugin({
-            extensions: ["js", "jsx", "ts", "tsx"],
+            extensions: ["js", "jsx", "ts", "tsx"]
         }),
-        new Dotenv({
-            path: ".dev.env"
-        })
+        new Dotenv()
     ]
 };
