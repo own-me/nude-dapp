@@ -5,6 +5,8 @@ import { ADAPTER_EVENTS, CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { INFURA_PROJECT_ID, WEB3AUTH_CLIENT_ID } from "../../lib/constants";
+import web3authLogo from "../../media/web3auth-logo.svg";
+import { socials } from "../../lib/socials";
 
 const openloginAdapter = new OpenloginAdapter({
     adapterSettings: {
@@ -24,11 +26,41 @@ const loginOptions = [
     "github",
     "google",
     "twitch",
-    "metamask"
+    "twitter"
 ];
 
 const Web3AuthContainer = styled.div` 
+    display: flex;
+    flex-direction: column;
+`;
 
+const Web3AuthLogo = styled.img` 
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+`;
+
+const ButtonsGrid = styled.div` 
+    display: flex;
+    justify-content: center;
+`;
+
+const LoginButton = styled.button` 
+    margin: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: #686868 solid 1px;
+    background-color: white;
+    cursor: pointer;
+
+    :hover {
+        background-color: #ffedff;
+    }
+`;
+
+const LoginButtonIcon = styled.img` 
+    height: 40px;
+    width: 40px;
 `;
 
 const Web3AuthLogin = memo(() => {
@@ -83,12 +115,16 @@ const Web3AuthLogin = memo(() => {
 
     return (
         <Web3AuthContainer>
-            <h1>Web3AuthLogin</h1>
-            {
-                loginOptions.map((provider, index) => {
-                    return <button onClick={(e) => handleLogin(e, provider)} key={index}>{provider}</button>;
-                })
-            }
+            <Web3AuthLogo src={web3authLogo} />
+            <ButtonsGrid>
+                {
+                    loginOptions.map((provider, index) => {
+                        return <LoginButton onClick={(e) => handleLogin(e, provider)} key={index}>
+                            <LoginButtonIcon src={socials?.find(social => social.key === provider)?.iconColor} />
+                        </LoginButton>;
+                    })
+                }
+            </ButtonsGrid>
         </Web3AuthContainer>
     );
 });
