@@ -1,4 +1,4 @@
-# own-me-frontend
+# nude-dapp
 Frontend for the Own Me web app.
 
 **DO NOT COMMIT ANY NUDE OR SEXUAL CONTENT - CLEAN CODE ONLY OR YOU ARE BANNED, NO SECOND CHANCES, NO MERCY**
