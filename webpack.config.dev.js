@@ -24,7 +24,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, "dev"),
-        filename: "own-me-frontend.bundle.dev.js",
+        filename: "nude-dapp.bundle.dev.js",
     },
     module: {
         rules: [
@@ -68,8 +68,6 @@ module.exports = {
         new ESLintPlugin({
             extensions: ["js", "jsx", "ts", "tsx"],
         }),
-        new Dotenv({
-            path: ".dev.env"
-        })
+        new Dotenv()
     ]
 };

@@ -10,7 +10,7 @@ module.exports = {
     devtool: "source-map",
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "own-me-frontend.bundle.prod.js",
+        filename: "nude-dapp.bundle.prod.js",
     },
     module: {
         rules: [
@@ -54,8 +54,6 @@ module.exports = {
         new ESLintPlugin({
             extensions: ["js", "jsx", "ts", "tsx"],
         }),
-        new Dotenv({
-            path: ".prod.env"
-        })
+        new Dotenv()
     ]
 };
