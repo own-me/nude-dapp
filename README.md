@@ -33,4 +33,4 @@ https://ownme.io/
 
 Read the CODE_OF_CONDUCT.md for more details.
 
-**OUR MAIN RULE:** Absolutely no adult content, nude content or pornography is allowed to be commited to Github. We only publish clean code.
+**OUR MAIN RULE:** Absolutely no adult content, nude content or pornography is allowed to be committed to Github. We only publish clean code.
