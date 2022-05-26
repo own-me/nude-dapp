@@ -55,6 +55,11 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     `}
 `;
 
+const ConnectWalletMsg = styled.div`
+    width: 100%;
+    padding-bottom: 20px;
+`;
+
 const AddressMessage = styled.div`
     width: 100%;
     padding-bottom: 20px;
@@ -69,11 +74,39 @@ const AddressText = styled.code`
     font-size: 20px;
 `;
 
+const ConnectWallet = styled.button<{ $disabled?: boolean }>`
+    margin: 20px;
+    background: #fdb140;
+    border: 1px solid #707070;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    color: white;
+    padding: 5px 15px;
+    font-family: Poppins, Open Sans;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: ${props => props.$disabled ? 0.8 : 1};
+
+    :hover{
+        background: #ff9b04;  
+    }
+
+    ${props => props.$disabled && css`
+        cursor: not-allowed;
+        :hover{
+            background: #f6b95d;  
+        }
+    `}
+`;
+
 export default function RegisterForm() {
     const navigate = useNavigate();
     const { address } = useWallet();
 
     const [isAgeConfirmed, setIsAgeConfirmed] = useState<boolean>(false);
+
+    const isFormValid = isAgeConfirmed && address;
 
     const [postRegister, {
         isLoading: isRegisterLoading,
@@ -86,25 +119,38 @@ export default function RegisterForm() {
         }
     }, [isRegisterSuccess, navigate]);
 
-    const isSubmitDisabled = !isAgeConfirmed;
-
     const handleRegister = (e) => {
         e.preventDefault();
-        if (!isSubmitDisabled) {
+        if (isFormValid) {
             postRegister({ address, isAgeConfirmed });
         }
+    };
+
+    const connectWallet = async () => {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
     };
 
     return (
         <RegisterFormContainer>
             <RegisterHeader>Register</RegisterHeader>
-            <AddressMessage>
-                <AddressTitle>Your Connected Address:</AddressTitle>
-                <AddressText>{address}</AddressText>
-            </AddressMessage>
-            <FormCheckboxInput label={"I confirm I am over 18 years of age and consent to interacting with pornographic / adult content."} onChecked={(checked) => setIsAgeConfirmed(checked)} />
             {
-                isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} $disabled={isSubmitDisabled}>Register</SubmitButton>
+                address ?
+                    <AddressMessage>
+                        <AddressTitle>Your Connected Address:</AddressTitle>
+                        <AddressText>{address}</AddressText>
+                    </AddressMessage>
+                    :
+                    <ConnectWalletMsg>
+                        <h3>Address Not Connected!</h3>
+                        <ConnectWallet onClick={connectWallet}>Connect Metamask</ConnectWallet>
+                    </ConnectWalletMsg>
+            }
+            <FormCheckboxInput
+                label="I confirm I am over 18 years of age and consent to interacting with pornographic / adult content."
+                onChecked={(checked) => setIsAgeConfirmed(checked)}
+            />
+            {
+                isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} $disabled={!isFormValid}>Register</SubmitButton>
             }
             <Link to="/login">Login</Link>
         </RegisterFormContainer>
