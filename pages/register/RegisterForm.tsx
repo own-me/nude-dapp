@@ -3,10 +3,11 @@ import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostRegisterMutation } from "../../api/register";
 import loadingSpinner from "../../media/own-me-spinner.svg";
-import FormInput from "../../components/FormInput";
 import useWallet from "../../hooks/useWallet";
+import FormCheckboxInput from "../../components/FormCheckboxInput";
 
 const RegisterFormContainer = styled.form`
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,22 +18,17 @@ const RegisterFormContainer = styled.form`
     padding: 2rem 2rem;
     color: black;
     margin: 2rem;
-    height: 62vh;
-    overflow-y: auto;
     font-family: Poppins, Open Sans;
-
-    @media (min-width: ${props => props.theme.breakpoints.tablet}px) {
-        padding: 3rem 5rem;
-        height: fit-content;
-    }
 `;
 
 const RegisterHeader = styled.h1`
     font-family: Rock Salt, Open Sans;
     color: #c931ff;
+    margin-top: 0;
 `;
 
 const SubmitButton = styled.button<{ $disabled?: boolean }>`
+    width: 100%;
     margin: 20px;
     background: #f455fa;
     border: 1px solid #707070;
@@ -45,6 +41,7 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     font-size: 20px;
     cursor: pointer;
     opacity: ${props => props.$disabled ? 0.8 : 1};
+    margin-top: 35px;
 
     :hover{
         background: #ff44e6;  
@@ -58,25 +55,24 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     `}
 `;
 
-const AgeVerify = styled.div`
+const AddressMessage = styled.div`
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0px;
+    padding-bottom: 20px;
 `;
 
-const CheckBox = styled.input`
+const AddressTitle = styled.h3`
+    color: #1f1f1f;
+    font-weight: 500;
+`;
 
+const AddressText = styled.code`
+    font-size: 20px;
 `;
 
 export default function RegisterForm() {
     const navigate = useNavigate();
-
     const { address } = useWallet();
 
-    const [email, setEmail] = useState<string>(null);
-    const [name, setName] = useState<string>(null);
     const [isAgeConfirmed, setIsAgeConfirmed] = useState<boolean>(false);
 
     const [postRegister, {
@@ -95,19 +91,18 @@ export default function RegisterForm() {
     const handleRegister = (e) => {
         e.preventDefault();
         if (!isSubmitDisabled) {
-            postRegister({ address, isAgeConfirmed, name, email });
+            postRegister({ address, isAgeConfirmed });
         }
     };
 
     return (
         <RegisterFormContainer>
             <RegisterHeader>Register</RegisterHeader>
-            <FormInput label="Email" type="email" onChange={(e) => setEmail(e.target.value)} autoComplete="email" optional />
-            <FormInput label="Name" type="text" onChange={(e) => setName(e.target.value)} optional />
-            <AgeVerify>
-                <label htmlFor="ageVerify">I am over 18 years of age</label>
-                <CheckBox type="checkbox" id="ageVerify" name="ageVerify" value={String(isAgeConfirmed)} onChange={() => setIsAgeConfirmed(!isAgeConfirmed)} />
-            </AgeVerify>
+            <AddressMessage>
+                <AddressTitle>Your Connected Address:</AddressTitle>
+                <AddressText>{address}</AddressText>
+            </AddressMessage>
+            <FormCheckboxInput label={"I confirm I am over 18 years of age and consent to interacting with pornographic / adult content."} onChecked={(checked) => setIsAgeConfirmed(checked)} />
             {
                 isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} $disabled={isSubmitDisabled}>Register</SubmitButton>
             }
