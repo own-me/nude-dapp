@@ -16,10 +16,12 @@ export default function useWallet() {
     const [signer, setSigner] = useState(null);
 
     useEffect(() => {
-        if (!provider) {
-            console.log("Getting new wallet provider...");
+        console.log("Getting new wallet provider...");
+        if (!provider && window.ethereum) {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             setProvider(provider);
+        } else {
+            console.log("No wallet provider found");
         }
     }, [provider]);
 
