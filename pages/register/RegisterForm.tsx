@@ -41,7 +41,6 @@ const SubmitButton = styled.button<{ $disabled?: boolean }>`
     font-size: 20px;
     cursor: pointer;
     opacity: ${props => props.$disabled ? 0.8 : 1};
-    margin-top: 35px;
 
     :hover{
         background: #ff44e6;  
@@ -100,6 +99,10 @@ const ConnectWallet = styled.button<{ $disabled?: boolean }>`
     `}
 `;
 
+const ErrorMessage = styled.p`
+    color: red;
+`;
+
 export default function RegisterForm() {
     const navigate = useNavigate();
     const { address } = useWallet();
@@ -110,7 +113,9 @@ export default function RegisterForm() {
 
     const [postRegister, {
         isLoading: isRegisterLoading,
-        isSuccess: isRegisterSuccess
+        isSuccess: isRegisterSuccess,
+        isError: isRegisterError,
+        error: registerError
     }] = usePostRegisterMutation();
 
     useEffect(() => {
@@ -149,6 +154,7 @@ export default function RegisterForm() {
                 label="I confirm I am over 18 years of age and consent to interacting with pornographic / adult content."
                 onChecked={(checked) => setIsAgeConfirmed(checked)}
             />
+            <ErrorMessage>{isRegisterError && registerError?.data?.error}</ErrorMessage>
             {
                 isRegisterLoading ? <img src={loadingSpinner} /> : <SubmitButton onClick={handleRegister} $disabled={!isFormValid}>Register</SubmitButton>
             }
