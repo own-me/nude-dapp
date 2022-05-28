@@ -72,18 +72,20 @@ export default function useWallet() {
     }, [address, dispatch, network, provider]);
 
     useEffect(() => {
-        window.ethereum.on("accountsChanged", (accounts: Array<string>) => {
-            if (!address) {
-                setAddress(accounts[0]);
-            } else {
-                setBalance(null);
-                setAddress("");
-                setNetwork(null);
-                setProvider(null);
-                setSigner(null);
-                dispatch(setUserLoggedIn(false));
-            }
-        });
+        if (window.ethereum) {
+            window.ethereum.on("accountsChanged", (accounts: Array<string>) => {
+                if (!address) {
+                    setAddress(accounts[0]);
+                } else {
+                    setBalance(null);
+                    setAddress("");
+                    setNetwork(null);
+                    setProvider(null);
+                    setSigner(null);
+                    dispatch(setUserLoggedIn(false));
+                }
+            });
+        }
     }, [address, dispatch]);
 
     return { balance, address, network, provider, signer };
