@@ -3,8 +3,7 @@ import { BigNumber, ethers } from "ethers";
 import { setUserLoggedIn } from "../redux/slices/user";
 import { setWalletAddress, setWalletBalance, setWalletNetwork } from "../redux/slices/wallet";
 import { useAppDispatch } from "../redux/hooks";
-import { Nude_ADDRESS } from "../lib/helpers";
-import { Nude__factory } from "../typechain/factories/Nude__factory";
+import { getPolygonMumbaiSdk } from "@dethcrypto/eth-sdk-client";
 
 export default function useWallet() {
     const dispatch = useAppDispatch();
@@ -14,6 +13,7 @@ export default function useWallet() {
     const [network, setNetwork] = useState(null);
     const [provider, setProvider] = useState(null);
     const [signer, setSigner] = useState(null);
+    const [ethSdk, setEthSdk] = useState(null);
 
     useEffect(() => {
         if (!provider) {
@@ -25,7 +25,10 @@ export default function useWallet() {
 
     useEffect(() => {
         async function getSigner() {
-            setSigner(await provider.getSigner());
+            const signer = await provider.getSigner();
+            const sdk = getPolygonMumbaiSdk(signer);
+            setSigner(signer);
+            setEthSdk(sdk);
         }
         if (provider) {
             getSigner();
