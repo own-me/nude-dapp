@@ -15,6 +15,7 @@ import PostPage from "./pages/posts/PostPage";
 import SearchPage from "./pages/search/SearchPage";
 import { Helmet } from "react-helmet";
 import { routes } from "./lib/routes";
+import BuyTokensPage from "./pages/buytokens/BuyTokensPage";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -53,6 +54,9 @@ export default function Main() {
                 } />
                 <Route path="/mint" element={
                     loggedIn ? <MintPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
+                } />
+                <Route path="/buytokens" element={
+                    loggedIn ? <BuyTokensPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
                 <Route path="/nft/:tokenId" element={
                     loggedIn ? <NftPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />

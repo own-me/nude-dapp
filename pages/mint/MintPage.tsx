@@ -14,7 +14,7 @@ import FormHashtagInput from "../../components/FormHashtagInput";
 import { NudeNFT_ADDRESS } from "../../lib/helpers";
 import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
 
-const MintPageContainer = styled.div`
+export const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
     height: 100%;
     display: flex;
@@ -32,19 +32,19 @@ const MintPageContainer = styled.div`
     }
 `;
 
-const MintFormHeader = styled.div`
+export const MintFormHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 `;
 
-const MintFormHeaderTitle = styled.h1`
+export const MintFormHeaderTitle = styled.h1`
     font-family: Rock Salt, Open Sans;
     font-size: 40px;
 `;
 
-const MintFormHeaderCandy = styled.img`
+export const MintFormHeaderCandy = styled.img`
     height: 60px;
 `;
 
@@ -56,7 +56,7 @@ const MintFormFooter = styled.div`
     margin-top: 30px;
 `;
 
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
     font-family: Poppins, Open Sans;
     font-size: 22px;
     background-color: #FF81EB;
