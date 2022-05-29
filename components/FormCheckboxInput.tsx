@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useState } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useAppSelector } from "../redux/hooks";
 
@@ -28,8 +29,9 @@ interface FormCheckboxInputProps {
 
 const FormCheckboxInput = memo(({ label, onChecked }: FormCheckboxInputProps) => {
     const [checked, setChecked] = useState<boolean>(false);
+    const location = useLocation();
 
-    const isDarkMode = useAppSelector(state => state.app.isDarkMode);
+    const isDarkMode = useAppSelector(state => state.app.isDarkMode) && location.pathname !== "/login" && location.pathname !== "/register";
 
     const handleChange = useCallback(() => {
         onChecked && onChecked(!checked);
