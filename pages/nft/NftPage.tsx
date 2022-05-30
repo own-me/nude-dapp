@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { NudeNFT_ADDRESS, shortenAddress } from "../../lib/helpers";
+import { shortenAddress } from "../../lib/helpers";
 import { useGetNftQuery, usePostNftLikeMutation, usePostNftUnlikeMutation } from "../../api/nft";
 import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
@@ -224,7 +224,7 @@ const NftPage = memo(() => {
     };
 
     const handleOwnMe = async () => {
-        const nudeNftContract = NudeNFT__factory.connect(NudeNFT_ADDRESS, provider);
+        const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
         const nudeNftWithSigner = nudeNftContract.connect(signer);
         try {
             const tx = await nudeNftWithSigner.buyNFT(params.tokenId, {
@@ -237,7 +237,7 @@ const NftPage = memo(() => {
     };
 
     const approveNft = async () => {
-        const nudeNftContract = NudeNFT__factory.connect(NudeNFT_ADDRESS, provider);
+        const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
         const nudeNftWithSigner = nudeNftContract.connect(signer);
         try {
             const tx = await nudeNftWithSigner.approve("0x2f725CB27fCE374efC7F68c5D7106215f2cf91b4", params.tokenId);

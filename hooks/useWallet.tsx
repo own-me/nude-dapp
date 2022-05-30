@@ -3,7 +3,6 @@ import { BigNumber, ethers } from "ethers";
 import { setUserLoggedIn } from "../redux/slices/user";
 import { setWalletAddress, setWalletBalance, setWalletNetwork } from "../redux/slices/wallet";
 import { useAppDispatch } from "../redux/hooks";
-import { Nude_ADDRESS } from "../lib/helpers";
 import { Nude__factory } from "../typechain/factories/Nude__factory";
 
 export default function useWallet() {
@@ -61,7 +60,7 @@ export default function useWallet() {
     useEffect(() => {
         async function getBalance() {
             await window.ethereum.request({ method: "eth_requestAccounts" });
-            const nudeContract = Nude__factory.connect(Nude_ADDRESS, provider);
+            const nudeContract = Nude__factory.connect(process.env.NUDE_ADDRESS, provider);
             const balance = await nudeContract.balanceOf(address);
             setBalance(balance);
             dispatch(setWalletBalance(balance.toString()));
