@@ -3,4 +3,3 @@ prod
 .DS_Store
 typechain
 dist
-.env

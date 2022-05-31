@@ -3,8 +3,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 interface RegisterRequest {
     address: string;
     isAgeConfirmed: boolean;
-    name?: string;
-    email?: string;
 }
 
 export const registerApi = createApi({
@@ -12,14 +10,12 @@ export const registerApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: process.env.IS_DEV === "true" ? "http://localhost:3000/" : "https://api.ownme.io/" }),
     endpoints: (builder) => ({
         postRegister: builder.mutation<{ message: string }, RegisterRequest>({
-            query: ({ address, isAgeConfirmed, name, email }) => ({
+            query: ({ address, isAgeConfirmed }) => ({
                 url: "auth/register/",
                 method: "POST",
                 body: {
                     address,
-                    isAgeConfirmed,
-                    name,
-                    email
+                    isAgeConfirmed
                 }
             })
         }),

@@ -8,10 +8,8 @@ import Switch from "./Switch";
 import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
 import useWallet from "../../hooks/useWallet";
-import { ethers } from "ethers";
 import { usePostIpfsUploadMutation } from "../../api/ipfs";
 import FormHashtagInput from "../../components/FormHashtagInput";
-import { NudeNFT_ADDRESS } from "../../lib/helpers";
 import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
 
 export const MintPageContainer = styled.div`
@@ -112,7 +110,7 @@ export default function MintPage() {
         formData.append("image", imageData);
         const ipfsResponse = await postIpfsUpload(formData);
         if (ipfsResponse) {
-            const nudeNftContract = NudeNFT__factory.connect(NudeNFT_ADDRESS, provider);
+            const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
             const nudeNftWithSigner = nudeNftContract.connect(signer);
             console.log(nudeNftWithSigner);
             const metadata = {

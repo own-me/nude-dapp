@@ -2,16 +2,14 @@ import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { NudeDEX_Address, NudeNFT_ADDRESS, Nude_ADDRESS, shortenAddress } from "../../lib/helpers";
+import { shortenAddress } from "../../lib/helpers";
 import { useGetNftQuery, usePostNftLikeMutation, usePostNftUnlikeMutation } from "../../api/nft";
 import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
 import { Helmet } from "react-helmet";
-import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
-import { NudeDEX__factory, Nude__factory } from "../../typechain";
+import { NudeDEX__factory, NudeNFT__factory } from "../../typechain";
 import FormInput from "../../components/FormInput";
-import { ApprovalEventFilter } from "../../typechain/Nude";
 
 const NftPageContainer = styled.div`
     padding: 80px;
@@ -193,7 +191,6 @@ const NftPage = memo(() => {
     const [isLikeHovering, setIsLikeHovering] = useState(false);
     const { address, provider, signer } = useWallet();
     const [price, setPrice] = useState("");
-    const nudeNftContract = NudeNFT__factory.connect(NudeNFT_ADDRESS, provider);
 
     const [postNftLike, {
         isSuccess: isNftLikeSuccess,
@@ -229,45 +226,44 @@ const NftPage = memo(() => {
     };
 
     const handleOwnMe = async () => {
-        const nudeNftWithSigner = nudeNftContract.connect(signer);
+        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
+        const nudeDexWithSigner = nudeDexContract.connect(signer);
         try {
-            const tx = await nudeNftWithSigner.buyNFT(params.tokenId, {
-                value: nftData?.nft?.price,
-            });
-            console.log(tx);
+            const tx = await nudeDexWithSigner.trade(params.tokenId);
+            console.log("handleOwnMe:", tx);
         } catch (e) {
             console.log(e);
         }
     };
 
     const approveNft = async () => {
-        if (ethers.utils.parseEther(price).lte(0)) return;
+        const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
         const nudeNftWithSigner = nudeNftContract.connect(signer);
         try {
             // user agree to sent NFT to NudeDex
-            const tx = await nudeNftWithSigner.approve(NudeDEX_Address, params.tokenId);
-            console.log(tx);
+            const tx = await nudeNftWithSigner.approve(process.env.NUDE_DEX_ADDRESS, params.tokenId);
+            console.log("approveNft:", tx);
         } catch (e) {
             console.log(e);
         }
     };
 
     const takeDown = async () => {
-        const nudeDexContract = NudeDEX__factory.connect(NudeDEX_Address, provider);
+        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
         const nudeDexWithSigner = nudeDexContract.connect(signer);
         try {
             const tx = await nudeDexWithSigner.takeDown(params.tokenId);
-            console.log(tx);
+            console.log("takeDown:", tx);
         } catch (e) {
             console.log(e);
         }
     };
-    const onSale =async () => {
-        const nudeDexContract = NudeDEX__factory.connect(NudeDEX_Address, provider);
-        const nudeDexWithSigner = nudeDexContract.connect(signer);
 
-        const tx3 = await nudeDexWithSigner.onSale(params.tokenId, ethers.utils.parseEther(price));
-        console.log(tx3);   
+    const onSale = async () => {
+        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
+        const nudeDexWithSigner = nudeDexContract.connect(signer);
+        const tx = await nudeDexWithSigner.onSale(params.tokenId, ethers.utils.parseEther(price));
+        console.log("onSale TX:", tx);
     };
 
 
