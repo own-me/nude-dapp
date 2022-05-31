@@ -156,7 +156,7 @@ interface NFTCardProps {
     tokenId?: number;
     title: string;
     recipient: string;
-    price: string;
+    price?: string;
     image: string;
     likesCount: number;
     viewsCount: number;

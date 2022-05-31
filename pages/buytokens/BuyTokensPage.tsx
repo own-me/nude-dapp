@@ -19,8 +19,11 @@ export default function BuyTokensPage() {
         const nudeContract = Nude__factory.connect(Nude_ADDRESS, provider);
         const nudeWithSigner = nudeContract.connect(signer);
         try {
-            const tx = await nudeWithSigner.buyTokens(price, { value: ethers.utils.parseEther(price).mul(0.1)});
+            // todo: implement getTokenRate in contract
+            const tokenRate = 10;
+            const tx = await nudeWithSigner.buyTokens(price, { value: ethers.utils.parseEther(price).div(tokenRate) });
             console.log(tx);
+            // todo: implement user-friendly ux
         } catch (error) {
             console.error(error);
         }
@@ -34,7 +37,7 @@ export default function BuyTokensPage() {
             </MintFormHeader>
             <FormInput
                 type="number"
-                label="Price"
+                label="Amount of NUDES to buy"
                 onChange={(e) => setPrice(e.target.value)}
                 errorMessage="Price is required."
                 min={0}
