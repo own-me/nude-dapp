@@ -3,7 +3,6 @@ import pinkCandy from "../../media/pink-candy.svg";
 import { MintPageContainer, MintFormHeader, MintFormHeaderTitle, MintFormHeaderCandy, SubmitButton } from "../mint/MintPage";
 import React, { useState } from "react";
 import FormInput from "../../components/FormInput";
-import { Nude_ADDRESS } from "../../lib/helpers";
 import { Nude__factory } from "../../typechain/factories/Nude__factory";
 import useWallet from "../../hooks/useWallet";
 import { ethers } from "ethers";
@@ -13,10 +12,10 @@ const BuyTokensPageContainer = styled(MintPageContainer)``;
 export default function BuyTokensPage() {
     const [price, setPrice] = useState("0");
 
-    const { address, provider, signer } = useWallet();
+    const { provider, signer } = useWallet();
 
     const handleSubmit = async () => {
-        const nudeContract = Nude__factory.connect(Nude_ADDRESS, provider);
+        const nudeContract = Nude__factory.connect(process.env.NUDE_ADDRESS, provider);
         const nudeWithSigner = nudeContract.connect(signer);
         try {
             // todo: implement getTokenRate in contract
@@ -42,7 +41,7 @@ export default function BuyTokensPage() {
                 errorMessage="Price is required."
                 min={0}
             />
-            <SubmitButton onClick = {handleSubmit}>BUY</SubmitButton>
+            <SubmitButton onClick={handleSubmit}>BUY</SubmitButton>
         </BuyTokensPageContainer>
     );
 }
