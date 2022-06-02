@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Following } from "./follow";
 
 interface User {
     id?: string;
@@ -40,6 +39,15 @@ export interface InitialLoginInfoResponse {
     profileImageUrl?: string;
     message?: string;
     error?: string;
+}
+
+export interface Following {
+    fromAddress: string;
+    toAddress: string;
+    toProfileImageUrl: string;
+    name: string;
+    followersCount: number;
+    nftsCount: number;
 }
 
 export const userApi = createApi({
@@ -110,6 +118,30 @@ export const userApi = createApi({
                     ...((token || localStorage.getItem("token")) && { Authorization: `Bearer ${token || localStorage.getItem("token")}` })
                 }
             })
+        }),
+        postFollow: builder.mutation<{ message: string, ok: boolean }, { toAddress: string }>({
+            query: ({ toAddress }) => ({
+                url: "user/follow",
+                method: "POST",
+                body: {
+                    toAddress
+                },
+                headers: {
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
+                }
+            })
+        }),
+        postUnfollow: builder.mutation<{ message: string, ok: boolean }, { toAddress: string }>({
+            query: ({ toAddress }) => ({
+                url: "user/unfollow",
+                method: "POST",
+                body: {
+                    toAddress
+                },
+                headers: {
+                    ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })
+                }
+            })
         })
     })
 });
@@ -120,5 +152,7 @@ export const {
     useUploadProfileBannerMutation,
     useEditUserMutation,
     useGetSearchUsersQuery,
-    useGetInitialLoginInfoQuery
+    useGetInitialLoginInfoQuery,
+    usePostFollowMutation,
+    usePostUnfollowMutation
 } = userApi;
