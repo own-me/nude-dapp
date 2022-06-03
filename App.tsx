@@ -7,18 +7,18 @@ import "@fontsource/shadows-into-light";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import Main from "./Main";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./styles/theme";
 
 function App() {
     return (
         <Provider store={store}>
-            <HashRouter>
+            <BrowserRouter>
                 <ThemeProvider theme={theme}>
                     <Main />
                 </ThemeProvider>
-            </HashRouter>
+            </BrowserRouter>
         </Provider>
     );
 }
