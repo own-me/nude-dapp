@@ -208,6 +208,7 @@ const NftPage = memo(() => {
     });
 
     useEffect(() => {
+        console.log(nftData);
         if (nftData) {
             setTokenUriData(nftData.nft.tokenURI);
         }
@@ -229,26 +230,14 @@ const NftPage = memo(() => {
         const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
         const nudeDexWithSigner = nudeDexContract.connect(signer);
         try {
-            const tx = await nudeDexWithSigner.trade(params.tokenId);
+            const tx = await nudeDexWithSigner.trade(params.tokenId, address);
             console.log("handleOwnMe:", tx);
         } catch (e) {
             console.log(e);
         }
     };
 
-    const approveNft = async () => {
-        const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
-        const nudeNftWithSigner = nudeNftContract.connect(signer);
-        try {
-            // user agree to sent NFT to NudeDex
-            const tx = await nudeNftWithSigner.approve(process.env.NUDE_DEX_ADDRESS, params.tokenId);
-            console.log("approveNft:", tx);
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
-    const takeDown = async () => {
+    const handleTakeDown = async () => {
         const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
         const nudeDexWithSigner = nudeDexContract.connect(signer);
         try {
@@ -259,10 +248,10 @@ const NftPage = memo(() => {
         }
     };
 
-    const onSale = async () => {
-        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
-        const nudeDexWithSigner = nudeDexContract.connect(signer);
-        const tx = await nudeDexWithSigner.onSale(params.tokenId, ethers.utils.parseEther(price));
+    const handleOnSale = async () => {
+        const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
+        const nudeNftWithSigner = nudeNftContract.connect(signer);
+        const tx = await nudeNftWithSigner.approveAndTransferToDEX(params.tokenId, ethers.utils.parseEther(price));
         console.log("onSale TX:", tx);
     };
 
@@ -310,24 +299,24 @@ const NftPage = memo(() => {
                 </TopItems>
                 {
                     address && address === nftData?.nft.recipient
-                        ? <>
-                            <FormInput
-                                type="number"
-                                label="Price"
-                                onChange={(e) => setPrice(e.target.value)}
-                                errorMessage="Price is required."
-                                min={1}
-                            />
-                            <OwnMeButton onClick={takeDown}>Owned</OwnMeButton>
-                        </>
+                        ? (
+                            nftData?.nft.isonsale
+                                ? <OwnMeButton onClick={handleTakeDown}>WITHDRAW</OwnMeButton>
+                                : <>
+                                    <FormInput
+                                        type="number"
+                                        label="Price"
+                                        onChange={(e) => setPrice(e.target.value)}
+                                        errorMessage="Price is required."
+                                        min={1}
+                                    />
+                                    <OwnMeButton onClick={handleOnSale}>ON SALE</OwnMeButton>
+                                </>)
                         : <OwnMeButton onClick={handleOwnMe}>
                             Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)
                         </OwnMeButton>
                 }
 
-                <OwnMeButton onClick={approveNft}>Approve</OwnMeButton>
-                <OwnMeButton onClick={onSale}>onSale</OwnMeButton>
-                <OwnMeButton onClick={takeDown}>TakeDown</OwnMeButton>
             </InfoSection>
         </NftPageContainer>
     );

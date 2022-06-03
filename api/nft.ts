@@ -21,6 +21,7 @@ export interface NftInterface {
     isLiked?: boolean;
     likesCount: number;
     viewsCount: number;
+    isonsale: boolean;
 }
 
 interface GetNftResponse {
