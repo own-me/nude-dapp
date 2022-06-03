@@ -8,7 +8,7 @@ import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
 import { Helmet } from "react-helmet";
-import { NudeDEX__factory, NudeNFT__factory } from "../../typechain";
+import { NudeDEX__factory, NudeNFT__factory, Nude__factory } from "../../typechain";
 import FormInput from "../../components/FormInput";
 
 const NftPageContainer = styled.div`
@@ -191,6 +191,7 @@ const NftPage = memo(() => {
     const [isLikeHovering, setIsLikeHovering] = useState(false);
     const { address, provider, signer } = useWallet();
     const [price, setPrice] = useState("");
+    const [salingPrice, setSalingPrice] = useState("");
 
     const [postNftLike, {
         isSuccess: isNftLikeSuccess,
@@ -208,11 +209,27 @@ const NftPage = memo(() => {
     });
 
     useEffect(() => {
-        console.log(nftData);
         if (nftData) {
             setTokenUriData(nftData.nft.tokenURI);
         }
     }, [nftData]);
+
+    useEffect(() => {
+        async function fetchPrice() {
+            if (params?.tokenId) {
+                const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
+                const nudeDexWithSigner = nudeDexContract.connect(signer);
+                try {
+                    const tx = await nudeDexWithSigner.getPrice(params.tokenId);
+                    console.log("price:", ethers.utils.formatEther(tx));
+                    setSalingPrice(ethers.utils.formatEther(tx));
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        } 
+        fetchPrice();
+    }, [params.tokenId, provider, signer]);
 
     useEffect(() => {
         nftRefetch();
@@ -227,10 +244,10 @@ const NftPage = memo(() => {
     };
 
     const handleOwnMe = async () => {
-        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
-        const nudeDexWithSigner = nudeDexContract.connect(signer);
+        const nudeContract = Nude__factory.connect(process.env.NUDE_ADDRESS, provider);
+        const nudeWithSigner = nudeContract.connect(signer);
         try {
-            const tx = await nudeDexWithSigner.trade(params.tokenId, address);
+            const tx = await nudeWithSigner.approveAndBuyNFT(params.tokenId);
             console.log("handleOwnMe:", tx);
         } catch (e) {
             console.log(e);
@@ -313,7 +330,7 @@ const NftPage = memo(() => {
                                     <OwnMeButton onClick={handleOnSale}>ON SALE</OwnMeButton>
                                 </>)
                         : <OwnMeButton onClick={handleOwnMe}>
-                            Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)
+                            Own Me ({salingPrice} NUDE)
                         </OwnMeButton>
                 }
 
