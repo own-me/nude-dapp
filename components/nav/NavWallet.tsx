@@ -94,6 +94,7 @@ export default function NavWallet() {
                     <AccountInfo>{name}</AccountInfo>
                     <AccountInfo>{email}</AccountInfo>
                     <Link to={`/${address}`}><EditProfileButton>Edit Profile</EditProfileButton></Link>
+                    <Link to={"/buytokens"}><EditProfileButton>Buy Tokens</EditProfileButton></Link>
                     <Link to={"/mint"}><EditProfileButton>Mint NFTs</EditProfileButton></Link>
                     <EditProfileButton onClick={handleToggleDarkMode}>Toggle UI Mode</EditProfileButton>
                 </div>

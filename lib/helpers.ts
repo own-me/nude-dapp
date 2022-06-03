@@ -5,5 +5,5 @@ export function shortenAddress(address: string, length: number) {
 }
 
 export function formatEth(value: BigNumber) {
-    return value && ethers.FixedNumber.fromValue(value, 18).round(4).toString();
+    return value && ethers.FixedNumber.fromValue(value).round(4).toString();
 }

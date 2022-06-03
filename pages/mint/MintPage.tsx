@@ -8,12 +8,11 @@ import Switch from "./Switch";
 import FormInput from "../../components/FormInput";
 import FormTextArea from "../../components/FormTextArea";
 import useWallet from "../../hooks/useWallet";
-import { ethers } from "ethers";
 import { usePostIpfsUploadMutation } from "../../api/ipfs";
 import FormHashtagInput from "../../components/FormHashtagInput";
 import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
 
-const MintPageContainer = styled.div`
+export const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
     height: 100%;
     display: flex;
@@ -31,19 +30,19 @@ const MintPageContainer = styled.div`
     }
 `;
 
-const MintFormHeader = styled.div`
+export const MintFormHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 `;
 
-const MintFormHeaderTitle = styled.h1`
+export const MintFormHeaderTitle = styled.h1`
     font-family: Rock Salt, Open Sans;
     font-size: 40px;
 `;
 
-const MintFormHeaderCandy = styled.img`
+export const MintFormHeaderCandy = styled.img`
     height: 60px;
 `;
 
@@ -55,7 +54,7 @@ const MintFormFooter = styled.div`
     margin-top: 30px;
 `;
 
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
     font-family: Poppins, Open Sans;
     font-size: 22px;
     background-color: #FF81EB;
@@ -97,7 +96,6 @@ const RightRow = styled.div`
 
 export default function MintPage() {
     const [title, setTitle] = useState<string>("");
-    const [price, setPrice] = useState<string>("0");
     const [description, setDescription] = useState<string>("");
     const [hashtags, setHashtags] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string>();
@@ -121,7 +119,7 @@ export default function MintPage() {
                 hashtags: hashtags.split(" "),
                 image: ipfsResponse.data.ipfsUrl
             };
-            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata), ethers.utils.parseEther(price));
+            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata));
             console.log(tx);
         } else {
             // image did not upload correctly
@@ -145,19 +143,11 @@ export default function MintPage() {
                         onChange={(image) => setImageData(image)}
                         onClear={clearImage}
                     />
-                    <FormInput
-                        type="number"
-                        label="Price"
-                        onChange={(e) => setPrice(e.target.value)}
-                        errorMessage="Price is required."
-                        min={0}
-                    />
                 </LeftRow>
                 <RightRow>
                     <NFTCard
                         title={title || "King Tobi"}
                         recipient={"@thecatdad"}
-                        price={ethers.utils.parseUnits(price).toString()}
                         image={imagePreview || catNft}
                         likesCount={0}
                         viewsCount={0}

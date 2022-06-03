@@ -8,7 +8,8 @@ import { HeartOutlined, HeartFilled, EyeOutlined } from "@ant-design/icons";
 import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
 import { Helmet } from "react-helmet";
-import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
+import { NudeDEX__factory, NudeNFT__factory } from "../../typechain";
+import FormInput from "../../components/FormInput";
 
 const NftPageContainer = styled.div`
     padding: 80px;
@@ -189,6 +190,7 @@ const NftPage = memo(() => {
     const [tokenUriData, setTokenUriData] = useState(null);
     const [isLikeHovering, setIsLikeHovering] = useState(false);
     const { address, provider, signer } = useWallet();
+    const [price, setPrice] = useState("");
 
     const [postNftLike, {
         isSuccess: isNftLikeSuccess,
@@ -224,13 +226,11 @@ const NftPage = memo(() => {
     };
 
     const handleOwnMe = async () => {
-        const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
-        const nudeNftWithSigner = nudeNftContract.connect(signer);
+        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
+        const nudeDexWithSigner = nudeDexContract.connect(signer);
         try {
-            const tx = await nudeNftWithSigner.buyNFT(params.tokenId, {
-                value: nftData?.nft?.price,
-            });
-            console.log(tx);
+            const tx = await nudeDexWithSigner.trade(params.tokenId);
+            console.log("handleOwnMe:", tx);
         } catch (e) {
             console.log(e);
         }
@@ -240,12 +240,32 @@ const NftPage = memo(() => {
         const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
         const nudeNftWithSigner = nudeNftContract.connect(signer);
         try {
-            const tx = await nudeNftWithSigner.approve("0x2f725CB27fCE374efC7F68c5D7106215f2cf91b4", params.tokenId);
-            console.log(tx);
+            // user agree to sent NFT to NudeDex
+            const tx = await nudeNftWithSigner.approve(process.env.NUDE_DEX_ADDRESS, params.tokenId);
+            console.log("approveNft:", tx);
         } catch (e) {
             console.log(e);
         }
     };
+
+    const takeDown = async () => {
+        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
+        const nudeDexWithSigner = nudeDexContract.connect(signer);
+        try {
+            const tx = await nudeDexWithSigner.takeDown(params.tokenId);
+            console.log("takeDown:", tx);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const onSale = async () => {
+        const nudeDexContract = NudeDEX__factory.connect(process.env.NUDE_DEX_ADDRESS, provider);
+        const nudeDexWithSigner = nudeDexContract.connect(signer);
+        const tx = await nudeDexWithSigner.onSale(params.tokenId, ethers.utils.parseEther(price));
+        console.log("onSale TX:", tx);
+    };
+
 
     return (
         <NftPageContainer>
@@ -289,12 +309,25 @@ const NftPage = memo(() => {
                     </TopItem>
                 </TopItems>
                 {
-                    address && address === nftData?.nft.recipient ?
-                        <OwnMeButton onClick={approveNft}>Owned</OwnMeButton> :
-                        <OwnMeButton onClick={handleOwnMe}>
+                    address && address === nftData?.nft.recipient
+                        ? <>
+                            <FormInput
+                                type="number"
+                                label="Price"
+                                onChange={(e) => setPrice(e.target.value)}
+                                errorMessage="Price is required."
+                                min={1}
+                            />
+                            <OwnMeButton onClick={takeDown}>Owned</OwnMeButton>
+                        </>
+                        : <OwnMeButton onClick={handleOwnMe}>
                             Own Me ({nftData?.nft?.price ? ethers.utils.formatEther(BigNumber.from(nftData?.nft?.price)) : 0} NUDE)
                         </OwnMeButton>
                 }
+
+                <OwnMeButton onClick={approveNft}>Approve</OwnMeButton>
+                <OwnMeButton onClick={onSale}>onSale</OwnMeButton>
+                <OwnMeButton onClick={takeDown}>TakeDown</OwnMeButton>
             </InfoSection>
         </NftPageContainer>
     );

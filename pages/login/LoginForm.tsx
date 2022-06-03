@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
 import { usePostAuthMutation } from "../../api/auth";
 import { useGetInitialLoginInfoQuery } from "../../api/user";
+import { utils } from "ethers";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -110,9 +111,15 @@ export const LoginForm = memo(() => {
         }
     }, [address, postLogin]);
 
-    const handleSubmit = useCallback((e?) => {
+    const handleSubmit = useCallback(async (e?) => {
         e.preventDefault();
-        postLogin({ address });
+        let userAddress = address;
+        if (!userAddress) {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            userAddress = utils.getAddress(accounts[0]);
+        }
+        console.log(userAddress);
+        postLogin({ address: userAddress });
     }, [address, postLogin]);
 
     useEffect(() => {
