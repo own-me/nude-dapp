@@ -118,7 +118,6 @@ export const LoginForm = memo(() => {
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
             userAddress = utils.getAddress(accounts[0]);
         }
-        console.log(userAddress);
         postLogin({ address: userAddress });
     }, [address, postLogin]);
 

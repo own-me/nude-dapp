@@ -49,8 +49,9 @@ export default function useWallet() {
     useEffect(() => {
         async function getAddress() {
             const address = await signer.getAddress();
-            setAddress(address);
-            dispatch(setWalletAddress(address));
+            const checkSumAddress = ethers.utils.getAddress(address);
+            setAddress(checkSumAddress);
+            dispatch(setWalletAddress(checkSumAddress));
         }
         if (signer && window?.ethereum?.selectedAddress) {
             getAddress();
@@ -74,7 +75,7 @@ export default function useWallet() {
         if (window.ethereum) {
             window.ethereum.on("accountsChanged", (accounts: Array<string>) => {
                 if (!address) {
-                    setAddress(accounts[0]);
+                    setAddress(ethers.utils.getAddress(accounts[0]));
                 } else {
                     setBalance(null);
                     setAddress("");
