@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import styled from "styled-components";
 import Dropdown from "./../Dropdown";
 import useWallet from "../../hooks/useWallet";
-import { formatEth, shortenAddress } from "../../lib/helpers";
+import { formatBigNumberEth, shortenAddress } from "../../lib/helpers";
 import { useAppSelector } from "../../redux/hooks";
 import { useAppDispatch } from "../../redux/hooks";
 import { logoutUser } from "../../redux/slices/user";
@@ -71,7 +71,7 @@ export default function NavWallet() {
     const name = useAppSelector(state => state.user.name);
     const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
 
-    const formattedBalance = useMemo(() => formatEth(balance), [balance]);
+    const formattedBalance = useMemo(() => formatBigNumberEth(balance), [balance]);
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
 
     const handleLogout = () => {
