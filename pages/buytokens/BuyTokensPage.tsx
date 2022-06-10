@@ -195,7 +195,7 @@ export default function BuyTokensPage() {
                         <InputContainer $isDarkMode={isDarkMode}>
                             <Label>   <CandyLogo src={candylogo} alt="logo" />$NUDE </Label>
                             <TokenAmoutnInput type="number" value="0.01" />
-                            <div> </div>
+                            <div style={{width: "22%"}}> </div>
                         </InputContainer>
                     </div>
                 </InputDiv>
