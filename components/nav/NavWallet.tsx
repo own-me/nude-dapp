@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { toggleDarkMode } from "../../redux/slices/app";
 import AvatarCircle from "./../AvatarCircle";
 import defaultProfile from "../../media/defaults/missing-profile.png";
+import { NETWORKS } from "../../lib/blockchain";
 
 const BalanceButton = styled.button`
     font-family: Poppins, Open Sans;
@@ -65,7 +66,7 @@ const LogoutText = styled.div`
 export default function NavWallet() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { balance, address } = useWallet();
+    const { balance, address, network } = useWallet();
     const email = useAppSelector(state => state.user.email);
     const name = useAppSelector(state => state.user.name);
     const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
@@ -84,7 +85,7 @@ export default function NavWallet() {
     return (
         <>
             <BalanceButton type="button" onClick={() => setIsOpen(!isOpen)}>
-                {formattedBalance} NUDE
+                {network?.chainId === NETWORKS.polygonMumbai.chainId ? `${formattedBalance} NUDE` : "Wrong Network"}
             </BalanceButton>
             <AvatarCircle image={profileImageUrl || defaultProfile} onClick={() => setIsOpen(!isOpen)} />
             <Dropdown isOpen={isOpen}>
