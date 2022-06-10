@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import styled, { css } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
 import { usePostAuthMutation } from "../../api/auth";
 import { useGetInitialLoginInfoQuery } from "../../api/user";
-import { utils } from "ethers";
+import { ethers, utils } from "ethers";
+import { NETWORKS } from "../../lib/blockchain";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -76,7 +77,7 @@ export const LoginForm = memo(() => {
     const loggedIn = useAppSelector(state => state.user.loggedIn);
     const userToken = useAppSelector(state => state.user.token);
 
-    const { address, signer } = useWallet();
+    const { address, signer, network } = useWallet();
 
     const [postLogin, {
         isLoading: isPostLoginLoading,
@@ -113,6 +114,35 @@ export const LoginForm = memo(() => {
 
     const handleSubmit = useCallback(async (e?) => {
         e.preventDefault();
+        try {
+            await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId: ethers.utils.hexValue(NETWORKS.polygonMumbai.chainId) }],
+            });
+        } catch (switchError) {
+            if (switchError.code === 4902) { // couldn't switch networks
+                try {
+                    await window.ethereum.request({
+                        method: "wallet_addEthereumChain",
+                        params: [
+                            {
+                                chainId: ethers.utils.hexValue(NETWORKS.polygonMumbai.chainId),
+                                chainName: "Mumbai",
+                                rpcUrls: ["https://rpc-mumbai.matic.today"],
+                                nativeCurrency: {
+                                    name: "Matic",
+                                    symbol: "MATIC",
+                                    decimals: 18
+                                },
+                                blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
+                            },
+                        ],
+                    });
+                } catch (addError) {
+                    console.log("error switching chains");
+                }
+            }
+        }
         let userAddress = address;
         if (!userAddress) {
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
