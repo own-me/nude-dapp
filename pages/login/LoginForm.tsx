@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
@@ -77,7 +77,7 @@ export const LoginForm = memo(() => {
     const loggedIn = useAppSelector(state => state.user.loggedIn);
     const userToken = useAppSelector(state => state.user.token);
 
-    const { address, signer, network } = useWallet();
+    const { address, signer } = useWallet();
 
     const [postLogin, {
         isLoading: isPostLoginLoading,
@@ -152,7 +152,7 @@ export const LoginForm = memo(() => {
     }, [address, postLogin]);
 
     useEffect(() => {
-        if (isPostLoginSuccess && postLoginData) {
+        if (isPostLoginSuccess && postLoginData && signer) {
             if (postLoginData?.nonce) {
                 window.localStorage.removeItem("token");
                 signer.signMessage(postLoginData.nonce).then(signature => {

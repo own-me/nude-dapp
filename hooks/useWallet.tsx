@@ -85,8 +85,16 @@ export default function useWallet() {
                     dispatch(setUserLoggedIn(false));
                 }
             });
+            window.ethereum.on("chainChanged", async (chainId) => {
+                if (provider) {
+                    setProvider(null);
+                    setSigner(null);
+                    setBalance(null);
+                    setNetwork(null);
+                }
+            });
         }
-    }, [address, dispatch]);
+    }, [address, dispatch, provider]);
 
     return { balance, address, network, provider, signer };
 }
