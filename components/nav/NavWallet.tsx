@@ -63,6 +63,11 @@ const LogoutText = styled.div`
     }
 `;
 
+const InteractionContainer = styled.div`
+    display: flex;
+    padding: 20px 0px;
+`;
+
 export default function NavWallet() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -83,8 +88,12 @@ export default function NavWallet() {
     };
 
     return (
-        <>
-            <BalanceButton type="button" onClick={() => setIsOpen(!isOpen)}>
+        <InteractionContainer
+            onClick={() => setIsOpen(!isOpen)}
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
+        >
+            <BalanceButton type="button">
                 {network?.chainId === NETWORKS.polygonMumbai.chainId ? `${formattedBalance} NUDE` : "Wrong Network"}
             </BalanceButton>
             <AvatarCircle image={profileImageUrl || defaultProfile} onClick={() => setIsOpen(!isOpen)} />
@@ -104,6 +113,6 @@ export default function NavWallet() {
                     Logout
                 </LogoutText>
             </Dropdown>
-        </>
+        </InteractionContainer>
     );
 }

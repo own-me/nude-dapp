@@ -8,8 +8,8 @@ const DropdownContainer = styled.div<{ $isDarkMode: boolean }>`
     background-color: ${props => props.$isDarkMode ? props.theme.dark.backgroundColor2 : props.theme.light.backgroundColor};
     color: ${props => props.$isDarkMode ? props.theme.dark.textColor : props.theme.light.textColor};
     position: fixed;
-    top: 95px;
-    right: 5px;
+    top: 88px;
+    right: 0px;
     align-content: center;
     align-items: center;
     flex-direction: column;
