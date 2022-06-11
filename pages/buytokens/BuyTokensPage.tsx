@@ -76,9 +76,7 @@ const ToggleContainer = styled.div<{ $isDarkMode: boolean }>`
   padding: 8px;
 `;
 
-const Label = styled.h3`
-  text-align: left;
-  display: block;
+const Label = styled.h3` 
   font-size: 26px;
 `;
 
@@ -122,10 +120,12 @@ const SellTokenButton = styled(SubmitButton) <{ $isSellActive: boolean }>`
   background-color: ${(props) => (props.$isSellActive ? "#cc00ff" : "#EDC7E7")};
 `;
 
-const TokenDropdown = styled.select`
+const TokenDropInput = styled.input<{ $isDarkMode: boolean }>`
   font-size: 24px;
   font-family: Poppins, Open Sans;
   font-weight: bold;
+  border: none;
+  background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
 `;
 
 const TokenAmoutnInput = styled.input<{ $isDarkMode: boolean }>`
@@ -143,11 +143,8 @@ const MaxButton = styled(SubmitButton)`
 `;
 
 const CandyLogo = styled.img`
-  width: 40px;
-  height: 40px;
-  position: relative;
-  top: 6px;
-  right: 22px;
+  width: 30px;
+  height: 30px;
 `;
 
 const InputDivider = styled.div`
@@ -207,7 +204,7 @@ export default function BuyTokensPage() {
                         id={"1"}
                         onClick={handleBuyClick}
                         $isBuyActive={isBuyActive}
-    
+
                     >
                         Buy Tokens
                     </BuyTokenButton>
@@ -225,10 +222,7 @@ export default function BuyTokensPage() {
                         <Label>From:</Label>
                         <InputContainer $isDarkMode={isDarkMode}>
                             <InputDivider>
-                                <TokenDropdown>
-                                    <option value="0">Select Token</option>
-                                    <option value="1">Token 1</option>
-                                </TokenDropdown>
+                                <TokenDropInput $isDarkMode={isDarkMode} placeholder="&#128269; Search Token" type="text" />
                             </InputDivider>
                             <TokenAmoutnInput
                                 $isDarkMode={isDarkMode}
@@ -245,9 +239,9 @@ export default function BuyTokensPage() {
                         <InputContainer $isDarkMode={isDarkMode}>
                             <InputDivider>
                                 <Label>
-                                    {" "}
                                     <CandyLogo src={candylogo} alt="logo" />
-                                    $NUDE{" "}
+                                    {" "}
+                                    $NUDE
                                 </Label>
                             </InputDivider>
                             <TokenAmoutnInput
