@@ -36,6 +36,7 @@ const InputContainer = styled.div<{ $isDarkMode: boolean }>`
     width: 100%;
     height: 65px;
     border-radius: 5px;
+    padding: 5px;
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
     color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
     font-size: 20px;
@@ -71,13 +72,8 @@ const MaxButton = styled.button`
     border: none;
     padding: 8px;
     border-radius: 6px;
-    margin: 0px;
     box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
-    cursor: pointer;
-
-    @media (max-width: 768px) {
-        display: none;
-    }
+    cursor: pointer;  
 `;
 
 const BuyOutput = styled.div<{ $isDarkMode: boolean }>`
@@ -99,6 +95,10 @@ const SubmitButton = styled.button`
     border-radius: 6px;
     box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
     cursor: pointer;
+
+    @media(max-width: 768px) {
+        padding: 20px 113px;
+    }
 `;
 
 const NudeSwapBuy = memo(() => {

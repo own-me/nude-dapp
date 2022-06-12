@@ -29,10 +29,10 @@ const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
     width: 30rem;
     height: 30rem;
     border-radius: 50px;
-    margin-bottom: 50px;
 
     @media(max-width: 768px) {
         padding: 20px;
+        width: 85%;
     }
 `;
 
@@ -64,11 +64,25 @@ const ToggleContainer = styled.div<{ $isDarkMode: boolean }>`
 `;
 
 
-const NudeSwapTab = styled(SubmitButton) <{ $isActive: boolean }>`
+const NudeBuyTab = styled(SubmitButton) <{ $isActive: boolean }>`
     width: 48%;
     padding: 20px;
     margin: 0;
     border-radius: 6px 0px 0px 6px;
+    box-shadow: none;
+    background-color: ${(props) => props.$isActive ? "#cc00ff" : "#EDC7E7"};
+
+    @media(max-width: 768px) {
+        font-size: 18px;
+    }
+`;
+
+
+const NudeSellTab = styled(SubmitButton) <{ $isActive: boolean }>`
+    width: 48%;
+    padding: 20px;
+    margin: 0;
+    border-radius: 0px 6px 6px 0px;
     box-shadow: none;
     background-color: ${(props) => props.$isActive ? "#cc00ff" : "#EDC7E7"};
 
@@ -93,8 +107,8 @@ export default function NudeSwapPage() {
             <NudeSwapContainer $isDarkMode={isDarkMode}>
                 <ToggleLabel>Choose:</ToggleLabel>
                 <ToggleContainer $isDarkMode={isDarkMode}>
-                    <NudeSwapTab onClick={() => setActiveTab(NudeSwapTabs.BUY)} $isActive={activeTab === NudeSwapTabs.BUY}>Buy Tokens</NudeSwapTab>
-                    <NudeSwapTab onClick={() => setActiveTab(NudeSwapTabs.SELL)} $isActive={activeTab === NudeSwapTabs.SELL}>Sell Tokens</NudeSwapTab>
+                    <NudeBuyTab onClick={() => setActiveTab(NudeSwapTabs.BUY)} $isActive={activeTab === NudeSwapTabs.BUY}>Buy Tokens</NudeBuyTab>
+                    <NudeSellTab onClick={() => setActiveTab(NudeSwapTabs.SELL)} $isActive={activeTab === NudeSwapTabs.SELL}>Sell Tokens</NudeSellTab>
                 </ToggleContainer>
                 {
                     activeTab === NudeSwapTabs.BUY && <NudeSwapBuy />

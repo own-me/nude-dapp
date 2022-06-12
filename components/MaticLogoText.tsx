@@ -12,13 +12,19 @@ const Logo = styled.img`
     width: 30px;
     height: 30px;
     margin: 0px 10px;
+
+    @media(max-width: 768px) {
+        width: 20px;
+        height: 30px;
+        margin: 0px 5px;
+    }
 `;
 
 const LogoText = styled.div`
     font-size: 24px;
 
 @media(max-width: 768px) {
-    font-size: 18px;
+    font-size: 16px;
 }
 `;
 
