@@ -26,7 +26,9 @@ module.exports = {
     ],
     env: {
         browser: true,
-        es6: true
+        es6: true, 
+        "amd": true,
+        "node": true
     },
     rules: {
         "react-hooks/rules-of-hooks": "error",
@@ -35,6 +37,7 @@ module.exports = {
 
         // enable additional rules
         "indent": ["error", 4],
+        
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
 
