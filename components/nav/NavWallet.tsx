@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import styled from "styled-components";
 import Dropdown from "./../Dropdown";
 import useWallet from "../../hooks/useWallet";
-import { formatEth, shortenAddress } from "../../lib/helpers";
+import { formatBigNumberEth, shortenAddress } from "../../lib/helpers";
 import { useAppSelector } from "../../redux/hooks";
 import { useAppDispatch } from "../../redux/hooks";
 import { logoutUser } from "../../redux/slices/user";
@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { toggleDarkMode } from "../../redux/slices/app";
 import AvatarCircle from "./../AvatarCircle";
 import defaultProfile from "../../media/defaults/missing-profile.png";
+import { NETWORKS } from "../../lib/blockchain";
 
 const BalanceButton = styled.button`
     font-family: Poppins, Open Sans;
@@ -62,15 +63,20 @@ const LogoutText = styled.div`
     }
 `;
 
+const InteractionContainer = styled.div`
+    display: flex;
+    padding: 20px 0px;
+`;
+
 export default function NavWallet() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { balance, address } = useWallet();
+    const { balance, address, network } = useWallet();
     const email = useAppSelector(state => state.user.email);
     const name = useAppSelector(state => state.user.name);
     const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
 
-    const formattedBalance = useMemo(() => formatEth(balance), [balance]);
+    const formattedBalance = useMemo(() => formatBigNumberEth(balance), [balance]);
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
 
     const handleLogout = () => {
@@ -82,9 +88,13 @@ export default function NavWallet() {
     };
 
     return (
-        <>
-            <BalanceButton type="button" onClick={() => setIsOpen(!isOpen)}>
-                {formattedBalance} NUDE
+        <InteractionContainer
+            onClick={() => setIsOpen(!isOpen)}
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
+        >
+            <BalanceButton type="button">
+                {network?.chainId === NETWORKS.polygonMumbai.chainId ? `${formattedBalance} NUDE` : "Wrong Network"}
             </BalanceButton>
             <AvatarCircle image={profileImageUrl || defaultProfile} onClick={() => setIsOpen(!isOpen)} />
             <Dropdown isOpen={isOpen}>
@@ -103,6 +113,6 @@ export default function NavWallet() {
                     Logout
                 </LogoutText>
             </Dropdown>
-        </>
+        </InteractionContainer>
     );
 }

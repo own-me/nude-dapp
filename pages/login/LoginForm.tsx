@@ -10,7 +10,8 @@ import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
 import { usePostAuthMutation } from "../../api/auth";
 import { useGetInitialLoginInfoQuery } from "../../api/user";
-import { utils } from "ethers";
+import { ethers, utils } from "ethers";
+import { NETWORKS } from "../../lib/blockchain";
 
 const LoginFormContainer = styled.form`
     display: flex;
@@ -113,6 +114,35 @@ export const LoginForm = memo(() => {
 
     const handleSubmit = useCallback(async (e?) => {
         e.preventDefault();
+        try {
+            await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId: ethers.utils.hexValue(NETWORKS.polygonMumbai.chainId) }],
+            });
+        } catch (switchError) {
+            if (switchError.code === 4902) { // couldn't switch networks
+                try {
+                    await window.ethereum.request({
+                        method: "wallet_addEthereumChain",
+                        params: [
+                            {
+                                chainId: ethers.utils.hexValue(NETWORKS.polygonMumbai.chainId),
+                                chainName: "Mumbai",
+                                rpcUrls: ["https://rpc-mumbai.matic.today"],
+                                nativeCurrency: {
+                                    name: "Matic",
+                                    symbol: "MATIC",
+                                    decimals: 18
+                                },
+                                blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
+                            },
+                        ],
+                    });
+                } catch (addError) {
+                    console.log("error switching chains");
+                }
+            }
+        }
         let userAddress = address;
         if (!userAddress) {
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -122,7 +152,7 @@ export const LoginForm = memo(() => {
     }, [address, postLogin]);
 
     useEffect(() => {
-        if (isPostLoginSuccess && postLoginData) {
+        if (isPostLoginSuccess && postLoginData && signer) {
             if (postLoginData?.nonce) {
                 window.localStorage.removeItem("token");
                 signer.signMessage(postLoginData.nonce).then(signature => {
