@@ -1,34 +1,8 @@
 import styled from "styled-components";
-import pinkCandy from "../../media/pink-candy.svg";
-import { MintPageContainer, MintFormHeaderTitle, MintFormHeaderCandy, SubmitButton, } from "../mint/MintPage";
-import React, { useCallback, useState } from "react";
+import { SubmitButton } from "../mint/MintPage";
+import React, { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
-import { Nude__factory } from "../../typechain/factories/Nude__factory";
-import useWallet from "../../hooks/useWallet";
-import { ethers } from "ethers";
-import arrow from "../../media/arrow.svg";
-import candylogo from "../../media/candylogo.svg";
-
-const NudeTitle = styled(MintFormHeaderTitle)`
-    color: #dc68f9;
-`;
-
-const NudeSwapContainer = styled(MintPageContainer) <{ $isDarkMode: boolean }>`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#fef4fb")};
-    border: 6px dotted #dc68f9;
-    padding: 50px;
-    height: 80%;
-    width: 80%;
-    border-radius: 50px;
-    margin-bottom: 50px;
-
-    @media(max-width: 768px) {
-      padding: 20px;
-    }
-`;
+import NudeSwapBuy from "./NudeSwapBuy";
 
 const PageContainer = styled.div`
     flex-direction: column;
@@ -37,27 +11,36 @@ const PageContainer = styled.div`
     align-items: center;
 `;
 
-const InputGrid = styled.div<{ $isDarkMode: boolean }>`
-    display: grid;
-    grid-template-columns: 0.8fr 1.5fr 0.5fr;
-    align-items: center;
-    justify-items: start;
-    align-content: center
-    padding: 5px;
-    width: 100%;
-    height: 80px;
-    border-radius: 5px;
-    padding-left: 10px;
-    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
-    color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
-    font-size: 20px;
+const Header = styled.h1`
+    color: #dc68f9;
+    font-family: Rock Salt, Open Sans;
+    font-size: 40px;
+`;
+
+const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
-    font-weight: bold;
-    border: 1px solid #cc00ff;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#fef4fb")};
+    border: 4px dotted #dc68f9;
+    padding: 50px;
+    height: 80%;
+    width: 80%;
+    border-radius: 50px;
+    margin-bottom: 50px;
 
     @media(max-width: 768px) {
-      grid-template-columns: 1fr 1fr;
+        padding: 20px;
+    }
+`;
+
+const ToggleLabel = styled.h3`
+    font-size: 26px;
+    width: 100%;
+
+    @media(max-width: 768px) {
+        font-size: 18px;
     }
 `;
 
@@ -79,217 +62,45 @@ const ToggleContainer = styled.div<{ $isDarkMode: boolean }>`
     padding: 8px;
 `;
 
-const Label1 = styled.h3 <{ $isSellActive: boolean }>`
-    font-size: 26px;
-    margin: 2px;
 
-    @media(max-width: 768px) {
-      font-size: 18px;
-    }
-`;
-
-const Label2 = styled.h3`
-    font-size: 26px;
-    margin: 2px;
-
-    @media(max-width: 768px) {
-      font-size: 18px;
-    }
-`;
-
-const InputDiv = styled.div<{ $isSellActive: boolean }>`
-    width: 100%;
-    display: flex;
-    flex-direction: ${(props) => (props.$isSellActive ? "column-reverse" : "column")};
-`;
-
-const ToggleDiv = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-`;
-
-const TransferButton = styled(SubmitButton)`
-    width: 50%;
-    padding: 20px;
-    margin-top: 35px;
-    margin-left: 0px;
-`;
-
-const Arrow = styled.img`
-    width: 40px;
-    height: 40px;
-    margin-top: 10px;
-    position: relative;
-    left: 48%;
-    top: 20px;
-
-    @media(max-width: 768px) {
-        width: 32px;
-        top: 15px;
-    }
-`;
-
-const BuyTokenButton = styled(SubmitButton) <{ $isBuyActive: boolean }>`
+const NudeSwapTab = styled(SubmitButton) <{ $isActive: boolean }>`
     width: 48%;
     padding: 20px;
     margin: 0;
     border-radius: 6px 0px 0px 6px;
     box-shadow: none;
-    background-color: ${(props) => props.$isBuyActive ? "#cc00ff" : "#EDC7E7"};
+    background-color: ${(props) => props.$isActive ? "#cc00ff" : "#EDC7E7"};
 
     @media(max-width: 768px) {
         font-size: 18px;
     }
 `;
 
-const SellTokenButton = styled(SubmitButton) <{ $isSellActive: boolean }>`
-    width: 48%;
-    padding: 20px;
-    margin: 0;
-    border-radius: 0px 6px 6px 0px;
-    box-shadow: none;
-    background-color: ${(props) => (props.$isSellActive ? "#cc00ff" : "#EDC7E7")};
-
-    @media(max-width: 768px) {
-        font-size: 18px;
-    }
-`;
-
-const TokenDropInput = styled.input<{ $isDarkMode: boolean }>`
-    font-size: 24px;
-    font-family: Poppins, Open Sans;
-    font-weight: bold;
-    border: none;
-    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
-
-    @media(max-width: 768px) {
-        font-size: 16px;
-    }
-`;
-
-const TokenAmountInput = styled.input<{ $isDarkMode: boolean }>`
-    font-size: 24px;
-    font-family: Poppins, Open Sans;
-    font-weight: bold;
-    border: none;
-    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
-    color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
-
-    @media(max-width: 768px) {
-        font-size: 18px;
-    }
-`;
-
-const MaxButton = styled(SubmitButton)`
-    width: 50%;
-    margin: 0px;
-    position: relative;
-    left: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
-
-const CandyLogo = styled.img`
-    width: 30px;
-    height: 30px;
-    padding: 5px;
-
-    @media (max-width: 768px) {
-        width: 20px;
-        height: 20px;
-    }
-`;
-
-const NudeLogo = styled.div`
-    display: flex;
-    align-items: center;
-`;
+enum NudeSwapTabs {
+    BUY = "BUY",
+    SELL = "SELL"
+}
 
 export default function NudeSwapPage() {
     const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
-    const { provider, signer } = useWallet();
 
-    const [price, setPrice] = useState("0");
-    const [isBuyActive, setBuyIsActive] = useState(false);
-    const [isSellActive, setSellIsActive] = useState(false);
-    const [tokenAmount, setTokenAmount] = useState("0");
-    const [nudeAmount, setNudeAmount] = useState("0");
-
-    const handleBuyClick = useCallback(() => {
-        setBuyIsActive(!isBuyActive);
-        setSellIsActive(false);
-    }, [isBuyActive]);
-
-    const handleSellClick = useCallback(() => {
-        setSellIsActive(!isSellActive);
-        setBuyIsActive(false);
-    }, [isSellActive]);
-
-    const handleSubmit = async () => {
-        const nudeContract = Nude__factory.connect(
-            process.env.NUDE_ADDRESS,
-            provider
-        );
-        const nudeWithSigner = nudeContract.connect(signer);
-        try {
-            // todo: implement getTokenRate in contract
-            const tokenRate = 10;
-            const tx = await nudeWithSigner.buyTokens(price, {
-                value: ethers.utils.parseEther(price).div(tokenRate),
-            });
-            console.log(tx);
-            // todo: implement user-friendly ux
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    console.log(nudeAmount);
-    console.log(tokenAmount);
+    const [activeTab, setActiveTab] = useState<NudeSwapTabs>(NudeSwapTabs.BUY);
 
     return (
         <PageContainer>
-            <NudeTitle>
-                {" "}
-                $Nude Swap
-                <MintFormHeaderCandy src={pinkCandy} />
-            </NudeTitle>
+            <Header>$Nude Swap</Header>
             <NudeSwapContainer $isDarkMode={isDarkMode}>
-                <ToggleDiv>
-                    <Label2>Choose:</Label2>
-                    <ToggleContainer $isDarkMode={isDarkMode}>
-                        <BuyTokenButton onClick={handleBuyClick} $isBuyActive={isBuyActive}>Buy Tokens</BuyTokenButton>
-                        <SellTokenButton onClick={handleSellClick} $isSellActive={isSellActive}>Sell Tokens</SellTokenButton>
-                    </ToggleContainer>
-                </ToggleDiv>
-                <InputDiv $isSellActive={isSellActive}>
-                    <div>
-                        <Label1 $isSellActive={isSellActive}>{isSellActive ? "From:" : "To:"}</Label1>
-                        <InputGrid $isDarkMode={isDarkMode}>
-                            <TokenDropInput $isDarkMode={isDarkMode} placeholder="&#128269; Search" type="text" />
-                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={() => setTokenAmount(tokenAmount)} />
-                            <MaxButton>Max</MaxButton>
-                        </InputGrid>
-                    </div>
-                    <Arrow src={arrow} />
-                    <div>
-                        <Label1 $isSellActive={isSellActive}>{isSellActive ? "To:" : "From:"} </Label1>
-                        <InputGrid $isDarkMode={isDarkMode}>
-                            <NudeLogo>
-                                <Label2>$NUDE </Label2>
-                                <CandyLogo src={candylogo} alt="logo" />
-                            </NudeLogo>
-                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={() => setNudeAmount(nudeAmount)} />
-                        </InputGrid>
-                    </div>
-                </InputDiv>
-                <TransferButton onClick={handleSubmit}>Transfer</TransferButton>
+                <ToggleLabel>Choose:</ToggleLabel>
+                <ToggleContainer $isDarkMode={isDarkMode}>
+                    <NudeSwapTab onClick={() => setActiveTab(NudeSwapTabs.BUY)} $isActive={activeTab === NudeSwapTabs.BUY}>Buy Tokens</NudeSwapTab>
+                    <NudeSwapTab onClick={() => setActiveTab(NudeSwapTabs.SELL)} $isActive={activeTab === NudeSwapTabs.SELL}>Sell Tokens</NudeSwapTab>
+                </ToggleContainer>
+                {
+                    activeTab === NudeSwapTabs.BUY && <NudeSwapBuy />
+                }
+                {
+                    activeTab === NudeSwapTabs.SELL && <NudeSwapBuy />
+                }
             </NudeSwapContainer>
         </PageContainer>
     );
