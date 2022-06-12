@@ -7,7 +7,7 @@ import useWallet from "../../hooks/useWallet";
 import NudeLogoText from "../../components/NudeLogoText";
 import MaticLogoText from "../../components/MaticLogoText";
 
-const NudeSwapBuyContainer = styled.div<{ $isDarkMode: boolean }>`
+const NudeSwapSellContainer = styled.div<{ $isDarkMode: boolean }>`
     padding: 5px;
     width: 100%;
     font-size: 20px;
@@ -51,7 +51,7 @@ const InnerInputDiv = styled.div`
     justify-content: flex-end;
 `;
 
-const BuyInput = styled.input<{ $isDarkMode: boolean }>`
+const SellInput = styled.input<{ $isDarkMode: boolean }>`
     font-size: 24px;
     font-family: Poppins, Open Sans;
     border: none;
@@ -80,7 +80,7 @@ const MaxButton = styled.button`
     }
 `;
 
-const BuyOutput = styled.div<{ $isDarkMode: boolean }>`
+const SellOutput = styled.div<{ $isDarkMode: boolean }>`
     font-size: 24px;
     text-align: center;
 
@@ -101,11 +101,11 @@ const SubmitButton = styled.button`
     cursor: pointer;
 `;
 
-const NudeSwapBuy = memo(() => {
+const NudeSwapSell = memo(() => {
     const { provider, signer } = useWallet();
     const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
 
-    const setBuyAmount = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const setSellAmount = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.value);
     }, []);
 
@@ -129,23 +129,23 @@ const NudeSwapBuy = memo(() => {
     };
 
     return (
-        <NudeSwapBuyContainer $isDarkMode={isDarkMode}>
-            <Label>Sell $MATIC:</Label>
-            <InputContainer $isDarkMode={isDarkMode}>
-                <MaticLogoText />
+        <NudeSwapSellContainer $isDarkMode={isDarkMode}>
+            <Label>Sell $Nude:</Label>
+            <InputContainer $isDarkMode={isDarkMode}>\
+                <NudeLogoText />
                 <InnerInputDiv>
-                    <BuyInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={setBuyAmount} />
+                    <SellInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={setSellAmount} />
                     <MaxButton>Max</MaxButton>
                 </InnerInputDiv>
             </InputContainer>
-            <Label>Buy $NUDE:</Label>
+            <Label>Buy $matic:</Label>
             <InputContainer $isDarkMode={isDarkMode}>
-                <NudeLogoText />
-                <BuyOutput $isDarkMode={isDarkMode}>123.11 </BuyOutput>
+                <MaticLogoText />
+                <SellOutput $isDarkMode={isDarkMode}>123.11 </SellOutput>
             </InputContainer>
-            <SubmitButton onClick={handleSubmit}>BUY NUDE</SubmitButton>
-        </NudeSwapBuyContainer>
+            <SubmitButton onClick={handleSubmit}>SELL NUDE</SubmitButton>
+        </NudeSwapSellContainer>
     );
 });
 
-export default NudeSwapBuy;
+export default NudeSwapSell;

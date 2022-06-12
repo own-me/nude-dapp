@@ -22,11 +22,12 @@ const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#fef4fb")};
-    border: 4px dotted #dc68f9;
-    padding: 50px;
-    height: 80%;
-    width: 80%;
+    border: 5px dotted #dc68f9;
+    padding: 35px;
+    width: 30rem;
+    height: 30rem;
     border-radius: 50px;
     margin-bottom: 50px;
 
@@ -38,6 +39,7 @@ const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
 const ToggleLabel = styled.h3`
     font-size: 26px;
     width: 100%;
+    margin: 0px
 
     @media(max-width: 768px) {
         font-size: 18px;
@@ -58,7 +60,6 @@ const ToggleContainer = styled.div<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
     font-weight: bold;
     border: 1px solid #cc00ff;
-    margin: 10px 0px 30px 0px;
     padding: 8px;
 `;
 
