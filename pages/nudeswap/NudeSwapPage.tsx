@@ -3,6 +3,7 @@ import { SubmitButton } from "../mint/MintPage";
 import React, { useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import NudeSwapBuy from "./NudeSwapBuy";
+import NudeSwapSell from "./NudeSwapSell";
 
 const PageContainer = styled.div`
     flex-direction: column;
@@ -70,7 +71,7 @@ const NudeBuyTab = styled(SubmitButton) <{ $isActive: boolean }>`
     margin: 0;
     border-radius: 6px 0px 0px 6px;
     box-shadow: none;
-    background-color: ${(props) => props.$isActive ? "#cc00ff" : "#EDC7E7"};
+    background-color: ${(props) => props.$isActive ? "#dc68f9" : "#EDC7E7"};
 
     @media(max-width: 768px) {
         font-size: 18px;
@@ -84,7 +85,7 @@ const NudeSellTab = styled(SubmitButton) <{ $isActive: boolean }>`
     margin: 0;
     border-radius: 0px 6px 6px 0px;
     box-shadow: none;
-    background-color: ${(props) => props.$isActive ? "#cc00ff" : "#EDC7E7"};
+    background-color: ${(props) => props.$isActive ? "#dc68f9" : "#EDC7E7"};
 
     @media(max-width: 768px) {
         font-size: 18px;
@@ -114,7 +115,7 @@ export default function NudeSwapPage() {
                     activeTab === NudeSwapTabs.BUY && <NudeSwapBuy />
                 }
                 {
-                    activeTab === NudeSwapTabs.SELL && <NudeSwapBuy />
+                    activeTab === NudeSwapTabs.SELL && <NudeSwapSell />
                 }
             </NudeSwapContainer>
         </PageContainer>

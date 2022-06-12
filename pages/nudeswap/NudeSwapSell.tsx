@@ -132,7 +132,7 @@ const NudeSwapSell = memo(() => {
     return (
         <NudeSwapSellContainer $isDarkMode={isDarkMode}>
             <Label>Sell $Nude:</Label>
-            <InputContainer $isDarkMode={isDarkMode}>\
+            <InputContainer $isDarkMode={isDarkMode}>
                 <NudeLogoText />
                 <InnerInputDiv>
                     <SellInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={setSellAmount} />
