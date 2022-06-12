@@ -77,7 +77,15 @@ const ToggleContainer = styled.div<{ $isDarkMode: boolean }>`
   padding: 8px;
 `;
 
-const Label = styled.h3`
+const Label1 = styled.h3 <{$isSellActive: boolean }>`
+  font-size: 26px;
+  margin: 2px;
+  @media(max-width: 768px) {
+    font-size: 18px;
+  }
+`;
+
+const Label2 = styled.h3`
   font-size: 26px;
   margin: 2px;
   @media(max-width: 768px) {
@@ -102,6 +110,7 @@ const TransferButton = styled(SubmitButton)`
   width: 50%;
   padding: 20px;
   margin-top: 35px;
+  margin-left: 0px;
 `;
 
 const Arrow = styled.img`
@@ -113,7 +122,6 @@ const Arrow = styled.img`
   top: 20px;
 @media(max-width: 768px) {
     width: 32px;
-    left: 50%;
     top: 15px;
 }
 `;
@@ -197,7 +205,10 @@ const NudeLogo = styled.div`
 export default function BuyTokensPage() {
     const [price, setPrice] = useState("0");
     const [isBuyActive, setBuyIsActive] = useState(false);
-    const [isSellActive, setSellIsActive] = useState(false);
+    const [isSellActive, setSellIsActive] = useState(false); 
+    const [tokenAmount, setTokenAmount] = useState("0");
+    const [nudeAmount, setNudeAmount] = useState("0");
+
 
     const handleBuyClick = () => {
         setBuyIsActive(!isBuyActive);
@@ -231,7 +242,8 @@ export default function BuyTokensPage() {
             console.error(error);
         }
     };
-
+    console.log(nudeAmount);
+    console.log(tokenAmount);
     return (
         <PageContainer>
             <NudeTitle>
@@ -241,7 +253,7 @@ export default function BuyTokensPage() {
             </NudeTitle>
             <NudeSwapContainer $isDarkMode={isDarkMode}>
                 <ToggleDiv>
-                    <Label>Choose:</Label>
+                    <Label2>Choose:</Label2>
                     <ToggleContainer $isDarkMode={isDarkMode}>
                         <BuyTokenButton onClick={handleBuyClick} $isBuyActive={isBuyActive}>Buy Tokens</BuyTokenButton>
                         <SellTokenButton onClick={handleSellClick} $isSellActive={isSellActive}>Sell Tokens</SellTokenButton>
@@ -249,22 +261,22 @@ export default function BuyTokensPage() {
                 </ToggleDiv>
                 <InputDiv $isSellActive={isSellActive}>
                     <div>
-                        <Label>From:</Label>
+                        <Label1 $isSellActive={isSellActive}>{isSellActive? "From:" : "To:"}</Label1>
                         <InputGrid $isDarkMode={isDarkMode}>
                             <TokenDropInput $isDarkMode={isDarkMode} placeholder="&#128269; Search" type="text" />
-                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" value="1" min="1"  max="100000000"/>
+                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={()=> setTokenAmount(tokenAmount)}/>
                             <MaxButton>Max</MaxButton>
                         </InputGrid>
                     </div>
                     <Arrow src={arrow} />
                     <div>
-                        <Label>To:</Label>
+                        <Label1 $isSellActive={isSellActive}>{isSellActive? "To:" : "From:"  } </Label1>
                         <InputGrid $isDarkMode={isDarkMode}>
                             <NudeLogo>
-                                <Label>$NUDE </Label>
+                                <Label2>$NUDE </Label2>
                                 <CandyLogo src={candylogo} alt="logo" /> 
                             </NudeLogo>
-                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" value="0.01" step="0.01" max="100000000" min="0" />
+                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={()=> setNudeAmount(nudeAmount)} />
                         </InputGrid>
                     </div>
                 </InputDiv>
