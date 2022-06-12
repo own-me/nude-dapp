@@ -10,202 +10,211 @@ import arrow from "../../media/arrow.svg";
 import candylogo from "../../media/candylogo.svg";
 
 const NudeTitle = styled(MintFormHeaderTitle)`
-  color: #dc68f9;
+    color: #dc68f9;
 `;
 
 const NudeSwapContainer = styled(MintPageContainer) <{ $isDarkMode: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#fef4fb")};
-  border: 6px dotted #dc68f9;
-  padding: 50px;
-  height: 80%;
-  width: 80%;
-  border-radius: 50px;
-  margin-bottom: 50px;
-  @media(max-width: 768px) {
-    padding: 20px;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#fef4fb")};
+    border: 6px dotted #dc68f9;
+    padding: 50px;
+    height: 80%;
+    width: 80%;
+    border-radius: 50px;
+    margin-bottom: 50px;
+
+    @media(max-width: 768px) {
+      padding: 20px;
+    }
 `;
 
 const PageContainer = styled.div`
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const InputGrid = styled.div<{ $isDarkMode: boolean }>`
-  display: grid;
-  grid-template-columns: 0.8fr 1.5fr 0.5fr;
-  align-items: center;
-  justify-items: start;
-  align-content: center
-  padding: 5px;
-  width: 100%;
-  height: 80px;
-  border-radius: 5px;
-  padding-left: 10px;
-  background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
-  color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
-  font-size: 20px;
-  font-family: Poppins, Open Sans;
-  font-weight: bold;
-  border: 1px solid #cc00ff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  @media(max-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-  }
+    display: grid;
+    grid-template-columns: 0.8fr 1.5fr 0.5fr;
+    align-items: center;
+    justify-items: start;
+    align-content: center
+    padding: 5px;
+    width: 100%;
+    height: 80px;
+    border-radius: 5px;
+    padding-left: 10px;
+    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
+    color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
+    font-size: 20px;
+    font-family: Poppins, Open Sans;
+    font-weight: bold;
+    border: 1px solid #cc00ff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media(max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+    }
 `;
 
 const ToggleContainer = styled.div<{ $isDarkMode: boolean }>`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 80px;
-  border-radius: 5px;
-  background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
-  color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
-  font-size: 20px;
-  font-family: Poppins, Open Sans;
-  font-weight: bold;
-  border: 1px solid #cc00ff;
-  margin: 10px 0px 30px 0px;
-  padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    border-radius: 5px;
+    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
+    color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
+    font-size: 20px;
+    font-family: Poppins, Open Sans;
+    font-weight: bold;
+    border: 1px solid #cc00ff;
+    margin: 10px 0px 30px 0px;
+    padding: 8px;
 `;
 
-const Label1 = styled.h3 <{$isSellActive: boolean }>`
-  font-size: 26px;
-  margin: 2px;
-  @media(max-width: 768px) {
-    font-size: 18px;
-  }
+const Label1 = styled.h3 <{ $isSellActive: boolean }>`
+    font-size: 26px;
+    margin: 2px;
+
+    @media(max-width: 768px) {
+      font-size: 18px;
+    }
 `;
 
 const Label2 = styled.h3`
-  font-size: 26px;
-  margin: 2px;
-  @media(max-width: 768px) {
-    font-size: 18px;
-  }
+    font-size: 26px;
+    margin: 2px;
+
+    @media(max-width: 768px) {
+      font-size: 18px;
+    }
 `;
 
 const InputDiv = styled.div<{ $isSellActive: boolean }>`
-  width: 100%;
-  display: flex;
-  flex-direction: ${(props) => (props.$isSellActive ? "column-reverse" : "column")};
+    width: 100%;
+    display: flex;
+    flex-direction: ${(props) => (props.$isSellActive ? "column-reverse" : "column")};
 `;
 
 const ToggleDiv = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 `;
 
-
 const TransferButton = styled(SubmitButton)`
-  width: 50%;
-  padding: 20px;
-  margin-top: 35px;
-  margin-left: 0px;
+    width: 50%;
+    padding: 20px;
+    margin-top: 35px;
+    margin-left: 0px;
 `;
 
 const Arrow = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-top: 10px;
-  position: relative;
-  left: 48%;
-  top: 20px;
-@media(max-width: 768px) {
-    width: 32px;
-    top: 15px;
-}
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    position: relative;
+    left: 48%;
+    top: 20px;
+
+    @media(max-width: 768px) {
+        width: 32px;
+        top: 15px;
+    }
 `;
 
 const BuyTokenButton = styled(SubmitButton) <{ $isBuyActive: boolean }>`
-  width: 48%;
-  padding: 20px;
-  margin: 0;
-  border-radius: 6px 0px 0px 6px;
-  box-shadow: none;
-  background-color: #cc00ff;
-  background-color: ${(props) => props.$isBuyActive ? "#cc00ff" : "#EDC7E7"}; 
-  @media(max-width: 768px) {
-    font-size: 18px;
-  }
+    width: 48%;
+    padding: 20px;
+    margin: 0;
+    border-radius: 6px 0px 0px 6px;
+    box-shadow: none;
+    background-color: ${(props) => props.$isBuyActive ? "#cc00ff" : "#EDC7E7"};
+
+    @media(max-width: 768px) {
+        font-size: 18px;
+    }
 `;
 
 const SellTokenButton = styled(SubmitButton) <{ $isSellActive: boolean }>`
-  width: 48%;
-  padding: 20px;
-  margin: 0;
-  border-radius: 0px 6px 6px 0px;
-  box-shadow: none;
-  background-color: ${(props) => (props.$isSellActive ? "#cc00ff" : "#EDC7E7")};
-  @media(max-width: 768px) {
-    font-size: 18px;
-  }
+    width: 48%;
+    padding: 20px;
+    margin: 0;
+    border-radius: 0px 6px 6px 0px;
+    box-shadow: none;
+    background-color: ${(props) => (props.$isSellActive ? "#cc00ff" : "#EDC7E7")};
+
+    @media(max-width: 768px) {
+        font-size: 18px;
+    }
 `;
 
 const TokenDropInput = styled.input<{ $isDarkMode: boolean }>`
-  font-size: 24px;
-  font-family: Poppins, Open Sans;
-  font-weight: bold;
-  border: none;
-  background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
-  @media(max-width: 768px) {
-    font-size: 16px;
-  }
+    font-size: 24px;
+    font-family: Poppins, Open Sans;
+    font-weight: bold;
+    border: none;
+    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
+
+    @media(max-width: 768px) {
+        font-size: 16px;
+    }
 `;
 
 const TokenAmountInput = styled.input<{ $isDarkMode: boolean }>`
-  font-size: 24px;
-  font-family: Poppins, Open Sans;
-  font-weight: bold;
-  border: none;
-  background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
-  color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
-  @media(max-width: 768px) {
-    font-size: 18px;
-  }
+    font-size: 24px;
+    font-family: Poppins, Open Sans;
+    font-weight: bold;
+    border: none;
+    background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
+    color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
+
+    @media(max-width: 768px) {
+        font-size: 18px;
+    }
 `;
 
 const MaxButton = styled(SubmitButton)`
-  width: 50%;
-  margin: 0px;
-  position: relative;
-  left: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 768px) {
-    display: none;
-  }
+    width: 50%;
+    margin: 0px;
+    position: relative;
+    left: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const CandyLogo = styled.img`
-  width: 30px;
-  height: 30px;
-  padding: 5px;
-  @media (max-width: 768px) {
-    width: 20px;
-    height: 20px;
-  }
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+
+    @media (max-width: 768px) {
+        width: 20px;
+        height: 20px;
+    }
 `;
 
 const NudeLogo = styled.div`
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 `;
 
 export default function BuyTokensPage() {
     const [price, setPrice] = useState("0");
     const [isBuyActive, setBuyIsActive] = useState(false);
-    const [isSellActive, setSellIsActive] = useState(false); 
+    const [isSellActive, setSellIsActive] = useState(false);
     const [tokenAmount, setTokenAmount] = useState("0");
     const [nudeAmount, setNudeAmount] = useState("0");
 
@@ -248,7 +257,7 @@ export default function BuyTokensPage() {
         <PageContainer>
             <NudeTitle>
                 {" "}
-        $Nude Swap
+                $Nude Swap
                 <MintFormHeaderCandy src={pinkCandy} />
             </NudeTitle>
             <NudeSwapContainer $isDarkMode={isDarkMode}>
@@ -261,22 +270,22 @@ export default function BuyTokensPage() {
                 </ToggleDiv>
                 <InputDiv $isSellActive={isSellActive}>
                     <div>
-                        <Label1 $isSellActive={isSellActive}>{isSellActive? "From:" : "To:"}</Label1>
+                        <Label1 $isSellActive={isSellActive}>{isSellActive ? "From:" : "To:"}</Label1>
                         <InputGrid $isDarkMode={isDarkMode}>
                             <TokenDropInput $isDarkMode={isDarkMode} placeholder="&#128269; Search" type="text" />
-                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={()=> setTokenAmount(tokenAmount)}/>
+                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={() => setTokenAmount(tokenAmount)} />
                             <MaxButton>Max</MaxButton>
                         </InputGrid>
                     </div>
                     <Arrow src={arrow} />
                     <div>
-                        <Label1 $isSellActive={isSellActive}>{isSellActive? "To:" : "From:"  } </Label1>
+                        <Label1 $isSellActive={isSellActive}>{isSellActive ? "To:" : "From:"} </Label1>
                         <InputGrid $isDarkMode={isDarkMode}>
                             <NudeLogo>
                                 <Label2>$NUDE </Label2>
-                                <CandyLogo src={candylogo} alt="logo" /> 
+                                <CandyLogo src={candylogo} alt="logo" />
                             </NudeLogo>
-                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={()=> setNudeAmount(nudeAmount)} />
+                            <TokenAmountInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={() => setNudeAmount(nudeAmount)} />
                         </InputGrid>
                     </div>
                 </InputDiv>
