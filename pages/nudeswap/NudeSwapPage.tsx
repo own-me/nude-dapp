@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import pinkCandy from "../../media/pink-candy.svg";
 import { MintPageContainer, MintFormHeaderTitle, MintFormHeaderCandy, SubmitButton, } from "../mint/MintPage";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { Nude__factory } from "../../typechain/factories/Nude__factory";
 import useWallet from "../../hooks/useWallet";
@@ -211,27 +211,25 @@ const NudeLogo = styled.div`
     align-items: center;
 `;
 
-export default function BuyTokensPage() {
+export default function NudeSwapPage() {
+    const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
+    const { provider, signer } = useWallet();
+
     const [price, setPrice] = useState("0");
     const [isBuyActive, setBuyIsActive] = useState(false);
     const [isSellActive, setSellIsActive] = useState(false);
     const [tokenAmount, setTokenAmount] = useState("0");
     const [nudeAmount, setNudeAmount] = useState("0");
 
-
-    const handleBuyClick = () => {
+    const handleBuyClick = useCallback(() => {
         setBuyIsActive(!isBuyActive);
         setSellIsActive(false);
-    };
+    }, [isBuyActive]);
 
-    const handleSellClick = () => {
+    const handleSellClick = useCallback(() => {
         setSellIsActive(!isSellActive);
         setBuyIsActive(false);
-    };
-
-    const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
-
-    const { provider, signer } = useWallet();
+    }, [isSellActive]);
 
     const handleSubmit = async () => {
         const nudeContract = Nude__factory.connect(
@@ -240,7 +238,7 @@ export default function BuyTokensPage() {
         );
         const nudeWithSigner = nudeContract.connect(signer);
         try {
-            // todo: implement getTokenRate in co   ntract
+            // todo: implement getTokenRate in contract
             const tokenRate = 10;
             const tx = await nudeWithSigner.buyTokens(price, {
                 value: ethers.utils.parseEther(price).div(tokenRate),
@@ -251,8 +249,10 @@ export default function BuyTokensPage() {
             console.error(error);
         }
     };
+
     console.log(nudeAmount);
     console.log(tokenAmount);
+
     return (
         <PageContainer>
             <NudeTitle>
