@@ -58,13 +58,13 @@ export default function Main() {
                 <Route path={routes.nudeswap.path} element={
                     loggedIn ? <NudeSwapPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path={`${routes.nft.path}:tokenId`} element={
+                <Route path={`${routes.nft.path}/:tokenId`} element={
                     loggedIn ? <NftPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
                 <Route path={`${routes.home.path}:name`} element={
                     loggedIn ? <ProfilePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path={`${routes.post.path}:postId`} element={
+                <Route path={`${routes.post.path}/:postId`} element={
                     loggedIn ? <PostPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
                 <Route path={routes.home.path} element={
