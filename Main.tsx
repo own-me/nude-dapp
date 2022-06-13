@@ -15,7 +15,7 @@ import PostPage from "./pages/posts/PostPage";
 import SearchPage from "./pages/search/SearchPage";
 import { Helmet } from "react-helmet";
 import { routes } from "./lib/routes";
-import BuyTokensPage from "./pages/buytokens/BuyTokensPage";
+import NudeSwapPage from "./pages/nudeswap/NudeSwapPage";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -41,33 +41,33 @@ export default function Main() {
             </Helmet>
             {loggedIn && <Navbar />}
             <Routes>
-                <Route path="login" element={<LoginPage />} />
-                <Route path="register" element={<RegisterPage />} />
-                <Route path="/candyshop" element={
+                <Route path={routes.login.path} element={<LoginPage />} />
+                <Route path={routes.register.path} element={<RegisterPage />} />
+                <Route path={routes.candyshop.path} element={
                     loggedIn ? <MintPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/auctionhouse" element={
+                <Route path={routes.auctionhouse.path} element={
                     loggedIn ? <AuctionHousePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/gumballmachine" element={
+                <Route path={routes.gumballmachine.path} element={
                     loggedIn ? <GumballMachinePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/mint" element={
+                <Route path={routes.mint.path} element={
                     loggedIn ? <MintPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/buytokens" element={
-                    loggedIn ? <BuyTokensPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
+                <Route path={routes.nudeswap.path} element={
+                    loggedIn ? <NudeSwapPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/nft/:tokenId" element={
+                <Route path={`${routes.nft.path}:tokenId`} element={
                     loggedIn ? <NftPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/:name" element={
+                <Route path={`${routes.home.path}:name`} element={
                     loggedIn ? <ProfilePage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/post/:postId" element={
+                <Route path={`${routes.post.path}:postId`} element={
                     loggedIn ? <PostPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
-                <Route path="/" element={
+                <Route path={routes.home.path} element={
                     loggedIn ? <SearchPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
             </Routes>

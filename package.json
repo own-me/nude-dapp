@@ -31,6 +31,7 @@
     "@visx/scale": "^2.2.2",
     "@visx/text": "^2.10.0",
     "@visx/wordcloud": "^2.10.0",
+    "cryptocurrency-icons": "^0.18.0",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.8",
     "react": "^18.1.0",

@@ -1,20 +1,49 @@
-export const routes = {
-    "/": {
+interface Routes {
+    [key: string]: {
+        path: string;
+        title?: string;
+    }
+}
+
+export const routes: Routes = {
+    home: {
+        path: "/",
         title: "Home"
     },
-    "/login": {
+    login: {
+        path: "/login",
         title: "Login"
     },
-    "/register": {
+    register: {
+        path: "/register",
         title: "Register"
     },
-    "/candyshop": {
+    nft: {
+        path: "/nft",
+        title: "NFT"
+    },
+    post: {
+        path: "/post",
+        title: "Post"
+    },
+    mint: {
+        path: "/mint",
+        title: "Mint"
+    },
+    candyshop: {
+        path: "/candyshop",
         title: "Candyshop"
     },
-    "/auctionhouse": {
+    auctionhouse: {
+        path: "/auctionhouse",
         title: "Auction House"
     },
-    "/gumballmachine": {
+    gumballmachine: {
+        path: "/gumballmachine",
         title: "Gumball Machine"
+    },
+    nudeswap: {
+        path: "/nudeswap",
+        title: "NudeSwap"
     }
 };

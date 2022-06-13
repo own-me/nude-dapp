@@ -8,6 +8,7 @@ import { ZIndex } from "../../lib/zindex";
 import hamburgerIcon from "../../media/hamburger.svg";
 import SideNav from "./SideNav";
 import { useAppSelector } from "../../redux/hooks";
+import { routes } from "../../lib/routes";
 
 export const NAVBAR_HEIGHT = 50;
 export const NAVBAR_PADDING = 20;
@@ -77,21 +78,21 @@ const NavButtons = styled.div`
 
 export const navLinks = [
     {
-        text: "Home",
-        link: "/",
+        title: routes.home.title,
+        path: routes.home.path,
     },
     {
-        text: "Candyshop",
-        link: "/candyshop",
+        title: routes.candyshop.title,
+        path: routes.candyshop.path,
     },
     {
-        text: "Auction House",
-        link: "/auctionhouse",
+        title: routes.nudeswap.title,
+        path: routes.nudeswap.path,
     },
     {
-        text: "Gumball Machine",
-        link: "/gumballmachine",
-    }
+        title: routes.gumballmachine.title,
+        path: routes.gumballmachine.path,
+    },
 ];
 
 const Navbar = memo(() => {
@@ -107,8 +108,8 @@ const Navbar = memo(() => {
                 <NavLogo src={navLogo} />
                 <NavbarItems>
                     {
-                        navLinks.map(({ text, link }, index) => {
-                            return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>;
+                        navLinks.map(({ title, path }, index) => {
+                            return <NavLink to={path} key={index} $isActive={location.pathname === path}>{title}</NavLink>;
                         })
                     }
                 </NavbarItems>
