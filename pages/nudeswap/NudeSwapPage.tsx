@@ -8,14 +8,16 @@ import NudeSwapSell from "./NudeSwapSell";
 const PageContainer = styled.div`
     flex-direction: column;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    height: 100%;
+    padding-top: 30px;
 `;
 
 const Header = styled.h1`
     color: #dc68f9;
     font-family: Rock Salt, Open Sans;
-    font-size: 40px;
+    font-size: 30px;
 `;
 
 const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
@@ -27,9 +29,9 @@ const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#fef4fb")};
     border: 5px dotted #dc68f9;
     padding: 35px;
+    padding-bottom: 0px;
     width: 60%;
     max-width: 750px;
-    height: 70%;
     border-radius: 50px;
 
     @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
