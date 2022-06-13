@@ -23,7 +23,7 @@ const Label = styled.h3`
     margin: 2px;
     width: 100%;
 
-    @media(max-width: 768px) {
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
       font-size: 18px;
     }
 `;
@@ -59,7 +59,7 @@ const BuyInput = styled.input<{ $isDarkMode: boolean }>`
     text-align: right;
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
 
-    @media(max-width: 768px) {
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         font-size: 18px;
     }
 `;
@@ -80,7 +80,7 @@ const BuyOutput = styled.div<{ $isDarkMode: boolean }>`
     font-size: 24px;
     text-align: center;
 
-    @media(max-width: 768px) {
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         font-size: 18px;
     }
 `;
@@ -96,7 +96,7 @@ const SubmitButton = styled.button`
     box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
     cursor: pointer;
 
-    @media(max-width: 768px) {
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         padding: 20px 113px;
     }
 `;

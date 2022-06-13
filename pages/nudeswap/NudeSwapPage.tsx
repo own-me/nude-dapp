@@ -27,11 +27,12 @@ const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#fef4fb")};
     border: 5px dotted #dc68f9;
     padding: 35px;
-    width: 30rem;
-    height: 30rem;
+    width: 60%;
+    max-width: 1000px;
+    height: 70%;
     border-radius: 50px;
 
-    @media(max-width: 768px) {
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         padding: 20px;
         width: 85%;
     }
@@ -40,9 +41,9 @@ const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
 const ToggleLabel = styled.h3`
     font-size: 26px;
     width: 100%;
-    margin: 0px
-
-    @media(max-width: 768px) {
+    margin: 0px;
+ 
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         font-size: 18px;
     }
 `;
@@ -73,7 +74,7 @@ const NudeBuyTab = styled(SubmitButton) <{ $isActive: boolean }>`
     box-shadow: none;
     background-color: ${(props) => props.$isActive ? "#dc68f9" : "#EDC7E7"};
 
-    @media(max-width: 768px) {
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         font-size: 18px;
     }
 `;
@@ -87,7 +88,7 @@ const NudeSellTab = styled(SubmitButton) <{ $isActive: boolean }>`
     box-shadow: none;
     background-color: ${(props) => props.$isActive ? "#dc68f9" : "#EDC7E7"};
 
-    @media(max-width: 768px) {
+    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         font-size: 18px;
     }
 `;
