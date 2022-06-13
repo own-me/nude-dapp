@@ -152,8 +152,8 @@ export const LoginForm = memo(() => {
     }, [address, postLogin]);
 
     useEffect(() => {
-        if (isPostLoginSuccess && postLoginData && signer) {
-            if (postLoginData?.nonce && address) {
+        if (isPostLoginSuccess && postLoginData && signer && address) {
+            if (postLoginData?.nonce) {
                 window.localStorage.removeItem("token");
                 signer.signMessage(postLoginData.nonce).then(signature => {
                     postAuth({ address, signature, nonce: postLoginData.nonce });

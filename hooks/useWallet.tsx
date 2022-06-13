@@ -53,7 +53,7 @@ export default function useWallet() {
             setAddress(checkSumAddress);
             dispatch(setWalletAddress(checkSumAddress));
         }
-        if (signer && window?.ethereum?.selectedAddress) {
+        if (signer) {
             getAddress();
         }
     }, [dispatch, signer]);
