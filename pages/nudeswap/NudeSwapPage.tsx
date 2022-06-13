@@ -28,7 +28,7 @@ const NudeSwapContainer = styled.div<{ $isDarkMode: boolean }>`
     border: 5px dotted #dc68f9;
     padding: 35px;
     width: 60%;
-    max-width: 1000px;
+    max-width: 750px;
     height: 70%;
     border-radius: 50px;
 
