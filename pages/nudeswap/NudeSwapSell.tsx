@@ -11,16 +11,11 @@ const NudeSwapSellContainer = styled.div<{ $isDarkMode: boolean }>`
     padding: 5px;
     width: 100%;
     font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    height: 550px;
 `;
 
 const Label = styled.h3`
     font-size: 26px;
-    margin: 2px;
+    padding: 5px 0px;
     width: 100%;
 
     @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
@@ -33,10 +28,9 @@ const InputContainer = styled.div<{ $isDarkMode: boolean }>`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     height: 65px;
     border-radius: 5px;
-    padding: 5px;
+    padding: 5px 20px 5px 5px;
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
     color: ${(props) => (props.$isDarkMode ? "#ffffff" : "#000000")};
     font-size: 20px;
@@ -102,6 +96,12 @@ const SubmitButton = styled.button`
     }
 `;
 
+const Footer = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 20px;  
+`;
+
 const NudeSwapSell = memo(() => {
     const { provider, signer } = useWallet();
     const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
@@ -131,7 +131,7 @@ const NudeSwapSell = memo(() => {
 
     return (
         <NudeSwapSellContainer $isDarkMode={isDarkMode}>
-            <Label>Sell $Nude:</Label>
+            <Label>Sell $NUDE</Label>
             <InputContainer $isDarkMode={isDarkMode}>
                 <NudeLogoText />
                 <InnerInputDiv>
@@ -139,12 +139,14 @@ const NudeSwapSell = memo(() => {
                     <MaxButton>Max</MaxButton>
                 </InnerInputDiv>
             </InputContainer>
-            <Label>Buy $matic:</Label>
+            <Label>Receive $MATIC</Label>
             <InputContainer $isDarkMode={isDarkMode}>
                 <MaticLogoText />
                 <SellOutput $isDarkMode={isDarkMode}>123.11 </SellOutput>
             </InputContainer>
-            <SubmitButton onClick={handleSubmit}>SELL NUDE</SubmitButton>
+            <Footer>
+                <SubmitButton onClick={handleSubmit}>SELL NUDE</SubmitButton>
+            </Footer>
         </NudeSwapSellContainer>
     );
 });
