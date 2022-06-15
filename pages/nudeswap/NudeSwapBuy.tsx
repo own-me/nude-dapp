@@ -1,8 +1,8 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { useAppSelector } from "../../redux/hooks";
 import { Nude__factory } from "../../typechain/factories/Nude__factory";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import useWallet from "../../hooks/useWallet";
 import NudeLogoText from "../../components/NudeLogoText";
 import MaticLogoText from "../../components/MaticLogoText";
@@ -52,6 +52,7 @@ const BuyInput = styled.input<{ $isDarkMode: boolean }>`
     border: none;
     text-align: right;
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
+    margin-right: 15px;
 
     @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         font-size: 18px;
@@ -100,14 +101,22 @@ const Footer = styled.div`
     justify-content: center;
     padding: 20px;  
 `;
+const tokenRate = ethers.utils.parseUnits("0.1", 18);
 
 const NudeSwapBuy = memo(() => {
     const { provider, signer } = useWallet();
     const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
 
-    const setBuyAmount = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value);
+    const [buyInput, setBuyInput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
+    const [buyOutput, setBuyOutput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
+
+    const handleBuyInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setBuyInput(ethers.utils.parseUnits(e.target.value, 18));
     }, []);
+
+    useEffect(() => {
+        setBuyOutput(buyInput.div(tokenRate));
+    }, [buyInput]);
 
     const handleSubmit = async () => {
         const nudeContract = Nude__factory.connect(
@@ -117,9 +126,8 @@ const NudeSwapBuy = memo(() => {
         const nudeWithSigner = nudeContract.connect(signer);
         try {
             // todo: implement getTokenRate in contract
-            const tokenRate = 10;
-            const tx = await nudeWithSigner.buyTokens(price, {
-                value: ethers.utils.parseEther(price).div(tokenRate),
+            const tx = await nudeWithSigner.buyTokens(buyOutput, {
+                value: buyInput,
             });
             console.log(tx);
             // todo: implement user-friendly ux
@@ -134,14 +142,14 @@ const NudeSwapBuy = memo(() => {
             <InputContainer $isDarkMode={isDarkMode}>
                 <MaticLogoText />
                 <InnerInputDiv>
-                    <BuyInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={setBuyAmount} />
+                    <BuyInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={handleBuyInputChange} />
                     <MaxButton>Max</MaxButton>
                 </InnerInputDiv>
             </InputContainer>
             <Label>Receive $NUDE</Label>
             <InputContainer $isDarkMode={isDarkMode}>
                 <NudeLogoText />
-                <BuyOutput $isDarkMode={isDarkMode}>123.11 </BuyOutput>
+                <BuyOutput $isDarkMode={isDarkMode}>{buyOutput.toString()}</BuyOutput>
             </InputContainer>
             <Footer>
                 <SubmitButton onClick={handleSubmit}>BUY NUDE</SubmitButton>
