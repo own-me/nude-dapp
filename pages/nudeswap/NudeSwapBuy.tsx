@@ -1,5 +1,5 @@
-import React, { memo, useCallback, useEffect } from "react";
-import styled from "styled-components";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
+import styled, { css } from "styled-components";
 import { useAppSelector } from "../../redux/hooks";
 import { Nude__factory } from "../../typechain/factories/Nude__factory";
 import { BigNumber, ethers } from "ethers";
@@ -80,20 +80,31 @@ const BuyOutput = styled.div<{ $isDarkMode: boolean }>`
     }
 `;
 
-const SubmitButton = styled.button`
-    font-family: Poppins, Open Sans;
-    font-size: 24px;
-    background-color: #FF81EB;
+const SubmitButton = styled.button<{ $disabled?: boolean }>`
+    width: 100%;
+    margin: 20px;
+    background: #FF81EB;
+    border: 1px solid #707070;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
     color: white;
-    border: none;
-    padding: 20px 130px;
-    border-radius: 6px;
-    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+    padding: 8px 25px;
+    font-family: Poppins, Open Sans;
+    font-size: 20px;
     cursor: pointer;
+    opacity: ${props => props.$disabled ? 0.8 : 1};
 
-    @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
-        padding: 20px 113px;
+    :hover{
+        background: #ff44e6;  
     }
+
+    ${props => props.$disabled && css`
+        cursor: not-allowed;
+        :hover{
+            background: #f455fa;  
+        }
+    `}
 `;
 
 const Footer = styled.div`
@@ -104,11 +115,13 @@ const Footer = styled.div`
 const tokenRate = ethers.utils.parseUnits("0.1", 18);
 
 const NudeSwapBuy = memo(() => {
-    const { provider, signer } = useWallet();
+    const { provider, signer, balance } = useWallet();
     const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
 
     const [buyInput, setBuyInput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
     const [buyOutput, setBuyOutput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
+
+    const isBuyValid = useMemo(() => balance && buyInput.lte(balance), [balance, buyInput]);
 
     const handleBuyInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setBuyInput(ethers.utils.parseUnits(e.target.value, 18));
@@ -118,23 +131,25 @@ const NudeSwapBuy = memo(() => {
         setBuyOutput(buyInput.div(tokenRate));
     }, [buyInput]);
 
-    const handleSubmit = async () => {
-        const nudeContract = Nude__factory.connect(
-            process.env.NUDE_ADDRESS,
-            provider
-        );
-        const nudeWithSigner = nudeContract.connect(signer);
-        try {
-            // todo: implement getTokenRate in contract
-            const tx = await nudeWithSigner.buyTokens(buyOutput, {
-                value: buyInput,
-            });
-            console.log(tx);
-            // todo: implement user-friendly ux
-        } catch (error) {
-            console.error(error);
+    const handleSubmit = useCallback(async () => {
+        if (isBuyValid) {
+            try {
+                const nudeContract = Nude__factory.connect(
+                    process.env.NUDE_ADDRESS,
+                    provider
+                );
+                const nudeWithSigner = nudeContract.connect(signer);
+                // todo: implement getTokenRate in contract
+                const tx = await nudeWithSigner.buyTokens(buyOutput, {
+                    value: buyInput,
+                });
+                console.log(tx);
+                // todo: implement user-friendly ux
+            } catch (error) {
+                console.error(error);
+            }
         }
-    };
+    }, [buyInput, buyOutput, isBuyValid, provider, signer]);
 
     return (
         <NudeSwapBuyContainer $isDarkMode={isDarkMode}>
@@ -142,7 +157,13 @@ const NudeSwapBuy = memo(() => {
             <InputContainer $isDarkMode={isDarkMode}>
                 <MaticLogoText />
                 <InnerInputDiv>
-                    <BuyInput $isDarkMode={isDarkMode} type="number" placeholder="0.01" onChange={handleBuyInputChange} />
+                    <BuyInput
+                        $isDarkMode={isDarkMode}
+                        type="number"
+                        placeholder="0.01"
+                        onChange={handleBuyInputChange}
+                        min={0}
+                    />
                     <MaxButton>Max</MaxButton>
                 </InnerInputDiv>
             </InputContainer>
@@ -152,7 +173,7 @@ const NudeSwapBuy = memo(() => {
                 <BuyOutput $isDarkMode={isDarkMode}>{buyOutput.toString()}</BuyOutput>
             </InputContainer>
             <Footer>
-                <SubmitButton onClick={handleSubmit}>BUY NUDE</SubmitButton>
+                <SubmitButton onClick={handleSubmit} $disabled={isBuyValid}>BUY NUDE</SubmitButton>
             </Footer>
         </NudeSwapBuyContainer>
     );
