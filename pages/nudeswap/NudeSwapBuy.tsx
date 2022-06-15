@@ -44,6 +44,7 @@ const InnerInputDiv = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
+    width: 100%;
 `;
 
 const BuyInput = styled.input<{ $isDarkMode: boolean }>`
@@ -53,6 +54,7 @@ const BuyInput = styled.input<{ $isDarkMode: boolean }>`
     text-align: right;
     background-color: ${(props) => (props.$isDarkMode ? "#1b0028" : "#ffffff")};
     margin-right: 15px;
+    width: 80%;
 
     @media(max-width: ${props => props.theme.breakpoints.mobile}px) {
         font-size: 18px;
