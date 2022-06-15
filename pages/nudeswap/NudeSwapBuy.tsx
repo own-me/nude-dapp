@@ -112,13 +112,15 @@ const Footer = styled.div`
     justify-content: center;
     padding: 20px;  
 `;
-const tokenRate = ethers.utils.parseUnits("0.1", 18);
+
+const tokenRate = 0.1;
+const tokenRateEther = ethers.utils.parseUnits(String(tokenRate), 18);
 
 const NudeSwapBuy = memo(() => {
     const { provider, signer, maticBalance } = useWallet();
     const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
 
-    const [buyInput, setBuyInput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
+    const [buyInput, setBuyInput] = React.useState<BigNumber>(ethers.BigNumber.from(tokenRateEther));
     const [buyOutput, setBuyOutput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
 
     const isBuyValid = useMemo(() => maticBalance && buyInput.lte(maticBalance), [maticBalance, buyInput]);
@@ -128,7 +130,7 @@ const NudeSwapBuy = memo(() => {
     }, []);
 
     useEffect(() => {
-        setBuyOutput(buyInput.div(tokenRate));
+        setBuyOutput(buyInput.div(tokenRateEther));
     }, [buyInput]);
 
     const handleSubmit = useCallback(async () => {
@@ -166,11 +168,11 @@ const NudeSwapBuy = memo(() => {
                     <BuyInput
                         $isDarkMode={isDarkMode}
                         type="number"
-                        placeholder="0.01"
+                        placeholder={String(tokenRate)}
                         value={ethers.utils.formatUnits(buyInput, 18)}
                         onChange={handleBuyInputChange}
-                        min={0}
-                        step={0.01}
+                        min={tokenRate}
+                        step={tokenRate}
                     />
                     <MaxButton onClick={handleMax}>Max</MaxButton>
                 </InnerInputDiv>
