@@ -78,10 +78,6 @@ const NavButtons = styled.div`
 
 export const navLinks = [
     {
-        title: routes.home.title,
-        path: routes.home.path,
-    },
-    {
         title: routes.candyshop.title,
         path: routes.candyshop.path,
     },
@@ -105,7 +101,9 @@ const Navbar = memo(() => {
     return (
         <>
             <NavbarContainer $isDarkMode={isDarkMode}>
-                <NavLogo src={navLogo} />
+                <Link to={routes.home.path}>
+                    <NavLogo src={navLogo} />
+                </Link>
                 <NavbarItems>
                     {
                         navLinks.map(({ title, path }, index) => {
