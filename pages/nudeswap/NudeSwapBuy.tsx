@@ -115,13 +115,13 @@ const Footer = styled.div`
 const tokenRate = ethers.utils.parseUnits("0.1", 18);
 
 const NudeSwapBuy = memo(() => {
-    const { provider, signer, balance } = useWallet();
+    const { provider, signer, maticBalance } = useWallet();
     const isDarkMode = useAppSelector((state) => state.app.isDarkMode);
 
     const [buyInput, setBuyInput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
     const [buyOutput, setBuyOutput] = React.useState<BigNumber>(ethers.BigNumber.from(0));
 
-    const isBuyValid = useMemo(() => balance && buyInput.lte(balance), [balance, buyInput]);
+    const isBuyValid = useMemo(() => maticBalance && buyInput.lte(maticBalance), [maticBalance, buyInput]);
 
     const handleBuyInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setBuyInput(ethers.utils.parseUnits(e.target.value, 18));
@@ -151,6 +151,12 @@ const NudeSwapBuy = memo(() => {
         }
     }, [buyInput, buyOutput, isBuyValid, provider, signer]);
 
+    const handleMax = useCallback(async () => {
+        if (maticBalance) {
+            setBuyInput(maticBalance);
+        }
+    }, [maticBalance]);
+
     return (
         <NudeSwapBuyContainer $isDarkMode={isDarkMode}>
             <Label>Sell $MATIC</Label>
@@ -161,10 +167,12 @@ const NudeSwapBuy = memo(() => {
                         $isDarkMode={isDarkMode}
                         type="number"
                         placeholder="0.01"
+                        value={ethers.utils.formatUnits(buyInput, 18)}
                         onChange={handleBuyInputChange}
                         min={0}
+                        step={0.01}
                     />
-                    <MaxButton>Max</MaxButton>
+                    <MaxButton onClick={handleMax}>Max</MaxButton>
                 </InnerInputDiv>
             </InputContainer>
             <Label>Receive $NUDE</Label>
@@ -173,7 +181,7 @@ const NudeSwapBuy = memo(() => {
                 <BuyOutput $isDarkMode={isDarkMode}>{buyOutput.toString()}</BuyOutput>
             </InputContainer>
             <Footer>
-                <SubmitButton onClick={handleSubmit} $disabled={isBuyValid}>BUY NUDE</SubmitButton>
+                <SubmitButton onClick={handleSubmit} $disabled={!isBuyValid}>BUY NUDE</SubmitButton>
             </Footer>
         </NudeSwapBuyContainer>
     );

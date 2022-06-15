@@ -72,12 +72,12 @@ const InteractionContainer = styled.div`
 export default function NavWallet() {
     const dispatch = useAppDispatch();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const { balance, address, network } = useWallet();
+    const { nudeBalance, address, network } = useWallet();
     const email = useAppSelector(state => state.user.email);
     const name = useAppSelector(state => state.user.name);
     const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
 
-    const formattedBalance = useMemo(() => formatBigNumberEth(balance), [balance]);
+    const formattedBalance = useMemo(() => formatBigNumberEth(nudeBalance), [nudeBalance]);
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
 
     const handleLogout = () => {

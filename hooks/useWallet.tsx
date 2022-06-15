@@ -8,7 +8,8 @@ import { Nude__factory } from "../typechain/factories/Nude__factory";
 export default function useWallet() {
     const dispatch = useAppDispatch();
 
-    const [balance, setBalance] = useState<BigNumber>(null);
+    const [nudeBalance, setNudeBalance] = useState<BigNumber>(null);
+    const [maticBalance, setMaticBalance] = useState<BigNumber>(null);
     const [address, setAddress] = useState<string>("");
     const [network, setNetwork] = useState(null);
     const [provider, setProvider] = useState(null);
@@ -62,14 +63,16 @@ export default function useWallet() {
         async function getBalance() {
             await window.ethereum.request({ method: "eth_requestAccounts" });
             const nudeContract = Nude__factory.connect(process.env.NUDE_ADDRESS, provider);
-            const balance = await nudeContract.balanceOf(address);
-            setBalance(balance);
-            dispatch(setWalletBalance(balance.toString()));
+            const nudeBalance = await nudeContract.balanceOf(address);
+            const maticBalance = await signer.getBalance();
+            setNudeBalance(nudeBalance);
+            setMaticBalance(maticBalance);
+            dispatch(setWalletBalance(nudeBalance.toString()));
         }
         if (network && provider && address) {
             getBalance();
         }
-    }, [address, dispatch, network, provider]);
+    }, [address, dispatch, network, provider, signer]);
 
     useEffect(() => {
         if (window.ethereum) {
@@ -77,7 +80,8 @@ export default function useWallet() {
                 if (!address) {
                     setAddress(ethers.utils.getAddress(accounts[0]));
                 } else {
-                    setBalance(null);
+                    setNudeBalance(null);
+                    setMaticBalance(null);
                     setAddress("");
                     setNetwork(null);
                     setProvider(null);
@@ -89,12 +93,13 @@ export default function useWallet() {
                 if (provider) {
                     setProvider(null);
                     setSigner(null);
-                    setBalance(null);
+                    setNudeBalance(null);
+                    setMaticBalance(null);
                     setNetwork(null);
                 }
             });
         }
     }, [address, dispatch, provider]);
 
-    return { balance, address, network, provider, signer };
+    return { nudeBalance, maticBalance, address, network, provider, signer };
 }
