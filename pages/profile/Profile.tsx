@@ -213,9 +213,12 @@ const Profile = memo(({
             <a href={`https://mumbai.polygonscan.com/address/${profileAddress}`} target="_blank">
                 <ProfileAddress>{formattedAddress}</ProfileAddress>
             </a>
-            <GetVerifiedButton onClick={() => setIsVerifyOpen(true)}>
-                Get Verified
-            </GetVerifiedButton>
+            {
+                address === profileAddress &&
+                <GetVerifiedButton onClick={() => setIsVerifyOpen(true)}>
+                    Get Verified
+                </GetVerifiedButton>
+            }
             <ProfileInfo>
                 <ProfileName>{name}</ProfileName>
                 <ProfileDescription>{bio}</ProfileDescription>
