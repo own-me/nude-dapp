@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import styled from "styled-components";
 import Dropdown from "./../Dropdown";
 import useWallet from "../../hooks/useWallet";
-import { formatBigNumberEth, shortenAddress } from "../../lib/helpers";
+import { shortenAddress } from "../../lib/helpers";
 import { useAppSelector } from "../../redux/hooks";
 import { useAppDispatch } from "../../redux/hooks";
 import { logoutUser } from "../../redux/slices/user";
@@ -12,6 +12,7 @@ import AvatarCircle from "./../AvatarCircle";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { NETWORKS } from "../../lib/blockchain";
 import { routes } from "../../lib/routes";
+import { ethers } from "ethers";
 
 const BalanceButton = styled.button`
     font-family: Poppins, Open Sans;
@@ -71,13 +72,12 @@ const InteractionContainer = styled.div`
 
 export default function NavWallet() {
     const dispatch = useAppDispatch();
-    const [isOpen, setIsOpen] = useState<boolean>(false);
     const { nudeBalance, address, network } = useWallet();
-    const email = useAppSelector(state => state.user.email);
-    const name = useAppSelector(state => state.user.name);
-    const profileImageUrl = useAppSelector(state => state.user.profileImageUrl);
+    const { email, name, profileImageUrl } = useAppSelector(state => state.user);
 
-    const formattedBalance = useMemo(() => formatBigNumberEth(nudeBalance), [nudeBalance]);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    const formattedBalance = useMemo(() => Number(ethers.utils.formatEther(nudeBalance || ethers.BigNumber.from(0))).toFixed(4), [nudeBalance]);
     const formattedAddress = useMemo(() => shortenAddress(address, 16), [address]);
 
     const handleLogout = () => {
