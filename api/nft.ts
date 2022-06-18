@@ -7,6 +7,11 @@ export interface TokenURIInterface {
     hashtags: string[];
 }
 
+interface NFTCount {
+    nft_mumbai_likes: number;
+    nft_mumbai_views: number;
+}
+
 export interface NftInterface {
     tokenId: number;
     recipient: string;
@@ -19,8 +24,7 @@ export interface NftInterface {
     price: string;
     ownerName?: string;
     isLiked?: boolean;
-    likesCount: number;
-    viewsCount: number;
+    _count: NFTCount;
 }
 
 interface GetNftResponse {
