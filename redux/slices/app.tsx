@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Notification {
+    key: number;
     title: string;
     message: string;
     type: "success" | "error" | "info";
@@ -9,13 +10,13 @@ export interface Notification {
 interface AppState {
     isDarkMode: boolean;
     isReportModalOpen: boolean;
-    notifications: Notification[];
+    notifications: Record<number, Notification>;
 }
 
 const initialState: AppState = {
     isDarkMode: window.localStorage.getItem("isDarkMode") === "true",
     isReportModalOpen: false,
-    notifications: [],
+    notifications: {},
 };
 
 export const appSlice = createSlice({
@@ -29,11 +30,15 @@ export const appSlice = createSlice({
         toggleReportModal: (state: AppState) => {
             state.isReportModalOpen = !state.isReportModalOpen;
         },
-        addNotification: (state: AppState, action: { payload: Notification }) => {
-            state.notifications.push(action.payload);
+        addNotification: (state: AppState, action: { payload: Omit<Notification, "key"> }) => {
+            const key = Object.keys(state.notifications).length;
+            state.notifications[key] = {
+                key,
+                ...action.payload
+            };
         },
-        removeNotification: (state: AppState, action: { payload: number }) => {
-            state.notifications.splice(action.payload, 1);
+        removeNotification: (state: AppState, action: PayloadAction<{ key: number }>) => {
+            delete state.notifications[action.payload.key];
         }
     }
 });

@@ -1,7 +1,7 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import styled from "styled-components";
-import { useAppSelector } from "../../redux/hooks";
-import { Notification } from "../../redux/slices/app";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { Notification, removeNotification } from "../../redux/slices/app";
 
 const NotificationCardContainer = styled.div<{ $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;
@@ -14,8 +14,19 @@ const NotificationCardContainer = styled.div<{ $isDarkMode: boolean }>`
     color: ${props => props.$isDarkMode ? props.theme.light.textColor : props.theme.dark.textColor};
 `;
 
-const NotificationCard = memo(({ title, message, type }: Notification) => {
+interface NotificationCardProps extends Omit<Notification, "key"> {
+    notificationKey: number;
+}
+
+const NotificationCard = memo(({ notificationKey, title, message, type }: NotificationCardProps) => {
+    const dispatch = useAppDispatch();
     const { isDarkMode } = useAppSelector(state => state.app);
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(removeNotification({ key: notificationKey }));
+        }, 5000);
+    }, [dispatch, notificationKey]);
 
     return (
         <NotificationCardContainer $isDarkMode={isDarkMode}>

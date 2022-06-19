@@ -22,10 +22,6 @@ const NotificationsManager = memo(() => {
     const { notifications, isDarkMode } = useAppSelector(state => state.app);
 
     useEffect(() => {
-        console.log(console.log("notifications", notifications));
-    }, [notifications]);
-
-    useEffect(() => {
         dispatch(addNotification({
             title: "Minted NUDE NFT",
             message: "You minted a NUDE NFT",
@@ -36,8 +32,14 @@ const NotificationsManager = memo(() => {
     return (
         <NotificationsContainer $isDarkMode={isDarkMode}>
             {
-                notifications.map(({ title, message, type }, index) => (
-                    <NotificationCard title={title} message={message} type={type} key={index} />
+                Object.values(notifications).map(({ key, title, message, type }, index) => (
+                    <NotificationCard
+                        key={index}
+                        notificationKey={key}
+                        title={title}
+                        message={message}
+                        type={type}
+                    />
                 ))
             }
         </NotificationsContainer>
