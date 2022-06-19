@@ -16,6 +16,7 @@ import SearchPage from "./pages/search/SearchPage";
 import { Helmet } from "react-helmet";
 import { routes } from "./lib/routes";
 import NudeSwapPage from "./pages/nudeswap/NudeSwapPage";
+import NotificationsManager from "./components/notifications/NotificationsManager";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -40,6 +41,7 @@ export default function Main() {
                 <title>Own Me | {routes[location.pathname]?.title || "App"}</title>
             </Helmet>
             {loggedIn && <Navbar />}
+            <NotificationsManager />
             <Routes>
                 <Route path={routes.login.path} element={<LoginPage />} />
                 <Route path={routes.register.path} element={<RegisterPage />} />
