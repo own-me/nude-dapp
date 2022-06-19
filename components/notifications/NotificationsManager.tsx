@@ -1,8 +1,7 @@
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { ZIndex } from "../../lib/zindex";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { addNotification } from "../../redux/slices/app";
+import { useAppSelector } from "../../redux/hooks";
 import NotificationCard from "./NotificationCard";
 
 const NotificationsContainer = styled.div<{ $isDarkMode: boolean }>`
@@ -18,16 +17,7 @@ const NotificationsContainer = styled.div<{ $isDarkMode: boolean }>`
 `;
 
 const NotificationsManager = memo(() => {
-    const dispatch = useAppDispatch();
     const { notifications, isDarkMode } = useAppSelector(state => state.app);
-
-    useEffect(() => {
-        dispatch(addNotification({
-            title: "Minted NUDE NFT",
-            message: "You minted a NUDE NFT",
-            type: "success"
-        }));
-    }, [dispatch]);
 
     return (
         <NotificationsContainer $isDarkMode={isDarkMode}>
