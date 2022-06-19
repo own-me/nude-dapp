@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface Notification {
+export interface Notification {
     title: string;
     message: string;
     type: "success" | "error" | "info";

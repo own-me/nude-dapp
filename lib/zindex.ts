@@ -1,4 +1,5 @@
 export enum ZIndex {
     DEFAULT,
-    NAVBAR
+    NAVBAR,
+    NOTIFICATION
 }
