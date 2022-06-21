@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
-import catNft from "../../media/defaults/catnft.png";
+import girlImage from "../../media/girl.png";
 import NFTCard from "../../components/NFTCard";
 import pinkCandy from "../../media/pink-candy.svg";
 import DragDropInput from "./DragDropInput";
@@ -163,7 +163,7 @@ export default function MintPage() {
     return (
         <MintPageContainer>
             <MintFormHeader>
-                <MintFormHeaderTitle>Mint an NFT</MintFormHeaderTitle>
+                <MintFormHeaderTitle>Mint a $NUDE NFT</MintFormHeaderTitle>
                 <MintFormHeaderCandy src={pinkCandy} />
             </MintFormHeader>
             <ImagesRow>
@@ -176,9 +176,9 @@ export default function MintPage() {
                 </LeftRow>
                 <RightRow>
                     <NFTCard
-                        title={title || "King Tobi"}
-                        recipient={"@thecatdad"}
-                        image={imagePreview || catNft}
+                        title={title || "Own Me!"}
+                        recipient={address}
+                        image={imagePreview || girlImage}
                         likesCount={0}
                         viewsCount={0}
                         hashtags={hashtags.split(" ")}

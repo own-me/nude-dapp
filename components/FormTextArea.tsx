@@ -45,9 +45,7 @@ const FormTextArea = memo(({ label, onChange, inputValue, errorMessage, placeHol
 
     const handleChange = (e) => {
         const value = e.target?.value;
-        if (!value) {
-            setError(errorMessage || "Error, input is invalid.");
-        }
+        setError(!value ? (errorMessage || "Error, input is invalid.") : "");
         setValue(value);
         onChange && onChange(value);
     };
