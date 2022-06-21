@@ -11,6 +11,8 @@ import useWallet from "../../hooks/useWallet";
 import { usePostIpfsUploadMutation } from "../../api/ipfs";
 import FormHashtagInput from "../../components/FormHashtagInput";
 import { NudeNFT__factory } from "../../typechain/factories/NudeNFT__factory";
+import { useAppDispatch } from "../../redux/hooks";
+import { addNotification } from "../../redux/slices/app";
 
 export const MintPageContainer = styled.div`
     font-family: Poppins, Open Sans;
@@ -95,13 +97,14 @@ const RightRow = styled.div`
 `;
 
 export default function MintPage() {
+    const dispatch = useAppDispatch();
+    const { address, provider, signer } = useWallet();
+
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [hashtags, setHashtags] = useState<string>("");
     const [imagePreview, setImagePreview] = useState<string>();
     const [imageData, setImageData] = useState<File>();
-
-    const { address, provider, signer } = useWallet();
 
     const [postIpfsUpload] = usePostIpfsUploadMutation();
 
@@ -112,17 +115,35 @@ export default function MintPage() {
         if (ipfsResponse) {
             const nudeNftContract = NudeNFT__factory.connect(process.env.NUDE_NFT_ADDRESS, provider);
             const nudeNftWithSigner = nudeNftContract.connect(signer);
-            console.log(nudeNftWithSigner);
             const metadata = {
                 title,
                 description,
                 hashtags: hashtags.split(" "),
                 image: ipfsResponse.data.ipfsUrl
             };
-            const tx = await nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata));
-            console.log(tx);
+            nudeNftWithSigner.mintNFT(address, JSON.stringify(metadata))
+                .then(tx => {
+                    console.log(tx);
+                    dispatch(addNotification({
+                        title: "Minted NUDE NFT!",
+                        message: title,
+                        type: "success"
+                    }));
+                })
+                .catch(e => {
+                    console.log(e);
+                    dispatch(addNotification({
+                        title: "Mint Error",
+                        message: e.message,
+                        type: "error"
+                    }));
+                });
         } else {
-            // image did not upload correctly
+            dispatch(addNotification({
+                title: "Error",
+                message: "Issue uploading image to IPFS.",
+                type: "error"
+            }));
         }
     };
 
