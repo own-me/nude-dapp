@@ -1,15 +1,16 @@
 import { BigNumber, ethers } from "ethers";
 import React, { memo, useMemo } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { shortenAddress } from "../lib/helpers";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { EyeOutlined, HeartOutlined } from "@ant-design/icons";
 import EllipseExtras, { EllipseExtrasContainer, ExtraAction } from "./EllipseExtras";
 import LazyImage, { Image, LazyImageContainer, LoadingImage } from "./LazyImage";
 import { toggleReportModal } from "../redux/slices/app";
+import { routes } from "../lib/routes";
 
-const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
+const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean, $isDummy: boolean }>`
     font-family: Poppins, Open Sans;
     height: 400px;
     width: 290px;
@@ -25,26 +26,28 @@ const NFTCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     color: ${props => (props.$isDarkMode ? "white" : "black")};
     background: ${props => (props.$isDarkMode ? "#0d0018" : "white")};
 
-    :hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    }
+    ${props => !props.$isDummy && css`
+        :hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        }
 
-    ::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background: rgba(244, 246, 248, ${props => props.$isDarkMode ? 0.025 : 0.05});
-        transition: background-color 100ms ease-out, opacity 100ms ease-out;
-        opacity: 0;
-    }
+        ::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(244, 246, 248, ${props => props.$isDarkMode ? 0.025 : 0.05});
+            transition: background-color 100ms ease-out, opacity 100ms ease-out;
+            opacity: 0;
+        }
 
-    :hover::after {
-        opacity: 1;
-    }
+        :hover::after {
+            opacity: 1;
+        }
+    `};
 `;
 
 const NFTCardImage = styled(LazyImage)`
@@ -162,6 +165,7 @@ interface NFTCardProps {
     viewsCount: number;
     hashtags: string[];
     transactionHash?: string;
+    isDummy?: boolean;
     onReport: (tokenId: number) => void;
 }
 
@@ -175,6 +179,7 @@ const NFTCard = memo(({
     viewsCount,
     hashtags = [],
     transactionHash,
+    isDummy,
     onReport,
 }: NFTCardProps) => {
     const dispatch = useAppDispatch();
@@ -198,7 +203,11 @@ const NFTCard = memo(({
     ], [dispatch, onReport, tokenId, transactionHash]);
 
     return (
-        <NFTCardContainer to={`/nft/${tokenId}`} $isDarkMode={isDarkMode}>
+        <NFTCardContainer
+            to={isDummy ? routes.mint.path : `${routes.nft.path}/${tokenId}`}
+            $isDarkMode={isDarkMode}
+            $isDummy={isDummy}
+        >
             <NFTCardImage src={image} />
             <NFTCardContent>
                 <NFTCardTitle>{title}</NFTCardTitle>
@@ -223,7 +232,7 @@ const NFTCard = memo(({
                         <PriceAmount>{price ? ethers.utils.formatEther(BigNumber.from(price)) : 0}</PriceAmount>
                         <PriceTokenName>NUDE</PriceTokenName>
                     </NFTCardPrice>
-                    <ExtraActions extraActions={extraActions} />
+                    {!isDummy && <ExtraActions extraActions={extraActions} />}
                 </BottomItems>
             </NFTCardContent>
         </NFTCardContainer>

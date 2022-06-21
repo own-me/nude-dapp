@@ -183,6 +183,7 @@ export default function MintPage() {
                         viewsCount={0}
                         hashtags={hashtags.split(" ")}
                         onReport={() => console.log("report")}
+                        isDummy
                     />
                 </RightRow>
             </ImagesRow>
