@@ -17,6 +17,7 @@ import { Helmet } from "react-helmet";
 import { routes } from "./lib/routes";
 import NudeSwapPage from "./pages/nudeswap/NudeSwapPage";
 import NotificationsManager from "./components/notifications/NotificationsManager";
+import DaoPage from "./pages/dao/DaoPage";
 
 const MainContainer = styled.div<{ $isLoggedIn: boolean, $isDarkMode: boolean }>`
     height: calc(100% - ${props => props.$isLoggedIn ? TOTAL_HEIGHT : 0}px);
@@ -71,6 +72,9 @@ export default function Main() {
                 } />
                 <Route path={routes.home.path} element={
                     loggedIn ? <SearchPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
+                } />
+                <Route path={routes.dao.path} element={
+                    loggedIn ? <DaoPage /> : <Navigate to="/login" state={{ from: location }} replace={true} />
                 } />
             </Routes>
         </MainContainer>

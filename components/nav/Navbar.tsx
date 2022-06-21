@@ -89,6 +89,10 @@ export const navLinks = [
         title: routes.gumballmachine.title,
         path: routes.gumballmachine.path,
     },
+    {
+        title: routes.dao.title,
+        path: routes.dao.path
+    }
 ];
 
 const Navbar = memo(() => {

@@ -72,8 +72,8 @@ const SideNav = memo(({ isOpen, setIsOpen }: SideNavProps) => {
                 <>
                     <SideNavContainer className={transitionState}>
                         {
-                            navLinks.map(({ text, link }, index) => {
-                                return <NavLink to={link} key={index} $isActive={location.pathname === link}>{text}</NavLink>;
+                            navLinks.map(({ title, path }, index) => {
+                                return <NavLink to={path} key={index} $isActive={location.pathname === path}>{title}</NavLink>;
                             })
                         }
                     </SideNavContainer>

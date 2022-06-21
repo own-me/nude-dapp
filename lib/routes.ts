@@ -45,5 +45,9 @@ export const routes: Routes = {
     nudeswap: {
         path: "/nudeswap",
         title: "NudeSwap"
+    },
+    dao: {
+        path: "/dao",
+        title: "DAO"
     }
 };
