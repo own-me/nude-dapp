@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import catNft from "../../media/defaults/catnft.png";
 import NFTCard from "../../components/NFTCard";
@@ -56,17 +56,22 @@ const MintFormFooter = styled.div`
     margin-top: 30px;
 `;
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button<{ $disabled?: boolean }>`
     font-family: Poppins, Open Sans;
     font-size: 22px;
-    background-color: #FF81EB;
+    background-color: ${props => props.$disabled ? "#a3a3a3" : "#FF81EB"};
     color: white;
     border: none;
     padding: 8px 40px;
     border-radius: 6px;
-    margin-left: 50px;
-    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
-    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    cursor: ${props => props.$disabled ? "not-allowed" : "pointer"};
+    align-self: flex-end;
+    opacity: ${props => props.$disabled ? 0.8 : 1};
+
+    :hover {
+        background-color: ${props => props.$disabled ? "#8a8a8a" : "#fb5de1"};
+    }
 `;
 
 const EncryptedLabel = styled.h3`
@@ -107,6 +112,10 @@ export default function MintPage() {
     const [imageData, setImageData] = useState<File>();
 
     const [postIpfsUpload] = usePostIpfsUploadMutation();
+
+    const isMintValid = useMemo(() => {
+        return !!(address && title?.length > 0 && description?.length > 0 && hashtags?.length > 0 && imagePreview);
+    }, [address, title, description, hashtags, imagePreview]);
 
     const handleMintSubmit = async () => {
         const formData = new FormData();
@@ -198,7 +207,7 @@ export default function MintPage() {
             />
             <MintFormFooter>
                 <EncryptedLabel>Encrypted Content<Switch /></EncryptedLabel>
-                <SubmitButton onClick={handleMintSubmit}>MINT</SubmitButton>
+                <SubmitButton $disabled={!isMintValid} onClick={handleMintSubmit}>MINT</SubmitButton>
             </MintFormFooter>
         </MintPageContainer>
     );
