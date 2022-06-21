@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import Modal from "./Modal";
-import FormInput from "./FormInput";
+import FormInput from "./form/FormInput";
 import { useCreateVerifySessionMutation } from "../api/verify";
 
 const ModalContent = styled.div`

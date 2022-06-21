@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { usePostRegisterMutation } from "../../api/register";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import useWallet from "../../hooks/useWallet";
-import FormCheckboxInput from "../../components/FormCheckboxInput";
+import FormCheckboxInput from "../../components/form/FormCheckboxInput";
 
 const RegisterFormContainer = styled.form`
     max-width: 600px;

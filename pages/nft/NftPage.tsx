@@ -9,7 +9,7 @@ import useWallet from "../../hooks/useWallet";
 import { BigNumber, ethers } from "ethers";
 import { Helmet } from "react-helmet";
 import { NudeDEX__factory, NudeNFT__factory } from "../../typechain";
-import FormInput from "../../components/FormInput";
+import FormInput from "../../components/form/FormInput";
 
 const NftPageContainer = styled.div`
     padding: 80px;

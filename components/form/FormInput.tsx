@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes, memo, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 
 export const formStyles = css<{ $isError?: boolean, $isDarkMode: boolean }>`
     font-family: Poppins, Open Sans;

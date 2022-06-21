@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
 import styled from "styled-components";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 import { formStyles } from "./FormInput";
 
 const FormTextAreaContainer = styled.div`

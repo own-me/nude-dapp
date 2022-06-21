@@ -4,8 +4,8 @@ import { shortenAddress } from "../lib/helpers";
 import { NftInterface, usePostNftReportMutation } from "../api/nft";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { toggleReportModal } from "../redux/slices/app";
-import FormCheckboxInput from "./FormCheckboxInput";
-import FormTextArea from "./FormTextArea";
+import FormCheckboxInput from "./form/FormCheckboxInput";
+import FormTextArea from "./form/FormTextArea";
 import Modal from "./Modal";
 
 const Header = styled.h1`

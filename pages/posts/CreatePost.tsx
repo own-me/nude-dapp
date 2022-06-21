@@ -1,10 +1,10 @@
 import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
-import FormTextArea from "../../components/FormTextArea";
+import FormTextArea from "../../components/form/FormTextArea";
 import defaultProfile from "../../media/defaults/missing-profile.png";
 import { FileImageOutlined } from "@ant-design/icons";
 import { usePostsPostMutation } from "../../api/posts";
-import FormFileInputButton from "../../components/FormFileInputButton";
+import FormFileInputButton from "../../components/form/FormFileInputButton";
 import { usePostIpfsUploadMutation } from "../../api/ipfs";
 
 const CreatePostContainer = styled.div`

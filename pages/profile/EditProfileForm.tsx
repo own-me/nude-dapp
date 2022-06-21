@@ -1,10 +1,10 @@
 import React, { memo, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import FormInput from "../../components/FormInput";
-import FormTextArea from "../../components/FormTextArea";
+import FormInput from "../../components/form/FormInput";
+import FormTextArea from "../../components/form/FormTextArea";
 import { useEditUserMutation, useUploadProfileImageMutation, useUploadProfileBannerMutation } from "../../api/user";
 import { useNavigate } from "react-router-dom";
-import FormFileInputButton from "../../components/FormFileInputButton";
+import FormFileInputButton from "../../components/form/FormFileInputButton";
 
 const EditProfileFormContainer = styled.div`
 
