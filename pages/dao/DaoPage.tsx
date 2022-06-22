@@ -1,8 +1,8 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Nude__factory } from "../../typechain/factories/Nude__factory";
 import useWallet from "../../hooks/useWallet";
 import JoinDao from "./JoinDao";
+import ProposalList from "./ProposalList";
 
 export default function DaoPage() {
     const { provider, signer, address } = useWallet();
@@ -21,5 +21,5 @@ export default function DaoPage() {
         getDelegateInfo();
     }, [address, provider, signer]);
 
-    return hasJoined ?  <>Joined dao! Waiting for vote</> : <JoinDao />;
+    return hasJoined ?  <ProposalList /> : <JoinDao />;
 }
