@@ -1,8 +1,9 @@
 import React, { useState, useEffect, memo } from "react";
 import styled from "styled-components";
 import xIcon from "../../media/icons/x.svg";
+import { useAppSelector } from "../../redux/hooks";
 
-const DragDropInputContainer = styled.div`
+const DragDropInputContainer = styled.div<{ $isDarkMode: boolean }>`
     width: 100%;
     height: 200px;
     border: 3px dashed #f296ff;
@@ -13,7 +14,7 @@ const DragDropInputContainer = styled.div`
 
     :hover {
         border-color: #ff6af5;
-        background-color: #fcedf9;
+        background-color: ${props => props.$isDarkMode ? "#150027" : "#fff6ff"};;
 
         div { // button
             transform: scale(1.025);
@@ -68,6 +69,8 @@ interface DragDropInputProps {
 }
 
 const DragDropInput = memo(({ onBase64, onArrayBuffer, onClear, onChange }: DragDropInputProps) => {
+    const { isDarkMode } = useAppSelector(state => state.app);
+
     const [imageFile, setImageFile] = useState<File>();
     const [previewImage, setPreviewImage] = useState<string>();
 
@@ -102,7 +105,7 @@ const DragDropInput = memo(({ onBase64, onArrayBuffer, onClear, onChange }: Drag
     };
 
     return (
-        <DragDropInputContainer>
+        <DragDropInputContainer $isDarkMode={isDarkMode}>
             {
                 !previewImage && <>
                     <Input type="file" onChange={handleChange} />
