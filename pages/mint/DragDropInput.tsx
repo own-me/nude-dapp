@@ -10,6 +10,16 @@ const DragDropInputContainer = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
+
+    :hover {
+        border-color: #ff6af5;
+        background-color: #fcedf9;
+
+        div { // button
+            transform: scale(1.025);
+            transition: transform 100ms ease-in;
+        }
+    }
 `;
 
 const Input = styled.input`
