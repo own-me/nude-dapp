@@ -14,6 +14,7 @@ import { useAppSelector } from "../../redux/hooks";
 import ProfilePosts from "../posts/ProfilePosts";
 import ProfileCardList from "./ProfileCardList";
 import VerifyStepper from "../../components/VerifyStepper";
+import verifiedIcon from "../../media/verified.png";
 
 const ProfileContainer = styled.div<{ $isDarkMode: boolean }>`
     min-height: 100%;
@@ -56,6 +57,11 @@ const ProfileName = styled.h1`
     font-family: "Poppins", sans-serif;
     font-size: 36px;
     margin-top: 80px;
+`;
+
+const VerifiedIcon = styled.img`
+    height: 30px;
+    margin-left: 15px;
 `;
 
 const ProfileDescription = styled.p`
@@ -157,6 +163,7 @@ interface ProfileProps {
     following: Following[];
     profileImageUrl: string;
     bannerImageUrl: string;
+    adultVerified?: boolean;
     userRefetch: () => void;
 }
 
@@ -170,6 +177,7 @@ const Profile = memo(({
     following,
     profileImageUrl,
     bannerImageUrl,
+    adultVerified,
     userRefetch
 }: ProfileProps) => {
     const { address } = useWallet();
@@ -214,13 +222,16 @@ const Profile = memo(({
                 <ProfileAddress>{formattedAddress}</ProfileAddress>
             </a>
             {
-                address === profileAddress &&
+                address === profileAddress && !adultVerified &&
                 <GetVerifiedButton onClick={() => setIsVerifyOpen(true)}>
                     Get Verified
                 </GetVerifiedButton>
             }
             <ProfileInfo>
-                <ProfileName>{name}</ProfileName>
+                <ProfileName>
+                    {name}
+                    {adultVerified && <VerifiedIcon src={verifiedIcon} /> }
+                </ProfileName>
                 <ProfileDescription>{bio}</ProfileDescription>
                 <ProfileLink href={link} target={"_blank"}>{link}</ProfileLink>
             </ProfileInfo>

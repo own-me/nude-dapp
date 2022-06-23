@@ -57,6 +57,7 @@ const ProfilePage = memo(() => {
                     userRefetch={userRefetch}
                     userNfts={userNfts}
                     following={userData.following}
+                    adultVerified={userData.adultVerified}
                 />
             }
         </>
