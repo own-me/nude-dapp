@@ -16,12 +16,9 @@ export default function useWallet() {
     const [signer, setSigner] = useState(null);
 
     useEffect(() => {
-        console.log("Getting new wallet provider...");
         if (!provider && window.ethereum) {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             setProvider(provider);
-        } else {
-            console.log("No wallet provider found");
         }
     }, [provider]);
 
@@ -37,10 +34,8 @@ export default function useWallet() {
     useEffect(() => {
         async function getNetwork() {
             const network = await provider.getNetwork();
-            if (network) {
-                setNetwork(network);
-                dispatch(setWalletNetwork(network.name));
-            }
+            setNetwork(network);
+            dispatch(setWalletNetwork(network.name));
         }
         if (provider) {
             getNetwork();

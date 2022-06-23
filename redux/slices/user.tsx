@@ -6,7 +6,7 @@ interface UserState {
     address: string;
     name: string;
     profileImageUrl: string;
-    loggedIn: boolean;
+    isLoggedIn: boolean;
     token: string;
     email: string;
     nfts: NftInterface[];
@@ -16,7 +16,7 @@ const initialState: UserState = {
     address: null,
     name: "",
     profileImageUrl: "",
-    loggedIn: false,
+    isLoggedIn: false,
     token: "",
     email: "",
     nfts: []
@@ -33,7 +33,7 @@ export const userSlice = createSlice({
             if (!action.payload) {
                 localStorage.removeItem("token");
             }
-            state.loggedIn = action.payload;
+            state.isLoggedIn = action.payload;
         },
         logoutUser: () => {
             localStorage.removeItem("token");
@@ -56,7 +56,7 @@ export const userSlice = createSlice({
                 address: action.payload.address,
                 name: action.payload.name,
                 profileImageUrl: action.payload.profileImageUrl,
-                loggedIn: true
+                isLoggedIn: true
             };
         },
     }

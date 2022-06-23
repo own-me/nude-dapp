@@ -3,13 +3,12 @@ import styled, { css } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { usePostLoginMutation } from "../../api/login";
-import { setInitialLoginInfo, setUserLoggedIn, setUserToken } from "../../redux/slices/user";
+import { setUserLoggedIn, setUserToken } from "../../redux/slices/user";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import metamaskLogo from "../../media/metamask.svg";
 import { Link } from "react-router-dom";
 import useWallet from "../../hooks/useWallet";
 import { usePostAuthMutation } from "../../api/auth";
-import { useGetInitialLoginInfoQuery } from "../../api/user";
 import { ethers, utils } from "ethers";
 import { NETWORKS } from "../../lib/blockchain";
 
@@ -70,13 +69,10 @@ const ErrorMessage = styled.p`
 
 export const LoginForm = memo(() => {
     const dispatch = useAppDispatch();
-
     const navigate = useNavigate();
     const location = useLocation();
 
-    const loggedIn = useAppSelector(state => state.user.loggedIn);
-    const userToken = useAppSelector(state => state.user.token);
-
+    const { isLoggedIn } = useAppSelector(state => state.user);
     const { address, signer } = useWallet();
 
     const [postLogin, {
@@ -91,20 +87,6 @@ export const LoginForm = memo(() => {
         isSuccess: isPostAuthSuccess,
         data: postAuthData,
     }] = usePostAuthMutation();
-
-    const {
-        data: initialLoginInfoData,
-        isSuccess: isGetInitialLoginInfoSuccess,
-        refetch: getInitialLoginInfoRefetch
-    } = useGetInitialLoginInfoQuery({ token: userToken }, {
-        skip: !userToken || !address || loggedIn,
-    });
-
-    useEffect(() => {
-        if (isGetInitialLoginInfoSuccess) {
-            dispatch(setInitialLoginInfo(initialLoginInfoData));
-        }
-    }, [isGetInitialLoginInfoSuccess, initialLoginInfoData, dispatch]);
 
     useEffect(() => {
         if (window.localStorage.getItem("token") && address) {
@@ -172,12 +154,6 @@ export const LoginForm = memo(() => {
     }, [isPostLoginError]);
 
     useEffect(() => {
-        if (userToken && loggedIn) {
-            getInitialLoginInfoRefetch();
-        }
-    }, [getInitialLoginInfoRefetch, loggedIn, userToken]);
-
-    useEffect(() => {
         if (isPostAuthSuccess && postAuthData && postAuthData.token) {
             window.localStorage.setItem("token", postAuthData.token);
             dispatch(setUserToken(postAuthData.token));
@@ -185,10 +161,10 @@ export const LoginForm = memo(() => {
     }, [dispatch, isPostAuthSuccess, postAuthData]);
 
     useEffect(() => {
-        if (loggedIn) {
+        if (isLoggedIn) {
             navigate(location?.state?.from || "/");
         }
-    }, [location?.state?.from, loggedIn, navigate]);
+    }, [location?.state?.from, isLoggedIn, navigate]);
 
     return (
         <LoginFormContainer onSubmit={handleSubmit}>
