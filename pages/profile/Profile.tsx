@@ -61,7 +61,8 @@ const ProfileName = styled.h1`
 
 const VerifiedIcon = styled.img`
     height: 30px;
-    margin-left: 15px;
+    margin-left: 10px;
+    margin-bottom: 5px;
 `;
 
 const ProfileDescription = styled.p`
