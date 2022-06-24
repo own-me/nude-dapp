@@ -8,6 +8,7 @@ import { userApi } from "../api/user";
 import { nftApi } from "../api/nft";
 import { postsApi } from "../api/posts";
 import { verifyApi } from "../api/verify";
+import { proposalsApi } from "../api/proposals";
 import appReducer from "./slices/app";
 import userReducer from "./slices/user";
 import walletReducer from "./slices/wallet";
@@ -24,7 +25,8 @@ export const store = configureStore({
         [ipfsApi.reducerPath]: ipfsApi.reducer,
         [nftApi.reducerPath]: nftApi.reducer,
         [postsApi.reducerPath]: postsApi.reducer,
-        [verifyApi.reducerPath]: verifyApi.reducer
+        [verifyApi.reducerPath]: verifyApi.reducer,
+        [proposalsApi.reducerPath]: proposalsApi.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
         loginApi.middleware,
@@ -34,7 +36,8 @@ export const store = configureStore({
         ipfsApi.middleware,
         nftApi.middleware,
         postsApi.middleware,
-        verifyApi.middleware
+        verifyApi.middleware,
+        proposalsApi.middleware,
     ),
 });
 
