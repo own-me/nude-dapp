@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { BigNumber, ethers } from "ethers";
-import { setUserLoggedIn } from "../redux/slices/user";
 import { setWalletAddress, setWalletBalance, setWalletNetwork } from "../redux/slices/wallet";
 import { useAppDispatch } from "../redux/hooks";
 import { Nude__factory } from "../typechain/factories/Nude__factory";
@@ -75,13 +74,8 @@ export default function useWallet() {
                 if (!address) {
                     setAddress(ethers.utils.getAddress(accounts[0]));
                 } else {
-                    setNudeBalance(null);
-                    setMaticBalance(null);
-                    setAddress("");
-                    setNetwork(null);
-                    setProvider(null);
-                    setSigner(null);
-                    dispatch(setUserLoggedIn(false));
+                    localStorage.removeItem("token");
+                    window.location.reload();
                 }
             });
             window.ethereum.on("chainChanged", async (chainId) => {
