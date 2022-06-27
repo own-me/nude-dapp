@@ -10,7 +10,8 @@ export default function Blender() {
     return (
         <primitive
             object={gltf.scene}
-            position={[0, -30, -100]}
+            position={[0, -10, -22]}
+            rotation={[0, 4.70, -0.3]}
         />
     );
 }
