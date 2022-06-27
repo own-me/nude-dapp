@@ -10,7 +10,7 @@ const Canvas = memo(() => {
     return (
         <ThreeCanvas>
             <pointLight position={[0, 10, 20]} />
-            {/* <ambientLight intensity={0.5} /> */}
+            <ambientLight intensity={0.4} />
             <CameraController />
             {/* <GumballMachine /> */}
             <Blender />
