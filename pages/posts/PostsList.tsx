@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from "react";
 import styled from "styled-components";
-import defaultProfile from "../../media/defaults/missing-profile.png";
+import defaultProfile from "../../media/defaults/old-missing-profile.png";
 import { Post, useLikePostMutation, useUnlikePostMutation } from "../../api/posts";
 import { HeartOutlined, HeartFilled, CommentOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { useAppSelector } from "../../redux/hooks";
