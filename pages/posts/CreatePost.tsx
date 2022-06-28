@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import styled from "styled-components";
 import FormTextArea from "../../components/form/FormTextArea";
-import defaultProfile from "../../media/defaults/missing-profile.png";
+import defaultProfile from "../../media/defaults/old-missing-profile.png";
 import { FileImageOutlined } from "@ant-design/icons";
 import { usePostsPostMutation } from "../../api/posts";
 import FormFileInputButton from "../../components/form/FormFileInputButton";

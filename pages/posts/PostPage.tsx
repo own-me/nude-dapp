@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import defaultProfile from "../../media/defaults/missing-profile.png";
+import defaultProfile from "../../media/defaults/old-missing-profile.png";
 import { useGetPostQuery } from "../../api/posts";
 import { useAppSelector } from "../../redux/hooks";
 import CreatePost from "./CreatePost";

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import defaultProfile from "../../media/defaults/missing-profile.png";
+import defaultProfile from "../../media/defaults/missing-profile.svg";
 import { shortenAddress } from "../../lib/helpers";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";

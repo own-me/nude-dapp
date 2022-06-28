@@ -9,7 +9,7 @@ import { logoutUser } from "../../redux/slices/user";
 import { Link } from "react-router-dom";
 import { toggleDarkMode } from "../../redux/slices/app";
 import AvatarCircle from "./../AvatarCircle";
-import defaultProfile from "../../media/defaults/missing-profile.png";
+import defaultProfile from "../../media/defaults/old-missing-profile.png";
 import { NETWORKS } from "../../lib/blockchain";
 import { routes } from "../../lib/routes";
 import { ethers } from "ethers";
