@@ -230,7 +230,7 @@ const SearchPage = memo(() => {
                         />
                     </TabContent>
                     <TabContent>
-                        <SearchProfilesList users={searchUsersData?.users} />
+                        <SearchProfilesList users={searchUsersData} />
                     </TabContent>
                     <TabContent>
                         <HashtagWordCloud

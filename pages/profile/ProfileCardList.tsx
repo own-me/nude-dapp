@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import { Following } from "../../api/follow";
+import { User } from "../../api/user";
 import ProfileCard from "./ProfileCard";
 
 const ProfileCardListContainer = styled.div`
@@ -11,7 +11,7 @@ const ProfileCardListContainer = styled.div`
 `;
 
 interface ProfileCardListProps {
-    users?: Following[];
+    users?: User[];
     className?: string;
 }
 
@@ -19,7 +19,7 @@ const ProfileCardList = memo(({ users = [], className }: ProfileCardListProps) =
     return (
         <ProfileCardListContainer className={className}>
             {
-                users.map((user: Following, index) =>
+                users.map((user: User, index) =>
                     <ProfileCard user={user} key={index} />
                 )
             }

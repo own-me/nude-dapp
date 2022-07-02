@@ -4,7 +4,8 @@ import defaultProfile from "../../media/defaults/neon-missing-profile.svg";
 import { shortenAddress } from "../../lib/helpers";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
-import { Following } from "../../api/follow";
+import { User } from "../../api/user";
+import verifiedIcon from "../../media/verified.png";
 
 const ProfileCardContainer = styled(Link) <{ $isDarkMode: boolean }>`
     display: flex;
@@ -71,19 +72,28 @@ const ProfileAddress = styled.div`
     font-size: 18px;
 `;
 
+const VerifiedIcon = styled.img`
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+`;
+
 interface ProfileCardProps {
-    user?: Following;
+    user?: User;
     className?: string;
 }
 
 const ProfileCard = memo(({ user, className }: ProfileCardProps) => {
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
     return (
-        <ProfileCardContainer to={`/${user.toAddress}`} $isDarkMode={isDarkMode} className={className}>
-            <ProfileImage src={user.toProfileImageUrl || defaultProfile} />
+        <ProfileCardContainer to={`/${user.address}`} $isDarkMode={isDarkMode} className={className}>
+            <ProfileImage src={user.profileImageUrl || defaultProfile} />
             <InfoContainer>
                 <ProfileName>{user.name}</ProfileName>
-                <ProfileAddress>{shortenAddress(user.toAddress, 16)}</ProfileAddress>
+                <ProfileAddress>{shortenAddress(user.address, 16)}</ProfileAddress>
+                {user.adultVerified && <VerifiedIcon src={verifiedIcon} />}
             </InfoContainer>
         </ProfileCardContainer>
     );
