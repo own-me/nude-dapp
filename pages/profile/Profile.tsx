@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import defaultBanner from "../../media/defaults/stars-banner.png";
-import defaultProfile from "../../media/defaults/missing-profile.png";
+import defaultProfile from "../../media/defaults/old-missing-profile.png";
 import useWallet from "../../hooks/useWallet";
 import { shortenAddress } from "../../lib/helpers";
 import Tabs, { TabContent } from "../../components/Tabs";
