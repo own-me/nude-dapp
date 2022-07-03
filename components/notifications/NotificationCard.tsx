@@ -18,7 +18,7 @@ interface NotificationCardProps extends Omit<Notification, "key"> {
     notificationKey: number;
 }
 
-const NotificationCard = memo(({ notificationKey, title, message, type }: NotificationCardProps) => {
+const NotificationCard = memo(({ notificationKey, title, message }: NotificationCardProps) => {
     const dispatch = useAppDispatch();
     const { isDarkMode } = useAppSelector(state => state.app);
 

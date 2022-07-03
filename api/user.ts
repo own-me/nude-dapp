@@ -26,14 +26,6 @@ interface UserEditRequest {
     bannerImageUrl?: string;
 }
 
-interface SearchUser {
-    toProfileImageUrl: string;
-    name: string;
-    toAddress: string;
-    followersCount: number;
-    nftsCount: number;
-}
-
 export interface InitialLoginInfoResponse {
     address?: string;
     name?: string;
@@ -102,9 +94,9 @@ export const userApi = createApi({
                 }
             })
         }),
-        getSearchUsers: builder.query<{ users?: SearchUser[], message?: string, error?: string }, { query: string }>({
-            query: ({ query }) => ({
-                url: `user/search/${query}`,
+        getSearchUsers: builder.query<{ users?: User[], message?: string, error?: string }, { query: string, page: number }>({
+            query: ({ query, page }) => ({
+                url: `user/search/${query}?page=${page}`,
                 method: "GET",
                 headers: {
                     ...(localStorage.getItem("token") && { Authorization: `Bearer ${localStorage.getItem("token")}` })

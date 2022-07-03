@@ -78,7 +78,7 @@ export default function useWallet() {
                     window.location.reload();
                 }
             });
-            window.ethereum.on("chainChanged", async (chainId) => {
+            window.ethereum.on("chainChanged", async () => {
                 if (provider) {
                     setProvider(null);
                     setSigner(null);

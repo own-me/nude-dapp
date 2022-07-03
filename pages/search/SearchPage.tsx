@@ -6,7 +6,7 @@ import NFTCard from "../../components/NFTCard";
 import Tabs, { TabContent, Tab } from "../../components/Tabs";
 import { NftInterface, useGetSearchNftsQuery } from "../../api/nft";
 import { useGetSearchPostsQuery } from "../../api/posts";
-import { useGetSearchUsersQuery } from "../../api/user";
+import { useGetSearchUsersQuery, User } from "../../api/user";
 import { useAppSelector } from "../../redux/hooks";
 import PostsList from "../posts/PostsList";
 import ProfileCardList from "../profile/ProfileCardList";
@@ -117,6 +117,7 @@ const SearchPage = memo(() => {
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [pageMaxed, setPageMaxed] = useState<boolean>(false);
     const [nfts, setNfts] = useState<NftInterface[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
     const [reportingNft, setReportingNft] = useState<NftInterface | null>(null);
 
     const isDarkMode = useAppSelector(state => state.app.isDarkMode);
@@ -136,9 +137,10 @@ const SearchPage = memo(() => {
     });
 
     const {
-        data: searchUsersData
-    } = useGetSearchUsersQuery({ query: searchValue || "*" }, {
-        skip: activeTab !== TabOptions.USERS,
+        data: searchUsersData,
+        isLoading: isSearchUsersLoading,
+    } = useGetSearchUsersQuery({ query: searchValue || "*", page: pageNumber }, {
+        skip: pageMaxed && activeTab !== TabOptions.USERS,
     });
 
     useEffect(() => {
@@ -153,6 +155,19 @@ const SearchPage = memo(() => {
             setPageMaxed(true);
         }
     }, [searchNftsData?.nfts, searchValue]);
+
+    useEffect(() => {
+        if (searchUsersData?.users?.length > 0) {
+            if (searchValue) {
+                setUsers(searchUsersData.users);
+            } else {
+                setUsers((prevValue) => prevValue.concat(searchUsersData.users));
+            }
+        }
+        if (searchUsersData?.users?.length === 0) {
+            setPageMaxed(true);
+        }
+    }, [searchUsersData?.users, searchValue]);
 
     useEffect(() => {
         const mainContainer = document.getElementById("main-container");
@@ -192,7 +207,10 @@ const SearchPage = memo(() => {
                         TabOptions.USERS,
                         TabOptions.HASHTAGS
                     ], [])}
-                    onTabChange={(tab) => setActiveTab((tab as TabOptions))}
+                    onTabChange={(tab) => {
+                        setActiveTab((tab as TabOptions));
+                        setPageNumber(0);
+                    }}
                 >
                     <TabContent>
                         <NftCards>
@@ -230,7 +248,15 @@ const SearchPage = memo(() => {
                         />
                     </TabContent>
                     <TabContent>
-                        <SearchProfilesList users={searchUsersData} />
+                        <SearchProfilesList users={users} />
+                        <PaginationMessage>
+                            {
+                                isSearchUsersLoading && <img src={loadingSpinner} />
+                            }
+                            {
+                                !isSearchUsersLoading && pageMaxed && <NoItemsMessage>No more users...</NoItemsMessage>
+                            }
+                        </PaginationMessage>
                     </TabContent>
                     <TabContent>
                         <HashtagWordCloud
