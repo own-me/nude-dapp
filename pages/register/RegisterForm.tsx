@@ -5,6 +5,7 @@ import { usePostRegisterMutation } from "../../api/register";
 import loadingSpinner from "../../media/own-me-spinner.svg";
 import useWallet from "../../hooks/useWallet";
 import FormCheckboxInput from "../../components/form/FormCheckboxInput";
+import { shortenAddress } from "../../lib/helpers";
 
 const RegisterFormContainer = styled.form`
     max-width: 600px;
@@ -19,6 +20,10 @@ const RegisterFormContainer = styled.form`
     color: black;
     margin: 2rem;
     font-family: Poppins, Open Sans;
+
+    @media (max-width: ${props => props.theme.breakpoints.tablet}px) {
+        width: 80%;
+    }
 `;
 
 const RegisterHeader = styled.h1`
@@ -142,7 +147,7 @@ export default function RegisterForm() {
                 address ?
                     <AddressMessage>
                         <AddressTitle>Your Connected Address:</AddressTitle>
-                        <AddressText>{address}</AddressText>
+                        <AddressText>{shortenAddress(address, 24)}</AddressText>
                     </AddressMessage>
                     :
                     <ConnectWalletMsg>
