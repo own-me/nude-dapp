@@ -1,6 +1,8 @@
 # nude-dapp
 Frontend for the Own Me web app.
 
+> Project is dead. We had fun, but failed the business aspect.
+
 **DO NOT COMMIT ANY NUDE OR SEXUAL CONTENT - CLEAN CODE ONLY OR YOU ARE BANNED, NO SECOND CHANCES, NO MERCY**
 
 ## Dev Setup
